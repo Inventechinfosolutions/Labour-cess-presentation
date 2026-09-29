@@ -1,0 +1,98 @@
+---
+description: CESS presenter deck — GoK language, common-man terms, visualization-first, animated
+alwaysApply: true
+---
+
+# Labour CESS presenter deck standards
+
+Audience: Government of Karnataka / Board committee — mixed, often non-technical. Every scene, beat, and speaker note must follow this.
+
+## Language
+
+- Use **formal government English** in **short, complete sentences**.
+- **Avoid big / long sentences.** Prefer one idea per sentence. If a line wraps twice on the slide, split it.
+- Aim for roughly **8–14 words** per on-screen sentence where possible; supporting lines stay to **one short line**.
+- Write for a **common man** — no developer or IT jargon on slides.
+- Prefer plain words over technical ones:
+
+| Avoid on slides | Prefer |
+|-----------------|--------|
+| API, REST, SOAP, SFTP, Queue | Direct link, department exchange, file transfer, message pass |
+| Connector, middleware protocol | Periodic transfer / feed |
+| Manual entry | Officer entry / authorised entry |
+| Map & transform, route & retry | Bring details into one format; send again if a transfer fails |
+| Audit trail, source reference | Keep a full exchange record; keep where each detail came from |
+| Board system, CESS portal (as the app) | See lexicon below |
+| Fraud / confirmed leakage | Potential exception (unless Board has decided) |
+
+## Application lexicon (one name only)
+
+| Term | Means |
+|------|--------|
+| **Labour CESS Tracking & Monitoring System** | Full official name of this application |
+| **Central Platform** | Short form of the same application only |
+| **Smart Middleware** | Linking layer (M06) — not a separate product name for the whole app |
+| **Labour CESS Portal** | Builder / agency collection channel — not the main app |
+| **KSK** | Separate Board service platform |
+| **The Board / KBOCWWB** | The institution — not software |
+| **Worker welfare** | Purpose of CESS funds — not a system name |
+
+Never say “Board system”, “CESS portal”, or “Worker Welfare system” when you mean the Central Platform.
+
+## Visualization over text
+
+- Design **visualization-first**: icons, flows, hubs, stamps, short chips.
+- One idea per section; one short supporting sentence under the title.
+- Avoid paragraphs, long lists, and dense console prose on the main slide.
+- Put long RFP lists behind a badge / dialog, not on the face of the slide.
+- Prefer icon + 2–5 word label over a sentence when the meaning is clear.
+
+### No cards by default (Scene 01 lesson)
+
+- **Do not** fill the slide with bordered list cards, white row boxes, or “dashboard panels” for every item.
+- Prefer **icon stamps** (circle + short label), flow lines / packets, and one shaped hub plaque.
+- Cards are allowed only when they hold a real interaction (dialog, clickable rail) or a single destination plaque — not as a grid of repeating boxes.
+- When densifying empty space, **tighten the picture** — do not regress into card grids.
+
+### Story as a picture
+
+- Layout must **read the story**: e.g. many offices → construction project → gap / Smart Middleware → one Board file.
+- Reference tone: `1.png` / `2.png` in the repo (sources flow into ABC site, then into the platform) — not a spreadsheet of widgets.
+- Prefer **one continuous composition** (left → centre → right, or constellation → hub). Do not bolt a “problem UI” and a “solution UI” as two unrelated screens.
+- When merging scenes, **keep order**: problem beats first, then solution beats; do not drop ideas.
+
+### Pleasant visuals
+
+- Prefer a **light stage** (white / mist) with soft rings and calm shadows for narrative scenes — avoid a heavy full-bleed navy box unless the story needs drama.
+- Hub / step plaques: white or soft surface + **colour accent** (icon wrap, ring, dots) so each journey step is colour-coded without loud solid slabs.
+- Site photo: keep the project visible; use a light gradient veil for captions — do not bury the picture under dark overlays.
+- **Watch for / Key message / Next** live in a **footer band under the stage**, not stacked on top of the photo. Soft chips on mist / soft tints — not harsh full-width alert bars.
+
+## Animation (more animated, purposeful)
+
+- Prefer an **animated presentation**: motion should explain the story (flow in, connect, receive, highlight) — not decorate randomly.
+- Each scene should ship **at least 2–3 intentional motions** (e.g. Reveal on beat, Stagger on stamps, flow packets / arrows, gentle hub pulse).
+- Use existing **Motion + SlideKit** patterns: `Reveal`, `Stagger`, `IconChip`; add scene-local `motion` for flows and emphasis.
+- Advance story with **beats (Space)** — animate what appears; do not dump the full layout at once.
+- Respect **reduced motion** (`useReducedMotion`) — still readable when animation is off.
+- Avoid noisy loops, excessive bounce, glow spam, or animation that hides text.
+
+## Scene craft
+
+- Absolute scene title; supporting line in plain GoK language.
+- Progressive beats (Space) — reveal the visual story, then key message, then Next.
+- Key message as a short sentence + icon chain, not a speech.
+- Colour-code multi-step journeys (Middleware · Receiving · Match · Check · One file) so Space advances feel distinct.
+- Keep Motion + Phosphor patterns already in `SlideKit` / scenes.
+
+## Visual QA (do this when polishing visuals)
+
+- Capture the live slide (headless Chrome or user screenshot) and **read the image** before claiming the design is done.
+- Check: story readable in one glance; no card spam; footer not colliding with the stage; hub not covering sources.
+
+## Where this lives
+
+- This rule: `.cursor/rules/cess-presenter-deck.mdc` (always on for this project)
+- Speaker story tone: `speaker-notes.md` (lexicon + read-aloud boxes)
+- Scene UI copy: `src/scenes/*.tsx` and `src/lib/deck.ts`
+- Visual references: `1.png`, `2.png` (and other numbered refs) at repo root

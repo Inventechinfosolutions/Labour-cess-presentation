@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <circle cx="24" cy="24" r="24" fill="#0b1f4a"/>
+  <circle cx="24" cy="24" r="18" fill="url(#g)"/>
+  <defs>
+    <radialGradient id="g" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#f7dd9a"/>
+      <stop offset="100%" stop-color="#c4962e"/>
+    </radialGradient>
+  </defs>
+  <text x="24" y="29" text-anchor="middle" font-family="Sora, sans-serif" font-size="14" font-weight="800" fill="#3b2a08">KA</text>
+</svg>

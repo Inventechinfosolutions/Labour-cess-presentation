@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Karnataka Labour Cess — Connected CESS Intelligence</title>
+  <link rel="stylesheet" href="css/presentation.css" />
+  <script>window.CESS_GMAPS_KEY = window.CESS_GMAPS_KEY || "";</script>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21h16M6 21V7l6-3 6 3v14M10 11h4M10 15h4M10 19h4"/></symbol>
+    <symbol id="i-gov" viewBox="0 0 24 24"><path d="M4 10h16M6 10v8M10 10v8M14 10v8M18 10v8M4 18h16M12 4l8 4H4z"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s7 8 7 12a7 7 0 1 1-14 0c0-4 7-12 7-12z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.4-3.2 3.8-5 7-5s5.6 1.8 7 5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></symbol>
+    <symbol id="i-bank" viewBox="0 0 24 24"><path d="M4 10h16M5 10v7M9 10v7M15 10v7M19 10v7M4 17h16M12 4l9 5H3z"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24"><path d="M4 8h4l2-2h4l2 2h4v11H4z"/><circle cx="12" cy="13" r="3"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/></symbol>
+    <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h2M12 12h2M16 12h0M8 16h2M12 16h2M16 16h0"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 0-8 6 6 0 0 0-11-1A3.5 3.5 0 0 0 7 18z"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 4l9 5-9 5-9-5 9-5zM3 14l9 5 9-5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-4a6 6 0 1 1 12 0v4l2 2H4zM10 20h4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19h16M7 16V9M12 16V5M17 16v-6"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L6 14h6l-1 7 7-11h-6z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></symbol>
+    <symbol id="i-full" viewBox="0 0 24 24"><path d="M8 4H4v4M16 4h4v4M8 20H4v-4M20 16v4h-4"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.8.4-1.2.9-1.2 1.6V14"/><circle cx="12" cy="17" r="0.8" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="art-site" viewBox="0 0 280 340">
+      <rect width="280" height="340" fill="#d5e6f4"/>
+      <rect x="0" y="230" width="280" height="110" fill="#b7c7a8"/>
+      <rect x="0" y="268" width="280" height="72" fill="#7b8494"/>
+      <g fill="#0b1f4a" opacity=".18"><rect x="8" y="150" width="28" height="80"/><rect x="240" y="140" width="22" height="90"/></g>
+      <line x1="48" y1="250" x2="48" y2="70" stroke="#f0c14a" stroke-width="5"/>
+      <line x1="48" y1="70" x2="130" y2="62" stroke="#f0c14a" stroke-width="4"/>
+      <line x1="232" y1="250" x2="232" y2="48" stroke="#f0c14a" stroke-width="5"/>
+      <line x1="232" y1="48" x2="150" y2="42" stroke="#f0c14a" stroke-width="4"/>
+      <polygon points="140,78 210,102 210,252 140,228" fill="#12305f"/>
+      <polygon points="70,102 140,78 140,228 70,252" fill="#e8e2d8"/>
+      <polygon points="78,168 132,152 132,220 78,236" fill="#1a8a9a"/>
+      <g stroke="#8a8176" stroke-width="3"><line x1="88" y1="96" x2="88" y2="246"/><line x1="112" y1="88" x2="112" y2="236"/></g>
+      <polygon points="70,102 140,78 210,102 140,126" fill="#d7e3f0"/>
+      <rect x="62" y="248" width="156" height="22" fill="#f4d35e"/>
+    </symbol>
+    <symbol id="art-inspector" viewBox="0 0 220 320">
+      <rect width="220" height="320" fill="#cfe0d4"/>
+      <rect x="0" y="250" width="220" height="70" fill="#9aab8a"/>
+      <ellipse cx="110" cy="92" rx="36" ry="40" fill="#e8c3a6"/>
+      <path d="M74 78h72c6 0 10-18-4-30-12-10-52-10-64 0-14 12-10 30-4 30z" fill="#f4f1ea"/>
+      <rect x="86" y="70" width="48" height="10" rx="3" fill="#c9c4b8"/>
+      <path d="M58 148c8-22 28-34 52-34s44 12 52 34l8 92H50z" fill="#3d4a3a"/>
+      <path d="M64 168l-2 48 96 0-2-48c-8 10-28 16-46 16s-38-6-46-16z" fill="#d6e04a"/>
+      <rect x="72" y="176" width="76" height="10" fill="#0b1f4a"/>
+      <text x="110" y="185" text-anchor="middle" font-size="7" font-weight="800" fill="#fff" font-family="Sora, sans-serif">LABOUR INSPECTOR</text>
+      <rect x="138" y="186" width="52" height="70" rx="8" fill="#0b1f4a"/>
+      <rect x="144" y="194" width="40" height="52" rx="4" fill="#14c4d4"/>
+      <circle cx="82" cy="300" r="16" fill="#1a2433"/>
+      <circle cx="138" cy="300" r="16" fill="#1a2433"/>
+      <path d="M66 248h88v36H66z" fill="#2c382c"/>
+    </symbol>
+    <symbol id="art-notice" viewBox="0 0 240 300">
+      <rect width="240" height="300" fill="#e7eef8"/>
+      <rect x="28" y="22" width="184" height="256" rx="8" fill="#fff" stroke="#0b1f4a" stroke-width="2"/>
+      <rect x="28" y="22" width="184" height="36" fill="#0b1f4a"/>
+      <text x="120" y="45" text-anchor="middle" font-size="10" font-weight="800" fill="#14c4d4" font-family="Sora,sans-serif">KARNATAKA LABOUR CESS</text>
+      <text x="120" y="82" text-anchor="middle" font-size="14" font-weight="800" fill="#0b1f4a" font-family="Sora,sans-serif">DEMAND NOTICE</text>
+      <rect x="48" y="96" width="144" height="8" rx="2" fill="#d4a017"/>
+      <rect x="48" y="118" width="110" height="6" rx="2" fill="#c5d0de"/>
+      <rect x="48" y="132" width="144" height="6" rx="2" fill="#c5d0de"/>
+      <rect x="48" y="146" width="90" height="6" rx="2" fill="#c5d0de"/>
+      <rect x="48" y="172" width="144" height="48" rx="6" fill="#e8f6f8"/>
+      <text x="120" y="192" text-anchor="middle" font-size="9" fill="#0e9aa7" font-family="Manrope,sans-serif">LCD-2025-000456</text>
+      <text x="120" y="208" text-anchor="middle" font-size="11" font-weight="800" fill="#0b1f4a" font-family="Sora,sans-serif">Generated</text>
+      <rect x="70" y="232" width="100" height="22" rx="4" fill="#1b9a58"/>
+      <text x="120" y="247" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Sora,sans-serif">ISSUE TO BUILDER</text>
+    </symbol>
+    <symbol id="art-calc" viewBox="0 0 240 300">
+      <rect width="240" height="300" fill="#eef6f4"/>
+      <rect x="36" y="36" width="168" height="228" rx="14" fill="#0b1f4a"/>
+      <rect x="48" y="50" width="144" height="44" rx="8" fill="#10213d"/>
+      <text x="184" y="78" text-anchor="end" font-size="16" font-weight="800" fill="#14c4d4" font-family="Sora,sans-serif">CESS</text>
+      <g fill="#1a4278">
+        <rect x="48" y="108" width="40" height="32" rx="6"/>
+        <rect x="100" y="108" width="40" height="32" rx="6"/>
+        <rect x="152" y="108" width="40" height="32" rx="6"/>
+        <rect x="48" y="150" width="40" height="32" rx="6"/>
+        <rect x="100" y="150" width="40" height="32" rx="6"/>
+        <rect x="152" y="150" width="40" height="32" rx="6"/>
+        <rect x="48" y="192" width="40" height="32" rx="6"/>
+        <rect x="100" y="192" width="40" height="32" rx="6"/>
+      </g>
+      <rect x="152" y="192" width="40" height="52" rx="6" fill="#0e9aa7"/>
+    </symbol>
+    <symbol id="art-floors" viewBox="0 0 240 300">
+      <rect width="240" height="300" fill="#dce8f4"/>
+      <g fill="#0b1f4a" opacity=".12"><rect x="20" y="40" width="40" height="80"/><rect x="180" y="30" width="28" height="90"/></g>
+      <polygon points="120,40 190,70 190,250 120,220" fill="#12305f"/>
+      <polygon points="50,70 120,40 120,220 50,250" fill="#efe8dc"/>
+      <polygon points="58,140 114,118 114,210 58,232" fill="#1a8a9a"/>
+      <polygon points="50,70 120,40 190,70 120,100" fill="#d7e3f0"/>
+      <text x="120" y="280" text-anchor="middle" font-size="12" font-weight="800" fill="#0b1f4a" font-family="Sora,sans-serif">G + 10 · 25,000 sq ft</text>
+    </symbol>
+  </svg>
+
+  <div class="deck">
+    <div class="stage" id="stage">
+      <header class="chrome chrome-top">
+        <div class="brand">
+          <div class="emblem">KA</div>
+          <div>Karnataka Labour Cess<small>People · Projects · Compliance · Prosperity</small></div>
+        </div>
+        <div id="chrome-title">Opening</div>
+        <div id="counter">Opening</div>
+        <div class="chrome-actions">
+          <button class="icon-btn" id="btn-overview" title="Overview (O)">
+            <svg class="icon-svg"><use href="#i-grid"/></svg>
+          </button>
+          <button class="icon-btn" id="btn-full" title="Fullscreen (F)">
+            <svg class="icon-svg"><use href="#i-full"/></svg>
+          </button>
+          <button class="icon-btn" id="btn-help" title="Help (?)">
+            <svg class="icon-svg"><use href="#i-help"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <footer class="chrome chrome-bottom">
+        <div class="dots" id="dots"></div>
+        <div class="kbd-hint"><b>→</b> next beat · <b>←</b> back · <b>O</b> overview · <b>F</b> fullscreen</div>
+      </footer>
+
+      <!-- 0 Title -->
+      <section class="slide scene-title is-active" data-title="Connected CESS Intelligence" data-kicker="Karnataka Labour Cess" data-beats="1">
+        <div class="title-wrap">
+          <div class="title-emblem">KA</div>
+          <div class="kicker">Fair construction. Stronger communities.</div>
+          <h1 class="h1">Connected CESS Intelligence</h1>
+          <p class="lede">From fragmented construction information to a unified, transparent and accountable Labour Cess ecosystem for Karnataka.</p>
+          <div class="pill-row">
+            <span class="pill">People</span>
+            <span class="pill">Projects</span>
+            <span class="pill">Compliance</span>
+            <span class="pill">Prosperity</span>
+          </div>
+        </div>
+        <div class="hint" id="hint">Press <kbd>Space</kbd> or click to begin · <kbd>F</kbd> fullscreen</div>
+        <div class="skyline"></div>
+      </section>
+
+      <!-- 1 Problem -->
+      <section class="slide scene-problem" data-title="The Problem We Need to Solve" data-kicker="From fragmentation to integration" data-beats="6">
+        <div class="span-all">
+          <div class="kicker">The problem we need to solve</div>
+          <h1 class="h1">From fragmented information to a unified CESS ecosystem</h1>
+        </div>
+
+        <div class="panel today" data-reveal="0">
+          <div class="panel-head">
+            <h2 class="h2">Today: fragmented information</h2>
+            <span class="tag hot">Disconnected</span>
+          </div>
+          <div class="source-grid">
+            <div class="source-col">
+              <button class="source-card js-hold" data-sys="bpa"><span class="ico"><svg class="icon-svg"><use href="#i-file"/></svg></span><div><b>Building Plan Approval</b><span>Plans / Approvals / Sanctions</span></div><i class="x">×</i></button>
+              <button class="source-card js-hold" data-sys="plan"><span class="ico"><svg class="icon-svg"><use href="#i-map"/></svg></span><div><b>Planning Authorities</b><span>Zoning / Land use / Development</span></div><i class="x">×</i></button>
+              <button class="source-card js-hold" data-sys="util"><span class="ico"><svg class="icon-svg"><use href="#i-drop"/></svg></span><div><b>Utility Providers</b><span>Water / Power / Sewerage</span></div><i class="x">×</i></button>
+            </div>
+            <div class="site-thumb hub">
+              <svg class="art-fill" viewBox="0 0 280 340" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-site"/></svg>
+              <svg class="hub-rays" viewBox="0 0 180 220" aria-hidden="true">
+                <g stroke="#d64545" stroke-width="1.7" stroke-dasharray="4 4" fill="none">
+                  <line x1="90" y1="110" x2="8" y2="18"/>
+                  <line x1="90" y1="110" x2="8" y2="110"/>
+                  <line x1="90" y1="110" x2="8" y2="202"/>
+                  <line x1="90" y1="110" x2="172" y2="22"/>
+                  <line x1="90" y1="110" x2="172" y2="80"/>
+                  <line x1="90" y1="110" x2="172" y2="140"/>
+                  <line x1="90" y1="110" x2="172" y2="202"/>
+                </g>
+                <g fill="#d64545" font-size="13" font-weight="800" font-family="Sora,sans-serif">
+                  <text x="6" y="22">×</text><text x="6" y="114">×</text><text x="6" y="206">×</text>
+                  <text x="160" y="26">×</text><text x="160" y="84">×</text><text x="160" y="144">×</text><text x="160" y="206">×</text>
+                </g>
+              </svg>
+              <div class="site-caption"><b>Construction projects</b><br/>ABC Commercial Complex · no system sees the site</div>
+            </div>
+            <div class="source-col">
+              <button class="source-card js-hold" data-sys="pwd"><span class="ico"><svg class="icon-svg"><use href="#i-gov"/></svg></span><div><b>Government / PWD</b><span>Projects / Clearances / NOCs</span></div><i class="x">×</i></button>
+              <button class="source-card js-hold" data-sys="ulb"><span class="ico"><svg class="icon-svg"><use href="#i-building"/></svg></span><div><b>ULB / Municipal Bodies</b><span>Permits / Licences / Local approvals</span></div><i class="x">×</i></button>
+              <button class="source-card js-hold" data-sys="pvt"><span class="ico"><svg class="icon-svg"><use href="#i-user"/></svg></span><div><b>Private Agencies / Builders</b><span>Project details / Submissions</span></div><i class="x">×</i></button>
+              <button class="source-card js-hold" data-sys="pay"><span class="ico"><svg class="icon-svg"><use href="#i-bank"/></svg></span><div><b>Payment / Remittance</b><span>Treasury / Bank / Receipts</span></div><i class="x">×</i></button>
+            </div>
+          </div>
+          <p class="disconnect-note"><strong>0 systems disconnected</strong> — click a source to show the break.</p>
+          <ul class="challenges" data-reveal="1">
+            <li>● Limited project visibility</li>
+            <li>● Assessment tracking challenges</li>
+            <li>● Fragmented data</li>
+            <li>● Delayed remittance</li>
+            <li>● Manual / inconsistent capture</li>
+            <li>● Unmonitored construction</li>
+            <li>● Delayed information sharing</li>
+            <li>● Potential CESS leakage</li>
+          </ul>
+        </div>
+
+        <div class="gap-col" data-reveal="2">
+          <h3>THE GAP</h3>
+          <i class="v-chev"></i>
+          <div class="gap-chip">People</div>
+          <i class="v-chev"></i>
+          <div class="gap-chip">Process</div>
+          <i class="v-chev"></i>
+          <div class="gap-chip">Data</div>
+          <i class="v-chev"></i>
+          <div class="gap-chip">Technology</div>
+          <i class="v-chev"></i>
+          <div class="gap-chip">Governance</div>
+          <i class="v-chev teal"></i>
+          <div class="gap-to">Connect</div>
+        </div>
+
+        <div class="panel target" data-reveal="3">
+          <div class="panel-head">
+            <h2 class="h2">Target: connected CESS intelligence</h2>
+            <span class="tag cool">Integrated</span>
+          </div>
+          <div class="dash-mini">
+            <div class="dash-kpis">
+              <div class="kpi"><b>1,248</b><span>Total projects</span></div>
+              <div class="kpi"><b>1,036</b><span>Registered</span></div>
+              <div class="kpi"><b>186</b><span>Under assessment</span></div>
+              <div class="kpi"><b>76</b><span>Attention required</span></div>
+            </div>
+            <div class="ka-mini map-shell js-hold">
+              <div id="map-problem" class="map-canvas" data-map="karnataka-mini"></div>
+            </div>
+            <div class="outcomes" data-reveal="4">
+              <div>Better construction visibility</div>
+              <div>Better CESS monitoring</div>
+              <div>Potential leakage identification</div>
+              <div>Decision support</div>
+            </div>
+          </div>
+        </div>
+        <div class="story-bar span-all" data-reveal="5">
+          <span class="off">Sources × Site × CESS</span>
+          <i class="h-chev"></i>
+          <span class="on">Sources → Project → Assessment → GPS → GIS → Action</span>
+        </div>
+      </section>
+
+      <!-- 2 Intake -->
+      <section class="slide scene-intake" data-title="A Project Enters the CESS Ecosystem" data-kicker="Multiple sources · Single view" data-beats="4">
+        <div class="slide-copy span-all">
+          <div class="kicker">Multiple sources · Single view · Better governance</div>
+          <h1 class="h1">A construction project enters the CESS ecosystem</h1>
+        </div>
+        <div class="feed-col" data-reveal="0">
+          <button class="feed-card js-hold" data-feed="reg"><span class="ico"><svg class="icon-svg"><use href="#i-file"/></svg></span><div><b>Building Plan Approval</b><ul><li>Plan approval</li><li>Building permits</li></ul></div></button>
+          <button class="feed-card js-hold" data-feed="det"><span class="ico"><svg class="icon-svg"><use href="#i-gov"/></svg></span><div><b>Government Departments</b><ul><li>Revenue · Labour · TCP</li></ul></div></button>
+          <button class="feed-card js-hold" data-feed="apr"><span class="ico"><svg class="icon-svg"><use href="#i-building"/></svg></span><div><b>Urban Local Bodies</b><ul><li>Municipal corporations & councils</li></ul></div></button>
+          <button class="feed-card js-hold" data-feed="loc"><span class="ico"><svg class="icon-svg"><use href="#i-map"/></svg></span><div><b>Planning Authorities</b><ul><li>Land use / zoning / master plan</li></ul></div></button>
+          <button class="feed-card js-hold" data-feed="doc"><span class="ico"><svg class="icon-svg"><use href="#i-drop"/></svg></span><div><b>Utility Providers</b><ul><li>Water · Electricity · Sewerage</li></ul></div></button>
+          <button class="feed-card js-hold" data-feed="bld"><span class="ico"><svg class="icon-svg"><use href="#i-user"/></svg></span><div><b>Private Agencies / Builder</b><ul><li>Project submission & documents</li></ul></div></button>
+        </div>
+        <div class="flow-chev" data-reveal="1" aria-hidden="true"><span></span></div>
+        <div class="intake-center" data-reveal="1">
+          <div class="intake-building">
+            <svg class="intake-art" viewBox="0 0 900 1100" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+              <defs>
+                <linearGradient id="s2sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#cfe4f6"/>
+                  <stop offset="52%" stop-color="#eef4fb"/>
+                  <stop offset="100%" stop-color="#c9d7b8"/>
+                </linearGradient>
+                <linearGradient id="s2glass" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#8fd3dc"/>
+                  <stop offset="100%" stop-color="#1a6f8a"/>
+                </linearGradient>
+                <linearGradient id="s2conc" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f2eee7"/>
+                  <stop offset="100%" stop-color="#c4bbb0"/>
+                </linearGradient>
+                <linearGradient id="s2side" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#0e2a52"/>
+                  <stop offset="100%" stop-color="#1a4278"/>
+                </linearGradient>
+              </defs>
+              <rect width="900" height="1100" fill="url(#s2sky)"/>
+              <g fill="#0b1f4a" opacity="0.16">
+                <rect x="30" y="430" width="70" height="160"/>
+                <rect x="108" y="390" width="46" height="200"/>
+                <rect x="162" y="450" width="80" height="140"/>
+                <rect x="700" y="410" width="54" height="180"/>
+                <rect x="760" y="355" width="42" height="235"/>
+                <rect x="812" y="440" width="70" height="150"/>
+                <polygon points="108,390 131,348 154,390"/>
+              </g>
+              <rect x="0" y="720" width="900" height="380" fill="#c3d2b4"/>
+              <rect x="0" y="868" width="900" height="232" fill="#7b8494"/>
+              <rect x="0" y="978" width="900" height="12" fill="#d7c36a"/>
+              <line x1="0" y1="968" x2="900" y2="968" stroke="#e8edf3" stroke-width="6" stroke-dasharray="30 20"/>
+              <rect x="70" y="790" width="12" height="70" fill="#6b4a2b"/>
+              <circle cx="76" cy="770" r="34" fill="#2f7a4a"/>
+              <circle cx="56" cy="786" r="20" fill="#3b8d55"/>
+              <rect x="808" y="800" width="12" height="60" fill="#6b4a2b"/>
+              <circle cx="814" cy="786" r="30" fill="#2f7a4a"/>
+              <g stroke="#f0c14a" stroke-linecap="round" fill="none">
+                <line x1="200" y1="830" x2="200" y2="210" stroke-width="10"/>
+                <line x1="200" y1="210" x2="430" y2="188" stroke-width="8"/>
+                <line x1="200" y1="210" x2="108" y2="228" stroke-width="7"/>
+                <line x1="108" y1="228" x2="200" y2="262" stroke="#d4a017" stroke-width="2"/>
+                <line x1="378" y1="193" x2="378" y2="420" stroke="#b7aea3" stroke-width="2"/>
+                <line x1="700" y1="830" x2="700" y2="150" stroke-width="10"/>
+                <line x1="700" y1="150" x2="500" y2="136" stroke-width="8"/>
+                <line x1="700" y1="150" x2="802" y2="168" stroke-width="7"/>
+                <line x1="802" y1="168" x2="700" y2="202" stroke="#d4a017" stroke-width="2"/>
+                <line x1="542" y1="140" x2="542" y2="350" stroke="#b7aea3" stroke-width="2"/>
+              </g>
+              <rect x="188" y="818" width="24" height="16" fill="#e08a00"/>
+              <rect x="366" y="418" width="24" height="12" fill="#e08a00"/>
+              <rect x="688" y="818" width="24" height="16" fill="#e08a00"/>
+              <rect x="530" y="344" width="24" height="12" fill="#e08a00"/>
+              <polygon points="450,248 622,312 622,792 450,728" fill="url(#s2side)"/>
+              <polygon points="258,312 450,248 450,728 258,792" fill="url(#s2conc)"/>
+              <polygon points="268,558 440,508 440,718 268,768" fill="url(#s2glass)"/>
+              <g stroke="#0b1f4a" stroke-opacity="0.2" stroke-width="2" fill="none">
+                <path d="M266 338 L442 286"/><path d="M266 378 L442 326"/>
+                <path d="M266 418 L442 366"/><path d="M266 458 L442 406"/>
+                <path d="M266 498 L442 446"/><path d="M266 538 L442 486"/>
+                <path d="M266 598 L442 546"/><path d="M266 638 L442 586"/>
+                <path d="M266 678 L442 626"/><path d="M266 718 L442 666"/>
+              </g>
+              <g stroke="#8a8176" stroke-width="5">
+                <line x1="300" y1="298" x2="300" y2="776"/>
+                <line x1="355" y1="280" x2="355" y2="754"/>
+                <line x1="408" y1="262" x2="408" y2="736"/>
+              </g>
+              <g fill="#14c4d4" opacity="0.3">
+                <polygon points="472,338 590,378 590,396 472,356"/>
+                <polygon points="472,378 590,418 590,436 472,396"/>
+                <polygon points="472,418 590,458 590,476 472,436"/>
+                <polygon points="472,528 590,568 590,590 472,550"/>
+                <polygon points="472,578 590,618 590,640 472,600"/>
+                <polygon points="472,628 590,668 590,690 472,650"/>
+                <polygon points="472,678 590,718 590,740 472,700"/>
+              </g>
+              <polygon points="258,312 450,248 622,312 430,376" fill="#d9e3f0"/>
+              <polygon points="280,320 450,268 588,318 418,364" fill="#0e9aa7" opacity="0.32"/>
+              <rect x="168" y="786" width="564" height="62" fill="#f4d35e"/>
+              <rect x="168" y="786" width="564" height="9" fill="#0b1f4a"/>
+              <rect x="168" y="839" width="564" height="9" fill="#0b1f4a"/>
+              <g fill="#0b1f4a" opacity="0.12">
+                <rect x="188" y="802" width="70" height="28"/>
+                <rect x="278" y="802" width="70" height="28"/>
+                <rect x="368" y="802" width="70" height="28"/>
+                <rect x="458" y="802" width="70" height="28"/>
+                <rect x="548" y="802" width="70" height="28"/>
+                <rect x="638" y="802" width="70" height="28"/>
+              </g>
+              <rect x="198" y="824" width="68" height="26" rx="4" fill="#e08a00"/>
+              <rect x="246" y="806" width="26" height="20" rx="3" fill="#c96d00"/>
+              <circle cx="214" cy="852" r="8" fill="#1a2433"/>
+              <circle cx="254" cy="852" r="8" fill="#1a2433"/>
+              <rect x="638" y="828" width="50" height="20" rx="4" fill="#1d6fb3"/>
+              <circle cx="652" cy="850" r="7" fill="#1a2433"/>
+              <circle cx="678" cy="850" r="7" fill="#1a2433"/>
+            </svg>
+            <div class="building-badge">
+              <b>ABC Commercial Complex</b>
+              <div>Bengaluru, Karnataka · A new commercial development</div>
+            </div>
+          </div>
+          <div class="manual-callout" data-reveal="3"><b>External system unavailable?</b><br/>Manual data entry still creates the same project record.</div>
+          <div class="data-packet"></div>
+        </div>
+        <div class="flow-chev" data-reveal="2" aria-hidden="true"><span></span></div>
+        <aside class="platform" data-reveal="2">
+          <h3>Central Labour Cess Platform</h3>
+          <p class="foot-note" style="color:#9db0c9;margin:0 0 10px">Capture · Consolidate · Single source of truth</p>
+          <button class="plat-row" data-row="reg">Project Registration</button>
+          <button class="plat-row" data-row="det">Project Details</button>
+          <button class="plat-row" data-row="loc">Location</button>
+          <button class="plat-row" data-row="apr">Approval Information</button>
+          <button class="plat-row" data-row="bld">Builder / Contractor</button>
+          <button class="plat-row" data-row="cost">Project Cost</button>
+          <button class="plat-row" data-row="doc">Documents</button>
+        </aside>
+      </section>
+
+      <!-- 3 Unified record -->
+      <section class="slide scene-record" data-title="Building the Unified Project Record" data-kicker="One project · One view" data-beats="4">
+        <div class="span-all">
+          <div class="kicker">From the real world to a single, trusted digital record</div>
+          <h1 class="h1">Building the unified project record</h1>
+        </div>
+        <div class="record-hero" data-reveal="0">
+          <svg class="art-fill" viewBox="0 0 280 340" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-site"/></svg>
+          <div class="site-caption"><b>Physical project</b><br/>ABC Commercial Complex · Outer Ring Road</div>
+        </div>
+        <div class="link-col" data-reveal="1">
+          <p class="pipe-label">maps into</p>
+          <button class="link-node" data-link="project">Physical project</button>
+          <i class="v-chev teal"></i>
+          <button class="link-node" data-link="docs">Site evidence</button>
+          <i class="v-chev teal"></i>
+          <button class="link-node" data-link="loc">Location GPS / GIS</button>
+          <i class="v-chev teal"></i>
+          <button class="link-node" data-link="apr">Approvals & permits</button>
+          <i class="v-chev teal"></i>
+          <button class="link-node" data-link="stk">Stakeholders</button>
+          <i class="v-chev teal"></i>
+          <p class="pipe-label">one record</p>
+        </div>
+        <div class="record-ui" data-reveal="2">
+          <header>
+            <div>
+              <div class="kicker">Project Record</div>
+              <h2 class="h2">ABC Commercial Complex</h2>
+              <p class="pipe-label" style="text-align:left;margin-top:4px">Site → Evidence → GPS → Approvals → Stakeholders</p>
+            </div>
+            <span class="status ok">Active project</span>
+          </header>
+          <div class="record-grid">
+            <button class="record-card" data-card="project" data-reveal="2">
+              <h4>Project</h4>
+              <ul>
+                <li>Project ID <b>CESS-2025-000123</b></li>
+                <li>Category <b>Commercial</b></li>
+                <li>Building <b>Multi-storey</b></li>
+                <li>Cost <b>₹ 12,00,00,000</b></li>
+              </ul>
+            </button>
+            <button class="record-card" data-card="stk" data-reveal="3">
+              <h4>Stakeholder</h4>
+              <ul>
+                <li>Builder <b>ABC Developers Pvt. Ltd.</b></li>
+                <li>Agency <b>BBMP</b></li>
+              </ul>
+            </button>
+            <button class="record-card" data-card="loc" data-reveal="3">
+              <h4>Location</h4>
+              <ul>
+                <li>Address <b>Outer Ring Road, Marathahalli</b></li>
+                <li>Lat / Long <b>12.9616° N, 77.6973° E</b></li>
+                <li>District <b>Bengaluru Urban</b></li>
+              </ul>
+            </button>
+            <button class="record-card" data-card="apr" data-reveal="3">
+              <h4>Approval</h4>
+              <ul>
+                <li>Reference <b>BBMP/TP/2025/00456</b></li>
+                <li>Date <b>15 Mar 2025</b></li>
+                <li>Sanction <b>G+10 · 1,25,000 sq ft</b></li>
+              </ul>
+            </button>
+            <button class="record-card" data-card="cess" data-reveal="3">
+              <h4>CESS</h4>
+              <ul>
+                <li>CESS status <span class="status ok">Registered</span></li>
+                <li>Assessment <span class="status wait">Pending</span></li>
+                <li>Demand <span class="status idle">Not generated</span></li>
+                <li>Collection <span class="status idle">Not initiated</span></li>
+              </ul>
+            </button>
+            <button class="record-card" data-card="docs" data-reveal="3">
+              <h4>Documents</h4>
+              <ul>
+                <li>Approval documents <b>5 files</b></li>
+                <li>Project documents <b>12 files</b></li>
+                <li>Compliance documents <b>3 files</b></li>
+              </ul>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 Assessment -->
+      <section class="slide scene-assess" data-title="From Project to CESS Assessment" data-kicker="On-ground reality · Digital workflow" data-beats="7">
+        <div>
+          <div class="kicker">On-ground reality. Digital workflow. Greater compliance.</div>
+          <h1 class="h1">From project to CESS assessment</h1>
+        </div>
+        <div class="steps">
+          <button class="step is-current" data-step="0" data-beat-min="0" data-beat-eq="0"><div class="n">1</div><b>Construction Project</b><span>ABC Commercial Complex</span></button>
+          <button class="step" data-step="1" data-beat-min="1" data-beat-eq="1"><div class="n">2</div><b>Assessment Task</b><span>Assigned to inspector</span></button>
+          <button class="step" data-step="2" data-beat-min="2" data-beat-eq="2"><div class="n">3</div><b>Inspector</b><span>Receives task</span></button>
+          <button class="step" data-step="3" data-beat-min="3" data-beat-eq="3"><div class="n">4</div><b>Site Survey</b><span>On-site data capture</span></button>
+          <button class="step" data-step="4" data-beat-min="4" data-beat-eq="4"><div class="n">5</div><b>Estimation</b><span>Built-up area & details</span></button>
+          <button class="step" data-step="5" data-beat-min="5" data-beat-eq="5"><div class="n">6</div><b>CESS Calculation</b><span>As per applicable rules</span></button>
+          <button class="step" data-step="6" data-beat-min="6" data-beat-eq="6"><div class="n">7</div><b>CESS Demand</b><span>Generated in system</span></button>
+        </div>
+        <div class="assess-stage">
+          <div class="assess-card is-current" data-beat-eq="0">
+            <div class="site-thumb hub">
+              <svg class="art-fill" viewBox="0 0 280 340" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-site"/></svg>
+            </div>
+            <p class="foot-note"><b>ABC Commercial Complex</b> · Commercial · Multi-storey · In progress · Bengaluru Urban</p>
+          </div>
+          <div class="assess-card" data-beat-eq="1">
+            <div class="viz-plate">
+              <svg class="art-fill" viewBox="0 0 220 320" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-inspector"/></svg>
+              <div class="viz-tag">Assigned · R. Kumar</div>
+            </div>
+            <h3>Assessment task</h3>
+            <p class="foot-note">New task assigned</p>
+            <ul class="record-card" style="display:block;margin-top:10px">
+              <li>Project ID <b>CESS-2025-000123</b></li>
+              <li>Task <b>Site assessment</b></li>
+              <li>Assigned to <b>R. Kumar, Labour Inspector</b></li>
+              <li>Due <b>20 Mar 2025</b></li>
+            </ul>
+          </div>
+          <div class="assess-card" data-beat-eq="2">
+            <h3>Inspector at site</h3>
+            <p class="foot-note">Verifies and captures actual construction details.</p>
+            <div class="insp">
+              <svg class="art-fill" viewBox="0 0 220 320" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-inspector"/></svg>
+            </div>
+          </div>
+          <div class="assess-card" data-beat-eq="3">
+            <div class="phone">
+              <div class="phone-app js-hold">
+                <div class="kicker" style="color:#14c4d4">CESS Field App</div>
+                <h3>ABC Commercial Complex</h3>
+                <div class="check">Project details <span class="status ok">Done</span></div>
+                <div class="check">Estimation <span class="status ok">Done</span></div>
+                <div class="check">Survey <span class="status ok">Done</span></div>
+                <div class="check">Assessment <span class="status wait">Capture</span></div>
+                <button class="submit-btn">Capture / Update</button>
+              </div>
+            </div>
+          </div>
+          <div class="assess-card" data-beat-eq="4">
+            <div class="viz-plate">
+              <svg class="art-fill" viewBox="0 0 240 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-floors"/></svg>
+            </div>
+            <h3>Estimation details</h3>
+            <ul>
+              <li class="check">Built-up area <b>25,000 sq ft</b></li>
+              <li class="check">No. of floors <b>G + 10</b></li>
+              <li class="check">Building type <b>Commercial</b></li>
+              <li class="check">Construction stage <b>60%</b></li>
+            </ul>
+          </div>
+          <div class="assess-card" data-beat-eq="5">
+            <div class="viz-plate dark">
+              <svg class="art-fill" viewBox="0 0 240 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-calc"/></svg>
+            </div>
+            <h3>CESS calculation</h3>
+            <ul>
+              <li class="check">Applicable rate <b>As per rules</b></li>
+              <li class="check">Usage type <b>Commercial</b></li>
+              <li class="check">Category <b>Multi-storey</b></li>
+              <li class="check">Calculation <b>System generated</b></li>
+            </ul>
+            <p class="foot-note">Calculated as per Karnataka Labour Cess rules.</p>
+          </div>
+          <div class="assess-card" data-beat-eq="6">
+            <div class="viz-plate">
+              <svg class="art-fill" viewBox="0 0 240 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-notice"/></svg>
+            </div>
+            <h3>CESS demand</h3>
+            <ul>
+              <li class="check">Demand status <span class="status ok">Generated</span></li>
+              <li class="check">Demand ref <b>LCD-2025-000456</b></li>
+              <li class="check">Date <b>22 Mar 2025</b></li>
+              <li class="check">Valid till <b>21 Apr 2025</b></li>
+              <li class="check">Next step <b>Issue to builder</b></li>
+            </ul>
+          </div>
+          <div class="assess-card note-col">
+            <div class="v-flow">
+              <div data-beat-min="0" data-beat-eq="0">1 · Project</div>
+              <i class="v-chev teal"></i>
+              <div data-beat-min="1" data-beat-eq="1">2 · Task assigned</div>
+              <i class="v-chev teal"></i>
+              <div data-beat-min="2" data-beat-eq="2">3 · Inspector on site</div>
+              <i class="v-chev teal"></i>
+              <div data-beat-min="3" data-beat-eq="3">4 · Field capture</div>
+              <i class="v-chev teal"></i>
+              <div data-beat-min="4" data-beat-eq="4">5 · Estimation</div>
+              <i class="v-chev teal"></i>
+              <div data-beat-min="5" data-beat-eq="5">6 · Calculation</div>
+              <i class="v-chev teal"></i>
+              <div data-beat-min="6" data-beat-eq="6">7 · Demand issued</div>
+            </div>
+            <div class="step-note is-current" data-beat-eq="0">
+              <h3>Start with the project</h3>
+              <p class="lede">ABC Commercial Complex is already on the unified record. Assessment can now be assigned.</p>
+            </div>
+            <div class="step-note" data-beat-eq="1">
+              <h3>Task created</h3>
+              <p class="lede">The inspector receives a due date, location and the project file on a mobile task.</p>
+            </div>
+            <div class="step-note" data-beat-eq="2">
+              <h3>On the ground</h3>
+              <p class="lede">The inspector verifies what is actually built — not only what was approved on paper.</p>
+            </div>
+            <div class="step-note" data-beat-eq="3">
+              <h3>Field app</h3>
+              <p class="lede">Photos, measurements and remarks are captured on site and synced immediately.</p>
+            </div>
+            <div class="step-note" data-beat-eq="4">
+              <h3>Verified quantities</h3>
+              <p class="lede">Built-up area, floors and usage become the basis for a defensible CESS estimate.</p>
+            </div>
+            <div class="step-note" data-beat-eq="5">
+              <h3>Rule-based levy</h3>
+              <p class="lede">Calculation follows Karnataka Labour Cess rules — no spreadsheet variance.</p>
+            </div>
+            <div class="step-note" data-beat-eq="6">
+              <h3>Demand ready</h3>
+              <p class="lede">A demand notice is generated in the system and can be issued to the builder.</p>
+            </div>
+            <div class="sync-bar" data-reveal="3"><svg class="icon-svg"><use href="#i-cloud"/></svg> Central Labour Cess Platform · Field data synchronised in real time</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 GPS -->
+      <section class="slide scene-gps" data-title="GPS: Capturing the Field Location" data-kicker="Real-time field data" data-beats="6">
+        <div class="span-all">
+          <div class="kicker">Real-time field data. Accurate location. Stronger compliance.</div>
+          <h1 class="h1">GPS: capturing the field location</h1>
+        </div>
+        <div class="gps-left" data-reveal="0">
+          <div class="insp">
+            <svg class="art-fill" viewBox="0 0 220 320" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-inspector"/></svg>
+            <div class="badge">LABOUR INSPECTOR · 12.9616° N, 77.6973° E</div>
+          </div>
+          <div class="phone">
+            <div class="phone-app js-hold">
+              <div class="kicker" style="color:#14c4d4">CESS Field App</div>
+              <h3>ABC Commercial Complex</h3>
+              <div class="check" data-reveal="1">GPS captured <span class="status ok">✓</span></div>
+              <div class="check" data-reveal="2">Timestamp captured <span class="status ok">✓</span></div>
+              <div class="check" data-reveal="3">Photo captured <span class="status ok">✓</span></div>
+              <div class="photo-chip" data-reveal="3">
+                <svg class="art-fill" viewBox="0 0 280 340" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-site"/></svg>
+              </div>
+              <button class="submit-btn" data-reveal="4">Submit to CESS</button>
+            </div>
+          </div>
+        </div>
+        <div class="map-shell js-hold gps-hero" data-reveal="1">
+          <div id="map-gps" class="map-canvas" data-map="gps"></div>
+          <div class="gps-explain" data-reveal="5">
+            <div class="explain"><b>GPS = WHERE</b><br/>Exact latitude and longitude of the inspection.</div>
+            <div class="explain"><b>GIS = WHAT is around it</b><br/>Coordinates plus layers — land use, boundaries, zones.</div>
+          </div>
+        </div>
+        <aside class="central-box" data-reveal="4">
+          <h3>Central Labour Cess System</h3>
+          <p class="foot-note" style="color:#9db0c9">Field data fused into the project record</p>
+          <div class="tick" data-reveal="4"><i>✓</i> Location data (GPS)</div>
+          <div class="tick" data-reveal="4"><i>✓</i> Field photos & videos</div>
+          <div class="tick" data-reveal="4"><i>✓</i> Visit timestamp</div>
+          <div class="tick" data-reveal="5"><i>✓</i> Assessment information</div>
+          <div class="tick" data-reveal="5"><i>✓</i> Linked to project record</div>
+        </aside>
+        <div class="capture-stack span-all">
+          <div class="cap" data-reveal="1"><span class="ico"><svg class="icon-svg"><use href="#i-pin"/></svg></span><div><b>GPS coordinates</b><div class="gps-coords">12.9616° N, 77.6973° E</div></div></div>
+          <div class="cap" data-reveal="2"><span class="ico"><svg class="icon-svg"><use href="#i-bell"/></svg></span><div><b>Timestamp</b><div>16 Sep 2026 · 10:24 AM</div></div></div>
+          <div class="cap" data-reveal="3"><span class="ico"><svg class="icon-svg"><use href="#i-cam"/></svg></span><div><b>Photo · geo-tagged</b><div class="photo-chip"><svg class="art-fill" viewBox="0 0 280 340" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#art-site"/></svg></div></div></div>
+          <div class="cap" data-reveal="3"><span class="ico"><svg class="icon-svg"><use href="#i-file"/></svg></span><div><b>Assessment data</b><div>Observations, measurements, remarks</div></div></div>
+        </div>
+      </section>
+
+      <!-- 6 GIS -->
+      <section class="slide scene-gis" data-title="GIS: Putting the Project Into Geographic Context" data-kicker="From location to insight" data-beats="5">
+        <div class="span-all">
+          <div class="kicker">From location to insight. Better planning. Stronger compliance.</div>
+          <h1 class="h1">GIS: putting the project into geographic context</h1>
+        </div>
+        <aside class="card gps-gis-bridge" data-reveal="0">
+          <h3>GPS feeds GIS</h3>
+          <div class="bridge">
+            <div class="bridge-node">
+              <b>GPS</b>
+              <span>12.9616° N<br/>77.6973° E</span>
+            </div>
+            <div class="flow-chev small" aria-hidden="true"><span></span></div>
+            <div class="bridge-node on">
+              <b>GIS</b>
+              <span>Coordinates + layers + nearby projects</span>
+            </div>
+          </div>
+          <ul class="foot-note" data-reveal="2">
+            <li>Project locations</li>
+            <li>Administrative boundaries</li>
+            <li>Territory mapping</li>
+            <li>Spatial analysis</li>
+            <li>Identify risk areas</li>
+          </ul>
+        </aside>
+        <div class="map-shell js-hold" data-reveal="1">
+          <div id="map-gis" class="map-canvas" data-map="gis"></div>
+        </div>
+        <aside class="gis-side" data-reveal="3">
+          <div class="card" style="padding:12px;margin-bottom:10px">
+            <h3>Map layers</h3>
+            <div class="layer-list" style="margin-top:8px">
+              <button class="layer-item" data-layer="admin">Administrative boundary</button>
+              <button class="layer-item" data-layer="roads">Road network</button>
+              <button class="layer-item" data-layer="projects">Construction projects</button>
+            </div>
+          </div>
+          <div class="card" style="padding:12px" data-reveal="4">
+            <h3>Projects in view (5)</h3>
+            <div class="project-list" style="margin-top:8px">
+              <button class="project-row is-on" data-pin="abc">ABC Commercial Complex · In progress</button>
+              <button class="project-row" data-pin="sky">Skyline Residency · Assessed</button>
+              <button class="project-row" data-pin="tech">Tech Park Phase 2 · Active</button>
+              <button class="project-row" data-pin="orion">Orion Mall Expansion · Pending</button>
+              <button class="project-row" data-pin="maple">Maple Apartments · Active</button>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- 7 Layers -->
+      <section class="slide scene-layers" data-title="Layered Intelligence: From Location to Context" data-kicker="Multiple layers · Deeper insights" data-beats="4">
+        <div class="span-all">
+          <div class="kicker">Multiple layers. Deeper insights. Stronger governance.</div>
+          <h1 class="h1">Layered intelligence: from location to context</h1>
+        </div>
+        <aside class="card" style="padding:14px" data-reveal="0">
+          <h3>GIS layers</h3>
+          <p class="foot-note">Combine geographic and business data. Toggle a layer.</p>
+          <div class="layer-list" style="margin-top:10px">
+            <button class="layer-item" data-layer="base">1 · Base map</button>
+            <button class="layer-item" data-layer="admin">2 · Administrative / territory</button>
+            <button class="layer-item" data-layer="infra">3 · Roads / infrastructure</button>
+            <button class="layer-item" data-layer="projects">4 · Construction projects</button>
+            <button class="layer-item" data-layer="approval">5 · Building approval</button>
+            <button class="layer-item" data-layer="gps">6 · GPS field assessments</button>
+            <button class="layer-item" data-layer="cess">7 · CESS information</button>
+          </div>
+        </aside>
+        <div class="map-shell js-hold" data-reveal="1">
+          <div id="map-layers" class="map-canvas" data-map="layers"></div>
+        </div>
+        <aside class="intel" data-reveal="2">
+          <h3>ABC Commercial Complex</h3>
+          <p class="foot-note">CESS-2025-000123 · 25,000 sq ft (G+10)</p>
+          <span class="status wait">Under construction</span>
+          <div class="layer-list" style="margin-top:12px">
+            <div class="layer-item">Location 12.9616° N, 77.6973° E</div>
+            <div class="layer-item">Bengaluru Urban · East Zone · Ward 150</div>
+            <div class="layer-item">Road: Outer Ring Road (500 m)</div>
+            <div class="layer-item">Approved building plan BP-2025-0456</div>
+            <div class="layer-item">3 site visits · Latest 16 Sep 2026</div>
+            <div class="layer-item">CESS assessment pending</div>
+          </div>
+        </aside>
+        <div class="pipe span-all" data-reveal="3">
+          <div>GPS → Location</div>
+          <i class="h-chev"></i>
+          <div>GIS → Geographic context</div>
+          <i class="h-chev"></i>
+          <div>Business data → CESS intelligence</div>
+        </div>
+      </section>
+
+      <!-- 8 Leakage -->
+      <section class="slide scene-leak" data-title="From Spatial Data to Potential CESS Leakage" data-kicker="Identify where attention is required" data-beats="4">
+        <div class="span-all">
+          <div class="kicker">Multiple data sources. Greater visibility.</div>
+          <h1 class="h1">From spatial data to potential CESS leakage</h1>
+        </div>
+        <aside class="side-nav" data-reveal="0">
+          <div class="brand" style="margin-bottom:16px"><div class="emblem">KA</div><div>Labour Cess System</div></div>
+          <button class="is-on">GIS Map</button>
+          <button>Projects</button>
+          <button>Compliance</button>
+          <button>Analytics</button>
+          <button>Reports</button>
+        </aside>
+        <div class="leak-stage">
+          <div class="filter-bar" data-reveal="0">
+            <span>Bengaluru Urban</span><span>All project status</span><span>All wards</span><span>Last 1 year</span>
+          </div>
+          <div class="map-shell js-hold" data-reveal="1">
+            <div id="map-leak" class="map-canvas" data-map="leak"></div>
+          </div>
+        </div>
+        <aside class="intel" data-reveal="2">
+          <h3>Compliance intelligence</h3>
+          <div class="dash-kpis" style="grid-template-columns:1fr 1fr;margin:10px 0">
+            <div class="kpi"><b>1,248</b><span>Registered projects</span></div>
+            <div class="kpi"><b>1,036</b><span>Assessed</span></div>
+            <div class="kpi"><b>212</b><span>Unregistered</span></div>
+            <div class="kpi"><b>76</b><span>Potential exceptions</span></div>
+          </div>
+          <div class="donut-row">
+            <ul class="foot-note">
+              <li>Compliant 68%</li>
+              <li>Payment pending 12%</li>
+              <li>Assessment pending 10%</li>
+              <li>Not registered 6%</li>
+              <li>Potential exceptions 4%</li>
+            </ul>
+            <div class="donut"><span>1,248</span></div>
+          </div>
+          <div data-project-detail data-reveal="3" style="margin-top:12px">
+            <div class="sel-body"><div class="sel-head"><b>ABC Commercial Complex</b><span class="status warn">Attention Required</span></div>
+            <p>CESS-2025-000123 · Bengaluru Urban</p></div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- 9 Command -->
+      <section class="slide scene-command" data-title="From Construction Activity to CESS Intelligence" data-kicker="Integrated data · Greater transparency" data-beats="4">
+        <div class="span-all">
+          <div class="kicker">Integrated data. Greater transparency. Stronger compliance.</div>
+          <h1 class="h1">From construction activity to CESS intelligence</h1>
+        </div>
+        <aside class="rail" data-reveal="1">
+          <h3>Project sources</h3>
+          <button class="rail-item" data-pulse="map">Building approval</button>
+          <button class="rail-item" data-pulse="kpis">Government departments</button>
+          <button class="rail-item" data-pulse="map">Urban local bodies</button>
+          <button class="rail-item" data-pulse="alerts">Private agencies / builder</button>
+          <h3 style="margin-top:12px">Field</h3>
+          <button class="rail-item" data-pulse="map">GPS location capture</button>
+          <button class="rail-item" data-pulse="alerts">Mobile assessment</button>
+          <button class="rail-item" data-pulse="trend">Photos · videos · timestamp</button>
+        </aside>
+        <div class="command-screen" data-reveal="0">
+          <div class="cmd-kpis">
+            <div class="kpi" data-widget="kpis"><b>1,248</b><span>Construction projects</span></div>
+            <div class="kpi" data-widget="kpis"><b>1,036</b><span>Registered</span></div>
+            <div class="kpi" data-widget="kpis"><b>186</b><span>Assessment pending</span></div>
+            <div class="kpi" data-widget="kpis"><b>148</b><span>Payment pending</span></div>
+            <div class="kpi" data-widget="kpis"><b>76</b><span>Potential exceptions</span></div>
+          </div>
+          <div class="cmd-body">
+            <div class="cmd-map map-shell js-hold" data-widget="map">
+              <div id="map-ka" class="map-canvas" data-map="karnataka"></div>
+            </div>
+            <div class="cmd-side">
+              <div class="widget" data-widget="status">
+                <b>Project status</b>
+                <div class="legend"><span><i style="background:#1b9a58"></i>Compliant 68%</span><span><i style="background:#e08a00"></i>Pending 22%</span><span><i style="background:#d64545"></i>Exception 4%</span></div>
+              </div>
+              <div class="widget" data-widget="district">
+                <b>Projects by district</b>
+                <div class="bars">
+                  <div class="bar"><span>Bengaluru</span><i style="width:90%"></i><span>320</span></div>
+                  <div class="bar"><span>Mysuru</span><i style="width:62%"></i><span>148</span></div>
+                  <div class="bar"><span>Tumakuru</span><i style="width:50%"></i><span>112</span></div>
+                  <div class="bar"><span>Belagavi</span><i style="width:44%"></i><span>98</span></div>
+                  <div class="bar"><span>Kalaburagi</span><i style="width:38%"></i><span>86</span></div>
+                </div>
+              </div>
+              <div class="widget" data-widget="alerts">
+                <b>Recent alerts</b>
+                <div class="alert-item"><span>ABC Complex · Assessment pending</span><span>Today</span></div>
+                <div class="alert-item"><span>Skyline Residency · Payment pending</span><span>16 Sep</span></div>
+                <div class="alert-item"><span>Orion Tech Park · Remittance pending</span><span>15 Sep</span></div>
+              </div>
+              <div class="widget" data-widget="trend">
+                <b>Construction trend</b>
+                <svg viewBox="0 0 200 46" width="100%" height="46"><path d="M4 36 L28 28 L52 30 L76 18 L100 22 L124 12 L148 16 L172 8 L196 10" fill="none" stroke="#14c4d4" stroke-width="3"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="rail" data-reveal="2">
+          <h3>CESS lifecycle</h3>
+          <button class="rail-item" data-pulse="kpis">Registration</button>
+          <button class="rail-item" data-pulse="status">Assessment</button>
+          <button class="rail-item" data-pulse="alerts">Demand</button>
+          <button class="rail-item" data-pulse="district">Collection</button>
+          <button class="rail-item" data-pulse="trend">Remittance</button>
+          <h3 style="margin-top:12px">Geographic</h3>
+          <button class="rail-item" data-pulse="map">Territories</button>
+          <button class="rail-item" data-pulse="map">Project locations</button>
+          <button class="rail-item" data-pulse="map">GIS layers</button>
+        </aside>
+        <div class="flow span-all" data-reveal="3">
+          <span>Project</span><i class="h-chev"></i><span>Assess</span><i class="h-chev"></i><span>Locate</span><i class="h-chev"></i><span>Map</span><i class="h-chev"></i><span>Monitor</span><i class="h-chev"></i><span>Analyse</span><i class="h-chev"></i><span>Act</span>
+        </div>
+      </section>
+
+      <!-- 10 Core -->
+      <section class="slide scene-core" data-title="From Intelligence to Department-Wide Action" data-kicker="Connected data · Coordinated operations" data-beats="5">
+        <div>
+          <div class="kicker">Connected data. Coordinated operations. Stronger compliance.</div>
+          <h1 class="h1">From intelligence to department-wide action</h1>
+        </div>
+        <div class="core-wrap" data-reveal="0">
+          <svg class="core-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="50" y1="50" x2="50" y2="10"/>
+            <line x1="50" y1="50" x2="88" y2="24"/>
+            <line x1="50" y1="50" x2="88" y2="76"/>
+            <line x1="50" y1="50" x2="50" y2="90"/>
+            <line x1="50" y1="50" x2="12" y2="76"/>
+            <line x1="50" y1="50" x2="12" y2="24"/>
+          </svg>
+          <div class="core">
+            <div>
+              <div class="kicker" style="color:#14c4d4">CESS Intelligence Core</div>
+              <h2 class="h2" style="color:#fff">Integrated · Insightful · Actionable</h2>
+              <p class="foot-note" style="color:#b9c7db">People · Process · Data · Technology</p>
+            </div>
+          </div>
+          <button class="core-mod n" data-mod="gov" data-reveal="1"><b>Governance & Control</b><div class="foot-note">People, structure and control</div></button>
+          <button class="core-mod ne" data-mod="gis" data-reveal="1"><b>GIS & Spatial Intelligence</b><div class="foot-note">Projects, locations and insights</div></button>
+          <button class="core-mod se" data-mod="fin" data-reveal="2"><b>Finance & CESS Operations</b><div class="foot-note">End-to-end CESS lifecycle</div></button>
+          <button class="core-mod sw" data-mod="comm" data-reveal="2"><b>Communication & Compliance</b><div class="foot-note">Engage, monitor, ensure</div></button>
+          <button class="core-mod nw" data-mod="doc" data-reveal="1"><b>Document & Office Workflow</b><div class="foot-note">Digitise and streamline</div></button>
+          <button class="core-mod s" data-mod="ext" data-reveal="3"><b>External Ecosystem</b><div class="foot-note">Integrate with stakeholders</div></button>
+          <div class="core-detail js-hold">
+            <h3></h3>
+            <p></p>
+            <ul></ul>
+          </div>
+        </div>
+        <div class="act-chain" data-reveal="4">
+          <span>Capture</span><i class="h-chev light"></i><span>Assess</span><i class="h-chev light"></i><span>Locate</span><i class="h-chev light"></i><span>Map</span><i class="h-chev light"></i><span>Monitor</span><i class="h-chev light"></i><span>Operate</span><i class="h-chev light"></i><span>Report</span><i class="h-chev light"></i><span>Act</span>
+        </div>
+      </section>
+
+      <div class="overlay" id="overview">
+        <h2 class="h2" style="margin-bottom:16px">Jump to a scene</h2>
+        <div class="overview-grid" id="overview-grid"></div>
+      </div>
+      <div class="overlay" id="help">
+        <div class="help-card js-hold">
+          <h2>Presenter controls</h2>
+          <table>
+            <tr><td>→ · Space · Click</td><td>Next beat, then next scene</td></tr>
+            <tr><td>← · Backspace</td><td>Previous beat / scene</td></tr>
+            <tr><td>O · Esc</td><td>Slide overview</td></tr>
+            <tr><td>F · Double-click</td><td>Fullscreen</td></tr>
+            <tr><td>0–9</td><td>Jump to scene</td></tr>
+            <tr><td>? · H</td><td>This help</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/presentation.js"></script>
+  <script src="js/maps.js"></script>
+</body>
+</html>
