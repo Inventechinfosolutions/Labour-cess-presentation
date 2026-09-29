@@ -58,9 +58,6 @@ const B = {
   intel: 8,
 } as const;
 
-/** Always render the complete money-trail view (no Space beats). */
-const FULL = B.intel;
-
 const FOUNDATIONS: { label: string; detail: string; scene: string; color: string; angle: number; Icon: CessIcon }[] = [
   { label: "Smart Middleware", detail: "Match and validation · process into one path", scene: "Scene 1", color: "#14c4d4", angle: -135, Icon: TreeStructure },
   { label: "One project file", detail: "Central Platform holds the official Board file", scene: "Scene 1", color: "#5b9dff", angle: -45, Icon: Files },

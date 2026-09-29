@@ -2,7 +2,6 @@ import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { CessIcon } from "@/lib/icons";
 import {
-  Blueprint,
   Buildings,
   ClipboardText,
   Clock,
