@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CESS Tracking - Current Issues</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #dcecff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #102b57;
+}
+
+.slide {
+  width: 100vw;
+  aspect-ratio: 16 / 9;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(235,246,255,.96), rgba(207,229,250,.92)),
+    radial-gradient(circle at 50% 45%, #ffffff, #cfe5f8);
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  height: 10%;
+  background: linear-gradient(90deg, #073b78, #075cae);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 2%;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 42%;
+  height: 100%;
+  background:
+    linear-gradient(90deg, transparent, rgba(255,255,255,.08)),
+    repeating-linear-gradient(
+      120deg,
+      transparent 0 35px,
+      rgba(255,255,255,.06) 36px 37px
+    );
+}
+
+.logo {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+  color: #0a4f91;
+  font-size: 27px;
+  font-weight: 800;
+  z-index: 2;
+}
+
+.header-brand {
+  width: 29%;
+  z-index: 2;
+}
+
+.header-brand strong {
+  display: block;
+  font-size: 17px;
+  line-height: 1.1;
+}
+
+.header-brand span {
+  font-size: 11px;
+  opacity: .9;
+  letter-spacing: .7px;
+}
+
+.title-area {
+  flex: 1;
+  text-align: center;
+  z-index: 2;
+}
+
+.title {
+  font-size: clamp(30px, 4vw, 62px);
+  line-height: .9;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.title span {
+  color: #ff2935;
+}
+
+.subtitle {
+  font-size: clamp(10px, 1.05vw, 17px);
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+/* ================= MAIN ================= */
+
+.main {
+  height: 77%;
+  display: grid;
+  grid-template-columns: 24% 51% 25%;
+  gap: 1%;
+  padding: 1.2% 1.1% .7%;
+}
+
+/* ================= COMMON PANEL ================= */
+
+.panel {
+  background: rgba(255,255,255,.86);
+  border: 1px solid rgba(80,150,220,.25);
+  border-radius: 20px;
+  box-shadow: 0 10px 28px rgba(29,82,130,.13);
+  overflow: hidden;
+}
+
+.panel-title {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  font-weight: 900;
+  font-size: clamp(13px, 1.25vw, 21px);
+  color: white;
+  background: linear-gradient(90deg, #0874d1, #1768bb);
+}
+
+.panel-title.red {
+  background: linear-gradient(90deg, #ed252d, #ff3b3f);
+}
+
+.panel-title-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: white;
+  color: #0874d1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+/* ================= STAKEHOLDERS ================= */
+
+.stakeholders {
+  height: 100%;
+}
+
+.stakeholder-list {
+  padding: 10px;
+}
+
+.stakeholder {
+  height: 12.5%;
+  min-height: 58px;
+  margin-bottom: 7px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  padding: 7px;
+  background: linear-gradient(90deg, #f5faff, #eaf4fd);
+  border: 1px solid #d4e8fa;
+  position: relative;
+}
+
+.stake-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  margin-right: 9px;
+}
+
+.blue { background: #1774d1; }
+.orange { background: #f49b18; }
+.purple { background: #7746d9; }
+.green { background: #16a676; }
+.pink { background: #e53b91; }
+.cyan { background: #0e9fb3; }
+
+.stake-text strong {
+  display: block;
+  font-size: clamp(10px, .9vw, 15px);
+  line-height: 1.1;
+}
+
+.stake-text span {
+  display: block;
+  font-size: clamp(8px, .7vw, 12px);
+  color: #52708e;
+  margin-top: 3px;
+}
+
+/* ================= CENTER ================= */
+
+.center {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(218,237,252,.76), rgba(222,239,251,.93)),
+    radial-gradient(circle at center, #fff, #b9d8ed);
+  box-shadow: 0 10px 28px rgba(29,82,130,.12);
+  border: 1px solid rgba(70,140,210,.25);
+}
+
+.systems-title {
+  position: absolute;
+  top: 0;
+  left: 3%;
+  right: 3%;
+  height: 10%;
+  border-radius: 0 0 12px 12px;
+  background: linear-gradient(90deg, #0879d2, #2b8fe3);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(13px, 1.2vw, 20px);
+  font-weight: 900;
+  z-index: 5;
+}
+
+.city {
+  position: absolute;
+  inset: 20% 0 0;
+  background:
+    linear-gradient(to bottom, rgba(215,237,251,.3), rgba(188,216,236,.55)),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 80px,
+      rgba(255,255,255,.15) 81px 84px
+    );
+}
+
+.city::before {
+  content: "";
+  position: absolute;
+  bottom: 18%;
+  left: 8%;
+  width: 84%;
+  height: 38%;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0 8%,
+      rgba(90,125,150,.35) 9% 12%,
+      transparent 13% 21%,
+      rgba(70,110,140,.3) 22% 30%,
+      transparent 31% 39%,
+      rgba(100,130,150,.32) 40% 50%,
+      transparent 51% 59%,
+      rgba(75,110,135,.3) 60% 67%,
+      transparent 68%
+    );
+  opacity: .8;
+}
+
+.construction {
+  position: absolute;
+  bottom: 13%;
+  left: 8%;
+  right: 8%;
+  height: 35%;
+}
+
+.building {
+  position: absolute;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    #a6bdca 0 16px,
+    #e7f0f4 17px 28px
+  );
+  border: 3px solid #8ba8ba;
+}
+
+.b1 {
+  width: 22%;
+  height: 65%;
+  left: 5%;
+}
+
+.b2 {
+  width: 27%;
+  height: 90%;
+  left: 32%;
+}
+
+.b3 {
+  width: 20%;
+  height: 55%;
+  left: 68%;
+}
+
+.crane {
+  position: absolute;
+  height: 75%;
+  width: 3px;
+  background: #e8a41c;
+  bottom: 25%;
+}
+
+.crane::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -5px;
+  width: 150px;
+  height: 3px;
+  background: #e8a41c;
+}
+
+.crane::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 80px;
+  height: 90px;
+  width: 2px;
+  background: #e8a41c;
+}
+
+.crane.one { left: 18%; }
+.crane.two { left: 58%; }
+
+/* ================= SYSTEM CARDS ================= */
+
+.system-grid {
+  position: absolute;
+  top: 13%;
+  left: 5%;
+  right: 5%;
+  height: 23%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 7px;
+  z-index: 6;
+}
+
+.system {
+  background: rgba(255,255,255,.91);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 14px rgba(50,90,120,.13);
+  border: 1px solid #d9eaf7;
+  text-align: center;
+  padding: 4px;
+}
+
+.system-icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.system strong {
+  font-size: clamp(7px, .65vw, 11px);
+}
+
+/* ================= CENTRAL CLOUD ================= */
+
+.cloud {
+  position: absolute;
+  left: 31%;
+  right: 31%;
+  top: 35%;
+  height: 30%;
+  z-index: 8;
+  background: linear-gradient(145deg, #253a55, #172b45);
+  border-radius: 45% 55% 48% 52%;
+  box-shadow:
+    0 18px 35px rgba(0,0,0,.25),
+    inset 0 4px 12px rgba(255,255,255,.12);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: #243950;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 45%;
+  height: 75%;
+  left: 5%;
+  bottom: 5%;
+}
+
+.cloud::after {
+  width: 50%;
+  height: 80%;
+  right: 4%;
+  bottom: 4%;
+}
+
+.cloud-content {
+  position: relative;
+  z-index: 2;
+}
+
+.cloud-question {
+  width: 38px;
+  height: 38px;
+  margin: auto;
+  border-radius: 50%;
+  background: #ef2630;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 900;
+  box-shadow: 0 5px 14px rgba(239,38,48,.4);
+}
+
+.cloud h2 {
+  font-size: clamp(15px, 1.55vw, 26px);
+  margin: 7px 0 0;
+}
+
+.cloud p {
+  font-size: clamp(8px, .7vw, 12px);
+  margin: 5px 0;
+  opacity: .8;
+}
+
+/* ================= DATA ICONS ================= */
+
+.data-float {
+  position: absolute;
+  z-index: 9;
+  background: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  box-shadow: 0 6px 15px rgba(30,70,100,.2);
+}
+
+.d1 { left: 17%; top: 38%; }
+.d2 { left: 24%; top: 47%; }
+.d3 { right: 22%; top: 40%; }
+.d4 { right: 15%; top: 50%; }
+.d5 { left: 15%; top: 57%; }
+.d6 { right: 16%; top: 61%; }
+
+/* ================= KEY ISSUES ================= */
+
+.issues {
+  height: 100%;
+}
+
+.issue-list {
+  padding: 8px;
+  height: calc(100% - 54px);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.issue {
+  flex: 1;
+  min-height: 0;
+  border-radius: 13px;
+  background: linear-gradient(90deg, #fff8f8, #fff);
+  border: 1px solid #f0d8d8;
+  display: grid;
+  grid-template-columns: 38px 65px 1fr;
+  align-items: center;
+  padding: 7px;
+  gap: 7px;
+}
+
+.issue-number {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.issue-visual {
+  font-size: 29px;
+  text-align: center;
+}
+
+.issue-text strong {
+  display: block;
+  font-size: clamp(9px, .82vw, 14px);
+  line-height: 1.15;
+}
+
+.issue-text span {
+  display: block;
+  color: #5d7186;
+  font-size: clamp(7px, .62vw, 11px);
+  line-height: 1.15;
+  margin-top: 3px;
+}
+
+/* ================= BOTTOM PROCESS ================= */
+
+.process {
+  position: absolute;
+  left: 26%;
+  right: 26%;
+  bottom: 8%;
+  height: 13%;
+  z-index: 15;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.step {
+  background: rgba(255,255,255,.94);
+  border-radius: 12px;
+  border: 1px solid #cfe4f5;
+  box-shadow: 0 6px 15px rgba(40,80,110,.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -17px;
+  color: #0874d1;
+  font-size: 24px;
+  font-weight: 900;
+  z-index: 3;
+}
+
+.step-icon {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.step strong {
+  font-size: clamp(7px, .67vw, 12px);
+}
+
+/* ================= IMPACT ================= */
+
+.impact {
+  height: 13%;
+  margin: 0 1.1%;
+  border-radius: 17px;
+  background: rgba(255,255,255,.92);
+  border: 1px solid #bcdcf2;
+  box-shadow: 0 8px 20px rgba(40,80,120,.1);
+  display: grid;
+  grid-template-columns: 17% repeat(4, 1fr);
+  align-items: center;
+  overflow: hidden;
+}
+
+.impact-title {
+  height: 100%;
+  background: linear-gradient(110deg, #073c79, #086fc3);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  font-size: clamp(12px, 1.2vw, 20px);
+  font-weight: 900;
+}
+
+.impact-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 75%;
+  border-right: 1px solid #d9e7f2;
+}
+
+.impact-card:last-child {
+  border-right: none;
+}
+
+.impact-icon {
+  font-size: 28px;
+}
+
+.impact-card strong {
+  display: block;
+  font-size: clamp(9px, .8vw, 14px);
+}
+
+.impact-card span {
+  display: block;
+  font-size: clamp(7px, .6vw, 11px);
+  color: #61778c;
+  margin-top: 3px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width: 900px) {
+  .header-brand {
+    display: none;
+  }
+
+  .main {
+    grid-template-columns: 26% 48% 26%;
+  }
+
+  .stake-text span,
+  .issue-text span {
+    display: none;
+  }
+
+  .issue {
+    grid-template-columns: 30px 42px 1fr;
+  }
+
+  .issue-visual {
+    font-size: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="slide">
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <div class="logo">🏛</div>
+
+    <div class="header-brand">
+      <strong>Karnataka Building And Other<br>
+      Construction Workers Welfare Board</strong>
+      <span>GOVERNMENT OF KARNATAKA</span>
+    </div>
+
+    <div class="title-area">
+      <div class="title">
+        CURRENT <span>ISSUES</span>
+      </div>
+
+      <div class="subtitle">
+        Fragmented systems, incomplete information and limited visibility across the construction and CESS ecosystem
+      </div>
+    </div>
+
+  </header>
+
+
+  <!-- MAIN -->
+  <section class="main">
+
+    <!-- LEFT -->
+    <div class="panel stakeholders">
+
+      <div class="panel-title">
+        <div class="panel-title-icon">🏛</div>
+        CESS ECOSYSTEM
+      </div>
+
+      <div class="stakeholder-list">
+
+        <div class="stakeholder">
+          <div class="stake-icon blue">🏛</div>
+          <div class="stake-text">
+            <strong>Government Departments</strong>
+            <span>State departments</span>
+          </div>
+        </div>
+
+        <div class="stakeholder">
+          <div class="stake-icon orange">🏢</div>
+          <div class="stake-text">
+            <strong>ULBs & Planning Authorities</strong>
+            <span>Urban bodies and planning agencies</span>
+          </div>
+        </div>
+
+        <div class="stakeholder">
+          <div class="stake-icon purple">🏢</div>
+          <div class="stake-text">
+            <strong>Boards & Corporations</strong>
+            <span>Statutory boards and corporations</span>
+          </div>
+        </div>
+
+        <div class="stakeholder">
+          <div class="stake-icon green">⚡</div>
+          <div class="stake-text">
+            <strong>Utility & Infrastructure Providers</strong>
+            <span>Power, water, transport and infrastructure</span>
+          </div>
+        </div>
+
+        <div class="stakeholder">
+          <div class="stake-icon pink">🏢</div>
+          <div class="stake-text">
+            <strong>PSUs & Other Agencies</strong>
+            <span>Government undertakings and notified agencies</span>
+          </div>
+        </div>
+
+        <div class="stakeholder">
+          <div class="stake-icon cyan">👷</div>
+          <div class="stake-text">
+            <strong>Builders / Contractors</strong>
+            <span>Construction project execution</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- CENTER -->
+    <div class="center">
+
+      <div class="systems-title">
+        Different Systems, Different Data
+      </div>
+
+      <div class="city"></div>
+
+      <!-- SYSTEMS -->
+      <div class="system-grid">
+
+        <div class="system">
+          <div class="system-icon">🗄️</div>
+          <strong>Department<br>System</strong>
+        </div>
+
+        <div class="system">
+          <div class="system-icon">💻</div>
+          <strong>ULB<br>System</strong>
+        </div>
+
+        <div class="system">
+          <div class="system-icon">🗄️</div>
+          <strong>Board / PSU<br>System</strong>
+        </div>
+
+        <div class="system">
+          <div class="system-icon">☁️</div>
+          <strong>Utility<br>System</strong>
+        </div>
+
+        <div class="system">
+          <div class="system-icon">📁</div>
+          <strong>Manual<br>Records</strong>
+        </div>
+
+        <div class="system">
+          <div class="system-icon">📊</div>
+          <strong>Spreadsheets<br>& Reports</strong>
+        </div>
+
+      </div>
+
+
+      <!-- CONSTRUCTION -->
+      <div class="construction">
+        <div class="building b1"></div>
+        <div class="building b2"></div>
+        <div class="building b3"></div>
+
+        <div class="crane one"></div>
+        <div class="crane two"></div>
+      </div>
+
+
+      <!-- FLOATING DATA -->
+      <div class="data-float d1">📄</div>
+      <div class="data-float d2">📊</div>
+      <div class="data-float d3">📁</div>
+      <div class="data-float d4">🗄️</div>
+      <div class="data-float d5">📑</div>
+      <div class="data-float d6">🧾</div>
+
+
+      <!-- CENTRAL PROBLEM -->
+      <div class="cloud">
+
+        <div class="cloud-content">
+
+          <div class="cloud-question">!</div>
+
+          <h2>Fragmented<br>CESS Data</h2>
+
+          <p>No unified project-to-CESS view</p>
+
+        </div>
+
+      </div>
+
+
+      <!-- PROCESS -->
+      <div class="process">
+
+        <div class="step">
+          <div class="step-icon">📄</div>
+          <strong>Project<br>Information</strong>
+        </div>
+
+        <div class="step">
+          <div class="step-icon">💰</div>
+          <strong>Assessment<br>& Demand</strong>
+        </div>
+
+        <div class="step">
+          <div class="step-icon">₹</div>
+          <strong>Deduction<br>& Collection</strong>
+        </div>
+
+        <div class="step">
+          <div class="step-icon">🏛</div>
+          <strong>Remittance<br>to Board</strong>
+        </div>
+
+        <div class="step">
+          <div class="step-icon">🔎</div>
+          <strong>Reconciliation<br>& Compliance</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RIGHT -->
+    <div class="panel issues">
+
+      <div class="panel-title red">
+        <div class="panel-title-icon">!</div>
+        KEY ISSUES
+      </div>
+
+      <div class="issue-list">
+
+        <div class="issue">
+          <div class="issue-number blue">01</div>
+          <div class="issue-visual">🗄️</div>
+          <div class="issue-text">
+            <strong>Information is scattered across stakeholders</strong>
+            <span>Each agency maintains its own system. No single, unified view.</span>
+          </div>
+        </div>
+
+        <div class="issue">
+          <div class="issue-number orange">02</div>
+          <div class="issue-visual">📊</div>
+          <div class="issue-text">
+            <strong>Data sharing is inconsistent</strong>
+            <span>Different formats, processes and manual/automated systems.</span>
+          </div>
+        </div>
+
+        <div class="issue">
+          <div class="issue-number purple">03</div>
+          <div class="issue-visual">🏗️</div>
+          <div class="issue-text">
+            <strong>Construction activity is not fully visible</strong>
+            <span>Some construction activity remains unmonitored.</span>
+          </div>
+        </div>
+
+        <div class="issue">
+          <div class="issue-number green">04</div>
+          <div class="issue-visual">💰</div>
+          <div class="issue-text">
+            <strong>CESS demand is difficult to assess</strong>
+            <span>Incomplete and delayed project information affects assessment.</span>
+          </div>
+        </div>
+
+        <div class="issue">
+          <div class="issue-number pink">05</div>
+          <div class="issue-visual">₹</div>
+          <div class="issue-text">
+            <strong>Deduction and remittance are difficult to track</strong>
+            <span>Project-wise trail may be missing from lump-sum transfers.</span>
+          </div>
+        </div>
+
+        <div class="issue">
+          <div class="issue-number orange">06</div>
+          <div class="issue-visual">⏱</div>
+          <div class="issue-text">
+            <strong>Remittance delays are difficult to monitor</strong>
+            <span>CESS may not be remitted within the stipulated 30 days.</span>
+          </div>
+        </div>
+
+        <div class="issue">
+          <div class="issue-number blue">07</div>
+          <div class="issue-visual">🔎</div>
+          <div class="issue-text">
+            <strong>Reconciliation and compliance gaps</strong>
+            <span>Difficult to match deducted and remitted amounts.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- IMPACT -->
+  <section class="impact">
+
+    <div class="impact-title">
+      IMPACT<br>ON THE BOARD
+    </div>
+
+    <div class="impact-card">
+      <div class="impact-icon">💰</div>
+      <div>
+        <strong>Revenue Leakage</strong>
+        <span>Eligible CESS may not be fully collected.</span>
+      </div>
+    </div>
+
+    <div class="impact-card">
+      <div class="impact-icon">📅</div>
+      <div>
+        <strong>Delayed Remittance</strong>
+        <span>Agencies may not remit within the stipulated period.</span>
+      </div>
+    </div>
+
+    <div class="impact-card">
+      <div class="impact-icon">📄</div>
+      <div>
+        <strong>Difficult Reconciliation</strong>
+        <span>Project-wise and year-wise matching becomes difficult.</span>
+      </div>
+    </div>
+
+    <div class="impact-card">
+      <div class="impact-icon">⚠️</div>
+      <div>
+        <strong>Limited Compliance Visibility</strong>
+        <span>Outstanding amounts and exceptions are harder to identify.</span>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+</body>
+</html>
