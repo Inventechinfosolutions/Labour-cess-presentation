@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Linked CESS Record</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #eaf5ff;
+}
+
+.slide {
+    width: 100vw;
+    height: 56.25vw;
+    max-width: 177.78vh;
+    max-height: 100vh;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 50% 45%,
+            rgba(40,160,255,.14),
+            transparent 35%),
+        linear-gradient(135deg,
+            #f8fcff 0%,
+            #eaf5ff 50%,
+            #f8fcff 100%);
+    color: #16365f;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    position: absolute;
+    left: 2.4%;
+    right: 2.4%;
+    top: 2.2%;
+    height: 8%;
+    z-index: 20;
+}
+
+.title {
+    font-size: clamp(22px, 2.7vw, 48px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    color: #123d76;
+}
+
+.title span {
+    color: #eaaa16;
+}
+
+.subtitle {
+    margin-top: .5%;
+    font-size: clamp(9px, .9vw, 16px);
+    color: #527092;
+    font-weight: 500;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.content {
+    position: absolute;
+    left: 1.6%;
+    right: 1.6%;
+    top: 11%;
+    bottom: 5.5%;
+
+    display: grid;
+    grid-template-columns: 22% 16% 37% 25%;
+    gap: .8%;
+}
+
+/* =========================================================
+   LEFT — DATA SOURCES
+========================================================= */
+
+.sources {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4%;
+}
+
+.section-label {
+    font-size: clamp(9px, .8vw, 14px);
+    font-weight: 800;
+    color: #1b5a99;
+    margin-bottom: .5%;
+}
+
+.source {
+    flex: 1;
+    min-height: 0;
+
+    background: rgba(255,255,255,.95);
+    border-radius: 10px;
+    border: 1px solid #d4e5f5;
+
+    box-shadow: 0 5px 16px rgba(37,89,135,.09);
+
+    display: flex;
+    align-items: center;
+    padding: 3%;
+}
+
+.source-icon {
+    width: 18%;
+    aspect-ratio: 1;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    font-size: clamp(11px, 1.2vw, 20px);
+    margin-right: 4%;
+}
+
+.source h3 {
+    margin: 0 0 4px;
+    font-size: clamp(8px, .78vw, 14px);
+    color: #173f70;
+}
+
+.source p {
+    margin: 0;
+    font-size: clamp(6px, .55vw, 10px);
+    line-height: 1.35;
+    color: #58718c;
+}
+
+.gov .source-icon {
+    background: #1976d2;
+}
+
+.ulb .source-icon {
+    background: #ed9413;
+}
+
+.board .source-icon {
+    background: #7144d5;
+}
+
+.utility .source-icon {
+    background: #1ba45b;
+}
+
+.collection .source-icon {
+    background: #e43b70;
+}
+
+.builder .source-icon {
+    background: #c38b13;
+}
+
+/* =========================================================
+   MIDDLEWARE
+========================================================= */
+
+.middleware {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.middleware-box {
+    width: 94%;
+    height: 78%;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #154f91,
+            #0d3769
+        );
+
+    box-shadow:
+        0 15px 35px rgba(21,72,124,.25);
+
+    padding: 5% 7%;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.middleware-title {
+    text-align: center;
+    font-size: clamp(11px, 1vw, 17px);
+    font-weight: 800;
+}
+
+.middleware-subtitle {
+    text-align: center;
+    font-size: clamp(7px, .6vw, 10px);
+    opacity: .75;
+    margin-top: 3px;
+}
+
+.pipeline {
+    margin-top: 9%;
+    display: flex;
+    flex-direction: column;
+    gap: 3%;
+    flex: 1;
+}
+
+.pipeline-step {
+    flex: 1;
+
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.15);
+
+    border-radius: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    font-size: clamp(7px, .62vw, 11px);
+    font-weight: 700;
+
+    position: relative;
+}
+
+.pipeline-step:not(:last-child)::after {
+    content: "↓";
+
+    position: absolute;
+    bottom: -20px;
+
+    font-size: 13px;
+    color: #63c3ff;
+}
+
+.pipeline-icon {
+    font-size: clamp(12px, 1.1vw, 19px);
+    margin-right: 5px;
+}
+
+.protocols {
+    text-align: center;
+
+    font-size: clamp(6px, .52vw, 9px);
+
+    padding-top: 7%;
+
+    color: #a9d9ff;
+    letter-spacing: .5px;
+}
+
+/* =========================================================
+   PROJECT 360
+========================================================= */
+
+.project-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-card {
+    width: 96%;
+    height: 91%;
+
+    background: white;
+
+    border-radius: 17px;
+
+    border: 2px solid #afd6f5;
+
+    box-shadow:
+        0 15px 35px rgba(28,86,132,.14);
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+.project-header {
+    height: 15%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0865bd,
+            #188ce2
+        );
+
+    color: white;
+
+    padding: 2.5% 4%;
+}
+
+.project-header h2 {
+    margin: 0;
+    font-size: clamp(15px, 1.5vw, 26px);
+    font-weight: 800;
+}
+
+.project-header p {
+    margin: 3px 0 0;
+    font-size: clamp(7px, .65vw, 11px);
+    opacity: .88;
+}
+
+/* Project identity */
+
+.project-main {
+    height: 49%;
+
+    padding: 3%;
+
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 3%;
+}
+
+.project-photo {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #d9ebfa;
+}
+
+.project-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-info {
+    position: relative;
+}
+
+.status {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    background: #24a867;
+    color: white;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    font-size: clamp(6px, .55vw, 10px);
+    font-weight: 800;
+}
+
+.project-id {
+    font-size: clamp(8px, .75vw, 13px);
+    color: #1474c7;
+    font-weight: 800;
+}
+
+.project-name {
+    font-size: clamp(11px, 1.05vw, 18px);
+    font-weight: 800;
+    margin: 5px 0 8px;
+    color: #193e68;
+}
+
+.project-detail {
+    display: grid;
+    grid-template-columns: 26% 74%;
+
+    font-size: clamp(6px, .58vw, 10px);
+
+    margin: 5px 0;
+}
+
+.project-detail .label {
+    color: #71879d;
+}
+
+.project-detail .value {
+    font-weight: 700;
+    color: #315778;
+}
+
+/* Tabs */
+
+.project-tabs {
+    height: 16%;
+
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+
+    gap: 1%;
+
+    padding: 1.5% 3%;
+}
+
+.tab {
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: clamp(6px, .55vw, 10px);
+    font-weight: 700;
+
+    color: white;
+}
+
+.tab-icon {
+    font-size: clamp(11px, 1vw, 18px);
+    margin-bottom: 4px;
+}
+
+.tab.project {
+    background: #2588d8;
+}
+
+.tab.cess {
+    background: #ed3e71;
+}
+
+.tab.remit {
+    background: #21a56b;
+}
+
+.tab.docs {
+    background: #7745d6;
+}
+
+.tab.audit {
+    background: #df9a12;
+}
+
+/* Project summary */
+
+.summary {
+    height: 20%;
+
+    margin: 0 3% 3%;
+
+    background: #f5faff;
+
+    border-radius: 9px;
+
+    border: 1px solid #d9e9f6;
+
+    padding: 2.5%;
+
+    display: grid;
+    grid-template-columns: 60% 40%;
+}
+
+.summary h4 {
+    margin: 0 0 5px;
+
+    font-size: clamp(7px, .65vw, 11px);
+
+    color: #1764a7;
+}
+
+.summary-row {
+    display: grid;
+    grid-template-columns: 38% 62%;
+
+    font-size: clamp(5px, .5vw, 9px);
+
+    margin: 3px 0;
+}
+
+.summary-row span:first-child {
+    color: #74899d;
+}
+
+.summary-row span:last-child {
+    font-weight: 700;
+    color: #365a78;
+}
+
+.map {
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d8edf9,
+            #edf7fd
+        );
+
+    position: relative;
+}
+
+.map::before {
+    content: "";
+
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50% 50% 50% 0;
+
+    background: #e74747;
+
+    transform: rotate(-45deg);
+
+    left: 48%;
+    top: 40%;
+}
+
+.map::after {
+    content: "";
+
+    position: absolute;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    left: calc(48% + 5px);
+    top: calc(40% + 5px);
+}
+
+/* =========================================================
+   RIGHT DATA PANELS
+========================================================= */
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+}
+
+.data-panel {
+    flex: 1;
+
+    background: white;
+
+    border-radius: 10px;
+
+    border: 1px solid #d7e7f5;
+
+    box-shadow: 0 5px 16px rgba(32,81,126,.08);
+
+    overflow: hidden;
+}
+
+.panel-title {
+    height: 27%;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 4%;
+
+    color: white;
+
+    font-size: clamp(8px, .75vw, 13px);
+
+    font-weight: 800;
+}
+
+.panel-title span {
+    margin-left: auto;
+
+    font-size: clamp(6px, .52vw, 9px);
+
+    opacity: .9;
+    font-weight: 600;
+}
+
+.panel-blue .panel-title {
+    background: #208ce1;
+}
+
+.panel-pink .panel-title {
+    background: #e83d70;
+}
+
+.panel-green .panel-title {
+    background: #20a567;
+}
+
+.panel-purple .panel-title {
+    background: #7545d5;
+}
+
+.panel-content {
+    height: 73%;
+
+    padding: 3% 4%;
+
+    display: grid;
+    grid-template-columns: 52% 48%;
+
+    gap: 3%;
+
+    font-size: clamp(5px, .5vw, 9px);
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 44% 56%;
+
+    margin-bottom: 3px;
+}
+
+.field-row span:first-child {
+    color: #71879b;
+}
+
+.field-row span:last-child {
+    color: #315473;
+    font-weight: 700;
+}
+
+.typical-title {
+    color: #5e3ab0;
+
+    font-weight: 800;
+
+    margin-bottom: 4px;
+}
+
+.typical-list {
+    margin: 0;
+    padding-left: 13px;
+
+    color: #58718a;
+
+    line-height: 1.45;
+}
+
+/* =========================================================
+   BOTTOM OUTCOMES
+========================================================= */
+
+.outcomes {
+    position: absolute;
+
+    left: 2%;
+    right: 2%;
+    bottom: .7%;
+
+    height: 5%;
+
+    display: grid;
+
+    grid-template-columns: 15% repeat(4,1fr);
+
+    background: white;
+
+    border-radius: 9px;
+
+    box-shadow: 0 5px 15px rgba(30,83,128,.1);
+
+    overflow: hidden;
+}
+
+.outcome-title {
+    background: #15569a;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: clamp(7px, .65vw, 11px);
+
+    font-weight: 800;
+}
+
+.outcome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    font-size: clamp(5px, .5vw, 9px);
+
+    font-weight: 700;
+
+    color: #3d5f7b;
+
+    border-left: 1px solid #d9e7f2;
+}
+
+.outcome-icon {
+    font-size: clamp(10px, .9vw, 16px);
+    margin-right: 5px;
+}
+
+/* =========================================================
+   FLOW ARROWS
+========================================================= */
+
+.flow-arrow {
+    position: absolute;
+
+    z-index: 15;
+
+    color: #1983d6;
+
+    font-size: clamp(15px, 1.5vw, 27px);
+
+    font-weight: 900;
+}
+
+.arrow-left {
+    left: 36.7%;
+    top: 45%;
+}
+
+.arrow-right {
+    right: 24.3%;
+    top: 42%;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+    .source p {
+        display: none;
+    }
+
+    .project-main {
+        grid-template-columns: 35% 65%;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="slide">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="title">
+            From Integrated Data to a
+            <span>Project-Linked Record</span>
+        </div>
+
+        <div class="subtitle">
+            Every incoming data set is validated, matched and linked to the right project
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="content">
+
+        <!-- =================================================
+             DATA SOURCES
+        ================================================== -->
+
+        <div class="sources">
+
+            <div class="section-label">
+                DATA FROM INTEGRATED SOURCES
+            </div>
+
+            <div class="source gov">
+
+                <div class="source-icon">🏛</div>
+
+                <div>
+                    <h3>Government Departments</h3>
+
+                    <p>
+                        Project / Tender data<br>
+                        Approvals / Permits<br>
+                        Construction details
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="source ulb">
+
+                <div class="source-icon">▥</div>
+
+                <div>
+                    <h3>ULBs &amp; Planning Authorities</h3>
+
+                    <p>
+                        Building plan approvals<br>
+                        Land / property details<br>
+                        Project information
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="source board">
+
+                <div class="source-icon">▦</div>
+
+                <div>
+                    <h3>Boards &amp; Corporations</h3>
+
+                    <p>
+                        Project data<br>
+                        Infrastructure works<br>
+                        Construction contracts
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="source utility">
+
+                <div class="source-icon">⚡</div>
+
+                <div>
+                    <h3>Utilities &amp; Infrastructure</h3>
+
+                    <p>
+                        Project information<br>
+                        Utility connection data<br>
+                        Construction activity indicators
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="source collection">
+
+                <div class="source-icon">●●</div>
+
+                <div>
+                    <h3>CESS Collection Agencies</h3>
+
+                    <p>
+                        CESS deduction data<br>
+                        Collection / remittance data<br>
+                        Payment / transaction details
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="source builder">
+
+                <div class="source-icon">⚒</div>
+
+                <div>
+                    <h3>Builders / Contractors</h3>
+
+                    <p>
+                        Project / registration details<br>
+                        Construction information<br>
+                        Supporting documents
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SMART MIDDLEWARE
+        ================================================== -->
+
+        <div class="middleware">
+
+            <div class="middleware-box">
+
+                <div class="middleware-title">
+                    Smart Middleware
+                </div>
+
+                <div class="middleware-subtitle">
+                    Integration Engine
+                </div>
+
+
+                <div class="pipeline">
+
+                    <div class="pipeline-step">
+                        <span class="pipeline-icon">↓</span>
+                        Receive Data
+                    </div>
+
+                    <div class="pipeline-step">
+                        <span class="pipeline-icon">✓</span>
+                        Validate Data
+                    </div>
+
+                    <div class="pipeline-step">
+                        <span class="pipeline-icon">⚙</span>
+                        Map &amp; Transform
+                    </div>
+
+                    <div class="pipeline-step">
+                        <span class="pipeline-icon">🔗</span>
+                        Identify / Match Project
+                    </div>
+
+                    <div class="pipeline-step">
+                        <span class="pipeline-icon">⇄</span>
+                        Route to Platform
+                    </div>
+
+                </div>
+
+
+                <div class="protocols">
+                    API &nbsp; | &nbsp; File &nbsp; | &nbsp;
+                    REST &nbsp; | &nbsp; SOAP<br>
+                    Portal &nbsp; | &nbsp; Manual
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PROJECT 360
+        ================================================== -->
+
+        <div class="project-area">
+
+            <div class="project-card">
+
+                <div class="project-header">
+
+                    <h2>PROJECT 360</h2>
+
+                    <p>
+                        One project record for all related information
+                    </p>
+
+                </div>
+
+
+                <!-- PROJECT IDENTITY -->
+
+                <div class="project-main">
+
+                    <div class="project-photo">
+                        <img
+                            src="project-construction.png"
+                            alt="Construction project">
+                    </div>
+
+
+                    <div class="project-info">
+
+                        <div class="status">
+                            ACTIVE
+                        </div>
+
+                        <div class="project-id">
+                            PRJ-000245
+                        </div>
+
+                        <div class="project-name">
+                            ABC Commercial Complex
+                        </div>
+
+
+                        <div class="project-detail">
+                            <div class="label">Location</div>
+                            <div class="value">
+                                Bengaluru, Karnataka
+                            </div>
+                        </div>
+
+                        <div class="project-detail">
+                            <div class="label">Project Type</div>
+                            <div class="value">
+                                Commercial Building
+                            </div>
+                        </div>
+
+                        <div class="project-detail">
+                            <div class="label">Project Value</div>
+                            <div class="value">
+                                ₹20.00 Crore
+                            </div>
+                        </div>
+
+                        <div class="project-detail">
+                            <div class="label">Agency</div>
+                            <div class="value">
+                                Urban Development Department
+                            </div>
+                        </div>
+
+                        <div class="project-detail">
+                            <div class="label">Developer</div>
+                            <div class="value">
+                                ABC Constructions Pvt Ltd
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LINKED DATA -->
+
+                <div class="project-tabs">
+
+                    <div class="tab project">
+                        <div class="tab-icon">▣</div>
+                        Project Details
+                    </div>
+
+                    <div class="tab cess">
+                        <div class="tab-icon">▤</div>
+                        CESS Deductions
+                    </div>
+
+                    <div class="tab remit">
+                        <div class="tab-icon">↗</div>
+                        Remittances
+                    </div>
+
+                    <div class="tab docs">
+                        <div class="tab-icon">▤</div>
+                        Documents
+                    </div>
+
+                    <div class="tab audit">
+                        <div class="tab-icon">◷</div>
+                        Audit Trail
+                    </div>
+
+                </div>
+
+
+                <!-- SUMMARY -->
+
+                <div class="summary">
+
+                    <div>
+
+                        <h4>Project Summary</h4>
+
+                        <div class="summary-row">
+                            <span>Project ID</span>
+                            <span>PRJ-000245</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Project Name</span>
+                            <span>ABC Commercial Complex</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Location</span>
+                            <span>Bengaluru, Karnataka</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Estimated Cost</span>
+                            <span>₹20.00 Crore</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Timeline</span>
+                            <span>Jan 2025 – Dec 2026</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="map"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT — DATA DETAILS
+        ================================================== -->
+
+        <div class="details">
+
+
+            <!-- PROJECT INFORMATION -->
+
+            <div class="data-panel panel-blue">
+
+                <div class="panel-title">
+
+                    Project Information
+
+                    <span>
+                        INITIAL / PERIODIC
+                    </span>
+
+                </div>
+
+
+                <div class="panel-content">
+
+                    <div>
+
+                        <div class="field-row">
+                            <span>Source Agency</span>
+                            <span>Urban Development Dept.</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Source System</span>
+                            <span>e-Procurement</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Reference No.</span>
+                            <span>TENDER-2025-00123</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Received Date</span>
+                            <span>15 Jan 2025</span>
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="typical-title">
+                            Typical Data
+                        </div>
+
+                        <ul class="typical-list">
+                            <li>Project / Tender data</li>
+                            <li>Approval / Permit data</li>
+                            <li>Project type</li>
+                            <li>Location / Land details</li>
+                            <li>Estimated cost</li>
+                            <li>Contractor / Developer</li>
+                            <li>Project timeline</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CESS DEDUCTION -->
+
+            <div class="data-panel panel-pink">
+
+                <div class="panel-title">
+
+                    CESS Deduction Details
+
+                    <span>
+                        PERIODIC
+                    </span>
+
+                </div>
+
+
+                <div class="panel-content">
+
+                    <div>
+
+                        <div class="field-row">
+                            <span>Deducting Agency</span>
+                            <span>Public Works Dept.</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Source System</span>
+                            <span>Treasury System</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Deduction Date</span>
+                            <span>15 Mar 2025</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Amount</span>
+                            <span>₹25,00,000</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Transaction Ref.</span>
+                            <span>TXN-20250315-7890</span>
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="typical-title">
+                            Typical Data
+                        </div>
+
+                        <ul class="typical-list">
+                            <li>Deducting agency</li>
+                            <li>Deduction amount</li>
+                            <li>Deduction date</li>
+                            <li>Transaction reference</li>
+                            <li>Project reference</li>
+                            <li>Period / month / quarter</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- REMITTANCE -->
+
+            <div class="data-panel panel-green">
+
+                <div class="panel-title">
+
+                    Remittance Details
+
+                    <span>
+                        PERIODIC
+                    </span>
+
+                </div>
+
+
+                <div class="panel-content">
+
+                    <div>
+
+                        <div class="field-row">
+                            <span>Remitting Agency</span>
+                            <span>Public Works Dept.</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Source System</span>
+                            <span>Bank / Treasury</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Remittance Date</span>
+                            <span>10 Apr 2025</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Amount</span>
+                            <span>₹25,00,000</span>
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="typical-title">
+                            Typical Data
+                        </div>
+
+                        <ul class="typical-list">
+                            <li>Remitting agency</li>
+                            <li>Remittance amount</li>
+                            <li>Remittance date</li>
+                            <li>Bank / transaction reference</li>
+                            <li>Project reference</li>
+                            <li>Period</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOCUMENTS -->
+
+            <div class="data-panel panel-purple">
+
+                <div class="panel-title">
+
+                    Documents &amp; Supporting Information
+
+                </div>
+
+
+                <div class="panel-content">
+
+                    <div>
+
+                        <div class="field-row">
+                            <span>Document Type</span>
+                            <span>Building Plan Approval</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Document No.</span>
+                            <span>BP-2025-4567</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Uploaded By</span>
+                            <span>Urban Development Dept.</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span>Source</span>
+                            <span>Integration / Portal</span>
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="typical-title">
+                            Typical Documents
+                        </div>
+
+                        <ul class="typical-list">
+                            <li>Approvals / permits</li>
+                            <li>Tender documents</li>
+                            <li>Contracts</li>
+                            <li>Deduction / remittance proofs</li>
+                            <li>Photos / site documents</li>
+                            <li>Correspondence</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FLOW ARROWS -->
+
+    <div class="flow-arrow arrow-left">
+        →
+    </div>
+
+    <div class="flow-arrow arrow-right">
+        →
+    </div>
+
+
+    <!-- =================================================
+         BOTTOM OUTCOMES
+    ================================================== -->
+
+    <div class="outcomes">
+
+        <div class="outcome-title">
+            KEY OUTCOMES
+        </div>
+
+
+        <div class="outcome">
+
+            <span class="outcome-icon">▤</span>
+
+            One project record consolidating
+            data from multiple sources
+
+        </div>
+
+
+        <div class="outcome">
+
+            <span class="outcome-icon">🔗</span>
+
+            All CESS information
+            linked to the project
+
+        </div>
+
+
+        <div class="outcome">
+
+            <span class="outcome-icon">✓</span>
+
+            Validated, consistent
+            and traceable data
+
+        </div>
+
+
+        <div class="outcome">
+
+            <span class="outcome-icon">◉</span>
+
+            Ready for CESS assessment,
+            tracking and reconciliation
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
