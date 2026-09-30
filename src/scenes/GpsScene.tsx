@@ -2,21 +2,31 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { CessIcon } from "@/lib/icons";
 import {
+  Bell,
   Buildings,
+  CurrencyInr,
+  DownloadSimple,
+  EnvelopeSimple,
+  Eye,
+  LinkSimple,
+  Ruler,
+  ShareNetwork,
+  WhatsappLogo,
+  CaretRight,
   Calculator,
   Camera,
   Check,
   CheckCircle,
   ClipboardText,
-  Clock,
-  CloudArrowDown,
   CloudArrowUp,
   CreditCard,
   Database,
   DeviceMobile,
+  FileText,
   GpsFix,
   House,
   LinkBreak,
+  MagnifyingGlass,
   MapPin,
   PaperPlaneTilt,
   Path,
@@ -27,6 +37,7 @@ import {
   User,
   VideoCamera,
   WarningCircle,
+  WifiHigh,
   WifiSlash,
   X,
 } from "@/lib/icons";
@@ -64,39 +75,45 @@ const CAPABILITIES: {
   shade: string;
 }[] = [
   {
-    label: "On-site place check",
-    detail: "Capture live place and verify details.",
+    label: "Assigned Projects",
+    detail: "View projects allocated to the field officer.",
+    Icon: ClipboardText,
+    glow: "rgba(20,118,232,0.42)",
+    shade: "radial-gradient(circle at 32% 26%, #60a5fa 0%, #1476e8 48%, #0d5fbf 100%)",
+  },
+  {
+    label: "Project Details",
+    detail: "Access project and location information.",
+    Icon: FileText,
+    glow: "rgba(16,168,121,0.42)",
+    shade: "radial-gradient(circle at 32% 26%, #4ade80 0%, #16a34a 48%, #15803d 100%)",
+  },
+  {
+    label: "Site Location",
+    detail: "View the project location before visiting.",
     Icon: MapPin,
-    glow: "rgba(26,78,138,0.42)",
-    shade: "radial-gradient(circle at 32% 26%, #6b9ad4 0%, #2a5f9e 48%, #1a4e8a 100%)",
+    glow: "rgba(245,158,11,0.42)",
+    shade: "radial-gradient(circle at 32% 26%, #fdba74 0%, #f97316 48%, #ea580c 100%)",
   },
   {
-    label: "Photos · video · notes",
-    detail: "Evidence with time on every file.",
-    Icon: Camera,
-    glow: "rgba(107,76,230,0.42)",
-    shade: "radial-gradient(circle at 32% 26%, #a78bfa 0%, #7c5cf0 48%, #6b4ce6 100%)",
+    label: "Assessment Workspace",
+    detail: "Start and manage field assessment for the project.",
+    Icon: ClipboardText,
+    glow: "rgba(124,58,237,0.42)",
+    shade: "radial-gradient(circle at 32% 26%, #c4b5fd 0%, #7c3aed 48%, #6d28d9 100%)",
   },
   {
-    label: "Works offline",
-    detail: "Keeps capturing on a weak network.",
-    Icon: CloudArrowDown,
-    glow: "rgba(14,138,114,0.42)",
-    shade: "radial-gradient(circle at 32% 26%, #4ec9b0 0%, #1aa88a 48%, #0e8a72 100%)",
-  },
-  {
-    label: "Secure record",
-    detail: "Government-grade security on file.",
-    Icon: ShieldCheck,
-    glow: "rgba(217,119,6,0.42)",
-    shade: "radial-gradient(circle at 32% 26%, #fbbf24 0%, #e8950f 48%, #d97706 100%)",
+    label: "Offline Ready",
+    detail: "Continue field work even when connectivity is unavailable.",
+    Icon: WifiSlash,
+    glow: "rgba(232,59,59,0.42)",
+    shade: "radial-gradient(circle at 32% 26%, #fb7185 0%, #e11d48 48%, #be123c 100%)",
   },
 ];
 
 const CAPTURES: {
   id: string;
   label: string;
-  holds: string;
   Icon: CessIcon;
   wrap: string;
   soft: string;
@@ -104,12 +121,12 @@ const CAPTURES: {
   thumbFit?: "cover" | "contain";
   color: string;
 }[] = [
-  { id: "photo", label: "Photos", holds: "Site photos", Icon: Camera, wrap: "bg-[#1a4e8a] text-white", soft: "bg-[#e8eef8]", thumb: buildStage1, color: "#1a4e8a" },
-  { id: "video", label: "Video", holds: "Site clips", Icon: VideoCamera, wrap: "bg-[#6b4ce6] text-white", soft: "bg-[#f0ebff]", thumb: assessSiteHero, color: "#6b4ce6" },
-  { id: "notes", label: "Notes", holds: "Remarks · quantities", Icon: ClipboardText, wrap: "bg-[#db2777] text-white", soft: "bg-[#fce7f3]", thumb: icon3dEvidence, thumbFit: "contain", color: "#db2777" },
-  { id: "place", label: "Place", holds: "GPS at ABC site", Icon: GpsFix, wrap: "bg-teal text-white", soft: "bg-accent", thumb: hubCenterSite, color: "#0e9aa7" },
-  { id: "time", label: "Time", holds: "Visit stamp", Icon: Clock, wrap: "bg-gold text-gold-ink", soft: "bg-gold-soft", thumb: icon3dCalendar, thumbFit: "contain", color: "#c9a227" },
-  { id: "demand", label: "Demand", holds: "On-spot notice", Icon: Receipt, wrap: "bg-ok text-white", soft: "bg-ok-soft", thumb: buildStage2, color: "#0e8a72" },
+  { id: "photo", label: "Photos", Icon: Camera, wrap: "bg-[#f97316] text-white", soft: "bg-[#fff4e6]", thumb: buildStage1, color: "#f97316" },
+  { id: "video", label: "Video", Icon: VideoCamera, wrap: "bg-[#7c3aed] text-white", soft: "bg-[#f1ebff]", thumb: assessSiteHero, color: "#7c3aed" },
+  { id: "notes", label: "Notes", Icon: FileText, wrap: "bg-[#1476e8] text-white", soft: "bg-[#e8f1fd]", thumb: icon3dEvidence, thumbFit: "contain", color: "#1476e8" },
+  { id: "place", label: "Survey Details", Icon: ClipboardText, wrap: "bg-[#db2777] text-white", soft: "bg-[#fce7f3]", thumb: hubCenterSite, color: "#db2777" },
+  { id: "time", label: "GPS Location", Icon: MapPin, wrap: "bg-[#16a34a] text-white", soft: "bg-[#e7f6ee]", thumb: icon3dCalendar, thumbFit: "contain", color: "#16a34a" },
+  { id: "demand", label: "Demand", Icon: Receipt, wrap: "bg-[#0e8a72] text-white", soft: "bg-ok-soft", thumb: buildStage2, color: "#0e8a72" },
 ];
 
 const PHOTO_STRIP = [buildStage1, abcSite, assessSiteHero, hubCenterAbc] as const;
@@ -160,28 +177,33 @@ const KEY_ISSUES: {
 const BEAT_HEAD: readonly { kicker: string; title: string; support: string }[] = [
   {
     kicker: "Government of Karnataka · Labour CESS",
-    title: "Field Mobile App",
-    support: "The Labour Inspector opens the mobile application at ABC.",
+    title: "Field Officer Mobile App",
+    support: "",
   },
   {
     kicker: "Mobile application",
-    title: "Key Issues",
-    support: "What the field mobile app must support on site.",
+    title: "Location and Evidence Capture",
+    support: "Capture verified site information with GPS, timestamp, photos and videos.",
   },
   {
     kicker: "Mobile application",
-    title: "Works Offline",
-    support: "The mobile app keeps capturing when the network is weak.",
+    title: "Offline Field Assessment",
+    support: "Continue the assessment even when mobile connectivity is unavailable.",
   },
   {
     kicker: "Mobile application",
-    title: "Online · Happy Path",
+    title: "Evidence Reaches Central Platform",
     support: "Network is good. Every capture reaches the Board file.",
   },
   {
     kicker: "Mobile application",
-    title: "On-spot Demand",
-    support: "An on-spot demand can be drafted from the mobile app.",
+    title: "Survey and Construction Estimation",
+    support: "Convert field observations and measurements into a CESS assessment.",
+  },
+  {
+    kicker: "Mobile application",
+    title: "Demand Notice Generation",
+    support: "Complete the assessment and generate the demand notice on the spot.",
   },
 ];
 
@@ -189,11 +211,16 @@ const SPACE_HINTS = [
   "Space · Key issues",
   "Space · Works offline",
   "Space · Online happy path",
+  "Space · Survey and estimation",
   "Space · On-spot demand",
   "Space · Next",
 ] as const;
 
-export function GpsScene({ beat }: { beat: number }) {
+/** Space order → content: projects, evidence, survey, demand notice, offline, online sync. */
+const BEAT_ORDER = [0, 1, 4, 5, 2, 3] as const;
+
+export function GpsScene({ beat: step }: { beat: number }) {
+  const beat: number = BEAT_ORDER[Math.min(Math.max(step, 0), BEAT_ORDER.length - 1)];
   const [issuesOpen, setIssuesOpen] = useState(false);
   const reduce = useReducedMotion();
   const head = BEAT_HEAD[Math.min(beat, BEAT_HEAD.length - 1)];
@@ -201,8 +228,8 @@ export function GpsScene({ beat }: { beat: number }) {
   const offline = beat === 2;
   const happy = beat === 3;
   const sending = beat >= 3;
-  const showDemand = beat >= 4;
-  const demandOnly = beat === 4;
+  const showDemand = beat >= 5;
+  const demandOnly = beat === 5;
   const showIssues = beat === 1;
   const showCaps = beat === 0;
   const showSendFlow = beat === 2 || beat === 3;
@@ -235,7 +262,16 @@ export function GpsScene({ beat }: { beat: number }) {
   return (
     <div className="grid h-full min-h-0 grid-rows-[1fr_auto] gap-2">
       <div
-        className="relative grid h-full min-h-0 grid-cols-[minmax(0,0.95fr)_minmax(280px,1.2fr)_minmax(0,1fr)] grid-rows-[auto_auto_minmax(0,1fr)] gap-x-3 gap-y-2 overflow-hidden rounded-2xl p-2.5 shadow-[0_12px_36px_rgba(7,20,51,0.1)] ring-1 ring-navy/8"
+        className={cn(
+          "relative grid h-full min-h-0 gap-x-3 gap-y-2 overflow-hidden rounded-2xl p-2.5 shadow-[0_12px_36px_rgba(7,20,51,0.1)] ring-1 ring-navy/8",
+          beat === 1 || beat === 4 || beat === 5
+            ? "flex items-center justify-center"
+            : beat === 0
+              ? "grid-cols-[minmax(240px,0.72fr)_minmax(280px,1fr)] grid-rows-[auto_minmax(0,1fr)]"
+              : beat >= 2
+                ? "grid-cols-[minmax(0,0.95fr)_minmax(280px,1.2fr)_minmax(0,1fr)] grid-rows-[auto_auto_minmax(0,1fr)_auto]"
+                : "grid-cols-[minmax(0,0.95fr)_minmax(280px,1.2fr)_minmax(0,1fr)] grid-rows-[auto_auto_minmax(0,1fr)]",
+        )}
         onClick={(e) => e.stopPropagation()}
         onPointerDown={(e) => e.stopPropagation()}
       >
@@ -281,6 +317,14 @@ export function GpsScene({ beat }: { beat: number }) {
           </div>
         ) : null}
 
+        {beat === 1 ? (
+          <LocationEvidenceBeat reduce={!!reduce} />
+        ) : beat === 4 ? (
+          <SurveyEstimationBeat reduce={!!reduce} />
+        ) : beat === 5 ? (
+          <DemandNoticeBeat reduce={!!reduce} />
+        ) : (
+        <>
         {/* Row 1 — title · story strip · status (same craft as Problem Statement) */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: -8 }}
@@ -297,15 +341,22 @@ export function GpsScene({ beat }: { beat: number }) {
               transition={{ duration: 0.25 }}
             >
               <SceneHead kicker={head.kicker} title={head.title} />
-              <p className="mx-auto mt-1.5 max-w-[36rem] text-[12px] font-semibold text-muted-foreground">{head.support}</p>
-              <div className="mx-auto mt-2 inline-flex items-center gap-1.5 rounded-full bg-navy px-3 py-1.5 text-[11px] font-bold text-teal-bright shadow-sm">
-                <DeviceMobile weight="fill" className="size-3.5" />
-                CESS Field App · mobile
-              </div>
+              {head.support && beat < 2 ? (
+                <p className="mx-auto mt-1.5 max-w-[36rem] text-[12px] font-semibold text-muted-foreground">{head.support}</p>
+              ) : null}
+              {beat !== 1 ? null : (
+                <div className="mx-auto mt-2 inline-flex items-center gap-1.5 rounded-full bg-navy px-3 py-1.5 text-[11px] font-bold text-teal-bright shadow-sm">
+                  <DeviceMobile weight="fill" className="size-3.5" />
+                  CESS Field App · mobile
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
         </motion.div>
 
+        {offline || happy ? <SyncStepsRow offline={offline} /> : null}
+
+        {beat !== 1 ? null : (
         <div className="relative z-10 col-span-3 grid grid-cols-[minmax(0,0.95fr)_minmax(280px,1.2fr)_minmax(0,1fr)] gap-x-3">
         <div />
         <motion.div
@@ -379,6 +430,7 @@ export function GpsScene({ beat }: { beat: number }) {
           )}
         </motion.div>
         </div>
+        )}
 
         {/* Row 2 — left panel by beat · phone · Central Platform */}
         {showIssues || showCaps ? (
@@ -409,12 +461,15 @@ export function GpsScene({ beat }: { beat: number }) {
               capturing={capturing}
               reduce={!!reduce}
             />
-            <div className="pointer-events-none absolute top-1/2 right-0 z-20 -translate-y-1/2 translate-x-1/2">
-              <FlowArrow offline={offline} happy={happy} sending={sending} reduce={!!reduce} />
-            </div>
+            {beat === 0 ? null : (
+              <div className="pointer-events-none absolute top-1/2 right-0 z-20 -translate-y-1/2 translate-x-1/2">
+                <FlowArrow offline={offline} happy={happy} sending={sending} reduce={!!reduce} />
+              </div>
+            )}
           </div>
         </div>
 
+        {beat === 0 ? null : (
         <div className="relative z-10 h-full min-h-0">
           <PlatformHub
             beat={beat}
@@ -425,10 +480,858 @@ export function GpsScene({ beat }: { beat: number }) {
             reduce={!!reduce}
           />
         </div>
+        )}
+
+        {offline || happy ? <SyncMarksRow offline={offline} /> : null}
+        </>
+        )}
       </div>
 
-      <StoryFooter showIssues={showIssues} beat={beat} />
+      <StoryFooter showIssues={beat === 1 ? false : showIssues} beat={beat} />
     </div>
+  );
+}
+
+const EVIDENCE_SHOTS = [
+  { img: buildStage1, time: "15 Jan 2025, 10:42 AM", coords: "13.0827° N, 77.5871° E" },
+  { img: buildStage2, time: "15 Jan 2025, 10:43 AM", coords: "13.0828° N, 77.5872° E" },
+  { img: abcSite, time: "15 Jan 2025, 10:45 AM", coords: "13.0826° N, 77.5869° E" },
+] as const;
+
+/** Beat 2 — location and evidence capture, built as HTML. */
+function LocationEvidenceBeat({ reduce }: { reduce: boolean }) {
+  const steps = [
+    { label: "Navigate to Project", Icon: MapPin, wrap: "bg-[#16a34a]" },
+    { label: "Capture Location", Icon: Camera, wrap: "bg-[#f97316]" },
+    { label: "Capture Evidence", Icon: VideoCamera, wrap: "bg-[#7c3aed]" },
+    { label: "Save to Project", Icon: CloudArrowUp, wrap: "bg-[#1476e8]" },
+  ] as const;
+  const tools = [
+    { label: "GPS Location", detail: "Capture exact site location with timestamp.", Icon: MapPin, wrap: "bg-[#16a34a]" },
+    { label: "Photos", detail: "Capture site images with auto location tag.", Icon: Camera, wrap: "bg-[#f97316]" },
+    { label: "Videos", detail: "Record site videos with timestamp.", Icon: VideoCamera, wrap: "bg-[#7c3aed]" },
+    { label: "Documents", detail: "Attach relevant documents on site.", Icon: FileText, wrap: "bg-[#1476e8]" },
+  ] as const;
+  const marks = [
+    { label: "Accurate Location Capture", detail: "GPS coordinates with timestamp.", Icon: GpsFix, wrap: "bg-[#1476e8]" },
+    { label: "Photo & Video Evidence", detail: "Capture and store with auto tags.", Icon: Camera, wrap: "bg-[#f97316]" },
+    { label: "Complete Documentation", detail: "Keep all evidence linked to project.", Icon: FileText, wrap: "bg-[#7c3aed]" },
+    { label: "Reliable & Verifiable", detail: "Every observation is linked with project, location and time.", Icon: ShieldCheck, wrap: "bg-[#16a34a]" },
+  ] as const;
+
+  return (
+    <motion.div
+      className="relative z-10 flex h-full min-h-0 w-full flex-col gap-2"
+      initial={reduce ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35 }}
+    >
+      <SceneHead kicker="Mobile application" title="Location and Evidence Capture" className="shrink-0" />
+
+      <div className="grid min-h-0 flex-1 grid-cols-[minmax(220px,0.72fr)_minmax(0,1.15fr)] items-center gap-2">
+        <div className="flex min-h-0 items-center justify-center">
+          <div className="relative flex h-[min(100%,460px)] w-auto max-w-full aspect-[9/19.5] flex-col">
+            <div className="flex h-full min-h-0 flex-col rounded-[34px] bg-[#1a1f2e] p-[6px] shadow-[0_22px_48px_rgba(7,20,51,0.38)] ring-1 ring-white/25">
+              <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[28px] bg-white">
+                <div className="pointer-events-none absolute top-0 left-1/2 z-20 h-4 w-[72px] -translate-x-1/2 rounded-b-xl bg-[#1a1f2e]" />
+                <div className="shrink-0 bg-[#1476e8] px-2.5 pt-5 pb-1.5 text-white">
+                  <div className="mb-0.5 flex items-center justify-between text-[8px] font-bold">
+                    <span>9:41</span>
+                    <span className="tracking-tighter opacity-80">▮▮▮</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="text-[11px] leading-none">‹</span>
+                    <b className="flex-1 text-center text-[11px]">Project Site</b>
+                    <Bell weight="fill" className="size-3" />
+                  </div>
+                </div>
+                <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-1.5 py-1.5">
+                  <div className="flex shrink-0 gap-1.5 rounded-lg bg-[#f4f7fb] p-1 ring-1 ring-navy/8">
+                    <img src={abcSite} alt="" className="size-9 shrink-0 rounded-md object-cover" />
+                    <div className="min-w-0 text-[8px] leading-snug font-semibold text-navy/70">
+                      <b className="block text-[10px] text-navy">ABC Commercial Complex</b>
+                      Yelahanka, Bengaluru
+                      <span className="block">Project ID: PRJ-000245</span>
+                      <span className="block">Assigned Officer: R. Kumar</span>
+                    </div>
+                  </div>
+                  <div className="grid shrink-0 grid-cols-4 border-b border-navy/8 pb-1 text-center text-[7px] font-bold text-navy/40">
+                    <span className="border-b-2 border-[#1476e8] pb-0.5 text-[#1476e8]">Location</span>
+                    <span>Photos</span>
+                    <span>Videos</span>
+                    <span>Documents</span>
+                  </div>
+                  <div className="relative min-h-[72px] flex-1 overflow-hidden rounded-lg bg-[#d7e7c8]">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_55%,#8fbf6a_0%,#c5d7a4_42%,#e7e3c8_100%)]" />
+                    <span className="absolute top-1.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-white px-1.5 py-0.5 text-[7px] font-bold text-[#14804a] shadow-sm">
+                      <Check weight="bold" className="size-2" />
+                      GPS Location Captured
+                    </span>
+                    <MapPin weight="fill" className="absolute top-1/2 left-1/2 size-5 -translate-x-1/2 text-[#e83b3b]" />
+                  </div>
+                  <ul className="shrink-0 space-y-0.5 text-[8px] font-semibold text-navy">
+                    <li className="flex justify-between"><span className="text-navy/50">Latitude</span>13.0827° N</li>
+                    <li className="flex justify-between"><span className="text-navy/50">Longitude</span>77.5871° E</li>
+                    <li className="flex justify-between"><span className="text-navy/50">Timestamp</span>15 Jan 2025, 10:42 AM</li>
+                    <li className="flex justify-between"><span className="text-navy/50">Accuracy</span>5 meters</li>
+                    <li className="flex justify-between"><span className="text-navy/50">Status</span><span className="text-[#14804a]">Captured</span></li>
+                  </ul>
+                  <div className="shrink-0 rounded-lg bg-[#1476e8] py-1.5 text-center text-[9px] font-extrabold text-white">
+                    Capture Evidence →
+                  </div>
+                </div>
+                <div className="flex shrink-0 justify-center pb-1.5">
+                  <span className="h-1 w-16 rounded-full bg-navy/20" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex min-h-0 flex-col gap-2">
+          <div className="flex items-center justify-center gap-1.5 rounded-2xl bg-white/80 px-2 py-1.5 shadow-sm ring-1 ring-navy/8">
+            {steps.map((step, i) => (
+              <span key={step.label} className="flex items-center gap-1.5">
+                {i > 0 ? <span className="text-[12px] font-bold text-navy/25">→</span> : null}
+                <span className="flex items-center gap-1.5">
+                  <span className={cn("grid size-7 place-items-center rounded-full text-white shadow-sm", step.wrap)}>
+                    <step.Icon weight="fill" className="size-3.5" />
+                  </span>
+                  <span className="text-[10px] leading-tight font-bold text-navy">{step.label}</span>
+                </span>
+              </span>
+            ))}
+          </div>
+          <section className="rounded-2xl bg-white/95 p-2 shadow-sm ring-1 ring-navy/8">
+            <h3 className="mb-1.5 text-[13px] font-extrabold text-[#1476e8]">Capture Site Evidence</h3>
+            <div className="grid grid-cols-4 gap-1.5">
+              {tools.map((tool) => (
+                <div key={tool.label} className="rounded-xl bg-[#f7f9fc] px-1.5 py-2 text-center">
+                  <span className={cn("mx-auto grid size-9 place-items-center rounded-full text-white", tool.wrap)}>
+                    <tool.Icon weight="fill" className="size-4" />
+                  </span>
+                  <b className="mt-1 block text-[11px] text-navy">{tool.label}</b>
+                  <span className="mt-0.5 block text-[9px] leading-snug font-semibold text-navy/55">{tool.detail}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+          <section className="rounded-2xl bg-white/95 p-2 shadow-sm ring-1 ring-navy/8">
+            <h3 className="mb-1.5 text-[13px] font-extrabold text-[#1476e8]">Evidence with Auto Details</h3>
+            <div className="grid grid-cols-3 gap-1.5">
+              {EVIDENCE_SHOTS.map((shot) => (
+                <figure key={shot.time} className="relative aspect-[16/9] max-h-[148px] overflow-hidden rounded-xl">
+                  <img src={shot.img} alt="" className="h-full w-full object-cover" />
+                  <figcaption className="absolute inset-x-0 bottom-0 bg-navy/80 px-1.5 py-1 text-[8px] leading-snug font-semibold text-white">
+                    {shot.time}
+                    <span className="block">{shot.coords}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div className="grid shrink-0 grid-cols-4 gap-1.5">
+        {marks.map((mark) => (
+          <div key={mark.label} className="flex items-center gap-2 rounded-2xl bg-white/95 px-2 py-1.5 shadow-sm ring-1 ring-navy/8">
+            <span className={cn("grid size-8 shrink-0 place-items-center rounded-full text-white", mark.wrap)}>
+              <mark.Icon weight="fill" className="size-4" />
+            </span>
+            <span className="min-w-0">
+              <b className="block text-[11px] leading-tight text-navy">{mark.label}</b>
+              <span className="block text-[9px] leading-snug font-semibold text-navy/55">{mark.detail}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+const SYNC_STEPS = {
+  offline: [
+    { label: "No Network", Icon: WifiSlash, wrap: "bg-[#e0453c]" },
+    { label: "Capture & Assess", Icon: DeviceMobile, wrap: "bg-[#16a34a]" },
+    { label: "Store Securely", Icon: Database, wrap: "bg-[#1476e8]" },
+    { label: "Sync When Online", Icon: CloudArrowUp, wrap: "bg-[#7c3aed]" },
+  ],
+  online: [
+    { label: "Network Available", Icon: WifiHigh, wrap: "bg-[#16a34a]" },
+    { label: "Send Captures", Icon: PaperPlaneTilt, wrap: "bg-[#1476e8]" },
+    { label: "Central Platform Receives", Icon: CloudArrowUp, wrap: "bg-[#7c3aed]" },
+    { label: "One Project File", Icon: FileText, wrap: "bg-[#f97316]" },
+  ],
+} as const;
+
+const SYNC_MARKS = {
+  offline: [
+    { label: "Works Offline", detail: "Capture and assess even without network.", Icon: WifiSlash, wrap: "bg-[#e0453c]" },
+    { label: "Secure Local Storage", detail: "Data kept safely on device with project link.", Icon: ShieldCheck, wrap: "bg-[#16a34a]" },
+    { label: "Automatic Sync", detail: "Uploads when network is available.", Icon: CloudArrowUp, wrap: "bg-[#f97316]" },
+    { label: "No Work Lost", detail: "No interruption to site work.", Icon: DeviceMobile, wrap: "bg-[#1476e8]" },
+  ],
+  online: [
+    { label: "Instant Sync", detail: "Captures reach the Central Platform.", Icon: CloudArrowUp, wrap: "bg-[#1476e8]" },
+    { label: "Complete Evidence", detail: "Photos, video, notes, survey and GPS.", Icon: Camera, wrap: "bg-[#f97316]" },
+    { label: "One Project File", detail: "All evidence on one Project ID.", Icon: FileText, wrap: "bg-[#7c3aed]" },
+    { label: "Verified Record", detail: "Time and place kept with every item.", Icon: ShieldCheck, wrap: "bg-[#16a34a]" },
+  ],
+} as const;
+
+function SyncStepsRow({ offline }: { offline: boolean }) {
+  const steps = offline ? SYNC_STEPS.offline : SYNC_STEPS.online;
+  return (
+    <div className="relative z-10 col-span-3 flex items-center justify-center gap-1.5">
+      {steps.map((step, i) => (
+        <span key={step.label} className="flex items-center gap-1.5">
+          {i > 0 ? <span className="text-[12px] font-bold text-[#1476e8]/50">→</span> : null}
+          <Stagger delay={60 + i * 60}>
+            <span className="flex items-center gap-1.5 rounded-full bg-white/90 py-1 pr-2.5 pl-1 shadow-sm ring-1 ring-navy/8">
+              <span className={cn("grid size-6 place-items-center rounded-full text-white", step.wrap)}>
+                <step.Icon weight="fill" className="size-3.5" />
+              </span>
+              <span className="text-[10px] font-bold text-navy">{step.label}</span>
+            </span>
+          </Stagger>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function SyncMarksRow({ offline }: { offline: boolean }) {
+  const marks = offline ? SYNC_MARKS.offline : SYNC_MARKS.online;
+  return (
+    <div className="relative z-10 col-span-3 grid grid-cols-4 gap-1.5">
+      {marks.map((mark, i) => (
+        <Stagger key={mark.label} delay={300 + i * 70}>
+          <div className="flex items-center gap-2 rounded-2xl bg-white/95 px-2 py-1.5 shadow-sm ring-1 ring-navy/8">
+            <span className={cn("grid size-8 shrink-0 place-items-center rounded-full text-white", mark.wrap)}>
+              <mark.Icon weight="fill" className="size-4" />
+            </span>
+            <span className="min-w-0">
+              <b className="block text-[11px] leading-tight text-navy">{mark.label}</b>
+              <span className="block text-[9px] leading-snug font-semibold text-navy/55">{mark.detail}</span>
+            </span>
+          </div>
+        </Stagger>
+      ))}
+    </div>
+  );
+}
+
+function PhoneShell({
+  title,
+  className,
+  children,
+}: {
+  title: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={cn("relative flex shrink-0 aspect-[9/19.5] flex-col", className ?? "h-[min(100%,450px)] w-auto")}>
+      <div className="flex h-full min-h-0 flex-col rounded-[34px] bg-[#1a1f2e] p-[6px] shadow-[0_22px_48px_rgba(7,20,51,0.38)] ring-1 ring-white/25">
+        <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[28px] bg-white">
+          <div className="pointer-events-none absolute top-0 left-1/2 z-20 h-4 w-[72px] -translate-x-1/2 rounded-b-xl bg-[#1a1f2e]" />
+          <div className="shrink-0 bg-[#1476e8] px-2.5 pt-5 pb-1.5 text-white">
+            <div className="mb-0.5 flex items-center justify-between text-[8px] font-bold">
+              <span>9:41</span>
+              <span className="tracking-tighter opacity-80">▮▮▮</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="text-[11px] leading-none">‹</span>
+              <b className="min-w-0 flex-1 truncate text-center text-[9.5px]">{title}</b>
+              <span className="text-[11px] leading-none">⋮</span>
+            </div>
+          </div>
+          <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-1.5 py-1.5">
+            <div className="flex shrink-0 gap-1.5 rounded-lg bg-[#f4f7fb] p-1 ring-1 ring-navy/8">
+              <img src={abcSite} alt="" className="size-9 shrink-0 rounded-md object-cover" />
+              <div className="min-w-0 text-[8px] leading-snug font-semibold text-navy/70">
+                <b className="block text-[10px] text-navy">ABC Commercial Complex</b>
+                Yelahanka, Bengaluru
+                <span className="block">PRJ-000245</span>
+              </div>
+            </div>
+            {children}
+          </div>
+          <div className="flex shrink-0 justify-center pb-1.5">
+            <span className="h-1 w-16 rounded-full bg-navy/20" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FlowChevron({ reduce, delay }: { reduce: boolean; delay: number }) {
+  return (
+    <motion.span
+      aria-hidden
+      className="grid size-7 shrink-0 place-items-center rounded-full bg-[#1476e8] text-white shadow-[0_6px_14px_rgba(20,118,232,0.35)]"
+      animate={reduce ? undefined : { x: [0, 4, 0] }}
+      transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay }}
+    >
+      <CaretRight weight="bold" className="size-3.5" />
+    </motion.span>
+  );
+}
+
+function FormRow({ label, value, select }: { label: string; value: string; select?: boolean }) {
+  return (
+    <div className="shrink-0">
+      <span className="block text-[6.5px] font-bold text-navy/55">{label}</span>
+      <span className="flex items-center justify-between rounded-md bg-white px-1.5 py-[3px] text-[7.5px] font-bold text-navy ring-1 ring-navy/12">
+        {value}
+        {select ? <span className="text-[6px] text-navy/40">▾</span> : null}
+      </span>
+    </div>
+  );
+}
+
+function ValueRow({ label, value, Icon }: { label: string; value: string; Icon?: CessIcon }) {
+  return (
+    <div className="flex shrink-0 items-center gap-1 text-[7px] font-semibold text-navy">
+      {Icon ? <Icon weight="fill" className="size-2.5 text-[#1476e8]" /> : null}
+      <span className="flex-1 text-navy/70">{label}</span>
+      <span className="w-[52px] rounded-md bg-white px-1 py-[2px] text-right font-bold ring-1 ring-navy/12">{value}</span>
+    </div>
+  );
+}
+
+function PhoneButton({ label, tone }: { label: string; tone: string }) {
+  return (
+    <div className={cn("mt-auto shrink-0 rounded-lg py-1.5 text-center text-[8.5px] font-extrabold text-white", tone)}>
+      {label}
+    </div>
+  );
+}
+
+/** Beat 5 — survey, measurements, estimation and CESS calculation on the field officer phone. */
+function SurveyEstimationBeat({ reduce }: { reduce: boolean }) {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    if (reduce) return;
+    const id = window.setInterval(() => setActive((a) => (a + 1) % 4), 2200);
+    return () => window.clearInterval(id);
+  }, [reduce]);
+
+  const stages = [
+    { n: 1, label: "Site Survey", step: "Survey Site Details", Icon: ClipboardText, tone: "bg-[#f97316]", ring: "ring-[#f97316]" },
+    { n: 2, label: "Record Measurements", step: "Record Measurements", Icon: Ruler, tone: "bg-[#1476e8]", ring: "ring-[#1476e8]" },
+    { n: 3, label: "Estimate Construction Value", step: "Estimate Construction Value", Icon: Calculator, tone: "bg-[#7c3aed]", ring: "ring-[#7c3aed]" },
+    { n: 4, label: "CESS Calculation", step: "Calculate CESS Amount", Icon: CurrencyInr, tone: "bg-[#16a34a]", ring: "ring-[#16a34a]" },
+  ] as const;
+  const capabilities = [
+    {
+      label: "Survey",
+      Icon: ClipboardText,
+      wrap: "bg-[#16a34a]",
+      points: ["Record construction details", "Capture current construction stage", "Record work and measurement information"],
+    },
+    {
+      label: "Estimation",
+      Icon: Calculator,
+      wrap: "bg-[#f97316]",
+      points: ["Update estimation details", "Calculate estimated construction value", "Support assessment for the construction activity"],
+    },
+    {
+      label: "CESS Calculation",
+      Icon: CurrencyInr,
+      wrap: "bg-[#7c3aed]",
+      points: ["Apply applicable cess rules", "Generate assessment amount", "Prepare information for demand notice"],
+    },
+  ] as const;
+  const outcomes = [
+    { label: "Field observations from site survey", Icon: ClipboardText, wrap: "bg-[#e11d48]" },
+    { label: "Measured information and construction details", Icon: Ruler, wrap: "bg-[#1476e8]" },
+    { label: "Estimated construction value", Icon: Calculator, wrap: "bg-[#f97316]" },
+    { label: "Labour CESS assessment", Icon: CurrencyInr, wrap: "bg-[#16a34a]" },
+  ] as const;
+
+  const phoneBody = (n: number) => {
+    if (n === 1)
+      return (
+        <>
+          <span className="shrink-0 rounded-md bg-[#e7f6ee] py-0.5 text-center text-[8px] font-extrabold text-[#14804a]">Site Survey</span>
+          <FormRow label="Construction Type" value="Commercial" select />
+          <FormRow label="Construction Stage" value="RCC Structure" select />
+          <FormRow label="Work Status" value="Under Construction" select />
+          <FormRow label="Sanctioned Plan" value="Yes" select />
+          <div className="shrink-0">
+            <span className="flex justify-between text-[6.5px] font-bold text-navy/55">
+              Current Progress <span>40%</span>
+            </span>
+            <div className="mt-0.5 h-1 overflow-hidden rounded-full bg-navy/10">
+              <motion.div
+                className="h-full rounded-full bg-[#16a34a]"
+                initial={reduce ? false : { width: "0%" }}
+                animate={{ width: "40%" }}
+                transition={{ duration: 1.2, delay: reduce ? 0 : 0.5, ease }}
+              />
+            </div>
+          </div>
+          <PhoneButton label="Next →" tone="bg-[#1476e8]" />
+        </>
+      );
+    if (n === 2)
+      return (
+        <>
+          <b className="shrink-0 text-[8px] text-[#1476e8]">Building Details</b>
+          <ValueRow label="Built-up Area (sq.ft)" value="25,000" />
+          <ValueRow label="Number of Floors" value="6" />
+          <ValueRow label="Plot Area (sq.ft)" value="40,000" />
+          <b className="mt-0.5 shrink-0 text-[8px] text-[#1476e8]">Work Quantity</b>
+          <ValueRow label="Plinth Area (sq.ft)" value="25,000" Icon={Buildings} />
+          <ValueRow label="Structure (sq.ft)" value="25,000" Icon={Buildings} />
+          <ValueRow label="Finishing (sq.ft)" value="10,000" Icon={Ruler} />
+          <span className="shrink-0 text-[7px] font-bold text-[#1476e8]">+ Add More Items</span>
+          <PhoneButton label="Next →" tone="bg-[#1476e8]" />
+        </>
+      );
+    if (n === 3)
+      return (
+        <>
+          <b className="shrink-0 text-[8px] text-[#7c3aed]">Estimation Parameters</b>
+          <ValueRow label="Unit Rate (₹/sq.ft)" value="8,000" />
+          <ValueRow label="Built-up Area (sq.ft)" value="25,000" />
+          <ValueRow label="Number of Floors" value="6" />
+          <ValueRow label="Other Charges (%)" value="5" />
+          <motion.div
+            className="shrink-0 rounded-lg bg-[#f1ebff] px-1.5 py-1.5 text-center ring-1 ring-[#c4b5fd]"
+            animate={reduce ? undefined : { scale: [1, 1.03, 1] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
+          >
+            <span className="block text-[7px] font-bold text-[#6d28d9]">Estimated Construction Value</span>
+            <b className="block text-[12px] text-navy">₹ 20,00,00,000</b>
+            <span className="block text-[6.5px] font-semibold text-navy/55">(₹ 20.00 Crore)</span>
+          </motion.div>
+          <PhoneButton label="Next →" tone="bg-[#1476e8]" />
+        </>
+      );
+    return (
+      <>
+        <div className="shrink-0 rounded-lg bg-[#e7f6ee] px-1.5 py-1 text-center ring-1 ring-[#a7e3c2]">
+          <span className="block text-[6.5px] font-bold text-[#14804a]">Estimated Construction Value</span>
+          <b className="block text-[10.5px] text-navy">₹ 20,00,00,000</b>
+        </div>
+        <motion.span
+          aria-hidden
+          className="shrink-0 text-center text-[10px] leading-none font-extrabold text-[#1476e8]"
+          animate={reduce ? undefined : { y: [0, 2, 0] }}
+          transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          ↓
+        </motion.span>
+        <div className="shrink-0 rounded-lg bg-[#fff4e6] px-1.5 py-1 text-center ring-1 ring-[#fbd38d]">
+          <span className="block text-[6.5px] font-bold text-[#c2410c]">Applicable Labour CESS</span>
+          <b className="block text-[11px] text-[#c2410c]">₹ 20,00,000</b>
+          <span className="block text-[6.5px] font-semibold text-navy/55">(₹ 20.00 Lakh)</span>
+        </div>
+        <div className="shrink-0 space-y-[2px] text-[7px] font-semibold text-navy">
+          <b className="block text-[7.5px]">Calculation Summary</b>
+          <span className="flex justify-between"><span className="text-navy/60">CESS Rate (Example)</span>1%</span>
+          <span className="flex justify-between"><span className="text-navy/60">Estimated Value</span>₹ 20,00,00,000</span>
+          <span className="flex justify-between"><span className="text-navy/60">CESS Amount</span>₹ 20,00,000</span>
+        </div>
+        <span className="shrink-0 text-[5.5px] leading-snug font-semibold text-navy/45">
+          Example values only. Actual calculation follows the Board’s rules.
+        </span>
+        <PhoneButton label="Save Assessment" tone="bg-[#1476e8]" />
+      </>
+    );
+  };
+
+  const titles = ["Construction Assessment", "Site Measurements", "Estimation Details", "CESS Assessment"] as const;
+
+  return (
+    <motion.div
+      className="relative z-10 flex h-full min-h-0 w-full flex-col gap-2"
+      initial={reduce ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      <SceneHead kicker="Mobile application" title="Survey and Construction Estimation" className="shrink-0" />
+
+      <div className="flex shrink-0 items-center justify-center gap-1.5">
+        {stages.map((s, i) => (
+          <span key={s.step} className="flex items-center gap-1.5">
+            {i > 0 ? <span className="text-[12px] font-bold text-[#1476e8]/50">→</span> : null}
+            <span
+              className={cn(
+                "flex items-center gap-1.5 rounded-full bg-white/90 py-1 pr-2.5 pl-1 shadow-sm ring-1 transition-all duration-300",
+                active === i && !reduce ? cn("ring-2", s.ring) : "ring-navy/8",
+              )}
+            >
+              <span className={cn("grid size-6 place-items-center rounded-full text-white", s.tone)}>
+                <s.Icon weight="fill" className="size-3.5" />
+              </span>
+              <span className="text-[10px] font-bold text-navy">{s.step}</span>
+            </span>
+          </span>
+        ))}
+      </div>
+
+      <div className="flex min-h-0 flex-1 items-center justify-center gap-1.5">
+        {stages.map((s, i) => (
+          <span key={s.n} className="flex h-full min-h-0 items-center gap-1.5">
+            {i > 0 ? <FlowChevron reduce={reduce} delay={i * 0.25} /> : null}
+            <motion.div
+              className="flex min-h-0 flex-col items-center gap-1.5"
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: active === i && !reduce ? -4 : 0 }}
+              transition={{ duration: 0.4, delay: reduce ? 0 : 0.08 + i * 0.12, ease }}
+            >
+              <span
+                className={cn(
+                  "flex items-center gap-1.5 rounded-full py-0.5 pr-2.5 pl-0.5 text-[10px] font-extrabold text-white shadow-sm",
+                  s.tone,
+                )}
+              >
+                <span className="grid size-5 place-items-center rounded-full bg-white text-[10px] text-navy">{s.n}</span>
+                {s.label}
+              </span>
+              <div
+                className={cn(
+                  "rounded-[36px] ring-offset-2 ring-offset-transparent transition-shadow duration-300",
+                  active === i && !reduce ? cn("ring-2", s.ring) : "ring-0",
+                )}
+              >
+                <PhoneShell title={titles[i]} className="w-[176px]">
+                  {phoneBody(s.n)}
+                </PhoneShell>
+              </div>
+            </motion.div>
+          </span>
+        ))}
+
+        <motion.section
+          className="ml-1 flex w-[214px] shrink-0 flex-col gap-1.5 self-center rounded-2xl bg-white/95 p-2 shadow-[0_12px_28px_rgba(7,20,51,0.12)] ring-1 ring-navy/8"
+          initial={reduce ? false : { opacity: 0, x: 14 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: reduce ? 0 : 0.6, ease }}
+        >
+          <h3 className="rounded-lg bg-[#1476e8] px-2 py-1 text-[12px] font-extrabold text-white">Key Capabilities</h3>
+          {capabilities.map((cap, i) => {
+            const lit = active === 0 ? i === 0 : active === 3 ? i === 2 : i === 1;
+            return (
+              <div
+                key={cap.label}
+                className={cn(
+                  "flex gap-2 rounded-xl px-1.5 py-1.5 ring-1 transition-colors duration-300",
+                  lit && !reduce ? "bg-[#f4f8ff] ring-[#1476e8]/30" : "bg-white ring-navy/6",
+                )}
+              >
+                <span className={cn("grid size-9 shrink-0 place-items-center rounded-full text-white shadow-sm", cap.wrap)}>
+                  <cap.Icon weight="fill" className="size-4" />
+                </span>
+                <div className="min-w-0">
+                  <b className="block text-[12px] leading-tight text-navy">{cap.label}</b>
+                  <ul className="mt-0.5 space-y-0.5">
+                    {cap.points.map((pt) => (
+                      <li key={pt} className="flex gap-1 text-[9px] leading-snug font-semibold text-navy/70">
+                        <span className="text-navy/40">•</span>
+                        {pt}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            );
+          })}
+        </motion.section>
+      </div>
+
+      <div className="flex shrink-0 items-center justify-between gap-2 rounded-2xl bg-white/95 px-3 py-1.5 shadow-sm ring-1 ring-navy/8">
+        {outcomes.map((o, i) => (
+          <span key={o.label} className="flex min-w-0 flex-1 items-center gap-2">
+            {i > 0 ? <span className="text-[14px] font-bold text-navy/25">→</span> : null}
+            <Stagger delay={400 + i * 80}>
+              <span className="flex items-center gap-2">
+                <span className={cn("grid size-8 shrink-0 place-items-center rounded-full text-white", o.wrap)}>
+                  <o.Icon weight="fill" className="size-4" />
+                </span>
+                <b className="text-[11px] leading-tight text-navy">{o.label}</b>
+              </span>
+            </Stagger>
+          </span>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+function DetailRow({ label, value, strong }: { label: string; value: string; strong?: boolean }) {
+  return (
+    <div className="flex shrink-0 items-start justify-between gap-1 text-[7px] leading-snug font-semibold">
+      <span className="shrink-0 text-navy/55">{label}</span>
+      <span className={cn("text-right text-navy", strong && "font-extrabold")}>{value}</span>
+    </div>
+  );
+}
+
+/** Beat 6 — demand notice generated on the spot and issued from the field officer phone. */
+function DemandNoticeBeat({ reduce }: { reduce: boolean }) {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    if (reduce) return;
+    const id = window.setInterval(() => setActive((a) => (a + 1) % 4), 2200);
+    return () => window.clearInterval(id);
+  }, [reduce]);
+
+  const stages = [
+    { n: 1, label: "Assessment Summary", step: "Assessment Completed", Icon: ClipboardText, tone: "bg-[#1476e8]", ring: "ring-[#1476e8]" },
+    { n: 2, label: "CESS Assessment", step: "Verify CESS Amount", Icon: CurrencyInr, tone: "bg-[#16a34a]", ring: "ring-[#16a34a]" },
+    { n: 3, label: "Demand Notice Preview", step: "Generate Demand Notice", Icon: FileText, tone: "bg-[#f97316]", ring: "ring-[#f97316]" },
+    { n: 4, label: "Notice Issued", step: "Issue to Stakeholder", Icon: PaperPlaneTilt, tone: "bg-[#7c3aed]", ring: "ring-[#7c3aed]" },
+  ] as const;
+  const titles = ["Assessment Summary", "CESS Assessment", "Demand Notice Preview", "Notice Issued"] as const;
+  const capabilities = [
+    { label: "On-the-Spot Generation", detail: "Assessment and demand notice right after the field visit.", Icon: FileText, wrap: "bg-[#16a34a]" },
+    { label: "Digital Notice", detail: "Soft-copy notice with project details, amount and due date.", Icon: FileText, wrap: "bg-[#f97316]" },
+    { label: "Traceability", detail: "Assessment, demand, officer and project reference kept together.", Icon: LinkSimple, wrap: "bg-[#7c3aed]" },
+    { label: "Central Update", detail: "Notice and assessment updated on the Central Platform.", Icon: CloudArrowUp, wrap: "bg-[#1476e8]" },
+  ] as const;
+  const outcomes = [
+    { label: "Complete the field assessment", detail: "Verify details and CESS amount.", Icon: FileText, wrap: "bg-[#e11d48]" },
+    { label: "Generate digital demand notice", detail: "With notice number and due date.", Icon: FileText, wrap: "bg-[#f97316]" },
+    { label: "Share with the stakeholder", detail: "View, download, print or send.", Icon: ShareNetwork, wrap: "bg-[#7c3aed]" },
+    { label: "Update Central Platform", detail: "Keep project records in step.", Icon: CloudArrowUp, wrap: "bg-[#16a34a]" },
+  ] as const;
+  const shareActions = [
+    { label: "View Notice", Icon: Eye },
+    { label: "Download PDF", Icon: DownloadSimple },
+    { label: "Share via Email", Icon: EnvelopeSimple },
+    { label: "Share via WhatsApp", Icon: WhatsappLogo },
+  ] as const;
+
+  const phoneBody = (n: number) => {
+    if (n === 1)
+      return (
+        <>
+          <span className="flex shrink-0 items-center justify-center gap-1 rounded-md bg-[#e7f6ee] py-0.5 text-[8px] font-extrabold text-[#14804a]">
+            <CheckCircle weight="fill" className="size-3" />
+            Assessment Completed
+          </span>
+          <b className="shrink-0 text-[8px] text-navy">Project Details</b>
+          <div className="flex shrink-0 flex-col gap-[3px] rounded-lg bg-[#f4f7fb] px-1.5 py-1 ring-1 ring-navy/8">
+            <DetailRow label="Project ID" value="PRJ-000245" />
+            <DetailRow label="Location" value="Yelahanka, Bengaluru" />
+            <DetailRow label="Construction Type" value="Commercial" />
+            <DetailRow label="Construction Stage" value="RCC Structure" />
+            <DetailRow label="Built-up Area" value="25,000 sq.ft" />
+            <DetailRow label="Number of Floors" value="6" />
+            <DetailRow label="Assessment Date" value="15 Jan 2025" />
+            <DetailRow label="Assessed by" value="R. Kumar" />
+          </div>
+          <PhoneButton label="View Assessment Details →" tone="bg-[#1476e8]" />
+        </>
+      );
+    if (n === 2)
+      return (
+        <>
+          <b className="flex shrink-0 items-center gap-1 text-[8px] text-[#14804a]">
+            <Calculator weight="fill" className="size-3" />
+            Assessment Details
+          </b>
+          <div className="flex shrink-0 flex-col gap-1 rounded-lg bg-[#f4f7fb] px-1.5 py-1.5 ring-1 ring-navy/8">
+            <DetailRow label="Construction Value" value="₹ 20,00,00,000" />
+            <DetailRow label="Applicable CESS Rate" value="1%" />
+            <DetailRow label="CESS Amount" value="₹ 20,00,000" />
+            <DetailRow label="Other Charges" value="₹ 0" />
+          </div>
+          <motion.div
+            className="flex shrink-0 flex-col items-center rounded-lg bg-[#e7f6ee] px-1.5 py-2 ring-1 ring-[#a7e3c2]"
+            animate={reduce ? undefined : { scale: [1, 1.03, 1] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+          >
+            <span className="text-[7px] font-bold text-[#14804a]">Total Demand Amount</span>
+            <span className="flex items-center gap-1">
+              <span className="grid size-5 place-items-center rounded-full bg-[#16a34a] text-white">
+                <CurrencyInr weight="bold" className="size-3" />
+              </span>
+              <b className="text-[13px] text-navy">₹ 20,00,000</b>
+            </span>
+            <span className="text-[6.5px] font-semibold text-navy/55">(Rupees Twenty Lakh Only)</span>
+          </motion.div>
+          <PhoneButton label="Generate Demand Notice" tone="bg-[#1476e8]" />
+        </>
+      );
+    if (n === 3)
+      return (
+        <>
+          <div className="flex shrink-0 items-center gap-1 border-b border-navy/8 pb-1">
+            <img src={karnatakaEmblem} alt="" className="size-5 shrink-0 object-contain" />
+            <b className="text-[6.5px] leading-tight text-navy uppercase">
+              Karnataka Building and Other Construction Workers Welfare Board
+            </b>
+          </div>
+          <span className="shrink-0 rounded bg-[#fdecec] py-0.5 text-center text-[8px] font-extrabold text-[#b91c1c]">DEMAND NOTICE</span>
+          <div className="flex shrink-0 flex-col gap-[2px]">
+            <DetailRow label="Notice No." value="DN-2025-00128" />
+            <DetailRow label="Date" value="15 Jan 2025" />
+            <DetailRow label="To" value="M/s ABC Developers" />
+            <DetailRow label="Project" value="ABC Commercial Complex" />
+          </div>
+          <span className="shrink-0 text-[6.5px] leading-snug font-semibold text-navy/60">
+            As per the assessment, the Labour CESS payable is:
+          </span>
+          <div className="shrink-0 rounded-lg bg-[#fdecec] py-1 text-center ring-1 ring-[#f3b4b4]">
+            <b className="block text-[11px] text-[#b91c1c]">₹ 20,00,000</b>
+            <span className="block text-[6px] font-semibold text-navy/55">(Rupees Twenty Lakh Only)</span>
+          </div>
+          <DetailRow label="Due Date" value="14 Feb 2025" strong />
+          <PhoneButton label="Issue Notice →" tone="bg-[#1476e8]" />
+        </>
+      );
+    return (
+      <>
+        <div className="flex shrink-0 flex-col items-center gap-0.5">
+          <motion.span
+            className="grid size-8 place-items-center rounded-full bg-[#16a34a] text-white shadow-[0_6px_14px_rgba(22,163,74,0.35)]"
+            initial={reduce ? false : { scale: 0.4, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.45, delay: reduce ? 0 : 0.8, ease }}
+          >
+            <Check weight="bold" className="size-4" />
+          </motion.span>
+          <b className="text-center text-[8px] leading-tight text-[#14804a]">
+            Demand Notice
+            <span className="block">Generated Successfully</span>
+          </b>
+        </div>
+        <div className="flex shrink-0 flex-col gap-[2px] rounded-lg bg-[#f4f7fb] px-1.5 py-1 ring-1 ring-navy/8">
+          <DetailRow label="Notice No." value="DN-2025-00128" />
+          <DetailRow label="Demand Amount" value="₹ 20,00,000" />
+          <DetailRow label="Due Date" value="14 Feb 2025" />
+        </div>
+        <div className="flex shrink-0 flex-col gap-[3px]">
+          {shareActions.map((a, i) => (
+            <Stagger key={a.label} delay={900 + i * 90}>
+              <span className="flex items-center gap-1 rounded-md bg-white px-1.5 py-[3px] text-[7px] font-bold text-[#1476e8] ring-1 ring-navy/10">
+                <a.Icon weight="fill" className="size-2.5" />
+                {a.label}
+              </span>
+            </Stagger>
+          ))}
+        </div>
+        <div className="mt-auto flex shrink-0 items-center gap-1 rounded-lg bg-[#e7f6ee] px-1.5 py-1 ring-1 ring-[#a7e3c2]">
+          <CloudArrowUp weight="fill" className="size-3.5 shrink-0 text-[#16a34a]" />
+          <span className="leading-tight">
+            <b className="block text-[7px] text-[#14804a]">Synced to Central Platform</b>
+            <span className="block text-[6px] font-semibold text-navy/55">15 Jan 2025, 11:25 AM</span>
+          </span>
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <motion.div
+      className="relative z-10 flex h-full min-h-0 w-full flex-col gap-2"
+      initial={reduce ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      <SceneHead kicker="Mobile application" title="Demand Notice Generation" className="shrink-0" />
+
+      <div className="flex shrink-0 items-center justify-center gap-1.5">
+        {stages.map((s, i) => (
+          <span key={s.step} className="flex items-center gap-1.5">
+            {i > 0 ? <span className="text-[12px] font-bold text-[#1476e8]/50">→</span> : null}
+            <span
+              className={cn(
+                "flex items-center gap-1.5 rounded-full bg-white/90 py-1 pr-2.5 pl-1 shadow-sm ring-1 transition-all duration-300",
+                active === i && !reduce ? cn("ring-2", s.ring) : "ring-navy/8",
+              )}
+            >
+              <span className={cn("grid size-6 place-items-center rounded-full text-white", s.tone)}>
+                <s.Icon weight="fill" className="size-3.5" />
+              </span>
+              <span className="text-[10px] font-bold text-navy">{s.step}</span>
+            </span>
+          </span>
+        ))}
+      </div>
+
+      <div className="flex min-h-0 flex-1 items-center justify-center gap-1.5">
+        {stages.map((s, i) => (
+          <span key={s.n} className="flex h-full min-h-0 items-center gap-1.5">
+            {i > 0 ? <FlowChevron reduce={reduce} delay={i * 0.25} /> : null}
+            <motion.div
+              className="flex min-h-0 flex-col items-center gap-1.5"
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: active === i && !reduce ? -4 : 0 }}
+              transition={{ duration: 0.4, delay: reduce ? 0 : 0.08 + i * 0.12, ease }}
+            >
+              <span
+                className={cn(
+                  "flex items-center gap-1.5 rounded-full py-0.5 pr-2.5 pl-0.5 text-[10px] font-extrabold text-white shadow-sm",
+                  s.tone,
+                )}
+              >
+                <span className="grid size-5 place-items-center rounded-full bg-white text-[10px] text-navy">{s.n}</span>
+                {s.label}
+              </span>
+              <div
+                className={cn(
+                  "rounded-[36px] ring-offset-2 ring-offset-transparent transition-shadow duration-300",
+                  active === i && !reduce ? cn("ring-2", s.ring) : "ring-0",
+                )}
+              >
+                <PhoneShell title={titles[i]} className="w-[176px]">
+                  {phoneBody(s.n)}
+                </PhoneShell>
+              </div>
+            </motion.div>
+          </span>
+        ))}
+
+        <motion.section
+          className="ml-1 flex w-[214px] shrink-0 flex-col gap-1.5 self-center rounded-2xl bg-white/95 p-2 shadow-[0_12px_28px_rgba(7,20,51,0.12)] ring-1 ring-navy/8"
+          initial={reduce ? false : { opacity: 0, x: 14 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: reduce ? 0 : 0.6, ease }}
+        >
+          <h3 className="rounded-lg bg-[#1476e8] px-2 py-1 text-[12px] font-extrabold text-white">Key Capabilities</h3>
+          {capabilities.map((cap, i) => (
+            <div
+              key={cap.label}
+              className={cn(
+                "flex items-center gap-2 rounded-xl px-1.5 py-1.5 ring-1 transition-colors duration-300",
+                active === i && !reduce ? "bg-[#f4f8ff] ring-[#1476e8]/30" : "bg-white ring-navy/6",
+              )}
+            >
+              <span className={cn("grid size-9 shrink-0 place-items-center rounded-full text-white shadow-sm", cap.wrap)}>
+                <cap.Icon weight="fill" className="size-4" />
+              </span>
+              <div className="min-w-0">
+                <b className="block text-[11.5px] leading-tight text-navy">{cap.label}</b>
+                <span className="mt-0.5 block text-[9px] leading-snug font-semibold text-navy/65">{cap.detail}</span>
+              </div>
+            </div>
+          ))}
+        </motion.section>
+      </div>
+
+      <div className="grid shrink-0 grid-cols-4 gap-1.5">
+        {outcomes.map((o, i) => (
+          <Stagger key={o.label} delay={400 + i * 80}>
+            <div className="flex items-center gap-2 rounded-2xl bg-white/95 px-2 py-1.5 shadow-sm ring-1 ring-navy/8">
+              <span className={cn("grid size-8 shrink-0 place-items-center rounded-full text-white", o.wrap)}>
+                <o.Icon weight="fill" className="size-4" />
+              </span>
+              <span className="min-w-0">
+                <b className="block text-[11px] leading-tight text-navy">{o.label}</b>
+                <span className="block text-[9px] leading-snug font-semibold text-navy/55">{o.detail}</span>
+              </span>
+            </div>
+          </Stagger>
+        ))}
+      </div>
+    </motion.div>
   );
 }
 
@@ -470,10 +1373,10 @@ function FieldFlowStage({
   /* Offline tip meets left edge of Saved-safely image (~67%) */
   const hubX = offline ? 66.5 : 74;
   const hubTone = offline
-    ? { ring: "ring-gold/40", glow: "rgba(201,162,39,0.22)", box: "bg-gold text-gold-ink", chip: "bg-gold-ink/10 text-gold-ink" }
+    ? { ring: "ring-[#f97316]/40", glow: "rgba(249,115,22,0.2)", box: "bg-[#f97316] text-white", chip: "bg-white/20 text-white" }
     : happy || sending
-      ? { ring: "ring-ok/40", glow: "rgba(14,138,114,0.22)", box: "bg-ok text-white", chip: "bg-white/15 text-white" }
-      : { ring: "ring-[#5b9bd5]/40", glow: "rgba(91,155,213,0.22)", box: "bg-[#1a4e8a] text-white", chip: "bg-white/12 text-white/90" };
+      ? { ring: "ring-[#16a34a]/40", glow: "rgba(22,163,74,0.22)", box: "bg-[#16a34a] text-white", chip: "bg-white/20 text-white" }
+      : { ring: "ring-[#1476e8]/40", glow: "rgba(20,118,232,0.22)", box: "bg-[#1476e8] text-white", chip: "bg-white/15 text-white/90" };
 
   const hubLabel = offline
     ? "Held on phone"
@@ -513,25 +1416,6 @@ function FieldFlowStage({
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="relative z-10 flex items-center justify-between gap-2 border-b border-navy/6 px-3.5 py-2">
-        <div className="min-w-0">
-          <div className="text-[9px] font-extrabold tracking-[0.14em] text-[#1a4e8a] uppercase">
-            Field capture to Board file
-          </div>
-          <p className="mt-0.5 truncate text-[12px] font-semibold text-muted-foreground">
-            Place · photos · notes · demand reach one Project ID.
-          </p>
-        </div>
-        <span
-          className={cn(
-            "shrink-0 rounded-full px-2.5 py-1 text-[10px] font-extrabold",
-            offline ? "bg-gold-soft text-gold-deep" : happy || sending ? "bg-ok-soft text-ok" : "bg-[#e8f1fa] text-[#1a4e8a]",
-          )}
-        >
-          {items.length} captures
-        </span>
-      </div>
-
       <div ref={wrapRef} className="relative min-h-0 flex-1">
         <div
           aria-hidden
@@ -621,9 +1505,9 @@ function FieldFlowStage({
           : null}
 
         <div className="absolute inset-y-2.5 left-2.5 z-10 flex w-[48%] flex-col">
-          <div className="mb-1.5 text-[9px] font-extrabold tracking-[0.14em] text-muted-foreground uppercase">
-            Sending from phone
-          </div>
+          <h3 className="mb-1.5 text-[13px] font-extrabold text-[#1476e8]">
+            {offline ? "Saved on this phone" : "Sent from this phone"}
+          </h3>
           <div className="flex min-h-0 flex-1 flex-col justify-between py-0.5">
             {items.map((item, i) => (
               <Stagger key={item.id} delay={30 + i * 35}>
@@ -644,11 +1528,11 @@ function FieldFlowStage({
                     <span
                       className={cn(
                         "absolute -top-0.5 -right-0.5 grid size-3.5 place-items-center rounded-full text-white shadow-sm ring-[1.5px] ring-white",
-                        offline ? "bg-gold" : happy || sending ? "bg-ok" : "bg-[#1a4e8a]",
+                        offline ? "bg-[#f97316]" : happy || sending ? "bg-[#16a34a]" : "bg-[#1476e8]",
                       )}
                     >
                       {offline ? (
-                        <LinkBreak weight="bold" className="size-2 text-gold-ink" />
+                        <LinkBreak weight="bold" className="size-2 text-white" />
                       ) : happy || sending ? (
                         <Check weight="bold" className="size-2" />
                       ) : (
@@ -657,8 +1541,7 @@ function FieldFlowStage({
                     </span>
                   </span>
                   <span className="min-w-0">
-                    <span className="block truncate text-[12px] font-bold leading-tight text-navy">{item.label}</span>
-                    <span className="block truncate text-[10px] font-semibold text-muted-foreground">{item.holds}</span>
+                    <span className="block text-[12px] font-bold leading-tight text-navy">{item.label}</span>
                   </span>
                 </motion.div>
               </Stagger>
@@ -704,14 +1587,12 @@ function FieldFlowStage({
                 <span
                   className={cn(
                     "grid size-11 place-items-center rounded-xl shadow-md",
-                    happy || sending ? "bg-white/20 text-white" : "bg-[#5b9bd5] text-white",
+                    "bg-white/20 text-white",
                   )}
                 >
                   <Database weight="fill" className="size-5" />
                 </span>
-                <div className="mt-2 text-[8px] font-extrabold tracking-[0.12em] text-white/70 uppercase">
-                  Central Platform
-                </div>
+                <div className="mt-2 text-[10px] font-bold text-white/85">Central Platform</div>
                 <b className="mt-0.5 text-[12px] leading-snug">ABC project</b>
                 <span className={cn("mt-1.5 rounded-full px-2 py-0.5 text-[8px] font-bold", hubTone.chip)}>
                   {hubLabel}
@@ -1241,12 +2122,11 @@ function CapabilityRail({ mode, reduce }: { mode: "caps" | "issues"; reduce: boo
         </div>
       ) : (
         <div className="shrink-0 border-b border-navy/6 px-3.5 py-2">
-          <div className="text-[9px] font-extrabold tracking-[0.14em] text-teal uppercase">Field capabilities</div>
-          <div className="text-[11px] font-bold text-navy">What the Field Mobile App does</div>
+          <div className="text-[13px] font-extrabold text-navy">Key Capabilities</div>
         </div>
       )}
 
-      <ol className="grid min-h-0 flex-1 grid-rows-4">
+      <ol className={cn("grid min-h-0 flex-1", isIssues ? "grid-rows-4" : "grid-rows-5")}>
         {rows.map((item, i) => (
           <motion.li
             key={`${mode}-${item.label}`}
@@ -1326,20 +2206,20 @@ function OfflineSavedPanel({ reduce }: { reduce: boolean }) {
   return (
     <div className="flex h-full min-h-0 flex-col gap-1">
       <motion.div
-        className="flex shrink-0 items-start gap-2 rounded-2xl bg-[#fbf3e8] px-2 py-1.5 ring-1 ring-[#e8d4b8]/80"
+        className="flex shrink-0 items-start gap-2 rounded-2xl bg-[#fdecec] px-2 py-1.5 ring-1 ring-[#f3b4b4]"
         initial={reduce ? false : { opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease }}
       >
-        <span className="relative mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-[#f0e0c4] text-[#6b4a1e] shadow-sm ring-1 ring-[#e2c99a]/70">
+        <span className="relative mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-[#e0453c] text-white shadow-sm ring-1 ring-[#f3b4b4]">
           <WifiSlash weight="bold" className="size-3.5" />
-          <span className="absolute -right-0.5 -bottom-0.5 grid size-2.5 place-items-center rounded-full bg-[#e0453c] text-white ring-1 ring-white">
+          <span className="absolute -right-0.5 -bottom-0.5 grid size-2.5 place-items-center rounded-full bg-[#b91c1c] text-white ring-1 ring-white">
             <X weight="bold" className="size-1.5" />
           </span>
         </span>
         <div className="min-w-0 leading-tight">
-          <div className="text-[10px] font-extrabold text-[#5c3d18]">Network Unavailable</div>
-          <p className="mt-0.5 text-[8px] font-semibold leading-snug text-[#7a6248]">
+          <div className="text-[10px] font-extrabold text-[#b91c1c]">Network Unavailable</div>
+          <p className="mt-0.5 text-[8px] font-semibold leading-snug text-[#9f3a3a]">
             Data is saved on your phone and will sync automatically.
           </p>
         </div>
@@ -1399,6 +2279,143 @@ function OfflineSavedPanel({ reduce }: { reduce: boolean }) {
   );
 }
 
+const ASSIGNED_PROJECTS = [
+  {
+    name: "ABC Commercial Complex",
+    status: "Assigned",
+    statusClass: "bg-[#e8f8ef] text-[#14804a]",
+    id: "PRJ-000245",
+    place: "Yelahanka, Bengaluru",
+    kind: "Commercial Building",
+    dept: "Urban Development Dept.",
+    date: "15 Jan 2025",
+    img: abcSite,
+    featured: true,
+  },
+  {
+    name: "XYZ Apartments",
+    status: "In Progress",
+    statusClass: "bg-[#e8f1ff] text-[#1476e8]",
+    id: "PRJ-000312",
+    place: "Jakkur, Bengaluru",
+    img: buildStage2,
+    featured: false,
+  },
+  {
+    name: "Metro Station",
+    status: "Assigned",
+    statusClass: "bg-[#e8f8ef] text-[#14804a]",
+    id: "PRJ-000289",
+    place: "Mahalakshmi, Bengaluru",
+    img: hubCenterAbc,
+    featured: false,
+  },
+] as const;
+
+/** Beat 1 — My Assigned Projects, as on the field officer phone. */
+function AssignedProjectsScreen() {
+  return (
+    <div className="relative z-10 flex min-h-0 flex-1 flex-col bg-[#f4f7fb]">
+      <div className="shrink-0 bg-[#1476e8] px-2.5 pt-6 pb-2 text-white">
+        <div className="mb-1.5 flex items-center justify-between text-[8px] font-bold">
+          <span>9:41</span>
+          <span className="tracking-tighter opacity-80">▮▮▮</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="flex w-4 flex-col gap-[3px]" aria-hidden>
+            <span className="h-[1.5px] w-full rounded-full bg-white" />
+            <span className="h-[1.5px] w-full rounded-full bg-white" />
+            <span className="h-[1.5px] w-3/4 rounded-full bg-white" />
+          </span>
+          <b className="min-w-0 flex-1 truncate text-center text-[12px]">My Assigned Projects</b>
+          <span className="relative grid size-5 place-items-center">
+            <Bell weight="fill" className="size-3.5" />
+            <span className="absolute top-0 right-0 size-1.5 rounded-full bg-[#e83b3b] ring-1 ring-white" />
+          </span>
+        </div>
+      </div>
+
+      <div className="min-h-0 flex-1 overflow-hidden px-2 py-1.5">
+        <div className="flex items-center gap-1.5 rounded-lg bg-white px-2 py-1.5 shadow-sm ring-1 ring-navy/8">
+          <MagnifyingGlass weight="bold" className="size-3 text-navy/35" />
+          <span className="text-[9px] font-semibold text-navy/35">Search projects...</span>
+        </div>
+        <div className="mt-1.5 flex gap-2 overflow-hidden px-0.5 text-[8px] font-bold">
+          <span className="border-b-2 border-[#1476e8] pb-0.5 text-[#1476e8]">All (5)</span>
+          <span className="pb-0.5 text-navy/40">Assigned (3)</span>
+          <span className="pb-0.5 text-navy/40">In Progress (1)</span>
+          <span className="pb-0.5 text-navy/40">Completed (1)</span>
+        </div>
+
+        <div className="mt-1.5 flex flex-col gap-1.5">
+          {ASSIGNED_PROJECTS.map((project) =>
+            project.featured ? (
+              <div key={project.id} className="overflow-hidden rounded-xl bg-[#eef8f4] shadow-sm ring-1 ring-[#b7e4cf]">
+                <div className="flex gap-1.5 p-1.5">
+                  <img src={project.img} alt="" className="size-14 shrink-0 rounded-lg object-cover" />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-1">
+                      <b className="text-[10px] leading-tight text-navy">{project.name}</b>
+                      <span className={cn("shrink-0 rounded-full px-1.5 py-px text-[7px] font-extrabold", project.statusClass)}>
+                        {project.status}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-[8px] leading-snug font-semibold text-navy/70">
+                      <span className="block">Project ID: {project.id}</span>
+                      <span className="block">{project.place}</span>
+                      <span className="block">{project.kind}</span>
+                      <span className="block">{project.dept}</span>
+                      <span className="block">Assigned Date: {project.date}</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="mx-1.5 mb-1.5 flex items-center justify-center gap-1 rounded-lg bg-[#1476e8] py-1.5 text-[9px] font-extrabold text-white">
+                  View Project
+                  <CaretRight weight="bold" className="size-2.5" />
+                </div>
+              </div>
+            ) : (
+              <div key={project.id} className="flex items-center gap-1.5 rounded-xl bg-white p-1.5 shadow-sm ring-1 ring-navy/8">
+                <img src={project.img} alt="" className="size-10 shrink-0 rounded-lg object-cover" />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-1">
+                    <b className="truncate text-[10px] text-navy">{project.name}</b>
+                    <span className={cn("shrink-0 rounded-full px-1.5 py-px text-[7px] font-extrabold", project.statusClass)}>
+                      {project.status}
+                    </span>
+                  </div>
+                  <p className="text-[8px] leading-snug font-semibold text-navy/55">
+                    Project ID: {project.id}
+                    <span className="block">{project.place}</span>
+                  </p>
+                </div>
+                <CaretRight weight="bold" className="size-3 shrink-0 text-navy/30" />
+              </div>
+            ),
+          )}
+        </div>
+      </div>
+
+      <div className="grid shrink-0 grid-cols-4 border-t border-white/20 bg-[#1476e8] px-1 py-1.5 text-white">
+        {[
+          { label: "Projects", Icon: Buildings, active: true },
+          { label: "Map", Icon: MapPin, active: false },
+          { label: "Notifications", Icon: Bell, active: false },
+          { label: "Profile", Icon: User, active: false },
+        ].map((item) => (
+          <span
+            key={item.label}
+            className={cn("flex flex-col items-center gap-0.5 text-[7px] font-bold", item.active ? "text-white" : "text-white/65")}
+          >
+            <item.Icon weight="fill" className="size-3.5" />
+            {item.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function MobileAppStage({
   beat,
   offline,
@@ -1431,25 +2448,22 @@ function MobileAppStage({
           <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[34px] bg-[#f3f6fb]">
             <div className="pointer-events-none absolute top-0 left-1/2 z-20 h-5 w-28 -translate-x-1/2 rounded-b-2xl bg-[#1a1f2e]" />
 
-            <div className="relative z-10 flex shrink-0 items-center justify-between px-3.5 pt-2.5 pb-0.5 text-[9px] font-bold text-navy">
-              <span>10:24</span>
-              <span className="tracking-tighter text-navy/35">▮▮▮</span>
-            </div>
+            {beat === 0 ? <AssignedProjectsScreen /> : null}
 
-            <div className="shrink-0 border-b border-navy/8 bg-white px-2.5 py-2">
+            {beat === 0 ? null : (
+            <>
+            <div className="shrink-0 bg-[#1476e8] px-3 pt-6 pb-2 text-white">
+              <div className="mb-1 flex items-center justify-between text-[8px] font-bold">
+                <span>9:41</span>
+                <span className="tracking-tighter opacity-80">▮▮▮</span>
+              </div>
               <div className="flex items-center gap-2">
-                <span className="relative grid size-8 place-items-center rounded-full bg-navy text-teal-bright shadow-[0_3px_0_0_rgba(7,20,51,0.28),0_1.5px_0_rgba(255,255,255,0.35)_inset]">
-                  <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[45%] rounded-t-full bg-[linear-gradient(180deg,rgba(255,255,255,0.28),transparent)]" />
-                  <DeviceMobile weight="fill" className="relative z-[1] size-3.5" />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="text-[7px] font-extrabold tracking-[0.14em] text-teal uppercase">CESS Field App</div>
-                  <div className="truncate text-[12px] font-extrabold leading-tight text-navy">Field Visit</div>
-                </div>
+                <span className="text-[12px] leading-none">‹</span>
+                <b className="min-w-0 flex-1 truncate text-[12px]">{offline ? "Field Assessment" : "Sync Data"}</b>
                 <motion.span
                   className={cn(
-                    "rounded-full px-2.5 py-0.5 text-[8px] font-extrabold uppercase shadow-sm",
-                    offline ? "bg-gold text-gold-ink" : happy ? "bg-ok text-white" : "bg-ok-soft text-ok",
+                    "rounded-full px-2.5 py-0.5 text-[8px] font-extrabold shadow-sm",
+                    offline ? "bg-[#e0453c] text-white" : "bg-[#16a34a] text-white",
                   )}
                   animate={reduce ? undefined : { opacity: [1, 0.75, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -1478,22 +2492,20 @@ function MobileAppStage({
                 </div>
               </div>
 
-              <div className="relative shrink-0 overflow-hidden rounded-2xl bg-navy text-white shadow-[0_8px_18px_rgba(7,20,51,0.22)]">
-                <div aria-hidden className="pointer-events-none absolute -top-3 -left-2 h-12 w-12 rounded-full border border-teal-bright/25" />
-                <div aria-hidden className="pointer-events-none absolute -right-2 -bottom-3 h-14 w-14 rounded-full border border-teal-bright/15" />
+              <div className="relative shrink-0 overflow-hidden rounded-2xl bg-[#e7f6ee] text-navy ring-1 ring-[#a7e3c2]">
                 <div className="relative flex items-center gap-2.5 px-2.5 py-2">
                   <motion.span
-                    className="relative grid size-9 shrink-0 place-items-center rounded-full bg-teal-bright text-navy shadow-[0_3px_0_0_rgba(7,20,51,0.2),0_1.5px_0_rgba(255,255,255,0.55)_inset]"
+                    className="relative grid size-9 shrink-0 place-items-center rounded-full bg-[#16a34a] text-white shadow-sm"
                     animate={reduce || !capturing ? undefined : { scale: [1, 1.08, 1] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
                     <MapPin weight="fill" className="size-4" />
                   </motion.span>
                   <div className="min-w-0">
-                    <div className="text-[7px] font-extrabold tracking-[0.14em] text-teal-bright uppercase">
-                      {capturing ? "Place captured" : "Tap to capture place"}
+                    <div className="text-[9px] font-extrabold text-[#14804a]">
+                      {capturing ? "GPS Location Captured" : "Tap to capture GPS location"}
                     </div>
-                    <div className="truncate text-[11px] font-bold">
+                    <div className="truncate text-[11px] font-bold text-navy">
                       {capturing ? COORDS : "Standing at ABC site"}
                     </div>
                   </div>
@@ -1557,11 +2569,9 @@ function MobileAppStage({
                   ) : (
                     <>
                       <div className="mb-1 flex items-center justify-between gap-1 px-0.5">
-                        <span className="text-[7px] font-extrabold tracking-[0.12em] text-muted-foreground uppercase">
-                          Capture on this visit
-                        </span>
+                        <b className="text-[10px] text-[#1476e8]">Capture on this visit</b>
                         {happy ? (
-                          <span className="rounded-full bg-ok-soft px-1.5 py-px text-[6px] font-extrabold text-ok uppercase">
+                          <span className="rounded-full bg-[#e7f6ee] px-1.5 py-px text-[7px] font-extrabold text-[#14804a]">
                             All reached
                           </span>
                         ) : null}
@@ -1641,14 +2651,10 @@ function MobileAppStage({
                 className={cn(
                   "flex items-center justify-center gap-1.5 rounded-2xl px-3 py-2.5 text-[10px] font-extrabold shadow-[0_4px_0_0_rgba(7,20,51,0.18)]",
                   offline
-                    ? "bg-gold text-gold-ink"
-                    : happy
-                      ? "bg-ok text-white"
-                      : showDemand
-                        ? "bg-navy text-teal-bright"
-                        : sending
-                          ? "bg-ok text-white"
-                          : "bg-[#1a4e8a] text-white",
+                    ? "bg-[#f97316] text-white"
+                    : happy || sending
+                      ? "bg-[#16a34a] text-white"
+                      : "bg-[#1476e8] text-white",
                 )}
                 animate={reduce ? undefined : { scale: [1, 1.015, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -1658,9 +2664,9 @@ function MobileAppStage({
                   : showIssues
                     ? "Continue to capture"
                     : offline
-                      ? "Save on phone · send later"
+                      ? "Sync When Online"
                       : happy
-                        ? "Sent · all reached"
+                        ? "Synced to Central Platform"
                         : showDemand
                           ? "Demand draft ready · send"
                           : "Save capture"}
@@ -1668,7 +2674,7 @@ function MobileAppStage({
               </motion.div>
 
               <div className="mt-1.5 flex items-center justify-around px-1 pb-0.5 text-navy/40">
-                <House weight="fill" className="size-3.5 text-teal" />
+                <House weight="fill" className="size-3.5 text-[#1476e8]" />
                 <Path weight="bold" className="size-3.5" />
                 <span className="relative">
                   <CloudArrowUp weight="bold" className="size-3.5" />
@@ -1679,6 +2685,8 @@ function MobileAppStage({
                 <User weight="bold" className="size-3.5" />
               </div>
             </div>
+            </>
+            )}
           </div>
         </div>
       </motion.div>
@@ -1722,7 +2730,7 @@ function FlowArrow({
         aria-hidden
         className={cn(
           "relative z-[1] grid size-11 place-items-center rounded-full shadow-[0_10px_24px_rgba(7,20,51,0.22)] ring-2 ring-white",
-          offline ? "bg-gold text-gold-ink" : live ? "bg-ok text-white" : "bg-navy text-teal-bright",
+          offline ? "bg-[#f97316] text-white" : live ? "bg-[#16a34a] text-white" : "bg-[#1476e8] text-white",
         )}
         animate={reduce ? undefined : { x: offline ? [0, -2, 0] : [0, 5, 0], scale: [1, 1.08, 1] }}
         transition={{ duration: 1.35, repeat: Infinity, ease: "easeInOut" }}
@@ -1760,7 +2768,7 @@ function PlatformHub({
       : beat === 1
         ? "Awaiting capture"
         : offline
-          ? "Waiting · held on phone"
+          ? "Waiting on phone"
           : happy
             ? "All reached"
             : sending
@@ -1771,7 +2779,7 @@ function PlatformHub({
     <motion.div
       className={cn(
         "flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-navy/8 bg-white/92 shadow-[0_10px_28px_rgba(7,20,51,0.08)] backdrop-blur-sm ring-2",
-        happy ? "ring-ok/35" : "ring-teal/20",
+        happy ? "ring-[#16a34a]/35" : "ring-[#1476e8]/20",
       )}
       animate={reduce ? undefined : { y: [0, -1.5, 0] }}
       transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
@@ -1781,7 +2789,7 @@ function PlatformHub({
           <motion.span
             className={cn(
               "grid size-11 shrink-0 place-items-center rounded-2xl shadow-md",
-              happy ? "bg-ok text-white" : "bg-navy text-teal-bright",
+              happy ? "bg-[#16a34a] text-white" : "bg-[#1476e8] text-white",
             )}
             animate={reduce ? undefined : { scale: [1, 1.04, 1] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
@@ -1790,11 +2798,11 @@ function PlatformHub({
           </motion.span>
           <div className="min-w-0 flex-1">
             <div className="font-display text-[15px] font-extrabold leading-tight text-navy">Central Platform</div>
-            <div className="mt-0.5 font-mono text-[11px] font-bold text-teal">{PROJECT_ID}</div>
+            <div className="mt-0.5 font-mono text-[11px] font-bold text-[#1476e8]">{PROJECT_ID}</div>
             <div
               className={cn(
-                "mt-1.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[8px] font-extrabold tracking-[0.1em] uppercase",
-                happy ? "bg-ok-soft text-ok" : offline ? "bg-gold-soft text-gold-deep" : "bg-accent text-teal",
+                "mt-1.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold",
+                happy ? "bg-[#e7f6ee] text-[#14804a]" : offline ? "bg-[#fff4e6] text-[#c2410c]" : "bg-[#e8f1fd] text-[#1476e8]",
               )}
             >
               {status}
@@ -1805,9 +2813,7 @@ function PlatformHub({
       </div>
 
       <div className="min-h-0 flex-1 overflow-auto px-3 py-2.5">
-        <div className="mb-1.5 text-[9px] font-extrabold tracking-[0.12em] text-muted-foreground uppercase">
-          Field evidence on this file
-        </div>
+        <h3 className="mb-1.5 text-[13px] font-extrabold text-[#1476e8]">Field evidence on this file</h3>
 
         {/* Real site photo strip — offline: not yet on Board file (waiting look) */}
         <div className="mb-2 grid grid-cols-4 gap-1">
@@ -1878,7 +2884,7 @@ function PlatformHub({
                     ) : null}
                   </span>
                   <span className="min-w-0">
-                    <b className="block truncate text-[11px] text-navy">{item.label}</b>
+                    <b className="block text-[11px] leading-tight text-navy">{item.label}</b>
                     <span className="block truncate text-[9px] font-semibold text-muted-foreground">
                       {!lit
                         ? item.id === "photo"
@@ -1896,7 +2902,7 @@ function PlatformHub({
         </div>
 
         {showDemand ? (
-          <Reveal beat={beat} at={4}>
+          <Reveal beat={beat} at={5}>
             <motion.div
               className="relative mt-2 overflow-hidden rounded-2xl bg-linear-to-br from-white via-[#e8f7f5] to-[#d8f0ec] p-2.5 shadow-[0_2px_0_0_rgba(14,138,114,0.22),0_10px_22px_rgba(7,20,51,0.12)] ring-1 ring-ok/25"
               initial={reduce ? false : { opacity: 0, y: 8, scale: 0.97 }}
@@ -1934,17 +2940,20 @@ function PlatformHub({
           </Reveal>
         ) : null}
 
-        <div className="mt-2.5 flex items-center gap-2 rounded-xl bg-mist/70 px-2.5 py-2">
-          <CloudArrowUp weight="fill" className={cn("size-4", sending && !offline ? "text-ok" : "text-teal")} />
+        <div
+          className={cn(
+            "mt-2.5 flex items-center gap-2 rounded-xl px-2.5 py-2 ring-1",
+            offline ? "bg-[#fff4e6] ring-[#fbd38d]" : "bg-[#e7f6ee] ring-[#a7e3c2]",
+          )}
+        >
+          <CloudArrowUp weight="fill" className={cn("size-4", offline ? "text-[#f97316]" : "text-[#16a34a]")} />
           <span className="text-[10px] font-bold text-navy">
-            {offline ? "Held on phone · send when online" : happy || sending ? "Synced to Central Platform" : "Ready to receive"}
+            {offline ? "Waiting on phone. Sends when online." : happy || sending ? "Synced to Central Platform" : "Ready to receive"}
           </span>
         </div>
 
         <div className="mt-2.5">
-          <div className="mb-1.5 text-[9px] font-extrabold tracking-[0.12em] text-muted-foreground uppercase">
-            Recent field visits
-          </div>
+          <h3 className="mb-1.5 text-[13px] font-extrabold text-[#1476e8]">Recent field visits</h3>
           <ul className="space-y-1.5">
             {RECENT_VISITS.slice(0, 2).map((visit, i) => (
               <Stagger key={visit.id} delay={80 + i * 40}>

@@ -1,6 +1,11 @@
 export type { Icon as CessIcon, IconWeight } from "@phosphor-icons/react/dist/lib/types";
 
 export { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
+export { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
+export { EnvelopeSimple } from "@phosphor-icons/react/dist/csr/EnvelopeSimple";
+export { LinkSimple } from "@phosphor-icons/react/dist/csr/LinkSimple";
+export { ShareNetwork } from "@phosphor-icons/react/dist/csr/ShareNetwork";
+export { WhatsappLogo } from "@phosphor-icons/react/dist/csr/WhatsappLogo";
 export { Bank } from "@phosphor-icons/react/dist/csr/Bank";
 export { Bell } from "@phosphor-icons/react/dist/csr/Bell";
 export { Blueprint } from "@phosphor-icons/react/dist/csr/Blueprint";
@@ -39,6 +44,7 @@ export { FileText } from "@phosphor-icons/react/dist/csr/FileText";
 export { Files } from "@phosphor-icons/react/dist/csr/Files";
 export { FolderSimple } from "@phosphor-icons/react/dist/csr/FolderSimple";
 export { Funnel } from "@phosphor-icons/react/dist/csr/Funnel";
+export { Gear } from "@phosphor-icons/react/dist/csr/Gear";
 export { Globe } from "@phosphor-icons/react/dist/csr/Globe";
 export { GpsFix } from "@phosphor-icons/react/dist/csr/GpsFix";
 export { HardHat } from "@phosphor-icons/react/dist/csr/HardHat";
@@ -76,5 +82,6 @@ export { UsersThree } from "@phosphor-icons/react/dist/csr/UsersThree";
 export { VideoCamera } from "@phosphor-icons/react/dist/csr/VideoCamera";
 export { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
 export { Wallet } from "@phosphor-icons/react/dist/csr/Wallet";
+export { WifiHigh } from "@phosphor-icons/react/dist/csr/WifiHigh";
 export { WifiSlash } from "@phosphor-icons/react/dist/csr/WifiSlash";
 export { X } from "@phosphor-icons/react/dist/csr/X";
