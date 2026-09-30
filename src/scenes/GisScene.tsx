@@ -37,7 +37,7 @@ import {
 } from "@/lib/icons";
 import { CessMap } from "@/components/CessMap";
 import { MapPinMarker } from "@/components/MapPinMarker";
-import { Reveal, Stagger } from "@/components/SlideKit";
+import { Reveal, SlideTitle, Stagger } from "@/components/SlideKit";
 import { HEX } from "@/lib/palette";
 import { PROJECTS } from "@/lib/maps";
 import {
@@ -634,20 +634,19 @@ function GisBeatHeader({
   const active = stageIndex(mode);
 
   return (
-    <div
-      className={cn(
-        "flex shrink-0 flex-wrap items-end justify-between gap-2 px-1",
-        mode === "dashboard" && "items-center",
-      )}
-    >
+    <div className="flex shrink-0 flex-col gap-1 px-1">
       <motion.div
         key={head.step + beat}
-        className="min-w-0"
+        className="text-center"
         initial={reduce ? false : { opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.28 }}
       >
-        <div className="flex items-center gap-2.5">
+        <SlideTitle>{head.title}</SlideTitle>
+        <p className="mx-auto mt-1 max-w-[40rem] text-[12px] font-semibold text-muted-foreground">{head.support}</p>
+      </motion.div>
+      <div className={cn("flex flex-wrap items-end justify-between gap-2", mode === "dashboard" && "items-center")}>
+      <div className="flex items-center gap-2.5">
           <span
             className={cn(
               "relative grid shrink-0 place-items-center rounded-2xl shadow-[0_4px_0_0_rgba(7,20,51,0.18),0_1.5px_0_rgba(255,255,255,0.4)_inset] ring-[3px] ring-white",
@@ -658,32 +657,16 @@ function GisBeatHeader({
             <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[45%] rounded-t-2xl bg-[linear-gradient(180deg,rgba(255,255,255,0.35),transparent)]" />
             <stage.Icon weight="fill" className={cn("relative z-[1]", mode === "dashboard" ? "size-4" : "size-5")} />
           </span>
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span
-                className="inline-flex items-center rounded-full px-2 py-0.5 text-[8px] font-extrabold tracking-[0.12em] text-white uppercase"
-                style={{ background: head.accent }}
-              >
-                {head.step}
-              </span>
-              <span className="text-[9px] font-extrabold tracking-[0.12em] text-teal uppercase">{head.kicker}</span>
-            </div>
-            <h2
-              className={cn(
-                "font-display mt-0.5 leading-tight font-extrabold text-navy",
-                mode === "dashboard" ? "text-[18px]" : "text-[22px]",
-              )}
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span
+              className="inline-flex items-center rounded-full px-2 py-0.5 text-[8px] font-extrabold tracking-[0.12em] text-white uppercase"
+              style={{ background: head.accent }}
             >
-              {head.title}
-            </h2>
+              {head.step}
+            </span>
+            <span className="text-[9px] font-extrabold tracking-[0.12em] text-teal uppercase">{head.kicker}</span>
           </div>
-        </div>
-        {mode !== "dashboard" ? (
-          <p className="mt-1 max-w-[36rem] text-[12px] font-semibold text-muted-foreground">{head.support}</p>
-        ) : (
-          <p className="mt-0.5 max-w-[40rem] text-[11px] font-semibold text-muted-foreground">{head.support}</p>
-        )}
-      </motion.div>
+      </div>
 
       {mode !== "dashboard" ? (
         <div className="pointer-events-none flex flex-wrap items-center gap-1 pb-0.5">
@@ -710,6 +693,7 @@ function GisBeatHeader({
           })}
         </div>
       ) : null}
+      </div>
     </div>
   );
 }

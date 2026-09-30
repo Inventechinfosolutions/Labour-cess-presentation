@@ -212,6 +212,7 @@ export function CommandScene({ beat }: { beat: number }) {
 
         <div className="relative z-10 grid h-full min-h-0 grid-rows-[auto_1fr] gap-2 p-2 sm:p-2.5">
           <SceneHead
+            className="px-8"
             kicker="Demand · Payment · Remittance · Matching accounts · Linked systems"
             title="From construction to the CESS money trail"
           />

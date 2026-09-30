@@ -29,7 +29,7 @@ import {
   Wallet,
   X,
 } from "@/lib/icons";
-import { Reveal, Stagger } from "@/components/SlideKit";
+import { Reveal, SlideTitle, Stagger } from "@/components/SlideKit";
 import { ProblemStage } from "@/components/ProblemStage";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { RFP_INTEGRATION_HINT, RFP_INTEGRATION_LABEL, RFP_SOURCE_GROUPS } from "@/lib/rfpSources";
@@ -61,12 +61,12 @@ const SOURCES: {
   icon3d: string;
   actionColor: string;
 }[] = [
-  { id: "bpa", label: "Building plan", holds: "Sanctions", Icon: FileText, icon3d: icon3dBuilding, actionColor: "#5BB8E8" },
-  { id: "gov", label: "Departments", holds: "Project files", Icon: Bank, icon3d: icon3dGovBuilding, actionColor: "#3B7DD8" },
-  { id: "ulb", label: "ULBs", holds: "Permits", Icon: Buildings, icon3d: icon3dUlbBuilding, actionColor: "#E8B84A" },
-  { id: "plan", label: "Planning", holds: "Zoning", Icon: MapPin, icon3d: icon3dMapPin, actionColor: "#2F5FA8" },
-  { id: "util", label: "Utilities", holds: "Connections", Icon: Drop, icon3d: icon3dPipes, actionColor: "#2FAA6A" },
-  { id: "bld", label: "Builders", holds: "Returns", Icon: HardHat, icon3d: icon3dHardhat, actionColor: "#7B5CE8" },
+  { id: "bpa", label: "Building plan approval", holds: "Building permit", Icon: FileText, icon3d: icon3dBuilding, actionColor: "#5BB8E8" },
+  { id: "gov", label: "Government departments", holds: "Departmental works", Icon: Bank, icon3d: icon3dGovBuilding, actionColor: "#3B7DD8" },
+  { id: "ulb", label: "Urban Local Bodies", holds: "Deduct and remit cess", Icon: Buildings, icon3d: icon3dUlbBuilding, actionColor: "#E8B84A" },
+  { id: "plan", label: "Planning Authorities", holds: "Plan sanction", Icon: MapPin, icon3d: icon3dMapPin, actionColor: "#2F5FA8" },
+  { id: "util", label: "Utility service providers", holds: "Service connections", Icon: Drop, icon3d: icon3dPipes, actionColor: "#2FAA6A" },
+  { id: "bld", label: "Builders / contractors", holds: "Cess deduction at source", Icon: HardHat, icon3d: icon3dHardhat, actionColor: "#7B5CE8" },
 ];
 
 const ABC_PROJECT = {
@@ -170,10 +170,10 @@ const CENTRAL_FOOT_CHIPS: { label: string; Icon: CessIcon; tone: string }[] = [
 
 /** What the Board loses when there is no common file. */
 const IMPACTS: { label: string; Icon: CessIcon }[] = [
-  { label: "Demand not clear", Icon: ClipboardText },
-  { label: "Money late", Icon: Wallet },
-  { label: "Less for welfare", Icon: Eye },
-  { label: "Hard to check site", Icon: Camera },
+  { label: "Labour CESS demand is not clear", Icon: ClipboardText },
+  { label: "Cess remittance is late", Icon: Wallet },
+  { label: "Less cess for the welfare fund", Icon: Eye },
+  { label: "Hard to check the work against the cess record", Icon: Camera },
 ];
 
 const WATCH_ISSUES: { label: string; Icon: CessIcon }[] = [
@@ -186,9 +186,9 @@ const WATCH_ISSUES: { label: string; Icon: CessIcon }[] = [
 const PROBLEM_KEY = [
   { label: "Many files", Icon: LinkBreak },
   { label: "Duplicates", Icon: Plugs },
-  { label: "Wrong details", Icon: Scales },
-  { label: "Hard to see", Icon: Eye },
-  { label: "Slow action", Icon: Lightning },
+  { label: "Wrong project particulars", Icon: Scales },
+  { label: "Hard to see the cess due", Icon: Eye },
+  { label: "Slow cess demand and collection", Icon: Lightning },
 ] as const;
 
 const SOLUTION_KEY = [
@@ -211,7 +211,7 @@ const PROTOCOLS: {
 }[] = [
   {
     label: "Direct link",
-    support: "Live details from source offices.",
+    support: "Live details from CESS collection agencies.",
     Icon: Globe,
     icon3d: icon3dPaperPlane,
     accent: "#0e9aa7",
@@ -609,14 +609,14 @@ export function ProblemScene({ beat }: { beat: number; onBeat?: (n: number) => v
 
         {/* Slide-1 style: title inside the stage */}
         <div className="relative z-10 grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)] gap-2.5">
-          <div className="flex flex-wrap items-start justify-between gap-3 px-1">
+          <div className="relative px-1 text-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${head.title}-${matchTheme ? "gold" : processTheme ? "process" : oneTheme ? "one" : centralTheme ? "central" : "teal"}`}
-                className="min-w-0"
-                initial={reduce ? false : { opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={reduce ? undefined : { opacity: 0, x: 6 }}
+                className="mx-auto w-full"
+                initial={reduce ? false : { opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduce ? undefined : { opacity: 0, y: 6 }}
                 transition={{ duration: 0.3 }}
               >
                 <div
@@ -635,23 +635,10 @@ export function ProblemScene({ beat }: { beat: number; onBeat?: (n: number) => v
                 >
                   {head.kicker}
                 </div>
-                <h1
-                  className={cn(
-                    "mt-1 font-display text-[22px] leading-tight font-extrabold tracking-tight",
-                    matchTheme
-                      ? "text-gold-deep"
-                      : oneTheme
-                        ? "text-ok"
-                        : centralTheme
-                          ? "text-[#1a4e8a]"
-                          : "text-navy",
-                  )}
-                >
-                  {head.title}
-                </h1>
+                <SlideTitle>{head.title}</SlideTitle>
                 <p
                   className={cn(
-                    "mt-1.5 max-w-[28rem] text-[12px] font-semibold",
+                    "mx-auto mt-1.5 max-w-[36rem] text-[12px] font-semibold",
                     matchTheme ? "text-navy/70" : "text-muted-foreground",
                   )}
                 >
@@ -689,7 +676,7 @@ export function ProblemScene({ beat }: { beat: number; onBeat?: (n: number) => v
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex shrink-0 flex-col items-end gap-2 pt-1">
+            <div className="absolute top-0 right-0 flex shrink-0 flex-col items-end gap-2 pt-1">
               <div className="flex items-center gap-2">
                 <button
                   type="button"

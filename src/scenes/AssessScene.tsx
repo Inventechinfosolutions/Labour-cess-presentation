@@ -17,8 +17,8 @@ import {
   X,
 } from "@/lib/icons";
 import abcSite from "@/assets/abc-site.png";
-import assessAssign3d from "@/assets/assess-assign-3d.png";
-import assessAssess3d from "@/assets/assess-assess-3d.png";
+import assessAssign3d from "@/assets/assess-assign-officer-3d.png";
+import assessAssess3d from "@/assets/assess-field-3d.png";
 import assessDemand3d from "@/assets/assess-demand-3d.png";
 import assessEstimate3d from "@/assets/assess-estimate-3d.png";
 import assessStatus3d from "@/assets/assess-status-3d.png";
@@ -297,13 +297,14 @@ export function AssessScene({ beat, onBeat }: { beat: number; onBeat: (n: number
           <AnimatePresence mode="wait">
             <motion.div
               key={head.title}
+              className="text-center"
               initial={reduce ? false : { opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? undefined : { opacity: 0, y: 4 }}
               transition={{ duration: 0.25 }}
             >
               <SceneHead kicker={head.kicker} title={head.title} />
-              <p className="mt-0.5 text-[12px] font-semibold text-muted-foreground">{head.support}</p>
+              <p className="mx-auto mt-0.5 max-w-[36rem] text-[12px] font-semibold text-muted-foreground">{head.support}</p>
             </motion.div>
           </AnimatePresence>
 
@@ -362,7 +363,7 @@ export function AssessScene({ beat, onBeat }: { beat: number; onBeat: (n: number
 
             {/* Site circle hub */}
             <motion.div
-              className="absolute top-[48%] left-[52%] z-10 aspect-square w-[min(78%,340px)] -translate-x-1/2 -translate-y-1/2"
+              className="absolute top-[48%] left-[52%] z-10 aspect-square w-[min(62%,250px)] -translate-x-1/2 -translate-y-1/2"
               initial={reduce ? false : { opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
@@ -618,11 +619,11 @@ function ProjectFileCard({ reduce }: { reduce: boolean }) {
 const DESK_CASE_ART: Record<number, { src: string; alt: string }> = {
   [B.assign]: {
     src: assessAssign3d,
-    alt: "Assessment case file — Assignment · Territory officer takes ownership",
+    alt: "Assigned officer — R. Kumar, Labour Inspector, East Zone, Yelahanka, Bengaluru Urban",
   },
   [B.assess]: {
     src: assessAssess3d,
-    alt: "Assessment case file — Assessment · Officer works the same digital file",
+    alt: "Field assessment — on-site survey, GPS capture and CESS estimation",
   },
   [B.estimate]: {
     src: assessEstimate3d,

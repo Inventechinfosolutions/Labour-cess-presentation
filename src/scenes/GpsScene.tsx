@@ -47,7 +47,7 @@ import karnatakaEmblem from "@/assets/karnataka-emblem.png";
 import problemStageBg from "@/assets/problem-stage-bg.png";
 import savedSafelyOnDevice from "@/assets/saved-safely-on-device.png";
 import { NoticeArt } from "@/components/Art";
-import { Reveal, Stagger } from "@/components/SlideKit";
+import { Reveal, SceneHead, Stagger } from "@/components/SlideKit";
 import { cn } from "@/lib/utils";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -235,7 +235,7 @@ export function GpsScene({ beat }: { beat: number }) {
   return (
     <div className="grid h-full min-h-0 grid-rows-[1fr_auto] gap-2">
       <div
-        className="relative grid h-full min-h-0 grid-cols-[minmax(0,0.95fr)_minmax(280px,1.2fr)_minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)] gap-x-3 gap-y-2 overflow-hidden rounded-2xl p-2.5 shadow-[0_12px_36px_rgba(7,20,51,0.1)] ring-1 ring-navy/8"
+        className="relative grid h-full min-h-0 grid-cols-[minmax(0,0.95fr)_minmax(280px,1.2fr)_minmax(0,1fr)] grid-rows-[auto_auto_minmax(0,1fr)] gap-x-3 gap-y-2 overflow-hidden rounded-2xl p-2.5 shadow-[0_12px_36px_rgba(7,20,51,0.1)] ring-1 ring-navy/8"
         onClick={(e) => e.stopPropagation()}
         onPointerDown={(e) => e.stopPropagation()}
       >
@@ -283,10 +283,10 @@ export function GpsScene({ beat }: { beat: number }) {
 
         {/* Row 1 — title · story strip · status (same craft as Problem Statement) */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={reduce ? false : { opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="relative z-10 min-w-0 self-end"
+          className="relative z-10 col-span-3 text-center"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -296,14 +296,9 @@ export function GpsScene({ beat }: { beat: number }) {
               exit={reduce ? undefined : { opacity: 0, y: 4 }}
               transition={{ duration: 0.25 }}
             >
-              <div className="text-[10px] font-bold tracking-[0.16em] text-primary uppercase whitespace-nowrap">
-                {head.kicker}
-              </div>
-              <h1 className="mt-1 font-display text-[22px] leading-tight font-extrabold tracking-tight text-navy">
-                {head.title}
-              </h1>
-              <p className="mt-1.5 text-[12px] font-semibold text-muted-foreground">{head.support}</p>
-              <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-navy px-3 py-1.5 text-[11px] font-bold text-teal-bright shadow-sm">
+              <SceneHead kicker={head.kicker} title={head.title} />
+              <p className="mx-auto mt-1.5 max-w-[36rem] text-[12px] font-semibold text-muted-foreground">{head.support}</p>
+              <div className="mx-auto mt-2 inline-flex items-center gap-1.5 rounded-full bg-navy px-3 py-1.5 text-[11px] font-bold text-teal-bright shadow-sm">
                 <DeviceMobile weight="fill" className="size-3.5" />
                 CESS Field App · mobile
               </div>
@@ -311,6 +306,8 @@ export function GpsScene({ beat }: { beat: number }) {
           </AnimatePresence>
         </motion.div>
 
+        <div className="relative z-10 col-span-3 grid grid-cols-[minmax(0,0.95fr)_minmax(280px,1.2fr)_minmax(0,1fr)] gap-x-3">
+        <div />
         <motion.div
           className="relative z-10 flex min-h-0 flex-col items-center justify-end gap-2 text-center"
           initial={reduce ? false : { opacity: 0, y: 8 }}
@@ -381,6 +378,7 @@ export function GpsScene({ beat }: { beat: number }) {
             </p>
           )}
         </motion.div>
+        </div>
 
         {/* Row 2 — left panel by beat · phone · Central Platform */}
         {showIssues || showCaps ? (

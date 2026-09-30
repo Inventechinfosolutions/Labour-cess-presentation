@@ -34,25 +34,72 @@ export function Reveal({
   );
 }
 
-export function Kicker({ children }: { children: ReactNode }) {
+const TITLE_HIGHLIGHT = "text-[#1476e8]";
+
+/** Last word of a scene title, in the Problem Statement blue. */
+export function HighlightedTitle({
+  text,
+  highlightClassName = TITLE_HIGHLIGHT,
+}: {
+  text: string;
+  highlightClassName?: string;
+}) {
+  const trimmed = text.trim();
+  const splitAt = trimmed.lastIndexOf(" ");
+  if (splitAt < 0) return <span className={highlightClassName}>{trimmed}</span>;
   return (
-    <div className="mb-1 text-[11px] font-bold tracking-[0.16em] text-primary uppercase">{children}</div>
+    <>
+      {trimmed.slice(0, splitAt)} <span className={highlightClassName}>{trimmed.slice(splitAt + 1)}</span>
+    </>
   );
 }
 
-export function SlideTitle({ children }: { children: ReactNode }) {
-  return <h1 className="font-display text-[22px] font-extrabold tracking-tight text-navy">{children}</h1>;
+export function Kicker({ children }: { children: ReactNode }) {
+  return (
+    <div className="text-[9px] font-bold tracking-[0.18em] text-[#0087bd] uppercase">{children}</div>
+  );
 }
 
-export function SceneHead({ kicker, title }: { kicker: ReactNode; title: ReactNode }) {
+export function SlideTitle({
+  children,
+  className,
+  highlightClassName,
+}: {
+  children: ReactNode;
+  className?: string;
+  highlightClassName?: string;
+}) {
   return (
-    <header>
-      <Stagger delay={0}>
-        <Kicker>{kicker}</Kicker>
-      </Stagger>
-      <Stagger delay={90}>
-        <SlideTitle>{title}</SlideTitle>
-      </Stagger>
+    <h1
+      className={cn(
+        "mt-0.5 text-center font-display text-[46px] leading-[1.02] font-extrabold tracking-[-0.02em] text-navy uppercase",
+        className,
+      )}
+    >
+      {typeof children === "string" ? (
+        <HighlightedTitle text={children} highlightClassName={highlightClassName} />
+      ) : (
+        children
+      )}
+    </h1>
+  );
+}
+
+export function SceneHead({
+  kicker,
+  title,
+  className,
+  titleClassName,
+}: {
+  kicker: ReactNode;
+  title: string;
+  className?: string;
+  titleClassName?: string;
+}) {
+  return (
+    <header className={cn("text-center", className)}>
+      <Kicker>{kicker}</Kicker>
+      <SlideTitle className={titleClassName}>{title}</SlideTitle>
     </header>
   );
 }

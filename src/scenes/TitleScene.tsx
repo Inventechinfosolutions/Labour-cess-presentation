@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { Badge } from "@/components/ui/badge";
-import { KaMark } from "@/components/SlideKit";
+import { HighlightedTitle, KaMark } from "@/components/SlideKit";
 import { Buildings, ChartLineUp, ShieldCheck, UsersThree } from "@/lib/icons";
 
 const PILLARS = [
@@ -48,7 +48,7 @@ export function TitleScene() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.16, duration: 0.5, ease: easeOut }}
         >
-          Labour CESS Tracking &amp; Monitoring
+          <HighlightedTitle text="Labour CESS Tracking & Monitoring" highlightClassName="text-[#7ec8ff]" />
         </motion.h1>
 
         <motion.p

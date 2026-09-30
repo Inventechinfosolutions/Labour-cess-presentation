@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Field Officer Mobile App</title>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: #dceeff;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    color: #082d68;
+  }
+
+  .slide {
+    width: 1600px;
+    height: 900px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 85% 35%, rgba(255,255,255,.95), transparent 35%),
+      linear-gradient(135deg, #eaf6ff 0%, #ffffff 52%, #e8f5ff 100%);
+  }
+
+  /* HEADER */
+  .header {
+    height: 120px;
+    padding: 18px 34px;
+    color: white;
+    background:
+      linear-gradient(90deg, #0751b8 0%, #0877d7 45%, #cfeeff 100%);
+    position: relative;
+  }
+
+  .title {
+    font-size: 52px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .title .yellow {
+    color: #ffc928;
+  }
+
+  .subtitle {
+    margin-top: 12px;
+    font-size: 25px;
+    font-weight: 400;
+  }
+
+  /* HEADER FLOW */
+  .header-flow {
+    position: absolute;
+    right: 30px;
+    top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    color: #07336f;
+  }
+
+  .flow-item {
+    width: 110px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .flow-icon {
+    width: 58px;
+    height: 58px;
+    margin: auto auto 6px;
+    border-radius: 50%;
+    background: white;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    box-shadow: 0 6px 15px rgba(0, 75, 160, .15);
+  }
+
+  .flow-arrow {
+    font-size: 34px;
+    color: #0875d4;
+    margin-top: -25px;
+  }
+
+  /* MAIN */
+  .content {
+    height: 710px;
+    display: grid;
+    grid-template-columns: 34% 30% 36%;
+    position: relative;
+  }
+
+  /* OFFICER / SITE */
+  .officer-area {
+    position: relative;
+    padding: 30px 20px 20px 38px;
+    background:
+      linear-gradient(rgba(234,246,255,.2), rgba(234,246,255,.85)),
+      linear-gradient(145deg, #d4eafa, #f5fbff);
+  }
+
+  .site-visual {
+    position: absolute;
+    inset: 0;
+    opacity: .23;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent 110px,
+        rgba(18,95,160,.25) 111px,
+        transparent 114px
+      );
+  }
+
+  .officer {
+    position: absolute;
+    left: 48px;
+    bottom: 10px;
+    width: 360px;
+    height: 570px;
+  }
+
+  .helmet {
+    position: absolute;
+    width: 185px;
+    height: 92px;
+    border-radius: 95px 95px 30px 30px;
+    background: linear-gradient(#fff, #d8e4ee);
+    left: 55px;
+    top: 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,.15);
+  }
+
+  .head {
+    position: absolute;
+    width: 125px;
+    height: 145px;
+    background: #9f6445;
+    border-radius: 45% 45% 50% 50%;
+    left: 85px;
+    top: 65px;
+  }
+
+  .body {
+    position: absolute;
+    width: 310px;
+    height: 410px;
+    left: 0;
+    top: 175px;
+    border-radius: 90px 90px 20px 20px;
+    background: #123b65;
+    transform: rotate(-4deg);
+  }
+
+  .vest {
+    position: absolute;
+    width: 185px;
+    height: 390px;
+    left: 25px;
+    top: 185px;
+    background: #d8ef22;
+    clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+    opacity: .92;
+  }
+
+  .phone-small {
+    position: absolute;
+    right: 5px;
+    bottom: 130px;
+    width: 75px;
+    height: 135px;
+    background: #092341;
+    border: 6px solid #111d2c;
+    border-radius: 14px;
+    transform: rotate(-13deg);
+  }
+
+  .phone-small::after {
+    content: "";
+    position: absolute;
+    inset: 8px 5px;
+    background:
+      linear-gradient(#0874d8 0 18%, #fff 18%);
+    border-radius: 5px;
+  }
+
+  .site-label {
+    position: absolute;
+    top: 185px;
+    right: 18px;
+    background: white;
+    border-radius: 14px;
+    padding: 14px 18px;
+    box-shadow: 0 8px 25px rgba(12,69,130,.15);
+    font-weight: 700;
+  }
+
+  .site-label span {
+    color: #f33b4d;
+    margin-right: 6px;
+  }
+
+  /* PHONE */
+  .phone-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .phone {
+    width: 390px;
+    height: 665px;
+    border-radius: 46px;
+    background: #111a28;
+    padding: 12px;
+    box-shadow:
+      0 20px 45px rgba(6,60,115,.25),
+      inset 0 0 0 2px #536275;
+  }
+
+  .screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 36px;
+    overflow: hidden;
+    background: #f4f9fe;
+  }
+
+  .phone-top {
+    height: 80px;
+    background: linear-gradient(90deg, #0757be, #087fe0);
+    color: white;
+    padding: 26px 20px 0;
+    font-size: 23px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .search {
+    margin: 14px;
+    background: white;
+    border: 1px solid #c9def0;
+    border-radius: 10px;
+    padding: 12px;
+    color: #7790ad;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    font-size: 13px;
+    font-weight: 600;
+    color: #41628a;
+    margin: 0 12px 12px;
+  }
+
+  .tabs .active {
+    color: #0875d4;
+    border-bottom: 3px solid #0875d4;
+    padding-bottom: 7px;
+  }
+
+  .project-card {
+    margin: 10px 14px;
+    padding: 14px;
+    border-radius: 14px;
+    background: white;
+    box-shadow: 0 5px 14px rgba(5,67,125,.10);
+    border: 1px solid #d7e9f8;
+  }
+
+  .project-card.primary {
+    background: linear-gradient(135deg, #f5fffa, #e8f9f0);
+    border-color: #b9ead0;
+  }
+
+  .project-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .project-img {
+    width: 95px;
+    height: 90px;
+    border-radius: 10px;
+    background:
+      linear-gradient(135deg, #9ed4f0, #e5c69d);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-img::before {
+    content: "🏗️";
+    position: absolute;
+    font-size: 52px;
+    left: 20px;
+    top: 17px;
+  }
+
+  .project-name {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .status {
+    display: inline-block;
+    background: #7ee2a5;
+    color: #075e31;
+    padding: 4px 14px;
+    border-radius: 18px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .details {
+    font-size: 13px;
+    line-height: 1.75;
+    margin-top: 6px;
+    color: #315477;
+  }
+
+  .view-btn {
+    margin-top: 10px;
+    background: #0876df;
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .mini-project {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .mini-thumb {
+    width: 70px;
+    height: 55px;
+    border-radius: 8px;
+    background: #b9dff3;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+  }
+
+  .bottom-nav {
+    position: absolute;
+    width: 365px;
+    bottom: 35px;
+    display: flex;
+    justify-content: space-around;
+    color: #52708f;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* CAPABILITIES */
+  .cap-area {
+    padding: 45px 25px 30px 15px;
+  }
+
+  .cap-card {
+    height: 625px;
+    background: rgba(255,255,255,.84);
+    border: 1px solid #cce2f4;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(13,76,136,.08);
+  }
+
+  .cap-header {
+    width: 58%;
+    height: 58px;
+    padding: 14px 25px;
+    background: linear-gradient(90deg, #0757ba, #0c8be9);
+    color: white;
+    font-size: 25px;
+    font-weight: 800;
+    clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%);
+  }
+
+  .capability {
+    height: 108px;
+    margin: 0 26px;
+    display: grid;
+    grid-template-columns: 85px 1fr;
+    align-items: center;
+    border-bottom: 1px solid #d8e5ef;
+  }
+
+  .capability:last-child {
+    border-bottom: 0;
+  }
+
+  .cap-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  .blue { background: #1494e8; }
+  .green { background: #10a958; }
+  .orange { background: #ff8a00; }
+  .purple { background: #852ee9; }
+  .pink { background: #ff255d; }
+
+  .cap-title {
+    font-size: 21px;
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+
+  .cap-desc {
+    font-size: 16px;
+    color: #294e78;
+    line-height: 1.35;
+  }
+
+  /* FOOTER */
+  .footer {
+    height: 70px;
+    background: linear-gradient(90deg, #064fae, #075ec6);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    gap: 22px;
+  }
+
+  .footer-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: white;
+    color: #075ec6;
+    display: grid;
+    place-items: center;
+    font-size: 26px;
+  }
+
+  .footer-text {
+    font-size: 26px;
+  }
+
+  .footer-text strong {
+    color: #ffd128;
+  }
+
+  .offline-note {
+    position: absolute;
+    bottom: 78px;
+    right: 24px;
+    font-size: 11px;
+    color: #657b93;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="slide">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="title">
+      Field Officer <span class="yellow">Mobile App</span>
+    </div>
+
+    <div class="subtitle">
+      A mobile workspace for Labour Inspectors to manage assigned field assessments
+    </div>
+
+    <div class="header-flow">
+      <div class="flow-item">
+        <div class="flow-icon">👥</div>
+        Assigned by<br>Department
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-item">
+        <div class="flow-icon">📱</div>
+        View in App
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-item">
+        <div class="flow-icon">📍</div>
+        Go to Site
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+
+    <!-- LEFT: FIELD OFFICER -->
+    <div class="officer-area">
+      <div class="site-visual"></div>
+
+      <div class="site-label">
+        <span>●</span> On Site<br>
+        <small>Yelahanka, Bengaluru</small>
+      </div>
+
+      <div class="officer">
+        <div class="helmet"></div>
+        <div class="head"></div>
+        <div class="body"></div>
+        <div class="vest"></div>
+        <div class="phone-small"></div>
+      </div>
+    </div>
+
+    <!-- CENTER: MOBILE APP -->
+    <div class="phone-area">
+
+      <div class="phone">
+        <div class="screen">
+
+          <div class="phone-top">
+            My Assigned Projects
+          </div>
+
+          <div class="search">
+            🔍 &nbsp; Search projects...
+          </div>
+
+          <div class="tabs">
+            <span class="active">All (5)</span>
+            <span>Assigned (3)</span>
+            <span>In Progress (1)</span>
+            <span>Completed (1)</span>
+          </div>
+
+          <!-- PROJECT 1 -->
+          <div class="project-card primary">
+            <div class="project-row">
+
+              <div class="project-img"></div>
+
+              <div>
+                <div class="project-name">
+                  ABC Commercial Complex
+                </div>
+
+                <span class="status">Assigned</span>
+
+                <div class="details">
+                  🆔 Project ID: PRJ-000245<br>
+                  📍 Yelahanka, Bengaluru<br>
+                  🏢 Commercial Building<br>
+                  🏛 Urban Development Dept.<br>
+                  📅 Assigned: 15 Jan 2025
+                </div>
+              </div>
+            </div>
+
+            <div class="view-btn">
+              View Project →
+            </div>
+          </div>
+
+          <!-- PROJECT 2 -->
+          <div class="project-card">
+            <div class="mini-project">
+              <div class="mini-thumb">🏢</div>
+              <div>
+                <strong>XYZ Apartments</strong><br>
+                <small>PRJ-000312</small><br>
+                <small>📍 Jakkur, Bengaluru</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROJECT 3 -->
+          <div class="project-card">
+            <div class="mini-project">
+              <div class="mini-thumb">🏗️</div>
+              <div>
+                <strong>Metro Station</strong><br>
+                <small>PRJ-000289</small><br>
+                <small>📍 Mahalakshmi, Bengaluru</small>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <span>🏠<br>Projects</span>
+        <span>📍<br>Map</span>
+        <span>🔔<br>Notifications</span>
+        <span>👤<br>Profile</span>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: CAPABILITIES -->
+    <div class="cap-area">
+
+      <div class="cap-card">
+
+        <div class="cap-header">
+          Key Capabilities
+        </div>
+
+        <div class="capability">
+          <div class="cap-icon blue">▤</div>
+          <div>
+            <div class="cap-title">Assigned Projects</div>
+            <div class="cap-desc">
+              View projects allocated to the field officer
+            </div>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="cap-icon green">▣</div>
+          <div>
+            <div class="cap-title">Project Details</div>
+            <div class="cap-desc">
+              Access project and location information
+            </div>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="cap-icon orange">●</div>
+          <div>
+            <div class="cap-title">Site Location</div>
+            <div class="cap-desc">
+              View the project location before visiting
+            </div>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="cap-icon purple">✓</div>
+          <div>
+            <div class="cap-title">Assessment Workspace</div>
+            <div class="cap-desc">
+              Start and manage field assessment for the project
+            </div>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="cap-icon pink">⌁</div>
+          <div>
+            <div class="cap-title">Offline Ready</div>
+            <div class="cap-desc">
+              Continue field work even when connectivity is unavailable*
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="offline-note">
+      * Proposed solution capability
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+
+    <div class="footer-icon">📍</div>
+
+    <div class="footer-text">
+      <strong>One mobile workspace</strong>
+      for field officers to access and manage their assigned projects.
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

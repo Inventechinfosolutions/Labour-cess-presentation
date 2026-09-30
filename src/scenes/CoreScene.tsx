@@ -16,7 +16,7 @@ import {
   User,
   Wallet,
 } from "@/lib/icons";
-import { Hold, KaMark } from "@/components/SlideKit";
+import { Hold, KaMark, SlideTitle } from "@/components/SlideKit";
 import { HEX } from "@/lib/palette";
 import { cn } from "@/lib/utils";
 import problemStageBg from "@/assets/problem-stage-bg.png";
@@ -230,39 +230,18 @@ export function CoreScene({ beat }: { beat: number }) {
         />
 
         <div className="relative z-10 flex min-h-0 flex-1 flex-col gap-2 p-2">
-          <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 px-1">
+          <div className="flex shrink-0 flex-col gap-1 px-1">
             <AnimatePresence mode="wait">
               <motion.div
                 key={beat === 0 ? "open" : current.id}
-                className="min-w-0"
+                className="text-center"
                 initial={reduce ? false : { opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduce ? undefined : { opacity: 0, y: 4 }}
                 transition={{ duration: 0.28 }}
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="relative grid size-9 shrink-0 place-items-center rounded-2xl bg-navy text-teal-bright shadow-[0_4px_0_0_rgba(7,20,51,0.18),0_1.5px_0_rgba(255,255,255,0.4)_inset] ring-[3px] ring-white ring-teal/35">
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute inset-x-0 top-0 h-[45%] rounded-t-2xl bg-[linear-gradient(180deg,rgba(255,255,255,0.35),transparent)]"
-                    />
-                    <Stack weight="fill" className="relative z-[1] size-4" />
-                  </span>
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="inline-flex items-center rounded-full bg-teal px-2 py-0.5 text-[8px] font-extrabold tracking-[0.12em] text-navy-deep uppercase">
-                        Access · Appeals · KSK · Portal · Remittance at source
-                      </span>
-                      <span className="text-[9px] font-extrabold tracking-[0.12em] text-teal uppercase">
-                        {beat === 0 ? "Operating model" : current.chip}
-                      </span>
-                    </div>
-                    <h2 className="font-display mt-0.5 text-[18px] leading-tight font-extrabold text-navy">
-                      How the Department works day to day
-                    </h2>
-                  </div>
-                </div>
-                <p className="mt-0.5 max-w-[40rem] text-[11px] font-semibold text-muted-foreground">
+                <SlideTitle>How the Department works day to day</SlideTitle>
+                <p className="mx-auto mt-1 max-w-[40rem] text-[12px] font-semibold text-muted-foreground">
                   {beat === 0
                     ? "Zones, audit, loop and pillars orbit one common project view."
                     : current.establishes}
@@ -270,6 +249,22 @@ export function CoreScene({ beat }: { beat: number }) {
               </motion.div>
             </AnimatePresence>
 
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2.5">
+                <span className="relative grid size-9 shrink-0 place-items-center rounded-2xl bg-navy text-teal-bright shadow-[0_4px_0_0_rgba(7,20,51,0.18),0_1.5px_0_rgba(255,255,255,0.4)_inset] ring-[3px] ring-white ring-teal/35">
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 top-0 h-[45%] rounded-t-2xl bg-[linear-gradient(180deg,rgba(255,255,255,0.35),transparent)]"
+                  />
+                  <Stack weight="fill" className="relative z-[1] size-4" />
+                </span>
+                <span className="inline-flex items-center rounded-full bg-teal px-2 py-0.5 text-[8px] font-extrabold tracking-[0.12em] text-navy-deep uppercase">
+                  Access · Appeals · KSK · Portal · Remittance at source
+                </span>
+                <span className="text-[9px] font-extrabold tracking-[0.12em] text-teal uppercase">
+                  {beat === 0 ? "Operating model" : current.chip}
+                </span>
+              </div>
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="rounded-md bg-white/90 px-2 py-0.5 font-mono text-[10px] font-bold text-navy ring-1 ring-[#d6e5f6]">
                 {liveCount}/8 nodes · one view
@@ -284,6 +279,7 @@ export function CoreScene({ beat }: { beat: number }) {
                   Complete
                 </span>
               )}
+            </div>
             </div>
           </div>
 
