@@ -3,9 +3,11 @@ import { motion } from "motion/react";
 import { ArrowRight } from "@phosphor-icons/react";
 import pathwaysBg from "@/assets/pathways-bg.jpg";
 import { SectionHeading } from "@/components/home/SectionHeading";
+import { useCardTransition } from "@/lib/pageTransition";
 import { PATHWAYS, pathwayHref } from "@/lib/pathways";
 
 export function Explore({ reduce }: { reduce: boolean }) {
+  const go = useCardTransition();
   return (
     <section id="explore" className="relative isolate scroll-mt-16 overflow-hidden bg-[#f5f8fc] px-5 pt-16 pb-24 lg:px-8">
       <img
@@ -33,6 +35,7 @@ export function Explore({ reduce }: { reduce: boolean }) {
             >
               <Link
                 to={pathwayHref(p.id)}
+                onClick={(e) => go(e, { image: p.image, title: p.page, color: p.color, to: pathwayHref(p.id) })}
                 className="group relative flex h-full min-h-[172px] flex-col items-center justify-between overflow-hidden rounded-2xl px-4 pt-5 pb-4 text-center text-white shadow-[0_10px_26px_rgba(11,31,74,0.14)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_rgba(11,31,74,0.22)]"
                 style={{ background: `linear-gradient(150deg, ${p.color} 0%, ${p.deep} 100%)` }}
               >

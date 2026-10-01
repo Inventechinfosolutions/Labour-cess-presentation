@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
@@ -9,17 +10,20 @@ export function SectionHeading({
   sub,
   reduce,
   dark = false,
+  align = "center",
 }: {
   eyebrow: string;
-  title: string;
+  title: ReactNode;
   sub?: string;
   reduce: boolean;
   dark?: boolean;
+  align?: "center" | "left";
 }) {
   const view = { once: true, amount: 0.6 } as const;
+  const left = align === "left";
 
   return (
-    <div className="mx-auto max-w-3xl text-center">
+    <div className={cn(left ? "max-w-2xl text-left" : "mx-auto max-w-3xl text-center")}>
       <motion.p
         className={cn("text-[12px] font-extrabold uppercase", dark ? "text-[#7cc8ff]" : "text-[#1f5fbf]")}
         initial={reduce ? false : { opacity: 0, letterSpacing: "0.6em" }}
@@ -49,7 +53,10 @@ export function SectionHeading({
       </motion.h2>
       <motion.span
         aria-hidden
-        className="mx-auto mt-4 block h-[3px] w-16 origin-center rounded-full bg-gradient-to-r from-[#3fb4ff] to-[#ffcf6b]"
+        className={cn(
+          "mt-4 block h-[3px] w-16 rounded-full bg-gradient-to-r from-[#3fb4ff] to-[#ffcf6b]",
+          left ? "origin-left" : "mx-auto origin-center",
+        )}
         initial={reduce ? false : { scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={view}

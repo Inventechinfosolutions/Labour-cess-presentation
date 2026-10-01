@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router";
 import { GlobalConnectPage } from "@/pages/GlobalConnectPage";
+import { InvestPage } from "@/pages/InvestPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { PathwayPage } from "@/pages/PathwayPage";
 
@@ -19,6 +20,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/global-connect" replace />} />
         <Route path="/global-connect" element={<GlobalConnectPage />} />
+        <Route path="/global-connect/invest" element={<InvestPage />} />
         <Route path="/global-connect/:pathway" element={<PathwayPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, type MotionValue } from "motion/react"
 import { ArrowRight } from "@phosphor-icons/react";
 import pathwaysBg from "@/assets/pathways-bg.jpg";
 import { SectionHeading } from "@/components/home/SectionHeading";
+import { useCardTransition } from "@/lib/pageTransition";
 import { PATHWAYS, pathwayHref, type Pathway } from "@/lib/pathways";
 
 /** Parallax drift per card, alternating so the row moves like a wave. */
@@ -33,6 +34,7 @@ function CardPhoto({ p, reduce }: { p: Pathway; reduce: boolean }) {
 
 function PathwayCard({ p, i, progress, reduce }: { p: Pathway; i: number; progress: MotionValue<number>; reduce: boolean }) {
   const y = useTransform(progress, [0, 1], [DRIFT[i], -DRIFT[i]]);
+  const go = useCardTransition();
   const Icon = p.icon;
 
   return (
@@ -46,6 +48,7 @@ function PathwayCard({ p, i, progress, reduce }: { p: Pathway; i: number; progre
       >
         <Link
           to={pathwayHref(p.id)}
+          onClick={(e) => go(e, { image: p.image, title: p.page, color: p.color, to: pathwayHref(p.id) })}
           className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_6px_24px_rgba(11,31,74,0.08)] ring-1 ring-[#0b1f4a]/8 transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_40px_rgba(11,31,74,0.16)] focus-visible:ring-2 focus-visible:ring-[#3fb4ff] focus-visible:outline-none"
         >
           <CardPhoto p={p} reduce={reduce} />

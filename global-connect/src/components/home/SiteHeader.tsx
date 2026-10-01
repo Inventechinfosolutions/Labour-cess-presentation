@@ -54,12 +54,22 @@ export function SiteHeader({ solid = false }: { solid?: boolean }) {
               className={({ isActive }) =>
                 cn(
                   "relative px-3 py-2 text-[13.5px] font-medium text-white/80 transition-colors hover:text-white",
-                  isActive &&
-                    "text-white after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-[#3fb4ff]",
+                  isActive && "text-white",
                 )
               }
             >
-              {n.label}
+              {({ isActive }) => (
+                <>
+                  {n.label}
+                  {isActive ? (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-[#3fb4ff] shadow-[0_0_10px_rgba(63,180,255,0.8)]"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  ) : null}
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
