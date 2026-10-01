@@ -95,8 +95,8 @@ const SOURCES: {
   },
   {
     id: "agency",
-    title: "CESS Collection Agencies",
-    lines: ["Project data", "CESS deduction data", "Remittance information", "Payment / transaction details"],
+    title: "PSUs & Other Agencies",
+    lines: ["Various government undertakings and notified agencies"],
     Icon: UsersThree,
     color: "#e43a70",
     grad: "linear-gradient(135deg,#8f1640,#bc2257)",

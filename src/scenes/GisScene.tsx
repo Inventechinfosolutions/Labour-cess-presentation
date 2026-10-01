@@ -16,7 +16,6 @@ import {
   Minus,
   Phone,
   Plus,
-  SquaresFour,
   Stack,
   StackSimple,
   TreeStructure,
@@ -27,7 +26,6 @@ import {
 import { TerritoryWorkspace } from "@/scenes/GisTerritoryWorkspace";
 import { MisDashboard } from "@/scenes/GisMisDashboard";
 import { StoryMap } from "@/scenes/GisStoryMap";
-import { Reveal, SlideTitle } from "@/components/SlideKit";
 import { HEX } from "@/lib/palette";
 import {
   CESS_SITES,
@@ -115,7 +113,7 @@ const BEAT_HEAD: readonly {
   },
   {
     kicker: "Territory · MIS & GIS",
-    title: "Territory-wise Project Status",
+    title: "Department & Territory-wise Project Status",
     support: "Pick a territory. See its projects, field visits, evidence, and CESS status.",
     step: "04 · Territory map",
     accent: "#c45c26",
@@ -150,7 +148,6 @@ export function GisScene({ beat }: { beat: number; onBeat: (n: number) => void }
   const reduce = useReducedMotion();
   const head = BEAT_HEAD[Math.min(beat, BEAT_HEAD.length - 1)];
   const mode = mapMode(beat);
-  const showKey = beat >= 4;
   useEffect(() => {
     if (mode === "gps") {
       setMapPin("abc");
@@ -196,7 +193,7 @@ export function GisScene({ beat }: { beat: number; onBeat: (n: number) => void }
   const mapShowPopup = pinOpen;
 
   return (
-    <div className="grid h-full min-h-0 grid-rows-[1fr_auto] gap-2" onClick={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()}>
+    <div className="grid h-full min-h-0 grid-rows-[1fr]" onClick={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()}>
       <div className="relative flex min-h-0 h-full flex-col overflow-hidden rounded-2xl shadow-[0_12px_36px_rgba(7,20,51,0.1)] ring-1 ring-navy/8">
         <img
           src={problemStageBg}
@@ -217,7 +214,11 @@ export function GisScene({ beat }: { beat: number; onBeat: (n: number) => void }
         />
 
         <div className="relative z-10 flex min-h-0 flex-1 flex-col gap-2 p-2">
-          <GisBeatHeader head={head} beat={beat} reduce={!!reduce} />
+          {head.support ? (
+            <p className="mx-auto max-w-[40rem] shrink-0 px-1 text-center text-[12px] font-semibold text-muted-foreground">
+              {head.support}
+            </p>
+          ) : null}
 
           <div className="relative min-h-0 flex-1 overflow-hidden">
             {mode === "context" ? (
@@ -236,36 +237,6 @@ export function GisScene({ beat }: { beat: number; onBeat: (n: number) => void }
           </div>
         </div>
       </div>
-
-      <StoryFooter showKey={showKey} beat={beat} />
-    </div>
-  );
-}
-
-function GisBeatHeader({
-  head,
-  beat,
-  reduce,
-}: {
-  head: (typeof BEAT_HEAD)[number];
-  beat: number;
-  reduce: boolean;
-}) {
-
-  return (
-    <div className="flex shrink-0 flex-col gap-1 px-1">
-      <motion.div
-        key={head.step + beat}
-        className="text-center"
-        initial={reduce ? false : { opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.28 }}
-      >
-        <SlideTitle>{head.title}</SlideTitle>
-        {head.support ? (
-          <p className="mx-auto mt-1 max-w-[40rem] text-[12px] font-semibold text-muted-foreground">{head.support}</p>
-        ) : null}
-      </motion.div>
     </div>
   );
 }
@@ -1143,42 +1114,6 @@ function MiniGpsMap({ reduce }: { reduce: boolean }) {
       <span className="absolute right-2 bottom-2 grid size-6 place-items-center rounded-lg bg-white text-[#1476e8] shadow-sm ring-1 ring-navy/10">
         <Crosshair weight="bold" className="size-3.5" />
       </span>
-    </div>
-  );
-}
-
-function StoryFooter({
-  showKey,
-  beat,
-}: {
-  showKey: boolean;
-  beat: number;
-}) {
-  return (
-    <div className="flex min-h-0 flex-col gap-1.5">
-      {showKey ? (
-        <Reveal beat={beat} at={4}>
-          <div className="rounded-xl bg-ok-soft/80 px-3 py-1.5 shadow-sm ring-1 ring-ok/25">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[8px] font-extrabold tracking-[0.12em] text-ok uppercase">Key message</span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[11px] font-bold text-navy shadow-sm">
-                <GpsFix weight="fill" className="size-3.5 text-teal" />
-                GPS shows the place
-              </span>
-              <span className="text-[11px] font-extrabold text-ok/40">→</span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-navy px-2.5 py-1 text-[11px] font-bold text-teal-bright">
-                <MapTrifold weight="fill" className="size-3.5" />
-                Territory shows path and officer
-              </span>
-              <span className="text-[11px] font-extrabold text-ok/40">→</span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-ok px-2.5 py-1 text-[11px] font-bold text-white">
-                <SquaresFour weight="fill" className="size-3.5" />
-                MIS dashboard watches all projects
-              </span>
-            </div>
-          </div>
-        </Reveal>
-      ) : null}
     </div>
   );
 }

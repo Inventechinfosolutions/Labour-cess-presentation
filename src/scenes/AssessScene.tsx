@@ -6,7 +6,6 @@ import {
   Buildings,
   Calculator,
   CalendarBlank,
-  CaretRight,
   CheckCircle,
   Clock,
   CornersOut,
@@ -20,7 +19,6 @@ import {
   Ruler,
   Scan,
   SealCheck,
-  ShieldCheck,
   User,
   UsersThree,
   WarningCircle,
@@ -31,7 +29,7 @@ import assessAssign3d from "@/assets/assess-assign-officer-3d.png";
 import assessAssess3d from "@/assets/assess-field-3d.png";
 import assessDemandPoster from "@/assets/assess-demand-poster.png";
 import assessEstimatePoster from "@/assets/assess-estimation-poster.png";
-import assessStatus3d from "@/assets/assess-status-3d.png";
+import assessStatus3d from "@/assets/assess-status-board.png";
 import assessStageBg from "@/assets/assess-stage-bg.jpg";
 import projectFolder from "@/assets/project-file-folder.jpg";
 import icon3dDocument from "@/assets/icon3d-document.jpg";
@@ -91,9 +89,9 @@ const STAGES: Stage[] = [
   },
   {
     id: "assign",
-    sub: "Allotted to Inspector",
-    label: "Allotment to officer",
-    short: "Allotment",
+    sub: "Assigned to officer",
+    label: "Assignment to officer",
+    short: "Assignment",
     hint: "Territory officer takes ownership",
     Icon: UsersThree,
     who: "District in-charge",
@@ -108,9 +106,9 @@ const STAGES: Stage[] = [
   },
   {
     id: "assess",
-    sub: "Site inspection",
-    label: "Site inspection",
-    short: "Inspection",
+    sub: "On the same project file",
+    label: "Field assessment",
+    short: "Field assessment",
     hint: "Officer works the same digital file",
     Icon: HardHat,
     who: "Labour Inspector",
@@ -125,9 +123,9 @@ const STAGES: Stage[] = [
   },
   {
     id: "estimate",
-    sub: "Cost of construction",
-    label: "Cost valuation",
-    short: "Valuation",
+    sub: "Verified quantities",
+    label: "Estimation",
+    short: "Estimation",
     hint: "Verified quantities on the record",
     Icon: Ruler,
     who: "Labour Inspector",
@@ -207,17 +205,17 @@ const BEAT_HEAD: readonly { kicker: string; title: string; support: string }[] =
   },
   {
     kicker: "Assessment desk",
-    title: "Allotment to Officer",
+    title: "Assignment to Officer",
     support: "The project is allotted to the officer for that territory.",
   },
   {
     kicker: "Assessment desk",
-    title: "Site Inspection",
+    title: "Field Assessment",
     support: "The Labour Inspector inspects the site on the same project file.",
   },
   {
     kicker: "Assessment desk",
-    title: "Cost Valuation",
+    title: "Estimation",
     support: "The cost of construction is valued from verified quantities.",
   },
   {
@@ -361,51 +359,7 @@ export function AssessScene({ beat, onBeat }: { beat: number; onBeat: (n: number
         </div>
       </div>
 
-      {/* Footer — key message + orbit mirror */}
       <div className="flex flex-col gap-1.5">
-        <motion.div
-          layout={!reduce}
-          className="flex flex-wrap items-center gap-1.5 rounded-xl bg-navy px-3 py-2 text-white shadow-[0_10px_28px_rgba(7,20,51,0.2)]"
-        >
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-teal px-2.5 py-0.5 text-[9px] font-extrabold tracking-[0.12em] text-navy-deep uppercase">
-            Key message
-          </span>
-          <span className="text-[12px] font-semibold text-white/90">
-            One official file. Same Project ID at every step.
-          </span>
-          <span className="ml-auto flex flex-wrap items-center gap-1">
-            {STAGES.map((s, i) => {
-              const active = bi === i;
-              const done = bi > i;
-              return (
-                <button
-                  key={s.id}
-                  type="button"
-                  title={s.label}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onBeat(i);
-                  }}
-                  className={cn(
-                    "inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-bold transition",
-                    active && cn("shadow-md ring-2", s.tone.iconWrap, s.tone.ring),
-                    done && !active && "bg-ok/25 text-ok",
-                    !done && !active && "bg-white/10 text-white/45 hover:bg-white/15 hover:text-white/80",
-                  )}
-                >
-                  {done && !active ? (
-                    <ShieldCheck weight="fill" className="size-3" />
-                  ) : (
-                    <s.Icon weight="fill" className="size-3" />
-                  )}
-                  <span className="hidden sm:inline">{s.short}</span>
-                  {active ? <span className="text-[8px] font-extrabold uppercase">Now</span> : null}
-                </button>
-              );
-            })}
-          </span>
-        </motion.div>
-
         {showIssues ? (
           <Reveal beat={beat} at={B.record}>
             <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-risk-soft/85 px-3 py-1.5 shadow-sm ring-1 ring-risk/12">
@@ -618,29 +572,6 @@ function SiteHub({ reduce, glow }: { reduce: boolean; glow: string }) {
   return (
     <div className="relative min-h-0 [container-type:size]">
       <motion.div
-        className="absolute top-1 left-1/2 z-20 w-[min(98%,340px)] -translate-x-1/2"
-        initial={reduce ? false : { opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-      >
-        <div className="flex items-center gap-3.5 rounded-[22px] bg-white/88 py-3 pr-4 pl-3.5 shadow-[0_12px_30px_rgba(7,20,51,0.12)] ring-1 ring-white/90 backdrop-blur-md">
-          <span aria-hidden className="relative size-12 shrink-0 drop-shadow-[0_6px_10px_rgba(31,95,214,0.35)]">
-            <span className="absolute top-[4%] left-[4%] h-[30%] w-[46%] rounded-t-[7px] bg-[linear-gradient(180deg,#3f7ff0,#2a63dc)]" />
-            <span className="absolute inset-x-0 top-[16%] bottom-[2%] grid place-items-center rounded-[11px] bg-[linear-gradient(160deg,#6aa6ff_0%,#2f6fe6_55%,#1f52c4_100%)] shadow-[inset_0_2px_0_rgba(255,255,255,0.35)]">
-              <FileText weight="fill" className="size-6 text-white" />
-            </span>
-          </span>
-          <div className="min-w-0 flex-1 text-left">
-            <div className="text-[14px] leading-tight font-extrabold tracking-tight text-[#12306a]">One site · One official file</div>
-            <p className="mt-1 text-[11.5px] leading-snug font-medium text-[#4d5f7a]">
-              From submission to assessment, everything in one place.
-            </p>
-          </div>
-          <CaretRight weight="bold" className="size-4 shrink-0 text-[#12306a]" />
-        </div>
-      </motion.div>
-
-      <motion.div
         className="absolute top-[56%] left-1/2 z-10 aspect-square w-[min(80%,52cqh,330px)] -translate-x-1/2 -translate-y-1/2"
         initial={reduce ? false : { opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -701,7 +632,7 @@ function SiteHub({ reduce, glow }: { reduce: boolean; glow: string }) {
             />
             <FolderSimple weight="fill" className="relative size-10 shrink-0 text-[#f7c62f] drop-shadow-[0_2px_3px_rgba(0,0,0,0.35)]" />
             <span className="relative min-w-0 leading-tight">
-              <span className="block text-[10px] font-extrabold tracking-[0.16em] text-[#7fd8f5] uppercase">Official Board file</span>
+              <span className="block text-[10px] font-extrabold tracking-[0.16em] text-[#7fd8f5] uppercase">Project ID</span>
               <b className="block truncate text-[17px] font-extrabold tracking-[0.01em]">CESS-2025-000123</b>
               <span className="block truncate text-[12.5px] font-medium text-white/90">ABC Commercial Complex</span>
             </span>
@@ -878,7 +809,7 @@ const DESK_CASE_ART: Record<number, { src: string; alt: string }> = {
   },
   [B.status]: {
     src: assessStatus3d,
-    alt: "Assessment case file — Status · Pending work, payment, remittance and matching",
+    alt: "Assessment case file — status of assessed, pending, delayed and action cases, with payment, remittance and reconciliation",
   },
 };
 

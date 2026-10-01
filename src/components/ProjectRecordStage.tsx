@@ -64,8 +64,8 @@ const SOURCES: { title: string; lines: string[]; Icon: CessIcon; color: string; 
     grad: "linear-gradient(135deg,#0b6b3a,#22b86a)",
   },
   {
-    title: "CESS Collection Agencies",
-    lines: ["CESS deduction data", "Collection / remittance data", "Payment / transaction details"],
+    title: "PSUs & Other Agencies",
+    lines: ["Various government undertakings and notified agencies"],
     Icon: UsersThree,
     color: "#e43a70",
     grad: "linear-gradient(135deg,#a3164a,#f0507f)",

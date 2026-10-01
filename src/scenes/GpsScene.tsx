@@ -213,16 +213,15 @@ const BEAT_HEAD: readonly { kicker: string; title: string; support: string }[] =
 ];
 
 const SPACE_HINTS = [
-  "Space · Works offline",
+  "Space · Evidence capture",
   "Space · Survey and estimation",
   "Space · On-spot demand",
-  "Space · Evidence capture",
-  "Space · Online happy path",
+  "Space · Works offline",
   "Space · Next",
 ] as const;
 
-/** Space order → content: projects, offline, survey, demand notice, evidence, online sync. */
-const BEAT_ORDER = [0, 2, 4, 5, 1, 3] as const;
+/** Space order → content: projects, evidence, survey, demand notice, offline. */
+const BEAT_ORDER = [0, 1, 4, 5, 2] as const;
 
 export function GpsScene({ beat: step }: { beat: number }) {
   const beat: number = BEAT_ORDER[Math.min(Math.max(step, 0), BEAT_ORDER.length - 1)];

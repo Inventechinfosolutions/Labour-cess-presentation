@@ -21,7 +21,7 @@ import { TitleScene } from "@/scenes/TitleScene";
 import { useEffect, type ReactNode } from "react";
 
 /** Poster-style header title per slide/beat (key: "slide/beat"). */
-const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string; support: string }> = {
+const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
   "1/0": {
     title: (
       <>
@@ -29,88 +29,123 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string; suppor
       </>
     ),
     titleClass: "text-[length:clamp(18px,min(2.5vw,4.6vh),40px)] tracking-[-0.04em]",
-    support:
-      "Fragmented systems, incomplete information and limited visibility across the construction and CESS ecosystem.",
   },
   "1/1": {
     title: (
       <>
         Smart Middleware &amp; CESS{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] text-navy-deep">Self-Service Portal</span>
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Self-Service Portal</span>
       </>
     ),
-    titleClass: "text-[length:clamp(15px,min(1.95vw,3.6vh),32px)] tracking-[-0.02em]",
-    support: "Connect every department, authority and agency to the CESS platform.",
+    titleClass: "text-[length:clamp(15px,min(1.95vw,3.6vh),32px)] tracking-[-0.02em] whitespace-nowrap",
   },
   "1/2": {
     title: (
       <>
-        From Integrated Data to a{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] text-navy-deep">Project-Linked Record</span>
+        CESS Integrated{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Agencies</span>
       </>
     ),
     titleClass: "text-[length:clamp(15px,min(1.95vw,3.6vh),32px)] tracking-[-0.02em]",
-    support: "Every incoming data set is validated, matched and linked to the right project.",
   },
   "3/0": {
     title: (
       <>
         Field Officer{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] text-navy-deep">Mobile App</span>
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Mobile App</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
-    support: "A mobile workspace for Labour Inspectors to manage assigned field assessments.",
   },
   "3/1": {
     title: (
       <>
-        Offline Field{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] text-navy-deep">Assessment</span>
+        Location &amp;{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Evidence Capture</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
-    support: "Continue the assessment even when mobile connectivity is unavailable.",
   },
   "3/2": {
     title: (
       <>
         Survey &amp;{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] text-navy-deep">Construction Estimation</span>
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Construction Estimation</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
-    support: "Convert field observations and measurements into a CESS assessment.",
   },
   "3/3": {
     title: (
       <>
         Demand Notice{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] text-navy-deep">Generation</span>
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Generation</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
-    support: "Complete the assessment and generate the demand notice on the spot.",
   },
   "3/4": {
     title: (
       <>
-        Location &amp;{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] text-navy-deep">Evidence Capture</span>
+        Offline Field{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Assessment</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
-    support: "Capture verified site information with GPS, timestamp, photos and videos.",
+  },
+  "4/0": {
+    title: (
+      <>
+        Project{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Location</span>
+      </>
+    ),
+    titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
+  },
+  "4/1": {
+    title: (
+      <>
+        Project Territory{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Map</span>
+      </>
+    ),
+    titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
+  },
+  "4/2": {
+    title: (
+      <>
+        Mapped Responsible{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Officer</span>
+      </>
+    ),
+    titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
+  },
+  "4/3": {
+    title: (
+      <>
+        Department &amp; Territory-wise Project{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Status</span>
+      </>
+    ),
+    titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
+  },
+  "4/4": {
+    title: (
+      <>
+        MIS{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Dashboard</span>
+      </>
+    ),
+    titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
   },
   "5/0": {
     title: (
       <>
-        From Dashboard to{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] text-navy-deep">Closure</span>
+        CESS Exception to{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Closure</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
-    support: "Find exceptions. Take action. Track each case until it is closed.",
   },
 };
 
@@ -118,14 +153,14 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string; suppor
 const TITLE_HIGHLIGHT: Record<string, string> = {
   title: "Tracking & Monitoring",
   problem: "One Project File",
-  assess: "CESS Assessment",
+  assess: "Lifecycle",
   gps: "Mobile App",
   gis: "Map",
   leak: "Closure",
-  core: "Day to Day",
+  core: "Management Platform",
 };
 
-function scenePoster(id: string, title: string, kicker: string) {
+function scenePoster(id: string, title: string) {
   const mark = TITLE_HIGHLIGHT[id];
   const cut = mark && title.endsWith(mark) ? title.length - mark.length : title.length;
   const lead = title.slice(0, cut).trim();
@@ -134,18 +169,17 @@ function scenePoster(id: string, title: string, kicker: string) {
       <>
         {lead && `${lead} `}
         {cut < title.length && (
-          <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] text-navy-deep">{title.slice(cut)}</span>
+          <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">{title.slice(cut)}</span>
         )}
       </>
     ),
     titleClass: "text-[length:clamp(15px,min(1.95vw,3.6vh),32px)] tracking-[-0.02em]",
-    support: kicker,
   };
 }
 
 export default function App() {
   const p = usePresenter();
-  const poster = POSTER_HEAD[`${p.slide}/${p.beat}`] ?? scenePoster(p.scene.id, p.scene.title, p.scene.kicker);
+  const poster = POSTER_HEAD[`${p.slide}/${p.beat}`] ?? scenePoster(p.scene.id, p.scene.title);
   const voice = useVoiceover({
     slide: p.slide,
     onCue: ({ slide, beat }) => p.goTo(slide, beat),
@@ -180,7 +214,7 @@ export default function App() {
         else document.exitFullscreen().catch(() => {});
       }}
     >
-      {p.slide !== 0 && (
+      {p.slide !== 0 && !(p.scene.id === "core" && p.beat === p.scene.beats - 1) && (
       <header
         className="relative isolate z-20 flex h-14 shrink-0 items-center gap-2 overflow-hidden bg-linear-to-b from-navy-deep to-navy px-2.5 text-white sm:h-[clamp(4.75rem,min(6vw,10vh),6.25rem)] sm:gap-4 sm:px-4 [&_button]:drop-shadow-[0_1px_3px_rgba(4,12,40,0.85)]"
         onClick={(e) => e.stopPropagation()}
@@ -200,7 +234,7 @@ export default function App() {
           aria-hidden
           className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-[45%] bg-[linear-gradient(180deg,rgba(9,22,66,0.45)_0%,rgba(9,22,66,0.1)_50%,rgba(9,22,66,0)_100%)]"
         />
-        <div className="flex min-w-0 flex-1 items-center gap-2 max-sm:flex-none sm:gap-3">
+        <div className="flex shrink-0 items-center gap-2 max-sm:flex-none sm:gap-3">
           <KaMark className="size-9 shrink-0 sm:size-[clamp(2.25rem,min(3vw,5vh),3rem)]" />
           <span className="min-w-0 max-sm:hidden">
             <span className="font-display block truncate text-[length:clamp(11px,min(0.8vw,1.4vh),13px)] leading-tight font-bold">
@@ -216,11 +250,8 @@ export default function App() {
             </small>
           </span>
         </div>
-        <div className="min-w-0 flex-[1.4] px-1 text-center sm:px-2">
-          <div className={cn("font-display leading-none whitespace-nowrap font-black", poster.titleClass)}>{poster.title}</div>
-          <p className="mx-auto mt-1 line-clamp-2 max-w-[42rem] max-sm:hidden text-[length:clamp(11px,min(0.95vw,1.7vh),16px)] leading-snug font-semibold text-white/88">
-            {poster.support}
-          </p>
+        <div className="min-w-0 flex-1 px-1 text-center sm:px-2">
+          <div className={cn(poster.titleClass, "font-display leading-none font-black uppercase")}>{poster.title}</div>
         </div>
         <div className="rounded-full bg-navy-deep/60 px-2 py-1 font-display text-[10px] tracking-widest ring-1 ring-white/15 backdrop-blur-sm sm:px-3 sm:text-xs">
           {p.slide === 0 ? "Opening" : `${String(p.slide).padStart(2, "0")} / ${String(SCENES.length - 1).padStart(2, "0")}`}

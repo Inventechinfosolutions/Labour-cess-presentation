@@ -15,6 +15,7 @@ import {
   DotsThreeVertical,
   FileText,
   MapPin,
+  Receipt,
   ShieldCheck,
   VideoCamera,
   WifiSlash,
@@ -50,6 +51,7 @@ const ASSESS_ROWS: { label: string; value: string; Icon: CessIcon }[] = [
   { label: "Site Video", value: "2 Recorded", Icon: VideoCamera },
   { label: "Survey Details", value: "Saved", Icon: FileText },
   { label: "Estimation", value: "Draft Saved", Icon: Calculator },
+  { label: "Demand Notice", value: "Draft Saved", Icon: Receipt },
 ];
 
 const STORED: { label: string; Icon: CessIcon; color: string }[] = [

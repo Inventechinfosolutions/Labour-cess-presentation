@@ -143,7 +143,7 @@ export function TitleScene() {
           </motion.span>
         </div>
 
-        <h1 className="font-display text-[1.85rem] leading-[1.12] font-extrabold tracking-tight drop-shadow-[0_6px_24px_rgba(0,0,0,0.45)] sm:text-5xl md:text-6xl">
+        <h1 className="font-display text-[1.85rem] leading-[1.12] font-extrabold tracking-tight uppercase drop-shadow-[0_6px_24px_rgba(0,0,0,0.45)] sm:text-5xl md:text-6xl">
           {TITLE.map((w, i) => (
             <motion.span
               key={w}
@@ -181,7 +181,7 @@ export function TitleScene() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.5, duration: 0.6, ease: easeOut }}
         >
-          One Central Platform for projects, CESS demand, payment and remittance. It supports worker welfare in Karnataka.
+          One Central Platform for projects, CESS demand, payment and remittance.
         </motion.p>
 
         <div className="mt-5 flex flex-wrap justify-center gap-2 sm:mt-7 sm:gap-3">

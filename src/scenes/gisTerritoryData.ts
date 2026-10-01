@@ -209,72 +209,73 @@ export const PROJECTS: Project[] = [
   { id: "hoskote-town", name: "Hoskote Township", place: "Hoskote", taluk: "hoskote", at: [13.1, 77.87] },
 ];
 
-export type TreeKind = "state" | "division" | "district" | "taluk" | "hobli";
+export type TreeKind = "state" | "district" | "department" | "taluk" | "hobli";
 export type TreeNode = { id: string; label: string; kind: TreeKind; children?: TreeNode[] };
 
 const leaf = (id: string, label: string, kind: TreeKind = "taluk"): TreeNode => ({ id, label, kind });
+
+/** District → its PWD Department office → the territories (taluks) that office covers. */
+const district = (id: string, label: string, territories: TreeNode[] = []): TreeNode => ({
+  id,
+  label,
+  kind: "district",
+  children: [
+    {
+      id: `${id}-dept`,
+      label: "PWD Department",
+      kind: "department",
+      ...(territories.length ? { children: territories } : {}),
+    },
+  ],
+});
 
 export const TREE: TreeNode = {
   id: "ka",
   label: "Karnataka (31 Districts)",
   kind: "state",
   children: [
-    {
-      id: "blr-div",
-      label: "Bengaluru Division",
-      kind: "division",
-      children: [
-        {
-          id: "blr-urban",
-          label: "Bengaluru Urban",
-          kind: "district",
-          children: [
-            leaf("blr-north", "Bengaluru North"),
-            leaf("blr-south", "Bengaluru South"),
-            leaf("blr-east", "Bengaluru East"),
-            {
-              id: "anekal",
-              label: "Anekal",
-              kind: "taluk",
-              children: [
-                leaf("anekal-town", "Anekal Town", "hobli"),
-                leaf("bannerghatta", "Bannerghatta", "hobli"),
-                leaf("jigani", "Jigani", "hobli"),
-                leaf("chandapura", "Chandapura", "hobli"),
-              ],
-            },
-            {
-              id: "yelahanka",
-              label: "Yelahanka",
-              kind: "taluk",
-              children: [leaf("yelahanka-town", "Yelahanka Town", "hobli"), leaf("hesaraghatta", "Hesaraghatta", "hobli")],
-            },
-          ],
-        },
-        {
-          id: "blr-rural",
-          label: "Bengaluru Rural",
-          kind: "district",
-          children: [
-            {
-              id: "devanahalli",
-              label: "Devanahalli",
-              kind: "taluk",
-              children: [leaf("devanahalli-town", "Devanahalli Town", "hobli"), leaf("vijayapura", "Vijayapura", "hobli")],
-            },
-            leaf("hoskote", "Hoskote"),
-            leaf("nelamangala", "Nelamangala"),
-            leaf("doddaballapur", "Doddaballapur"),
-          ],
-        },
-        { id: "ramanagara", label: "Ramanagara", kind: "district", children: [leaf("ramanagara-t", "Ramanagara"), leaf("channapatna", "Channapatna")] },
-        { id: "chikkaballapur", label: "Chikkaballapur", kind: "district", children: [leaf("chikkaballapur-t", "Chikkaballapur"), leaf("gauribidanur", "Gauribidanur")] },
-        { id: "kolar", label: "Kolar", kind: "district", children: [leaf("kolar-t", "Kolar"), leaf("malur", "Malur")] },
-      ],
-    },
-    { id: "mysuru-div", label: "Mysuru Division", kind: "division", children: [leaf("mysuru", "Mysuru", "district"), leaf("mandya", "Mandya", "district")] },
-    { id: "belagavi-div", label: "Belagavi Division", kind: "division", children: [leaf("belagavi", "Belagavi", "district"), leaf("dharwad", "Dharwad", "district")] },
-    { id: "kalaburagi-div", label: "Kalaburagi Division", kind: "division", children: [leaf("kalaburagi", "Kalaburagi", "district"), leaf("ballari", "Ballari", "district")] },
+    district("blr-urban", "Bengaluru Urban", [
+      leaf("blr-north", "Bengaluru North"),
+      leaf("blr-south", "Bengaluru South"),
+      leaf("blr-east", "Bengaluru East"),
+      {
+        id: "anekal",
+        label: "Anekal",
+        kind: "taluk",
+        children: [
+          leaf("anekal-town", "Anekal Town", "hobli"),
+          leaf("bannerghatta", "Bannerghatta", "hobli"),
+          leaf("jigani", "Jigani", "hobli"),
+          leaf("chandapura", "Chandapura", "hobli"),
+        ],
+      },
+      {
+        id: "yelahanka",
+        label: "Yelahanka",
+        kind: "taluk",
+        children: [leaf("yelahanka-town", "Yelahanka Town", "hobli"), leaf("hesaraghatta", "Hesaraghatta", "hobli")],
+      },
+    ]),
+    district("blr-rural", "Bengaluru Rural", [
+      {
+        id: "devanahalli",
+        label: "Devanahalli",
+        kind: "taluk",
+        children: [leaf("devanahalli-town", "Devanahalli Town", "hobli"), leaf("vijayapura", "Vijayapura", "hobli")],
+      },
+      leaf("hoskote", "Hoskote"),
+      leaf("nelamangala", "Nelamangala"),
+      leaf("doddaballapur", "Doddaballapur"),
+    ]),
+    district("ramanagara", "Ramanagara", [leaf("ramanagara-t", "Ramanagara"), leaf("channapatna", "Channapatna")]),
+    district("chikkaballapur", "Chikkaballapur", [leaf("chikkaballapur-t", "Chikkaballapur"), leaf("gauribidanur", "Gauribidanur")]),
+    district("kolar", "Kolar", [leaf("kolar-t", "Kolar"), leaf("malur", "Malur")]),
+    district("mysuru", "Mysuru"),
+    district("mandya", "Mandya"),
+    district("belagavi", "Belagavi"),
+    district("dharwad", "Dharwad"),
+    district("kalaburagi", "Kalaburagi"),
+    district("ballari", "Ballari"),
   ],
 };
 
@@ -300,13 +301,14 @@ export type Focus = { taluks: TalukId[]; taluk?: TalukId; hobli?: string; distri
 
 /** What the map shows and zooms to for a tree selection. */
 export function focusFor(id: string): Focus {
+  if (NODE[id]?.kind === "department") return focusFor(PARENT[id] ?? "ka");
   if (id in TALUKS) return { taluks: [id as TalukId], taluk: id as TalukId, mapped: true };
   const parent = PARENT[id];
   if (parent && parent in TALUKS) return { taluks: [parent as TalukId], taluk: parent as TalukId, hobli: id, mapped: true };
   if (id === "blr-urban" || id === "blr-rural") {
     return { taluks: TALUK_ORDER.filter((t) => TALUKS[t].district === id), district: id, mapped: true };
   }
-  return { taluks: TALUK_ORDER, mapped: id === "ka" || id === "blr-div" };
+  return { taluks: TALUK_ORDER, mapped: id === "ka" };
 }
 
 export type PhaseId = "assessment" | "demand" | "payment" | "remittance" | "reconciliation" | "closed";

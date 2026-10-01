@@ -461,31 +461,47 @@ const KEY_ISSUES: {
   {
     id: "demand",
     label: "CESS demand is difficult to assess",
-    support: "Incomplete or delayed project details.",
+    support: "Timely data is missing, so annual demand is underestimated.",
     icon3d: issue3dDemand,
     tint: "#e5f6ec",
     numSoft: "linear-gradient(135deg,#2bb573,#138a55)",
   },
   {
-    id: "track",
-    label: "Deduction and remittance are difficult to track",
-    support: "Project-wise trail may be missing.",
-    icon3d: issue3dTrack,
-    tint: "#fde7f0",
-    numSoft: "linear-gradient(135deg,#ec4f9c,#c81e6f)",
-  },
-  {
     id: "delay",
-    label: "Remittance delays are difficult to monitor",
-    support: "May not remit within the 30-day limit.",
+    label: "Remittance is often delayed",
+    support: "Departments deduct CESS but do not remit within 30 days.",
     icon3d: issue3dDelay,
     tint: "#fdf4db",
     numSoft: "linear-gradient(135deg,#f5b820,#e39505)",
   },
   {
-    id: "recon",
-    label: "Reconciliation and compliance gaps",
-    support: "Hard to match deducted and remitted amounts.",
+    id: "lumpsum",
+    label: "Lump-sum transfer without details",
+    support: "Bulk payments lack a project-wise or year-wise breakup.",
+    icon3d: issue3dTrack,
+    tint: "#fde7f0",
+    numSoft: "linear-gradient(135deg,#ec4f9c,#c81e6f)",
+  },
+  {
+    id: "transparent",
+    label: "Fund status is not transparent",
+    support: "The Board learns the status when auditors ask.",
+    icon3d: impact3dVisibility,
+    tint: "#e5f4f6",
+    numSoft: "linear-gradient(135deg,#1aa6b8,#0e7c8a)",
+  },
+  {
+    id: "interest",
+    label: "Interest is lost on delayed funds",
+    support: "Funds are not parked in nationalized banks on time.",
+    icon3d: impact3dShortfall,
+    tint: "#fde8e4",
+    numSoft: "linear-gradient(135deg,#e85d4c,#c43324)",
+  },
+  {
+    id: "audit",
+    label: "Statutory audit objections",
+    support: "Incomplete reconciliation and reporting gaps remain.",
     icon3d: issue3dRecon,
     tint: "#e6f0fc",
     numSoft: "linear-gradient(135deg,#2f86e6,#1565c9)",
@@ -1006,23 +1022,26 @@ export function ProblemStage({ beat: _beat }: { beat: number }) {
             </span>
             <span className="font-display text-[length:var(--ps-14)] font-extrabold tracking-wide">KEY ISSUES</span>
           </div>
-          <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] grid-rows-7 gap-1 p-1.5">
+          <div
+            className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] gap-0.5 p-1"
+            style={{ gridTemplateRows: `repeat(${KEY_ISSUES.length}, minmax(0, 1fr))` }}
+          >
             {KEY_ISSUES.map((issue, i) => (
               <Stagger key={issue.id} delay={100 + i * 40} className="h-full min-h-0">
                 <motion.div
-                  className="flex h-full min-h-0 items-center gap-2 rounded-[12px] px-1.5 py-1 shadow-[0_3px_10px_rgba(40,70,110,0.08)] ring-1 ring-[#0b2f5c]/[0.06]"
+                  className="flex h-full min-h-0 items-center gap-1.5 overflow-hidden rounded-[10px] px-1 py-0.5 shadow-[0_3px_10px_rgba(40,70,110,0.08)] ring-1 ring-[#0b2f5c]/[0.06]"
                   style={{ background: `linear-gradient(90deg, ${issue.tint} 0%, #ffffff 75%)` }}
                   whileHover={reduce ? undefined : { x: 2 }}
                   transition={{ duration: 0.18 }}
                 >
                   <span
-                    className="grid size-9 shrink-0 place-items-center rounded-full text-[length:var(--ps-15)] font-black text-white shadow-[0_4px_10px_rgba(0,0,0,0.18)] ring-2 ring-white"
+                    className="grid size-7 shrink-0 place-items-center rounded-full text-[length:var(--ps-10)] font-black text-white shadow-[0_4px_10px_rgba(0,0,0,0.18)] ring-2 ring-white"
                     style={{ background: issue.numSoft }}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span
-                    className="relative aspect-[4/3] h-full max-h-[76px] shrink-0 overflow-hidden rounded-[10px] shadow-[0_3px_8px_rgba(40,70,110,0.12)] ring-1 ring-white"
+                    className="relative aspect-square h-[88%] max-h-10 shrink-0 overflow-hidden rounded-[8px] shadow-[0_3px_8px_rgba(40,70,110,0.12)] ring-1 ring-white"
                     style={{ background: `linear-gradient(135deg, #ffffff 0%, ${issue.tint} 100%)` }}
                   >
                     <motion.img
@@ -1037,10 +1056,10 @@ export function ProblemStage({ beat: _beat }: { beat: number }) {
                     />
                   </span>
                   <span className="min-w-0 flex-1 leading-tight">
-                    <span className="font-display block text-[length:var(--ps-18)] font-extrabold text-[#102b57]">
+                    <span className="font-display block text-[length:var(--ps-14)] leading-[1.05] font-extrabold text-[#102b57]">
                       {issue.label}
                     </span>
-                    <span className="mt-0.5 line-clamp-2 block text-[length:var(--ps-14)] leading-[1.2] font-semibold text-[#5d7186]">
+                    <span className="mt-px line-clamp-2 block text-[length:var(--ps-10)] leading-[1.15] font-semibold text-[#5d7186]">
                       {issue.support}
                     </span>
                   </span>

@@ -1,25 +1,15 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, animate, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { CessIcon } from "@/lib/icons";
 import {
   ArrowRight,
   ArrowUpRight,
   Bell,
-  Buildings,
   CaretRight,
-  ChartBar,
-  ChartLineUp,
   Check,
-  CurrencyInr,
-  FileText,
   Files,
-  GearSix,
-  House,
   Lightning,
-  LinkSimple,
-  MapPin,
   Megaphone,
-  Monitor,
   Plugs,
   Scales,
   Scroll,
@@ -32,13 +22,14 @@ import { KaMark } from "@/components/SlideKit";
 import { Gloss, orbStyle, slab3D, tileStyle } from "@/components/Depth";
 import { useElementSize } from "@/hooks/useElementSize";
 import { cn } from "@/lib/utils";
+import { CORE_ART } from "@/lib/coreArt";
 import stageBg from "@/assets/core-stage-bg.jpg";
 import hubSite from "@/assets/core-hub-site.jpg";
-import sidebarArt from "@/assets/monitor-sidebar-blueprint.jpg";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const INK = "#0b2462";
 const CLOSE_BEAT = 8;
+const THANKS_BEAT = 9;
 
 type OrbitNode = {
   id: string;
@@ -51,7 +42,6 @@ type OrbitNode = {
   items: string[];
   metric: string;
   angle: number;
-  pills: number[];
 };
 
 /** Eight orbit nodes — beats 1–5 zones, then audit · loop · pillars */
@@ -66,7 +56,6 @@ const NODES: OrbitNode[] = [
     Icon: Scales,
     angle: -90,
     metric: "capabilities",
-    pills: [0],
     items: [
       "Role-based access",
       "Organisational hierarchy",
@@ -86,7 +75,6 @@ const NODES: OrbitNode[] = [
     Icon: Files,
     angle: -38,
     metric: "capabilities",
-    pills: [1],
     items: ["DMS", "E-Office", "Inward / Outward", "Appeals", "Grievances", "Exception resolution", "Meetings"],
   },
   {
@@ -99,7 +87,6 @@ const NODES: OrbitNode[] = [
     Icon: Wallet,
     angle: 0,
     metric: "capabilities",
-    pills: [4],
     items: ["Demand", "Collection", "Remittance (30 days)", "Interest on delay", "Reconciliation", "Accounts / DCB"],
   },
   {
@@ -112,7 +99,6 @@ const NODES: OrbitNode[] = [
     Icon: ShieldCheck,
     angle: 38,
     metric: "capabilities",
-    pills: [1],
     items: ["Alerts & escalation", "Assignment", "Follow-up", "Resolution", "Appeals", "Grievances", "Decision support"],
   },
   {
@@ -125,7 +111,6 @@ const NODES: OrbitNode[] = [
     Icon: Plugs,
     angle: 90,
     metric: "capabilities",
-    pills: [2, 3, 4],
     items: ["Labour CESS Portal", "Cash counter / QR", "Remittance at source (LCDRS)", "KSK integration", "System links"],
   },
   {
@@ -138,7 +123,6 @@ const NODES: OrbitNode[] = [
     Icon: Scroll,
     angle: 142,
     metric: "records",
-    pills: [],
     items: [
       "Who created or changed a project",
       "Who performed an assessment",
@@ -159,7 +143,6 @@ const NODES: OrbitNode[] = [
     Icon: Stack,
     angle: 180,
     metric: "steps",
-    pills: [],
     items: ["Capture", "Validate", "Consolidate", "Assess", "Locate", "Map", "Monitor", "Detect", "Act", "Audit", "Report"],
   },
   {
@@ -172,80 +155,20 @@ const NODES: OrbitNode[] = [
     Icon: Lightning,
     angle: 218,
     metric: "pillars",
-    pills: [0, 1, 2, 3, 4],
     items: ["One Project", "One Unified View", "Connected Data", "Field Evidence", "Spatial Context", "CESS Intelligence", "Actionable Governance"],
   },
 ];
 
-const NAV: { label: string; Icon: CessIcon }[] = [
-  { label: "Day to Day", Icon: House },
-  { label: "Projects", Icon: Buildings },
-  { label: "Map View", Icon: MapPin },
-  { label: "Access & Appeals", Icon: FileText },
-  { label: "KSK Integration", Icon: LinkSimple },
-  { label: "Portal", Icon: Monitor },
-  { label: "Remittance", Icon: CurrencyInr },
-  { label: "Reports", Icon: ChartBar },
-  { label: "Analytics", Icon: ChartLineUp },
-  { label: "Settings", Icon: GearSix },
-];
-
-const PILLS: { label: string; c: string; Icon: CessIcon }[] = [
-  { label: "Access", c: "#2f7df0", Icon: ShieldCheck },
-  { label: "Appeals", c: "#0891b2", Icon: FileText },
-  { label: "KSK", c: "#10b981", Icon: LinkSimple },
-  { label: "Portal", c: "#f97316", Icon: Monitor },
-  { label: "Remittance at source", c: "#8b5cf6", Icon: Wallet },
-];
-
-const HIGHLIGHTS: { value: string; label: string; c: string; Icon: CessIcon }[] = [
-  { value: "125", label: "Projects Active", c: "#2f7df0", Icon: Buildings },
-  { value: "42", label: "Actions Pending", c: "#f97316", Icon: FileText },
-  { value: "18", label: "Appeals in Review", c: "#8b5cf6", Icon: Scales },
-  { value: "₹ 12.8 Cr", label: "Remittance (Today)", c: "#10b981", Icon: Wallet },
-];
-
-const ACTIVITY: { title: string; id: string; time: string; c: string }[] = [
-  { title: "New appeal received", id: "PRJ-000321", time: "10:12 AM", c: "#f43f5e" },
-  { title: "KSK data matched", id: "PRJ-000245", time: "09:45 AM", c: "#8b5cf6" },
-  { title: "Payment updated", id: "PRJ-000198", time: "09:20 AM", c: "#f59e0b" },
-  { title: "Officer assigned", id: "PRJ-000176", time: "08:50 AM", c: "#06b6d4" },
-  { title: "Remittance received", id: "PRJ-000133", time: "08:10 AM", c: "#10b981" },
-];
-
 const INTRO = {
   chip: "Operating model",
-  title: "Eight zones. One view.",
-  establishes: "Zones, audit, loop and pillars orbit one common project view.",
+  title: "Eight modules. One view.",
+  establishes: "Eight modules work around one common project view.",
   color: "#2f7df0",
   Icon: Stack,
   items: NODES.map((n) => n.chip),
 };
 
 /* ------------------------------------------------------------------ helpers */
-
-function CountValue({ value, reduce, delay }: { value: string; reduce: boolean; delay: number }) {
-  const m = value.match(/^(\D*)([\d,.]+)(.*)$/);
-  const target = m ? Number(m[2].replace(/,/g, "")) : 0;
-  const decimals = m && m[2].includes(".") ? 1 : 0;
-  const [v, setV] = useState(reduce ? target : 0);
-  useEffect(() => {
-    if (reduce) {
-      setV(target);
-      return;
-    }
-    const c = animate(0, target, { duration: 1.2, delay, ease, onUpdate: setV });
-    return () => c.stop();
-  }, [target, reduce, delay]);
-  if (!m) return <>{value}</>;
-  return (
-    <>
-      {m[1]}
-      {v.toLocaleString("en-IN", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
-      {m[3]}
-    </>
-  );
-}
 
 /* ------------------------------------------------------------------ scene */
 
@@ -259,41 +182,26 @@ export function CoreScene({ beat, onBeat }: { beat: number; onBeat?: (n: number)
   const lit = Math.min(Math.max(beat, 0), 8);
 
   return (
-    <div className="grid h-full min-h-0 grid-cols-[clamp(128px,11%,160px)_minmax(0,1fr)] gap-2.5 text-[#23395f]">
-      <Sidebar reduce={reduce} />
-      <div className="relative min-h-0 overflow-hidden rounded-[22px] shadow-[inset_0_1px_0_#fff,0_3px_0_#d6e3f2,0_22px_44px_-16px_rgba(0,70,140,0.35)] ring-1 ring-white">
+    <div className="h-full min-h-0 text-[#23395f]">
+      <div className="relative h-full min-h-0 overflow-hidden rounded-[22px] shadow-[inset_0_1px_0_#fff,0_3px_0_#d6e3f2,0_22px_44px_-16px_rgba(0,70,140,0.35)] ring-1 ring-white">
         <img src={stageBg} alt="" aria-hidden draggable={false} className="pointer-events-none absolute inset-0 size-full object-cover object-[center_55%] select-none" />
         <span aria-hidden className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(240,249,255,0.6)_0%,rgba(240,249,255,0.1)_24%,rgba(240,249,255,0)_60%,rgba(240,249,255,0.18)_100%)]" />
         <span aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_34%_44%_at_50%_54%,rgba(255,255,255,0.4),rgba(255,255,255,0)_100%)]" />
 
-        <div className="relative z-10 grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)_auto] gap-2 p-2.5">
-          <div className="relative flex items-center justify-center">
+        <AnimatePresence mode="wait" initial={false}>
+        {beat >= THANKS_BEAT ? (
+          <ThankYou key="thanks" reduce={reduce} />
+        ) : (
+        <motion.div
+          key="platform"
+          className="relative z-10 grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)_auto] gap-2 p-2.5"
+          exit={reduce ? undefined : { opacity: 0, scale: 0.97, filter: "blur(6px)" }}
+          transition={{ duration: 0.4, ease }}
+        >
+          <div className="flex items-center justify-end">
             <div className="flex items-center gap-1.5">
-              {PILLS.map((p, i) => {
-                const on = beat >= CLOSE_BEAT || (shown?.pills.includes(i) ?? false);
-                return (
-                  <motion.span
-                    key={p.label}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 rounded-full py-1 pr-3 pl-1 text-[9px] font-extrabold tracking-wide uppercase transition-colors",
-                      on ? "bg-white text-[#0b2462]" : "bg-white/75 text-[#52627a]",
-                    )}
-                    style={{ boxShadow: on ? slab3D(p.c) : "0 2px 0 #dbe6f3, 0 6px 12px -6px rgba(15,35,70,0.25)" }}
-                    initial={reduce ? false : { opacity: 0, y: -6 }}
-                    animate={{ opacity: 1, y: on && !reduce ? -1 : 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
-                  >
-                    <span className="relative grid size-5 place-items-center overflow-hidden rounded-full text-white" style={orbStyle(p.c)}>
-                      <p.Icon weight="fill" className="relative size-3" />
-                    </span>
-                    {p.label}
-                  </motion.span>
-                );
-              })}
-            </div>
-            <div className="absolute right-0 flex items-center gap-1.5">
               <span className="rounded-full bg-white/95 px-3 py-1.5 text-[9.5px] font-extrabold shadow-[0_2px_0_#dbe6f3] ring-1 ring-white" style={{ color: INK }}>
-                {lit}/8 nodes · one view
+                {lit}/8 modules · one view
               </span>
               {beat >= CLOSE_BEAT ? (
                 <motion.span
@@ -309,113 +217,86 @@ export function CoreScene({ beat, onBeat }: { beat: number; onBeat?: (n: number)
             </div>
           </div>
 
-          <div className="grid min-h-0 grid-cols-[minmax(150px,17%)_minmax(0,1fr)_minmax(220px,25%)] gap-2.5">
-            <Highlights reduce={reduce} />
+          <div className="grid min-h-0 grid-cols-[minmax(0,1fr)_minmax(300px,32%)] gap-2.5">
             <Orbit beat={beat} shown={shown} reduce={reduce} onPick={(n) => (beat >= n.at ? setPicked(n.id) : onBeat?.(n.at))} />
             <div className="flex min-h-0 flex-col gap-2.5">
               <DetailPanel node={shown} reduce={reduce} />
-              <LiveActivity reduce={reduce} />
             </div>
           </div>
 
           <StatusBar beat={beat} node={shown} reduce={reduce} />
-        </div>
+        </motion.div>
+        )}
+        </AnimatePresence>
       </div>
     </div>
   );
 }
 
-/* ------------------------------------------------------------------ sidebar */
+/* ------------------------------------------------------------------ thank you */
 
-function Sidebar({ reduce }: { reduce: boolean }) {
-  return (
-    <motion.aside
-      className="relative flex min-h-0 flex-col overflow-hidden rounded-[22px] bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(244,249,255,0.9))] px-2 py-2.5 shadow-[inset_0_1px_0_#fff,0_3px_0_#dce7f4,0_18px_36px_-14px_rgba(0,60,130,0.3)] ring-1 ring-white backdrop-blur"
-      initial={reduce ? false : { opacity: 0, x: -12 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.45, ease }}
-    >
-      <nav className="flex flex-col gap-0.5">
-        {NAV.map((n, i) => (
-          <span
-            key={n.label}
-            className={cn(
-              "flex items-center gap-2 rounded-xl px-2 py-[7px] text-[10px] font-bold",
-              i === 0 ? "text-white" : "text-[#1e3a6e]",
-            )}
-            style={
-              i === 0
-                ? {
-                    background: "linear-gradient(90deg,#2563eb,#3b82f6)",
-                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.3), 0 3px 0 #1d4ed8, 0 10px 18px -8px rgba(37,99,235,0.6)",
-                  }
-                : undefined
-            }
-          >
-            <span className={cn("grid size-6 shrink-0 place-items-center rounded-lg", i === 0 ? "bg-white/20" : "bg-[#eaf2ff] text-[#1d4ed8]")}>
-              <n.Icon weight="fill" className="size-3.5" />
-            </span>
-            <span className="truncate">{n.label}</span>
-          </span>
-        ))}
-      </nav>
-      <div className="relative mt-auto overflow-hidden rounded-2xl bg-[#071e4c] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_3px_0_#04122f,0_10px_18px_-8px_rgba(7,30,76,0.6)]">
-        <img src={sidebarArt} alt="" aria-hidden draggable={false} className="h-16 w-full object-cover opacity-80" />
-        <span className="pointer-events-none absolute inset-x-0 top-8 h-8 bg-[linear-gradient(180deg,rgba(7,30,76,0),#071e4c)]" />
-        <div className="relative px-2.5 pt-1 pb-2.5">
-          <b className="font-display block text-[12px] leading-tight font-black">One Department, One View</b>
-          <p className="mt-1 text-[8.5px] leading-snug text-[#bcd3f5]">From access to action. Complete daily workflow visibility.</p>
-        </div>
-      </div>
-    </motion.aside>
-  );
-}
+function ThankYou({ reduce }: { reduce: boolean }) {
+  const from = <T extends object>(v: T) => (reduce ? false : v);
 
-/* ------------------------------------------------------------------ highlights */
-
-function Highlights({ reduce }: { reduce: boolean }) {
   return (
     <motion.section
-      className="self-start rounded-[18px] bg-white/95 p-2.5 shadow-[inset_0_1px_0_#fff,0_3px_0_#d6e3f2,0_16px_30px_-12px_rgba(0,50,120,0.35)] ring-1 ring-white backdrop-blur"
-      initial={reduce ? false : { opacity: 0, x: -10 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.45, delay: 0.2, ease }}
+      className="relative z-10 grid h-full min-h-0 place-items-center overflow-hidden px-6 text-center"
+      initial={from({ opacity: 0 })}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
     >
-      <header className="flex items-center justify-between gap-1">
-        <span className="flex items-center gap-2">
-          <span className="relative grid size-7 place-items-center overflow-hidden rounded-lg text-white" style={tileStyle("#2f7df0")}>
-            <ChartBar weight="fill" className="relative size-4" />
-          </span>
-          <b className="text-[11px] leading-tight font-black" style={{ color: INK }}>
-            Key Highlights
-            <br />
-            Today
-          </b>
-        </span>
-        <ArrowUpRight weight="bold" className="size-3.5 text-[#94a3b8]" />
-      </header>
-      <ul className="mt-1.5 divide-y divide-[#eef2f7]">
-        {HIGHLIGHTS.map((h, i) => (
-          <motion.li
-            key={h.label}
-            className="flex items-center gap-2 py-1.5"
-            initial={reduce ? false : { opacity: 0, x: -6 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: 0.3 + i * 0.06 }}
-          >
-            <span className="relative grid size-7 shrink-0 place-items-center overflow-hidden rounded-full text-white" style={orbStyle(h.c)}>
-              <Gloss />
-              <h.Icon weight="fill" className="relative size-3.5" />
-            </span>
-            <span className="min-w-0 leading-tight">
-              <b className="block text-[14px] font-black" style={{ color: INK }}>
-                <CountValue value={h.value} reduce={reduce} delay={0.35 + i * 0.06} />
-              </b>
-              <span className="block truncate text-[8.5px] font-medium text-[#64748b]">{h.label}</span>
-            </span>
-          </motion.li>
-        ))}
-      </ul>
+      <span aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_70%_at_50%_45%,rgba(255,255,255,0.92),rgba(240,249,255,0.75)_60%,rgba(232,244,253,0.55)_100%)]" />
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          aria-hidden
+          className="pointer-events-none absolute top-1/2 left-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#2f7df0]/15"
+          style={{ width: `min(${44 + i * 22}vh, ${40 + i * 20}vw)` }}
+          initial={from({ scale: 0.6, opacity: 0 })}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.15 + i * 0.12, duration: 0.9, ease }}
+        />
+      ))}
+
+      <div className="relative flex flex-col items-center">
+        <motion.div
+          className="relative grid size-[clamp(72px,13vh,120px)] place-items-center"
+          initial={from({ scale: 0.5, opacity: 0 })}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.2, type: "spring", stiffness: 220, damping: 16 }}
+        >
+          {!reduce &&
+            [0, 1].map((i) => (
+              <motion.span
+                key={i}
+                aria-hidden
+                className="absolute inset-[8%] rounded-full border border-[#f0c14a]/70"
+                animate={{ scale: [1, 1.9], opacity: [0.6, 0] }}
+                transition={{ delay: 1 + i * 0.9, duration: 2.2, repeat: Infinity, repeatDelay: 1.6, ease: "easeOut" }}
+              />
+            ))}
+          <KaMark className="relative size-full shadow-[0_0_0_4px_rgba(240,193,74,0.25),0_14px_28px_-10px_rgba(11,36,98,0.45)]" />
+        </motion.div>
+
+        <motion.h2
+          className="font-display mt-[2.2vh] text-[length:clamp(40px,min(7vw,11vh),104px)] leading-none font-black tracking-[-0.02em] uppercase"
+          style={{ color: INK }}
+          initial={from({ opacity: 0, y: 24, filter: "blur(8px)" })}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ delay: 0.45, duration: 0.7, ease }}
+        >
+          Thank{" "}
+          <span className="rounded-xl bg-[#f5b21b] px-[0.2em] text-navy-deep">You</span>
+        </motion.h2>
+
+        <motion.div
+          aria-hidden
+          className="mt-[2vh] h-[3px] w-[min(320px,50vw)] origin-center rounded-full bg-[linear-gradient(90deg,transparent,#f0c14a,#2f7df0,transparent)]"
+          initial={from({ scaleX: 0 })}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.8, duration: 0.7, ease }}
+        />
+      </div>
     </motion.section>
   );
 }
@@ -561,7 +442,7 @@ function Hub({ d, cx, cy, beat, reduce }: { d: number; cx: number; cy: number; b
           <KaMark className="size-7" />
         </span>
         <b className="font-display mt-1 text-[14px] leading-tight font-black drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Central Platform</b>
-        <span className="text-[9px] font-semibold text-[#bae6fd]">{lit}/8 nodes · one view</span>
+        <span className="text-[9px] font-semibold text-[#bae6fd]">{lit}/8 modules · one view</span>
         <AnimatePresence mode="wait">
           <motion.span
             key={done ? "done" : lit}
@@ -573,7 +454,7 @@ function Hub({ d, cx, cy, beat, reduce }: { d: number; cx: number; cy: number; b
             transition={{ duration: 0.25 }}
           >
             {done ? <Check weight="bold" className="size-2.5" /> : null}
-            {done ? "Complete" : beat === 0 ? "Operating model" : `Node 0${lit}`}
+            {done ? "Complete" : beat === 0 ? "Operating model" : `Module 0${lit}`}
           </motion.span>
         </AnimatePresence>
       </div>
@@ -633,8 +514,7 @@ function NodeCard({
         {on ? <Gloss /> : null}
         <node.Icon weight="fill" className="relative size-4" />
       </span>
-      <span className="flex items-start justify-between">
-        <span className="font-mono text-[8.5px] font-bold text-[#94a3b8]">{String(idx).padStart(2, "0")}</span>
+      <span className="flex min-h-3 items-start justify-end">
         {on ? (
           <motion.span
             className="relative grid size-4 place-items-center overflow-hidden rounded-full text-white"
@@ -651,7 +531,11 @@ function NodeCard({
         {node.chip}
       </b>
       <span className="block truncate text-[9px] font-semibold text-[#64748b]">
-        {on ? `${node.items.length} ${node.metric}` : "Next · Space"}
+        <b className="font-extrabold" style={{ color: on ? node.color : "#94a3b8" }}>
+          Module {String(idx).padStart(2, "0")}
+        </b>
+        {" · "}
+        {on ? `${node.items.length} ${node.metric}` : "Next"}
       </span>
     </motion.button>
   );
@@ -662,58 +546,96 @@ function NodeCard({
 function DetailPanel({ node, reduce }: { node: OrbitNode | null; reduce: boolean }) {
   const d = node ?? INTRO;
   const color = d.color;
+  const module = node ? `Module ${String(NODES.indexOf(node) + 1).padStart(2, "0")}` : `${NODES.length} Modules`;
   return (
-    <section className="relative overflow-hidden rounded-[18px] bg-white/95 p-2.5 shadow-[inset_0_1px_0_#fff,0_3px_0_#d6e3f2,0_16px_30px_-12px_rgba(0,50,120,0.35)] ring-1 ring-white backdrop-blur">
+    <section className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[20px] bg-white/95 p-3.5 shadow-[inset_0_1px_0_#fff,0_3px_0_#d6e3f2,0_16px_30px_-12px_rgba(0,50,120,0.35)] ring-1 ring-white backdrop-blur">
+      <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-1.5" style={{ background: color }} />
       <AnimatePresence mode="wait">
         <motion.div
           key={node?.id ?? "intro"}
+          className="flex min-h-0 flex-1 flex-col"
           initial={reduce ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={reduce ? undefined : { opacity: 0, y: -6 }}
           transition={{ duration: 0.28, ease }}
         >
-          <header className="flex items-start gap-2">
-            <span className="relative grid size-9 shrink-0 place-items-center overflow-hidden rounded-xl text-white" style={tileStyle(color)}>
+          <header className="flex items-start gap-3">
+            <span className="relative grid size-12 shrink-0 place-items-center overflow-hidden rounded-2xl text-white" style={tileStyle(color)}>
               <span className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-[linear-gradient(180deg,rgba(255,255,255,0.4),rgba(255,255,255,0))]" />
-              <d.Icon weight="fill" className="relative size-[18px]" />
+              <d.Icon weight="fill" className="relative size-6" />
             </span>
             <span className="min-w-0 flex-1 leading-tight">
-              <span className="block text-[8.5px] font-extrabold tracking-[0.18em] uppercase" style={{ color }}>
-                {d.chip}
+              <span className="flex flex-wrap items-center gap-1.5">
+                <span
+                  className="rounded-full px-2 py-[2px] text-[9.5px] font-black tracking-[0.12em] text-white uppercase"
+                  style={{ background: color, boxShadow: `0 2px 0 color-mix(in srgb, ${color} 70%, #0b2462)` }}
+                >
+                  {module}
+                </span>
+                <span className="text-[10px] font-extrabold tracking-[0.18em] uppercase" style={{ color }}>
+                  {d.chip}
+                </span>
               </span>
-              <b className="block text-[13px] font-black" style={{ color: INK }}>
+              <b className="font-display mt-0.5 block text-[19px] leading-[1.1] font-black" style={{ color: INK }}>
                 {d.title}
               </b>
             </span>
-            <ArrowUpRight weight="bold" className="size-3.5 shrink-0 text-[#94a3b8]" />
+            <ArrowUpRight weight="bold" className="size-4 shrink-0 text-[#94a3b8]" />
           </header>
-          <p className="mt-1.5 text-[10px] leading-snug text-[#52627a]">{d.establishes}</p>
-          <div className="mt-1.5 flex flex-wrap gap-1">
+          <p className="mt-2.5 text-[12.5px] leading-snug font-semibold text-[#52627a]">{d.establishes}</p>
+          <div className="mt-3 grid min-h-0 flex-1 auto-rows-fr grid-cols-2 content-start gap-2 overflow-y-auto">
             {d.items.map((item, i) => (
-              <motion.span
+              <motion.div
                 key={item}
-                className="rounded-full px-2 py-[3px] text-[8.5px] font-bold"
-                style={{ background: `color-mix(in srgb, ${color} 10%, #f1f6fd)`, color: INK, boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${color} 22%, transparent)` }}
-                initial={reduce ? false : { opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2, delay: 0.1 + i * 0.03 }}
+                className="flex min-h-0 flex-col overflow-hidden rounded-2xl bg-white"
+                style={{
+                  boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${color} 24%, transparent), 0 2px 0 color-mix(in srgb, ${color} 18%, #e2eaf5), 0 8px 16px -10px rgba(15,35,70,0.35)`,
+                }}
+                initial={reduce ? false : { opacity: 0, y: 8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.28, delay: 0.1 + i * 0.05, ease }}
               >
-                {item}
-              </motion.span>
+                <div
+                  className="relative grid min-h-[34px] flex-1 place-items-center overflow-hidden"
+                  style={{ background: `radial-gradient(ellipse 70% 80% at 50% 55%, #fff 0%, color-mix(in srgb, ${color} 12%, #f4f8fd) 100%)` }}
+                >
+                  {CORE_ART[item] ? (
+                    <motion.img
+                      src={CORE_ART[item]}
+                      alt=""
+                      aria-hidden
+                      draggable={false}
+                      className="absolute inset-[8%] m-auto size-[84%] object-contain mix-blend-multiply select-none"
+                      initial={reduce ? false : { scale: 0.7, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.4, delay: 0.18 + i * 0.05, ease }}
+                    />
+                  ) : null}
+                </div>
+                <div className="flex shrink-0 items-center gap-1.5 px-2.5 py-1.5" style={{ background: `color-mix(in srgb, ${color} 6%, #fff)` }}>
+                  <span className="grid size-4 shrink-0 place-items-center rounded-full text-white" style={{ background: color }}>
+                    <Check weight="bold" className="size-2.5" />
+                  </span>
+                  <span className="min-w-0 line-clamp-2 text-[12.5px] leading-tight font-extrabold" style={{ color: INK }} title={item}>
+                    {node ? null : <span style={{ color: NODES[i].color }}>Module {String(i + 1).padStart(2, "0")} · </span>}
+                    {item}
+                  </span>
+                </div>
+              </motion.div>
             ))}
           </div>
           {node?.id === "audit" ? (
-            <div className="mt-1.5 flex flex-wrap items-center gap-1">
+            <div className="mt-3 flex flex-wrap items-center gap-1.5">
               {[
                 { label: "Alert", Icon: Bell },
                 { label: "Assign", Icon: User },
                 { label: "Follow up", Icon: Megaphone },
                 { label: "Close", Icon: ShieldCheck },
               ].map((s, i) => (
-                <span key={s.label} className="inline-flex items-center gap-0.5">
-                  {i > 0 ? <ArrowRight weight="bold" className="size-2.5 text-[#94a3b8]" /> : null}
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[linear-gradient(180deg,#1a4bb0,#0b2462)] px-1.5 py-0.5 text-[8px] font-extrabold tracking-wide text-[#7dfff0] uppercase shadow-[0_2px_0_#071a48]">
-                    <s.Icon weight="fill" className="size-2.5" />
+                <span key={s.label} className="inline-flex items-center gap-1">
+                  {i > 0 ? <ArrowRight weight="bold" className="size-3 text-[#94a3b8]" /> : null}
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[linear-gradient(180deg,#1a4bb0,#0b2462)] px-2.5 py-1 text-[10px] font-extrabold tracking-wide text-[#7dfff0] uppercase shadow-[0_2px_0_#071a48]">
+                    <s.Icon weight="fill" className="size-3" />
                     {s.label}
                   </span>
                 </span>
@@ -722,58 +644,6 @@ function DetailPanel({ node, reduce }: { node: OrbitNode | null; reduce: boolean
           ) : null}
         </motion.div>
       </AnimatePresence>
-    </section>
-  );
-}
-
-function LiveActivity({ reduce }: { reduce: boolean }) {
-  return (
-    <section className="flex min-h-0 shrink flex-col rounded-[18px] bg-white/95 p-2.5 shadow-[inset_0_1px_0_#fff,0_3px_0_#d6e3f2,0_16px_30px_-12px_rgba(0,50,120,0.35)] ring-1 ring-white backdrop-blur">
-      <header className="flex items-center justify-between">
-        <span className="flex items-center gap-2">
-          <span className="relative grid size-7 place-items-center overflow-hidden rounded-lg text-white" style={tileStyle("#2f7df0")}>
-            <ChartLineUp weight="fill" className="relative size-4" />
-          </span>
-          <b className="text-[12px] font-black" style={{ color: INK }}>
-            Live Activity
-          </b>
-        </span>
-        <span className="inline-flex items-center gap-0.5 text-[9px] font-extrabold text-[#2f7df0]">
-          View All
-          <CaretRight weight="bold" className="size-2.5" />
-        </span>
-      </header>
-      <ol className="relative mt-2 flex min-h-0 flex-col gap-2.5 overflow-hidden pl-4">
-        <span aria-hidden className="absolute top-1.5 bottom-1.5 left-[5px] w-px bg-[#dbe7f5]" />
-        {ACTIVITY.map((a, i) => (
-          <motion.li
-            key={a.title}
-            className="relative leading-tight"
-            initial={reduce ? false : { opacity: 0, x: 8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: 0.4 + i * 0.07 }}
-          >
-            <span
-              className="absolute top-[2px] -left-[15px] size-2.5 rounded-full ring-2 ring-white"
-              style={{ background: `radial-gradient(circle at 35% 30%, #fff 0%, ${a.c} 45%, ${a.c} 100%)`, boxShadow: `0 2px 4px ${a.c}66` }}
-            />
-            {i === 0 && !reduce ? (
-              <motion.span
-                className="absolute top-[2px] -left-[15px] size-2.5 rounded-full"
-                style={{ background: a.c }}
-                animate={{ scale: [1, 2.2], opacity: [0.5, 0] }}
-                transition={{ duration: 1.6, repeat: Infinity }}
-              />
-            ) : null}
-            <b className="block truncate text-[10px] font-extrabold" style={{ color: INK }}>
-              {a.title}
-            </b>
-            <span className="block text-[8.5px] text-[#94a3b8]">
-              {a.id} · {a.time}
-            </span>
-          </motion.li>
-        ))}
-      </ol>
     </section>
   );
 }
@@ -803,8 +673,8 @@ function StatusBar({ beat, node, reduce }: { beat: number; node: OrbitNode | nul
             <span className="relative">{String(idx).padStart(2, "0")}</span>
           </span>
           <span className="min-w-0 truncate text-[10.5px]">
-            <b style={{ color: INK }}>{node ? node.title : "Operating model"}</b>
-            <span className="text-[#52627a]"> — {node ? node.establishes : "Press Space to reveal each zone around the Central Platform."}</span>
+            <b style={{ color: INK }}>{node ? `Module ${String(idx).padStart(2, "0")} · ${node.title}` : `Operating model · ${NODES.length} modules`}</b>
+            <span className="text-[#52627a]"> — {node ? node.establishes : "Press Space to reveal each module around the Central Platform."}</span>
           </span>
         </motion.span>
       </AnimatePresence>

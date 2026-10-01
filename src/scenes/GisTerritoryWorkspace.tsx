@@ -99,10 +99,10 @@ const TOUR: { node: string; color: ColorBy; filter: StatusId | "all"; project: s
   { node: "blr-east", color: "status", filter: "notice-issued", project: "abc" },
   { node: "blr-south", color: "status", filter: "remit-overdue", project: "vija" },
   { node: "anekal", color: "status", filter: "all", project: "banner" },
-  { node: "blr-div", color: "status", filter: "all", project: "abc" },
+  { node: "ka", color: "status", filter: "all", project: "abc" },
 ];
 
-const DEFAULT_OPEN = ["ka", "blr-div", "blr-urban", "blr-rural"];
+const DEFAULT_OPEN = ["ka", "blr-urban", "blr-urban-dept", "blr-rural", "blr-rural-dept"];
 const THUMBS = [buildStage1, abcSite, hubCenterAbc, assessSiteHero];
 const PROJECT_BY_ID = Object.fromEntries(PROJECTS.map((p) => [p.id, p])) as Record<string, Project>;
 const PROJECT_XY = Object.fromEntries(PROJECTS.map((p) => [p.id, project(p.at)])) as Record<string, [number, number]>;
@@ -309,7 +309,7 @@ function TreePanel({
           value={query}
           onChange={(e) => onQuery(e.target.value)}
           onKeyDown={(e) => e.stopPropagation()}
-          placeholder="Search district, taluk..."
+          placeholder="Search district, office, taluk..."
           className="min-w-0 flex-1 bg-transparent text-[10.5px] text-navy outline-none placeholder:text-navy/40"
         />
       </label>
@@ -319,7 +319,16 @@ function TreePanel({
           const on = node.id === selected;
           const taluk = node.id in TALUKS ? TALUKS[node.id as TalukId] : undefined;
           const count = taluk ? PROJECTS.filter((p) => p.taluk === node.id).length : undefined;
-          const Icon = node.kind === "state" ? MapTrifold : node.kind === "hobli" ? Bank : Buildings;
+          const Icon =
+            node.kind === "state"
+              ? MapTrifold
+              : node.kind === "district"
+                ? MapPin
+                : node.kind === "department"
+                  ? Bank
+                  : node.kind === "hobli"
+                    ? TreeStructure
+                    : Buildings;
           return (
             <motion.li
               key={node.id}
@@ -347,12 +356,22 @@ function TreePanel({
                 className={cn(
                   "flex min-w-0 flex-1 items-center gap-1.5 rounded-md px-1.5 py-[2.5px] text-left text-[11px] transition-colors",
                   on ? "bg-[#e8f1fd] font-bold text-[#0f5fcf] ring-1 ring-[#1476e8]/25" : "text-navy hover:bg-navy/5",
-                  node.kind === "district" && (node.id === "blr-urban" || node.id === "blr-rural") && !on && "font-semibold",
+                  node.kind === "district" && !on && "font-semibold",
+                  node.kind === "department" && !on && "text-[#7a4a12]",
                 )}
               >
                 <Icon
                   weight="fill"
-                  className={cn("size-3 shrink-0", node.kind === "state" ? "text-[#16a34a]" : on ? "text-[#1476e8]" : "text-navy/55")}
+                  className={cn(
+                    "size-3 shrink-0",
+                    node.kind === "state"
+                      ? "text-[#16a34a]"
+                      : on
+                        ? "text-[#1476e8]"
+                        : node.kind === "department"
+                          ? "text-[#d97706]"
+                          : "text-navy/55",
+                  )}
                 />
                 <span className="truncate">{node.label}</span>
                 {taluk ? (

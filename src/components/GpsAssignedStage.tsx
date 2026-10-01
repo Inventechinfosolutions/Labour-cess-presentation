@@ -139,7 +139,7 @@ export function GpsAssignedStage() {
 
   return (
     <div
-      className="relative grid h-full min-h-0 w-full grid-rows-[minmax(0,1fr)_10%] overflow-hidden text-[#122b50]"
+      className="relative grid h-full min-h-0 w-full grid-rows-[minmax(0,1fr)] overflow-hidden text-[#122b50]"
       style={{
         ...STAGE_TYPE,
         background: `linear-gradient(180deg, rgba(238,245,253,0.25) 0%, rgba(238,245,253,0.05) 60%), url(${stageBg}) 70% bottom / cover no-repeat, #eef5fd`,
@@ -274,27 +274,6 @@ export function GpsAssignedStage() {
           </motion.div>
         </div>
       </div>
-
-      {/* Key message band */}
-      <motion.div
-        {...rise(0.9, 0, 12)}
-        className="relative flex min-h-0 items-center gap-[1.6%] overflow-hidden px-[2.4%] text-white shadow-[0_-6px_18px_rgba(10,30,80,0.22),inset_0_1px_0_rgba(255,255,255,0.35)]"
-        style={{
-          background:
-            "radial-gradient(120% 160% at 85% -40%, rgba(120,180,255,0.45), transparent 55%), linear-gradient(180deg,#2a6fe0 0%,#1450c0 42%,#0b3c9e 100%)",
-        }}
-      >
-        <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[45%] bg-[linear-gradient(180deg,rgba(255,255,255,0.16),transparent)]" />
-        <span className="relative grid aspect-[0.8/1] h-[72%] shrink-0 place-items-center">
-          <DeviceMobile weight="regular" className="size-full" />
-          <MapPin weight="regular" className="absolute top-[30%] left-1/2 size-[42%] -translate-x-1/2" />
-        </span>
-        <span aria-hidden className="h-[52%] w-px bg-white/45" />
-        <p className="font-display relative text-[length:var(--gp-26)] leading-tight font-semibold tracking-[-0.01em] whitespace-nowrap">
-          <span className="font-extrabold text-[#ffc629]">One mobile workspace</span> for field officers to access and manage
-          their assigned projects.
-        </p>
-      </motion.div>
     </div>
   );
 }

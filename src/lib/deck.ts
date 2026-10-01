@@ -15,8 +15,8 @@ export const SCENES: SceneMeta[] = [
     nav: "Gap → File",
     beats: 3,
   },
-  { id: "assess", title: "From Project File to CESS Assessment", kicker: "Register · Allot · Inspect · Value · Notify · Monitor", nav: "Assess", beats: 6 },
-  { id: "gps", title: "Field Officer Mobile App", kicker: "Online or offline · Capture · Send · On-spot demand", nav: "GPS", beats: 6 },
+  { id: "assess", title: "Project-to-CESS Lifecycle", kicker: "Register · Allot · Inspect · Value · Notify · Monitor", nav: "Assess", beats: 6 },
+  { id: "gps", title: "Field Officer Mobile App", kicker: "Online or offline · Capture · Send · On-spot demand", nav: "GPS", beats: 5 },
   {
     id: "gis",
     title: "Territory Map",
@@ -24,8 +24,8 @@ export const SCENES: SceneMeta[] = [
     nav: "GIS",
     beats: 5,
   },
-  { id: "leak", title: "From Dashboard to Closure", kicker: "Detect · Notify · Assign · Resolve · Verify · Close", nav: "Closure", beats: 1 },
-  { id: "core", title: "How the Department Works Day to Day", kicker: "Access · Appeals · KSK · Portal · Remittance at source", nav: "Core", beats: 9 },
+  { id: "leak", title: "CESS Exception to Closure", kicker: "Detect · Notify · Assign · Resolve · Verify · Close", nav: "Closure", beats: 1 },
+  { id: "core", title: "Complete CESS Management Platform", kicker: "Access · Appeals · KSK · Portal · Remittance at source", nav: "Core", beats: 10 },
 ];
 
 export const CORE = {
