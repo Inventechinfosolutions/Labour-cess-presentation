@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { motion } from "motion/react";
 import { WorldTiles } from "@/components/WorldTiles";
 import { useElementSize } from "@/hooks/useElementSize";
@@ -10,9 +10,9 @@ const NIGHT_LIGHTS =
 
 const HUB: LatLng = [12.97, 77.59];
 
-type Source = { label: string; at: LatLng; dx: number; dy: number; anchor: "start" | "middle" | "end" };
+export type MapSource = { label: string; at: LatLng; dx: number; dy: number; anchor: "start" | "middle" | "end" };
 
-const SOURCES: Source[] = [
+const SOURCES: MapSource[] = [
   { label: "USA", at: [40.71, -74.0], dx: 0, dy: -14, anchor: "middle" },
   { label: "UK", at: [51.5, -0.13], dx: -8, dy: -12, anchor: "end" },
   { label: "EUROPE", at: [48.2, 16.4], dx: 6, dy: -14, anchor: "start" },
@@ -22,9 +22,7 @@ const SOURCES: Source[] = [
   { label: "AUSTRALIA", at: [-33.87, 151.2], dx: -12, dy: 4, anchor: "end" },
 ];
 
-const POINTS: LatLng[] = [...SOURCES.map((s) => s.at), HUB];
-
-function insetFor({ w, h }: Size): Inset {
+function defaultInset({ w, h }: Size): Inset {
   if (w >= 1024) return { l: w * 0.36, r: 70, t: 190, b: 190 };
   if (w >= 640) return { l: 70, r: 96, t: h * 0.5, b: 120 };
   return { l: 40, r: 74, t: h * 0.56, b: 110 };
@@ -47,21 +45,43 @@ function arcPath([x1, y1]: [number, number], [x2, y2]: [number, number]) {
   return `M${x1.toFixed(1)},${y1.toFixed(1)} Q${(mx + nx * bow).toFixed(1)},${(my + ny * bow).toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;
 }
 
-export function HeroMap({ reduce }: { reduce: boolean }) {
+const DEFAULT_TAGLINE = (
+  <>
+    Connect <span className="text-[#ffcf6b]">•</span> Collaborate <span className="text-[#ffcf6b]">•</span> Invest{" "}
+    <span className="text-[#ffcf6b]">•</span> Grow
+  </>
+);
+
+export function HeroMap({
+  reduce,
+  sources = SOURCES,
+  insetFor = defaultInset,
+  tagline = DEFAULT_TAGLINE,
+  arcDuration = 1.4,
+}: {
+  reduce: boolean;
+  sources?: MapSource[];
+  insetFor?: (size: Size) => Inset;
+  tagline?: ReactNode;
+  arcDuration?: number;
+}) {
   const [ref, size] = useElementSize<HTMLDivElement>();
-  const view = useMemo(() => (size ? fitPoints(POINTS, size, insetFor(size)) : null), [size]);
+  const view = useMemo(
+    () => (size ? fitPoints([...sources.map((s) => s.at), HUB], size, insetFor(size)) : null),
+    [size, sources, insetFor],
+  );
 
   const geo = useMemo(() => {
     if (!view || !size) return null;
     const hub = toScreen(view, size, HUB);
     return {
       hub,
-      sources: SOURCES.map((s) => {
+      sources: sources.map((s) => {
         const p = toScreen(view, size, s.at);
         return { ...s, p, d: arcPath(p, hub) };
       }),
     };
-  }, [view, size]);
+  }, [view, size, sources]);
 
   const compact = (size?.w ?? 1200) < 640;
   const k = compact ? 0.18 : 0.3;
@@ -119,7 +139,7 @@ export function HeroMap({ reduce }: { reduce: boolean }) {
                 filter="url(#soft-glow)"
                 initial={reduce ? false : { pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 1.4, delay: 0.5 + i * 0.16, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ duration: arcDuration, delay: 0.5 + i * 0.16, ease: [0.4, 0, 0.2, 1] }}
               />
               {!reduce ? (
                 <circle r={2.6} fill="#fff4d1" filter="url(#soft-glow)">
@@ -231,8 +251,7 @@ export function HeroMap({ reduce }: { reduce: boolean }) {
                 : "mt-1 whitespace-nowrap text-[14px] font-medium text-white/90"
             }
           >
-            Connect <span className="text-[#ffcf6b]">•</span> Collaborate <span className="text-[#ffcf6b]">•</span> Invest{" "}
-            <span className="text-[#ffcf6b]">•</span> Grow
+            {tagline}
           </div>
         </motion.div>
       ) : null}

@@ -53,7 +53,7 @@ export const PATHWAYS: Pathway[] = [
     title: "Connect",
     text: "Engage with the global Kannada community.",
     nav: "Kannadigas",
-    page: "Connect with Karnataka",
+    page: "Connect with Kannadigas",
     explore: ["I want to", "connect with Karnataka"],
     color: "#16a05a",
     deep: "#0f7a43",
