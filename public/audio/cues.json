@@ -1,0 +1,512 @@
+{
+  "voice": "en-IN-PrabhatNeural",
+  "locale": "en-IN",
+  "rate": "-5%",
+  "source": "scripts/voice-script.md",
+  "silence": 0.8,
+  "scenes": [
+    {
+      "id": "title",
+      "beats": 1
+    },
+    {
+      "id": "problem",
+      "beats": 3
+    },
+    {
+      "id": "assess",
+      "beats": 6
+    },
+    {
+      "id": "gps",
+      "beats": 5
+    },
+    {
+      "id": "gis",
+      "beats": 6
+    },
+    {
+      "id": "leak",
+      "beats": 1
+    },
+    {
+      "id": "core",
+      "beats": 9
+    }
+  ],
+  "chain": [
+    {
+      "id": "01-problem",
+      "startSlide": 1
+    },
+    {
+      "id": "02-product",
+      "startSlide": 0
+    },
+    {
+      "id": "03a-assess",
+      "startSlide": 2
+    },
+    {
+      "id": "03b-gps-field-app",
+      "startSlide": 3
+    },
+    {
+      "id": "03c-gis-territory-map",
+      "startSlide": 4
+    },
+    {
+      "id": "03d-compare-records",
+      "startSlide": 5
+    },
+    {
+      "id": "04-operating-close",
+      "startSlide": 6
+    }
+  ],
+  "durations": {
+    "01-problem": 59.568,
+    "02-product": 159.864,
+    "03a-assess": 151.104,
+    "03b-gps-field-app": 110.064,
+    "03c-gis-territory-map": 135.144,
+    "03d-compare-records": 148.872,
+    "03e-money-trail": 197.952,
+    "04-operating-close": 230.712,
+    "00-full-video-speech": 1199.472
+  },
+  "tracks": {
+    "01-problem": [
+      {
+        "at": 0.0,
+        "slide": 1,
+        "beat": 0,
+        "marker": "start"
+      }
+    ],
+    "02-product": [
+      {
+        "at": 0.0,
+        "slide": 0,
+        "beat": 0,
+        "marker": "start"
+      },
+      {
+        "at": 13.176,
+        "slide": 1,
+        "beat": 0,
+        "marker": "goto:problem/0"
+      },
+      {
+        "at": 75.672,
+        "slide": 1,
+        "beat": 1,
+        "marker": "goto:problem/1"
+      },
+      {
+        "at": 87.984,
+        "slide": 1,
+        "beat": 2,
+        "marker": "goto:problem/2"
+      }
+    ],
+    "03a-assess": [
+      {
+        "at": 0.0,
+        "slide": 2,
+        "beat": 0,
+        "marker": "start"
+      },
+      {
+        "at": 29.424,
+        "slide": 2,
+        "beat": 1,
+        "marker": "next"
+      },
+      {
+        "at": 49.104,
+        "slide": 2,
+        "beat": 2,
+        "marker": "next"
+      },
+      {
+        "at": 65.016,
+        "slide": 2,
+        "beat": 3,
+        "marker": "next"
+      },
+      {
+        "at": 78.36,
+        "slide": 2,
+        "beat": 4,
+        "marker": "next"
+      },
+      {
+        "at": 95.28,
+        "slide": 2,
+        "beat": 5,
+        "marker": "next"
+      }
+    ],
+    "03b-gps-field-app": [
+      {
+        "at": 0.0,
+        "slide": 3,
+        "beat": 0,
+        "marker": "start"
+      },
+      {
+        "at": 22.152,
+        "slide": 3,
+        "beat": 1,
+        "marker": "next"
+      },
+      {
+        "at": 42.864,
+        "slide": 3,
+        "beat": 2,
+        "marker": "next"
+      },
+      {
+        "at": 64.32,
+        "slide": 3,
+        "beat": 3,
+        "marker": "next"
+      },
+      {
+        "at": 84.216,
+        "slide": 3,
+        "beat": 4,
+        "marker": "next"
+      }
+    ],
+    "03c-gis-territory-map": [
+      {
+        "at": 0.0,
+        "slide": 4,
+        "beat": 0,
+        "marker": "start"
+      },
+      {
+        "at": 25.2,
+        "slide": 4,
+        "beat": 1,
+        "marker": "next"
+      },
+      {
+        "at": 45.36,
+        "slide": 4,
+        "beat": 2,
+        "marker": "next"
+      },
+      {
+        "at": 67.248,
+        "slide": 4,
+        "beat": 3,
+        "marker": "next"
+      },
+      {
+        "at": 84.384,
+        "slide": 4,
+        "beat": 4,
+        "marker": "next"
+      },
+      {
+        "at": 103.56,
+        "slide": 4,
+        "beat": 5,
+        "marker": "next"
+      }
+    ],
+    "03d-compare-records": [
+      {
+        "at": 0.0,
+        "slide": 5,
+        "beat": 0,
+        "marker": "start"
+      }
+    ],
+    "04-operating-close": [
+      {
+        "at": 0.0,
+        "slide": 6,
+        "beat": 0,
+        "marker": "start"
+      },
+      {
+        "at": 24.936,
+        "slide": 6,
+        "beat": 1,
+        "marker": "next"
+      },
+      {
+        "at": 49.392,
+        "slide": 6,
+        "beat": 2,
+        "marker": "next"
+      },
+      {
+        "at": 70.416,
+        "slide": 6,
+        "beat": 3,
+        "marker": "next"
+      },
+      {
+        "at": 96.216,
+        "slide": 6,
+        "beat": 4,
+        "marker": "next"
+      },
+      {
+        "at": 115.32,
+        "slide": 6,
+        "beat": 5,
+        "marker": "next"
+      },
+      {
+        "at": 135.288,
+        "slide": 6,
+        "beat": 6,
+        "marker": "next"
+      },
+      {
+        "at": 163.344,
+        "slide": 6,
+        "beat": 7,
+        "marker": "next"
+      },
+      {
+        "at": 187.488,
+        "slide": 6,
+        "beat": 8,
+        "marker": "next"
+      }
+    ],
+    "00-full-video-speech": [
+      {
+        "at": 0.0,
+        "slide": 1,
+        "beat": 0,
+        "marker": "start",
+        "segment": "01-problem"
+      },
+      {
+        "at": 60.368,
+        "slide": 0,
+        "beat": 0,
+        "marker": "start",
+        "segment": "02-product"
+      },
+      {
+        "at": 73.544,
+        "slide": 1,
+        "beat": 0,
+        "marker": "goto:problem/0",
+        "segment": "02-product"
+      },
+      {
+        "at": 136.04,
+        "slide": 1,
+        "beat": 1,
+        "marker": "goto:problem/1",
+        "segment": "02-product"
+      },
+      {
+        "at": 148.352,
+        "slide": 1,
+        "beat": 2,
+        "marker": "goto:problem/2",
+        "segment": "02-product"
+      },
+      {
+        "at": 221.032,
+        "slide": 2,
+        "beat": 0,
+        "marker": "start",
+        "segment": "03a-assess"
+      },
+      {
+        "at": 250.456,
+        "slide": 2,
+        "beat": 1,
+        "marker": "next",
+        "segment": "03a-assess"
+      },
+      {
+        "at": 270.136,
+        "slide": 2,
+        "beat": 2,
+        "marker": "next",
+        "segment": "03a-assess"
+      },
+      {
+        "at": 286.048,
+        "slide": 2,
+        "beat": 3,
+        "marker": "next",
+        "segment": "03a-assess"
+      },
+      {
+        "at": 299.392,
+        "slide": 2,
+        "beat": 4,
+        "marker": "next",
+        "segment": "03a-assess"
+      },
+      {
+        "at": 316.312,
+        "slide": 2,
+        "beat": 5,
+        "marker": "next",
+        "segment": "03a-assess"
+      },
+      {
+        "at": 372.936,
+        "slide": 3,
+        "beat": 0,
+        "marker": "start",
+        "segment": "03b-gps-field-app"
+      },
+      {
+        "at": 395.088,
+        "slide": 3,
+        "beat": 1,
+        "marker": "next",
+        "segment": "03b-gps-field-app"
+      },
+      {
+        "at": 415.8,
+        "slide": 3,
+        "beat": 2,
+        "marker": "next",
+        "segment": "03b-gps-field-app"
+      },
+      {
+        "at": 437.256,
+        "slide": 3,
+        "beat": 3,
+        "marker": "next",
+        "segment": "03b-gps-field-app"
+      },
+      {
+        "at": 457.152,
+        "slide": 3,
+        "beat": 4,
+        "marker": "next",
+        "segment": "03b-gps-field-app"
+      },
+      {
+        "at": 483.8,
+        "slide": 4,
+        "beat": 0,
+        "marker": "start",
+        "segment": "03c-gis-territory-map"
+      },
+      {
+        "at": 509.0,
+        "slide": 4,
+        "beat": 1,
+        "marker": "next",
+        "segment": "03c-gis-territory-map"
+      },
+      {
+        "at": 529.16,
+        "slide": 4,
+        "beat": 2,
+        "marker": "next",
+        "segment": "03c-gis-territory-map"
+      },
+      {
+        "at": 551.048,
+        "slide": 4,
+        "beat": 3,
+        "marker": "next",
+        "segment": "03c-gis-territory-map"
+      },
+      {
+        "at": 568.184,
+        "slide": 4,
+        "beat": 4,
+        "marker": "next",
+        "segment": "03c-gis-territory-map"
+      },
+      {
+        "at": 587.36,
+        "slide": 4,
+        "beat": 5,
+        "marker": "next",
+        "segment": "03c-gis-territory-map"
+      },
+      {
+        "at": 619.744,
+        "slide": 5,
+        "beat": 0,
+        "marker": "start",
+        "segment": "03d-compare-records"
+      },
+      {
+        "at": 968.168,
+        "slide": 6,
+        "beat": 0,
+        "marker": "start",
+        "segment": "04-operating-close"
+      },
+      {
+        "at": 993.104,
+        "slide": 6,
+        "beat": 1,
+        "marker": "next",
+        "segment": "04-operating-close"
+      },
+      {
+        "at": 1017.56,
+        "slide": 6,
+        "beat": 2,
+        "marker": "next",
+        "segment": "04-operating-close"
+      },
+      {
+        "at": 1038.584,
+        "slide": 6,
+        "beat": 3,
+        "marker": "next",
+        "segment": "04-operating-close"
+      },
+      {
+        "at": 1064.384,
+        "slide": 6,
+        "beat": 4,
+        "marker": "next",
+        "segment": "04-operating-close"
+      },
+      {
+        "at": 1083.488,
+        "slide": 6,
+        "beat": 5,
+        "marker": "next",
+        "segment": "04-operating-close"
+      },
+      {
+        "at": 1103.456,
+        "slide": 6,
+        "beat": 6,
+        "marker": "next",
+        "segment": "04-operating-close"
+      },
+      {
+        "at": 1131.512,
+        "slide": 6,
+        "beat": 7,
+        "marker": "next",
+        "segment": "04-operating-close"
+      },
+      {
+        "at": 1155.656,
+        "slide": 6,
+        "beat": 8,
+        "marker": "next",
+        "segment": "04-operating-close"
+      }
+    ]
+  }
+}

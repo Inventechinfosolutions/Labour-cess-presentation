@@ -1,0 +1,62 @@
+{
+  "voice": "en-IN-PrabhatNeural",
+  "locale": "en-IN",
+  "rate": "-5%",
+  "source": "scripts/voice-script.md",
+  "tracks": [
+    {
+      "id": "00-full-video-speech",
+      "file": "/audio/00-full-video-speech.mp3",
+      "title": "Full Video Speech",
+      "duration": 1199.472
+    },
+    {
+      "id": "01-problem",
+      "file": "/audio/01-problem.mp3",
+      "title": "01 Problem",
+      "duration": 59.568
+    },
+    {
+      "id": "02-product",
+      "file": "/audio/02-product.mp3",
+      "title": "02 Product",
+      "duration": 159.864
+    },
+    {
+      "id": "03a-assess",
+      "file": "/audio/03a-assess.mp3",
+      "title": "03A Assess",
+      "duration": 151.104
+    },
+    {
+      "id": "03b-gps-field-app",
+      "file": "/audio/03b-gps-field-app.mp3",
+      "title": "03B Gps Field App",
+      "duration": 110.064
+    },
+    {
+      "id": "03c-gis-territory-map",
+      "file": "/audio/03c-gis-territory-map.mp3",
+      "title": "03C Gis Territory Map",
+      "duration": 135.144
+    },
+    {
+      "id": "03d-compare-records",
+      "file": "/audio/03d-compare-records.mp3",
+      "title": "03D Compare Records",
+      "duration": 148.872
+    },
+    {
+      "id": "03e-money-trail",
+      "file": "/audio/03e-money-trail.mp3",
+      "title": "03E Money Trail",
+      "duration": 197.952
+    },
+    {
+      "id": "04-operating-close",
+      "file": "/audio/04-operating-close.mp3",
+      "title": "04 Operating Close",
+      "duration": 230.712
+    }
+  ]
+}

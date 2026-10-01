@@ -13,9 +13,9 @@ export const SCENES: SceneMeta[] = [
     title: "From Many Files to One Project File",
     kicker: "Problem · First solution · Smart Middleware",
     nav: "Gap → File",
-    beats: 6,
+    beats: 3,
   },
-  { id: "assess", title: "From Project File to CESS Assessment", kicker: "Assign · Estimation · Demand · Area status · Workflow system-wide", nav: "Assess", beats: 6 },
+  { id: "assess", title: "From Project File to CESS Assessment", kicker: "Register · Allot · Inspect · Value · Notify · Monitor", nav: "Assess", beats: 6 },
   { id: "gps", title: "Field Officer Mobile App", kicker: "Online or offline · Capture · Send · On-spot demand", nav: "GPS", beats: 6 },
   {
     id: "gis",
@@ -24,8 +24,7 @@ export const SCENES: SceneMeta[] = [
     nav: "GIS",
     beats: 5,
   },
-  { id: "leak", title: "Compare Project Records", kicker: "Compare · Flag · Assign follow-up · Potential exceptions", nav: "Leakage", beats: 6 },
-  { id: "command", title: "From Construction to CESS Money Trail", kicker: "Demand · Payment · Remittance · Matching accounts · Linked systems", nav: "Command", beats: 9 },
+  { id: "leak", title: "From Dashboard to Closure", kicker: "Detect · Notify · Assign · Resolve · Verify · Close", nav: "Closure", beats: 1 },
   { id: "core", title: "How the Department Works Day to Day", kicker: "Access · Appeals · KSK · Portal · Remittance at source", nav: "Core", beats: 9 },
 ];
 

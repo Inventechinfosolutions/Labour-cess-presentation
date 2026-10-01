@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useSyncExternalStore } from "react";
 import { DeviceMobile } from "@/lib/icons";
 import { useFitScale } from "@/hooks/useFitScale";
@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 type Props = {
   children: ReactNode;
   className?: string;
+  style?: CSSProperties;
 };
 
 function subscribeOrientation(onStoreChange: () => void) {
@@ -26,7 +27,7 @@ function getPortrait() {
  * Desktop / laptop: full-bleed fluid stage (no side gaps).
  * Tablet / phone: fixed design canvas scaled to fit.
  */
-export function SlideViewport({ children, className }: Props) {
+export function SlideViewport({ children, className, style }: Props) {
   const { frameRef, scale, mode, designW, designH } = useFitScale();
   const isPortrait = useSyncExternalStore(subscribeOrientation, getPortrait, () => false);
   const portraitHint = mode === "scaled" && scale < 0.55 && isPortrait;
@@ -34,6 +35,7 @@ export function SlideViewport({ children, className }: Props) {
   return (
     <div
       ref={frameRef}
+      style={style}
       className={cn(
         "relative h-full w-full overflow-hidden",
         "bg-[radial-gradient(900px_420px_at_100%_0%,rgba(20,196,212,0.09),transparent_55%),radial-gradient(700px_380px_at_0%_100%,rgba(11,31,74,0.06),transparent_50%)]",

@@ -1,30 +1,44 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { CessIcon } from "@/lib/icons";
 import {
+  ArrowRight,
   Buildings,
-  ClipboardText,
+  Calculator,
+  CalendarBlank,
+  CaretRight,
+  CheckCircle,
   Clock,
+  CornersOut,
   Eye,
+  FileText,
   FolderSimple,
   HardHat,
   LinkBreak,
+  MapPin,
   Receipt,
   Ruler,
+  Scan,
+  SealCheck,
   ShieldCheck,
   User,
+  UsersThree,
   WarningCircle,
   X,
 } from "@/lib/icons";
 import abcSite from "@/assets/abc-site.png";
 import assessAssign3d from "@/assets/assess-assign-officer-3d.png";
 import assessAssess3d from "@/assets/assess-field-3d.png";
-import assessDemand3d from "@/assets/assess-demand-3d.png";
-import assessEstimate3d from "@/assets/assess-estimate-3d.png";
+import assessDemandPoster from "@/assets/assess-demand-poster.png";
+import assessEstimatePoster from "@/assets/assess-estimation-poster.png";
 import assessStatus3d from "@/assets/assess-status-3d.png";
-import oneFileStack from "@/assets/one-file-stack.png";
-import problemStageBg from "@/assets/problem-stage-bg.png";
-import projectFile3d from "@/assets/project-file-3d.png";
+import assessStageBg from "@/assets/assess-stage-bg.jpg";
+import projectFolder from "@/assets/project-file-folder.jpg";
+import icon3dDocument from "@/assets/icon3d-document.jpg";
+import icon3dPhoto from "@/assets/icon3d-photo.jpg";
+import icon3dPin from "@/assets/icon3d-pin.jpg";
+import icon3dRuler from "@/assets/icon3d-ruler.jpg";
+import { AssignedOfficerCard } from "@/components/AssignedOfficerCard";
 import { Reveal, SceneHead, Stagger } from "@/components/SlideKit";
 import { cn } from "@/lib/utils";
 
@@ -48,6 +62,7 @@ type Tone = {
 
 type Stage = {
   id: string;
+  sub: string;
   label: string;
   short: string;
   hint: string;
@@ -59,8 +74,9 @@ type Stage = {
 const STAGES: Stage[] = [
   {
     id: "record",
-    label: "Project file",
-    short: "File",
+    sub: "Project file opened",
+    label: "Project registration",
+    short: "Registration",
     hint: "One official file on the Central Platform",
     Icon: Buildings,
     who: "Platform",
@@ -75,10 +91,11 @@ const STAGES: Stage[] = [
   },
   {
     id: "assign",
-    label: "Assignment",
-    short: "Assign",
+    sub: "Allotted to Inspector",
+    label: "Allotment to officer",
+    short: "Allotment",
     hint: "Territory officer takes ownership",
-    Icon: ClipboardText,
+    Icon: UsersThree,
     who: "District in-charge",
     tone: {
       iconWrap: "bg-[#1a4e8a] text-white",
@@ -91,8 +108,9 @@ const STAGES: Stage[] = [
   },
   {
     id: "assess",
-    label: "Assessment",
-    short: "Assess",
+    sub: "Site inspection",
+    label: "Site inspection",
+    short: "Inspection",
     hint: "Officer works the same digital file",
     Icon: HardHat,
     who: "Labour Inspector",
@@ -107,8 +125,9 @@ const STAGES: Stage[] = [
   },
   {
     id: "estimate",
-    label: "Estimation",
-    short: "Estimate",
+    sub: "Cost of construction",
+    label: "Cost valuation",
+    short: "Valuation",
     hint: "Verified quantities on the record",
     Icon: Ruler,
     who: "Labour Inspector",
@@ -123,8 +142,9 @@ const STAGES: Stage[] = [
   },
   {
     id: "demand",
+    sub: "Notice issued",
     label: "Demand notice",
-    short: "Demand",
+    short: "Demand Notice",
     hint: "Formal notice on file or on-spot",
     Icon: Receipt,
     who: "Authorised officer",
@@ -139,8 +159,9 @@ const STAGES: Stage[] = [
   },
   {
     id: "status",
-    label: "Status",
-    short: "Status",
+    sub: "Status review",
+    label: "Status monitoring",
+    short: "Monitoring",
     hint: "Pending work · payment · remittance · matching",
     Icon: Eye,
     who: "Workflow",
@@ -153,16 +174,6 @@ const STAGES: Stage[] = [
       glow: "rgba(14,138,114,0.35)",
     },
   },
-];
-
-/** Left-arc seats around the site circle (percent of orbit stage). */
-const ORBIT_SEATS: { x: number; y: number }[] = [
-  { x: 8, y: 14 },
-  { x: 2, y: 34 },
-  { x: 4, y: 54 },
-  { x: 14, y: 72 },
-  { x: 30, y: 84 },
-  { x: 48, y: 88 },
 ];
 
 const CHALLENGES: { title: string; body: string; Icon: CessIcon }[] = [
@@ -191,35 +202,37 @@ const CHALLENGES: { title: string; body: string; Icon: CessIcon }[] = [
 const BEAT_HEAD: readonly { kicker: string; title: string; support: string }[] = [
   {
     kicker: "Government of Karnataka · Labour CESS",
-    title: "One Project File",
-    support: "One official file on the Central Platform. Assessment starts here.",
+    title: "Project Registration",
+    support: "One official project file on the Central Platform. Assessment starts here.",
   },
   {
     kicker: "Assessment desk",
-    title: "Assignment",
-    support: "We assign the project to the responsible officer by territory.",
+    title: "Allotment to Officer",
+    support: "The project is allotted to the officer for that territory.",
   },
   {
     kicker: "Assessment desk",
-    title: "Assessment",
-    support: "The officer works on the same digital project file.",
+    title: "Site Inspection",
+    support: "The Labour Inspector inspects the site on the same project file.",
   },
   {
     kicker: "Assessment desk",
-    title: "Estimation",
-    support: "Verified quantities stay on the same Board record.",
+    title: "Cost Valuation",
+    support: "The cost of construction is valued from verified quantities.",
   },
   {
     kicker: "Assessment desk",
     title: "Demand Notice",
-    support: "A formal demand notice is raised on the project file.",
+    support: "A formal demand notice is issued on the project file.",
   },
   {
     kicker: "Assessment desk",
-    title: "Status",
-    support: "Pending work, payment, remittance and matching — by territory.",
+    title: "Status Monitoring",
+    support: "Pending work, payment, remittance and matching are monitored by territory.",
   },
 ];
+
+const GOLD_GLOW = "rgba(240,193,74,0.45)";
 
 const stamp3d =
   "relative shadow-[0_2px_0_0_rgba(0,0,0,0.18),0_8px_16px_rgba(7,20,51,0.16)] before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[45%] before:rounded-t-full before:bg-[linear-gradient(180deg,rgba(255,255,255,0.35),transparent)] before:content-['']";
@@ -237,19 +250,20 @@ export function AssessScene({ beat, onBeat }: { beat: number; onBeat: (n: number
       {/* Orbit stage — same city / mist stage as Smart Middleware (title inside) */}
       <div className="relative min-h-0 overflow-hidden rounded-[24px] bg-[#eef3f8] shadow-[0_14px_40px_rgba(7,20,51,0.1)] ring-1 ring-navy/8">
         <img
-          src={problemStageBg}
+          src={assessStageBg}
           alt=""
           aria-hidden
           draggable={false}
-          className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-[center_40%] select-none"
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-[center_60%] select-none"
         />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-0"
           style={{
             background: `
-              linear-gradient(165deg, rgba(247,250,253,0.58) 0%, rgba(232,240,244,0.38) 45%, rgba(228,238,246,0.52) 100%),
-              radial-gradient(ellipse 55% 60% at 32% 48%, ${stage.tone.glow} 0%, transparent 65%),
+              radial-gradient(ellipse 34% 16% at 50% 8%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.45) 45%, transparent 80%),
+              linear-gradient(180deg, rgba(247,250,253,0.22) 0%, rgba(240,246,252,0.1) 45%, rgba(236,244,251,0.2) 100%),
+              radial-gradient(ellipse 55% 60% at 32% 48%, ${GOLD_GLOW} 0%, transparent 65%),
               radial-gradient(ellipse 80% 60% at 70% 35%, rgba(20,196,212,0.14) 0%, transparent 65%),
               radial-gradient(ellipse 40% 45% at 78% 30%, rgba(11,31,74,0.05) 0%, transparent 60%)
             `,
@@ -308,165 +322,10 @@ export function AssessScene({ beat, onBeat }: { beat: number; onBeat: (n: number
             </motion.div>
           </AnimatePresence>
 
-          <div className="grid min-h-0 grid-cols-[minmax(0,1.15fr)_minmax(280px,0.95fr)] gap-3">
-          {/* Orbit · site circle + path nodes */}
-          <div className="relative min-h-0">
-            <div className="absolute top-1 left-1/2 z-20 w-[min(100%,300px)] -translate-x-1/2">
-              <div className="flex items-center gap-2.5 rounded-[20px] bg-white/95 px-3 py-2 shadow-[0_10px_28px_rgba(7,20,51,0.12)] ring-1 ring-navy/8 backdrop-blur-[2px]">
-                <img
-                  src={oneFileStack}
-                  alt=""
-                  aria-hidden
-                  draggable={false}
-                  className="h-9 w-auto shrink-0 select-none drop-shadow-sm"
-                />
-                <div className="min-w-0 text-left">
-                  <div className="text-[12px] font-extrabold leading-tight tracking-tight text-navy">
-                    One site · One Board file
-                  </div>
-                  <p className="mt-0.5 text-[10px] leading-snug font-semibold text-[#6b849e]">
-                    From submission to assessment, everything in one place.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Dashed orbit path */}
-            <svg
-              className="pointer-events-none absolute inset-0 h-full w-full"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              aria-hidden
-            >
-              <path
-                d="M 18 12 C 2 28, 0 55, 18 78 C 28 88, 42 92, 55 90"
-                fill="none"
-                stroke={stage.tone.line}
-                strokeWidth="0.55"
-                strokeDasharray="1.4 1.1"
-                opacity="0.55"
-              />
-              {!reduce ? (
-                <motion.path
-                  d="M 18 12 C 2 28, 0 55, 18 78 C 28 88, 42 92, 55 90"
-                  fill="none"
-                  stroke={stage.tone.line}
-                  strokeWidth="0.7"
-                  strokeDasharray="2 2.5"
-                  strokeLinecap="round"
-                  animate={{ strokeDashoffset: [0, -18] }}
-                  transition={{ duration: 3.2, repeat: Infinity, ease: "linear" }}
-                  opacity="0.85"
-                />
-              ) : null}
-            </svg>
-
-            {/* Site circle hub */}
-            <motion.div
-              className="absolute top-[48%] left-[52%] z-10 aspect-square w-[min(62%,250px)] -translate-x-1/2 -translate-y-1/2"
-              initial={reduce ? false : { opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4 }}
-            >
-              {!reduce ? (
-                <motion.div
-                  aria-hidden
-                  className="absolute -inset-3 rounded-full"
-                  style={{ boxShadow: `0 0 0 2px ${stage.tone.line}33, 0 18px 40px rgba(7,20,51,0.14)` }}
-                  animate={{ scale: [1, 1.02, 1], opacity: [0.7, 1, 0.7] }}
-                  transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-                />
-              ) : null}
-
-              <div className="relative h-full w-full overflow-hidden rounded-full bg-white shadow-[0_16px_40px_rgba(7,20,51,0.16)] ring-[6px] ring-white">
-                <img
-                  src={abcSite}
-                  alt=""
-                  aria-hidden
-                  className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
-                />
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(247,250,253,0.08) 0%, transparent 40%, rgba(7,20,51,0.55) 100%)",
-                  }}
-                />
-
-                {/* Official Board file badge */}
-                <div className="absolute inset-x-4 bottom-4 z-10">
-                  <div className="flex items-center gap-2 rounded-2xl bg-navy/92 px-3 py-2 text-white shadow-lg ring-1 ring-white/15 backdrop-blur-sm">
-                    <span className={cn("grid size-8 shrink-0 place-items-center rounded-xl bg-gold text-gold-ink", stamp3d)}>
-                      <FolderSimple weight="fill" className="relative z-[1] size-4" />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-[8px] font-extrabold tracking-[0.14em] text-teal-bright uppercase">
-                        Official Board file
-                      </span>
-                      <b className="block truncate font-mono text-[11px] leading-tight">CESS-2025-000123</b>
-                      <span className="block truncate text-[10px] text-white/75">ABC Commercial Complex</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Orbit nodes */}
-            {STAGES.map((s, i) => {
-              const seat = ORBIT_SEATS[i];
-              const active = bi === i;
-              const done = bi > i;
-              return (
-                <motion.button
-                  key={s.id}
-                  type="button"
-                  title={s.label}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onBeat(i);
-                  }}
-                  className="absolute z-30 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1"
-                  style={{ left: `${seat.x}%`, top: `${seat.y}%` }}
-                  initial={reduce ? false : { opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: active ? 1.12 : 1 }}
-                  transition={{ delay: reduce ? 0 : 0.05 + i * 0.05, duration: 0.3 }}
-                  whileHover={reduce ? undefined : { scale: active ? 1.14 : 1.08 }}
-                  whileTap={reduce ? undefined : { scale: 0.95 }}
-                >
-                  <span
-                    className={cn(
-                      "grid size-11 place-items-center rounded-full transition",
-                      stamp3d,
-                      active
-                        ? cn(s.tone.iconWrap, "ring-[3px]", s.tone.ring)
-                        : done
-                          ? "bg-ok text-white ring-2 ring-ok/35"
-                          : "bg-white text-navy/40 ring-1 ring-navy/10",
-                    )}
-                    style={active ? { boxShadow: `0 10px 24px ${s.tone.line}55` } : undefined}
-                  >
-                    {done && !active ? (
-                      <ShieldCheck weight="fill" className="relative z-[1] size-5" />
-                    ) : (
-                      <s.Icon weight={active ? "fill" : "duotone"} className="relative z-[1] size-5" />
-                    )}
-                  </span>
-                  <span
-                    className={cn(
-                      "rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm",
-                      active
-                        ? "bg-navy text-white"
-                        : done
-                          ? "bg-ok-soft text-ok"
-                          : "bg-white/90 text-navy/45",
-                    )}
-                  >
-                    {String(i + 1).padStart(2, "0")} {s.short}
-                  </span>
-                </motion.button>
-              );
-            })}
+          <div className="grid min-h-0 grid-cols-[minmax(0,1fr)_minmax(280px,1fr)] gap-3">
+          <div className="grid min-h-0 grid-cols-[34%_minmax(0,1fr)] gap-1">
+            <WorkflowRail bi={bi} onBeat={onBeat} reduce={!!reduce} />
+            <SiteHub reduce={!!reduce} glow={GOLD_GLOW} />
           </div>
 
           {/* Active step detail card */}
@@ -484,7 +343,7 @@ export function AssessScene({ beat, onBeat }: { beat: number; onBeat: (n: number
                   <motion.div
                     aria-hidden
                     className="pointer-events-none absolute -inset-4 rounded-[36px]"
-                    style={{ background: `radial-gradient(ellipse at center, ${stage.tone.glow}, transparent 70%)` }}
+                    style={{ background: `radial-gradient(ellipse at center, ${GOLD_GLOW}, transparent 70%)` }}
                     animate={{ opacity: [0.35, 0.75, 0.35] }}
                     transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                   />
@@ -577,41 +436,425 @@ export function AssessScene({ beat, onBeat }: { beat: number; onBeat: (n: number
   );
 }
 
-/** Project File — 3D case-file hero (step 01). */
+/** Left workflow — six journey steps on a dashed wave path. */
+const RAIL_ICONS: CessIcon[] = [Buildings, UsersThree, HardHat, Calculator, FileText, Eye];
+const RAIL_COLORS = [
+  { main: "#2f7df0", deep: "#1f52c4", soft: "#e3eeff" },
+  { main: "#7c5cf0", deep: "#5537c9", soft: "#eee8ff" },
+  { main: "#e8a317", deep: "#a86e04", soft: "#fff1d2" },
+  { main: "#f07a3a", deep: "#c4541b", soft: "#ffe8dc" },
+  { main: "#0ea5a5", deep: "#0a7c80", soft: "#daf5f4" },
+  { main: "#16a34a", deep: "#0e7a38", soft: "#dff5e7" },
+];
+const RAIL_CIRCLE = 52;
+const RAIL_PAD = 4;
+const ORBIT_RX = 64;
+/** Vertical radius as a share of rail height; end steps sit at 95% of it. */
+const ORBIT_RY_SHARE = 5 / 12 / 0.95;
+const RAIL_OFFSETS = Array.from({ length: 6 }, (_, i) => {
+  const t = ((i - 2.5) / 2.5) * 0.95;
+  return ORBIT_RX * (1 - Math.sqrt(1 - t * t));
+});
+
+function WorkflowRail({
+  bi,
+  onBeat,
+  reduce,
+}: {
+  bi: number;
+  onBeat: (n: number) => void;
+  reduce: boolean;
+}) {
+  const [h, setH] = useState(0);
+  const boxRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setH(e.contentRect.height));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const mid = h / 2;
+  const ry = h * ORBIT_RY_SHARE;
+  const cx = RAIL_PAD + RAIL_CIRCLE / 2 + ORBIT_RX;
+  const node = (i: number) => ({ x: RAIL_PAD + RAIL_OFFSETS[i] + RAIL_CIRCLE / 2, y: ((i + 0.5) * h) / 6 });
+  const orbit = `M ${cx} ${mid - ry} A ${ORBIT_RX} ${ry} 0 0 0 ${cx} ${mid + ry}`;
+  const outer = `M ${cx} ${mid - ry - 18} A ${ORBIT_RX + 18} ${ry + 18} 0 0 0 ${cx} ${mid + ry + 18}`;
+  const n0 = node(0);
+  const na = node(bi);
+  const progress = `M ${n0.x} ${n0.y} A ${ORBIT_RX} ${ry} 0 0 0 ${na.x} ${na.y}`;
+
+  return (
+    <div className="relative min-h-0 py-[2%]">
+      <div ref={boxRef} className="relative grid h-full grid-rows-6">
+        {h > 0 ? (
+          <svg className="pointer-events-none absolute inset-0 size-full overflow-visible" viewBox={`0 0 ${cx + 60} ${h}`} preserveAspectRatio="xMinYMin meet" style={{ width: cx + 60 }} aria-hidden>
+            <defs>
+              <linearGradient id="orbit-progress" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#3b8cf5" />
+                <stop offset="100%" stopColor="#1f52c4" />
+              </linearGradient>
+            </defs>
+            <path d={outer} fill="none" stroke="#ffffff" strokeOpacity="0.85" strokeWidth="2" strokeLinecap="round" />
+            <path d={orbit} fill="none" stroke="#1b3f7a" strokeOpacity="0.7" strokeWidth="2.6" strokeDasharray="7 7" strokeLinecap="round" />
+            {bi > 0 ? (
+              <motion.path
+                key={bi}
+                d={progress}
+                fill="none"
+                stroke="url(#orbit-progress)"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                initial={reduce ? false : { pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              />
+            ) : null}
+            {!reduce ? (
+              <g>
+                <circle r="7" fill="#2f7df0" opacity="0.22">
+                  <animateMotion dur="7s" repeatCount="indefinite" path={orbit} keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" />
+                </circle>
+                <circle r="3.5" fill="#2f7df0">
+                  <animateMotion dur="7s" repeatCount="indefinite" path={orbit} keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" />
+                </circle>
+              </g>
+            ) : null}
+          </svg>
+        ) : null}
+        {STAGES.map((s, i) => {
+          const active = bi === i;
+          const done = bi > i;
+          const Icon = RAIL_ICONS[i];
+          const c = RAIL_COLORS[i];
+          return (
+            <motion.button
+              key={s.id}
+              type="button"
+              title={s.label}
+              onClick={(e) => {
+                e.stopPropagation();
+                onBeat(i);
+              }}
+              className="flex min-h-0 items-center text-left"
+              style={{ paddingLeft: RAIL_PAD + RAIL_OFFSETS[i] }}
+              initial={reduce ? false : { opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: reduce ? 0 : 0.05 + i * 0.07, duration: 0.35 }}
+              whileHover={reduce ? undefined : { x: 3 }}
+            >
+              <span className="relative z-10 shrink-0" style={{ width: RAIL_CIRCLE, height: RAIL_CIRCLE }}>
+                {active && !reduce ? (
+                  <motion.span
+                    aria-hidden
+                    className="absolute inset-0 rounded-full"
+                    style={{ boxShadow: `0 0 0 3px ${c.main}` }}
+                    animate={{ scale: [1, 1.35], opacity: [0.6, 0] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut" }}
+                  />
+                ) : null}
+                <span
+                  className="grid size-full place-items-center rounded-full ring-[3px] ring-white transition"
+                  style={
+                    active
+                      ? {
+                          background: `linear-gradient(145deg, ${c.main} 0%, ${c.deep} 100%)`,
+                          color: "#fff",
+                          boxShadow: `0 10px 22px ${c.main}66, inset 0 2px 0 rgba(255,255,255,0.3)`,
+                        }
+                      : {
+                          background: `linear-gradient(180deg, #ffffff 0%, ${c.soft} 100%)`,
+                          color: c.deep,
+                          boxShadow: "0 8px 18px rgba(7,20,51,0.14)",
+                        }
+                  }
+                >
+                  <Icon weight={active ? "fill" : "duotone"} className="size-6" />
+                </span>
+                {active ? (
+                  <span
+                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full px-2 text-[9px] leading-[15px] font-extrabold whitespace-nowrap text-white ring-2 ring-white"
+                    style={{ background: c.deep, boxShadow: `0 3px 8px ${c.main}59` }}
+                  >
+                    {s.short}
+                  </span>
+                ) : null}
+                {done ? (
+                  <CheckCircle weight="fill" className="absolute -top-0.5 -right-0.5 size-4 rounded-full bg-white text-ok" />
+                ) : null}
+              </span>
+              <span
+                className="relative -ml-4 min-w-0 overflow-hidden rounded-2xl py-2.5 pr-4 pl-6 backdrop-blur-sm transition"
+                style={{
+                  background: `linear-gradient(100deg, ${c.soft} 0%, rgba(255,255,255,${active ? 0.95 : 0.82}) 100%)`,
+                  boxShadow: active
+                    ? `0 10px 22px ${c.main}33, inset 0 0 0 1.5px ${c.main}`
+                    : `0 6px 16px rgba(7,20,51,0.08), inset 0 0 0 1px ${c.main}33`,
+                }}
+              >
+                <b className="block text-[14px] leading-tight font-extrabold whitespace-nowrap text-[#12306a]">
+                  <span style={{ color: c.deep }}>{String(i + 1).padStart(2, "0")}</span> {s.short}
+                </b>
+                <span className="mt-0.5 block text-[11px] leading-tight font-medium whitespace-nowrap text-[#3f5877]">{s.sub}</span>
+              </span>
+            </motion.button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+const HUB_TILES: { src: string; label: string; pos: string }[] = [
+  { src: icon3dDocument, label: "Documents", pos: "top-[16%] -left-[9%]" },
+  { src: icon3dPin, label: "Site location", pos: "top-[16%] -right-[9%]" },
+  { src: icon3dPhoto, label: "Site photos", pos: "bottom-[24%] -left-[7%]" },
+  { src: icon3dRuler, label: "Measurements", pos: "bottom-[24%] -right-[7%]" },
+];
+
+/** Centre hub — intro note, site circle with floating evidence tiles and the Board file badge. */
+function SiteHub({ reduce, glow }: { reduce: boolean; glow: string }) {
+  return (
+    <div className="relative min-h-0 [container-type:size]">
+      <motion.div
+        className="absolute top-1 left-1/2 z-20 w-[min(98%,340px)] -translate-x-1/2"
+        initial={reduce ? false : { opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <div className="flex items-center gap-3.5 rounded-[22px] bg-white/88 py-3 pr-4 pl-3.5 shadow-[0_12px_30px_rgba(7,20,51,0.12)] ring-1 ring-white/90 backdrop-blur-md">
+          <span aria-hidden className="relative size-12 shrink-0 drop-shadow-[0_6px_10px_rgba(31,95,214,0.35)]">
+            <span className="absolute top-[4%] left-[4%] h-[30%] w-[46%] rounded-t-[7px] bg-[linear-gradient(180deg,#3f7ff0,#2a63dc)]" />
+            <span className="absolute inset-x-0 top-[16%] bottom-[2%] grid place-items-center rounded-[11px] bg-[linear-gradient(160deg,#6aa6ff_0%,#2f6fe6_55%,#1f52c4_100%)] shadow-[inset_0_2px_0_rgba(255,255,255,0.35)]">
+              <FileText weight="fill" className="size-6 text-white" />
+            </span>
+          </span>
+          <div className="min-w-0 flex-1 text-left">
+            <div className="text-[14px] leading-tight font-extrabold tracking-tight text-[#12306a]">One site · One official file</div>
+            <p className="mt-1 text-[11.5px] leading-snug font-medium text-[#4d5f7a]">
+              From submission to assessment, everything in one place.
+            </p>
+          </div>
+          <CaretRight weight="bold" className="size-4 shrink-0 text-[#12306a]" />
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="absolute top-[56%] left-1/2 z-10 aspect-square w-[min(80%,52cqh,330px)] -translate-x-1/2 -translate-y-1/2"
+        initial={reduce ? false : { opacity: 0, scale: 0.92 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.45 }}
+      >
+        <div
+          aria-hidden
+          className="absolute -inset-[16%] rounded-full"
+          style={{ background: `radial-gradient(circle, ${glow} 0%, rgba(125,211,252,0.35) 40%, transparent 68%)` }}
+        />
+        {!reduce ? (
+          <motion.div
+            aria-hidden
+            className="absolute -inset-[5%] rounded-full ring-2 ring-white/80"
+            animate={{ scale: [1, 1.04, 1], opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ) : null}
+
+        <div className="relative h-full w-full overflow-hidden rounded-full bg-white shadow-[0_18px_44px_rgba(7,50,110,0.24)] ring-[7px] ring-white">
+          <img src={abcSite} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover object-[center_30%]" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{ background: "linear-gradient(180deg, rgba(247,250,253,0.05) 0%, transparent 45%, rgba(7,20,51,0.5) 100%)" }}
+          />
+        </div>
+
+        {HUB_TILES.map((t, i) => (
+          <motion.span
+            key={t.label}
+            title={t.label}
+            className={cn(
+              "absolute z-20 grid size-12 place-items-center overflow-hidden rounded-2xl bg-white shadow-[0_10px_22px_rgba(7,20,51,0.18)] ring-4 ring-white/70",
+              t.pos,
+            )}
+            initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+            animate={reduce ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1, y: [0, -4, 0] }}
+            transition={
+              reduce
+                ? { duration: 0 }
+                : {
+                    opacity: { duration: 0.35, delay: 0.35 + i * 0.1 },
+                    scale: { duration: 0.35, delay: 0.35 + i * 0.1 },
+                    y: { duration: 3 + i * 0.3, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 },
+                  }
+            }
+          >
+            <img src={t.src} alt="" aria-hidden draggable={false} className="size-[88%] mix-blend-multiply select-none" />
+          </motion.span>
+        ))}
+
+        <div className="absolute -bottom-[7%] left-1/2 z-20 w-max max-w-[96%] -translate-x-1/2">
+          <div className="relative flex items-center gap-3 overflow-hidden rounded-full bg-[linear-gradient(180deg,#123a8f_0%,#0b2766_55%,#081d52_100%)] py-2.5 pr-8 pl-5 text-white shadow-[0_14px_28px_rgba(7,20,51,0.35),inset_0_1px_0_rgba(255,255,255,0.25)] ring-1 ring-[#4d7fd6]/60">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-x-6 top-0 h-[45%] rounded-b-full bg-[linear-gradient(180deg,rgba(255,255,255,0.16),transparent)]"
+            />
+            <FolderSimple weight="fill" className="relative size-10 shrink-0 text-[#f7c62f] drop-shadow-[0_2px_3px_rgba(0,0,0,0.35)]" />
+            <span className="relative min-w-0 leading-tight">
+              <span className="block text-[10px] font-extrabold tracking-[0.16em] text-[#7fd8f5] uppercase">Official Board file</span>
+              <b className="block truncate text-[17px] font-extrabold tracking-[0.01em]">CESS-2025-000123</b>
+              <span className="block truncate text-[12.5px] font-medium text-white/90">ABC Commercial Complex</span>
+            </span>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+const FILE_FACTS: { label: string; value: string; note: string; Icon: CessIcon; grad: string; tint: string; key?: boolean }[] = [
+  {
+    label: "Project ID",
+    value: "CESS-2025-000123",
+    note: "ABC Commercial Complex",
+    Icon: Buildings,
+    grad: "linear-gradient(135deg,#1558c0,#3b8cf0)",
+    tint: "#eaf2fe",
+    key: true,
+  },
+  {
+    label: "Project type",
+    value: "Commercial · G+10",
+    note: "High-rise Commercial Building",
+    Icon: Scan,
+    grad: "linear-gradient(135deg,#0891b2,#22c3dd)",
+    tint: "#e6f7fb",
+  },
+  {
+    label: "Project location",
+    value: "East Zone · BBMP",
+    note: "Bengaluru, Karnataka",
+    Icon: MapPin,
+    grad: "linear-gradient(135deg,#e06a06,#f7a23a)",
+    tint: "#fdf0e6",
+  },
+  {
+    label: "Approval status",
+    value: "BBMP · Sanctioned",
+    note: "Sanction Ref: BBMP/BNG/2025/12345",
+    Icon: SealCheck,
+    grad: "linear-gradient(135deg,#0f8a4c,#2fc57a)",
+    tint: "#e7f6ee",
+  },
+  {
+    label: "Total built-up area",
+    value: "1,25,000 sq ft",
+    note: "As per sanctioned plan",
+    Icon: CornersOut,
+    grad: "linear-gradient(135deg,#6b35d6,#9d6bff)",
+    tint: "#f1ecfd",
+  },
+  {
+    label: "Demand status",
+    value: "Notice Generated",
+    note: "DN-2025-00412 · 25 Sep 2026",
+    Icon: CalendarBlank,
+    grad: "linear-gradient(135deg,#3f3fc9,#6d73f2)",
+    tint: "#eceefd",
+  },
+];
+
+/** Project File — live case-file card (step 01). */
 function ProjectFileCard({ reduce }: { reduce: boolean }) {
   return (
     <motion.div
-      className="relative flex w-full items-center justify-center overflow-hidden rounded-[26px] bg-transparent"
+      className="relative w-full overflow-hidden rounded-[26px] bg-white px-5 pt-4 pb-4 shadow-[0_24px_60px_rgba(0,55,120,0.2)] ring-1 ring-white"
       onClick={(e) => e.stopPropagation()}
-      animate={reduce ? undefined : { y: [0, -5, 0] }}
+      animate={reduce ? undefined : { y: [0, -4, 0] }}
       transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
     >
-      <img
-        src={projectFile3d}
-        alt="Project file — one official file on the Central Platform · CESS-2025-000123"
-        className="block h-auto w-full select-none object-contain drop-shadow-[0_22px_40px_rgba(7,20,51,0.22)]"
+      <motion.img
+        src={projectFolder}
+        alt=""
+        aria-hidden
         draggable={false}
+        className="pointer-events-none absolute top-1.5 right-4 w-[32%] mix-blend-multiply select-none"
+        initial={reduce ? false : { opacity: 0, y: -10, rotate: -3 }}
+        animate={{ opacity: 1, y: 0, rotate: 0 }}
+        transition={{ duration: 0.55, delay: 0.15 }}
       />
 
-      {/* Soft pulse over the Project ID tile — draws the eye without a second card */}
-      <motion.span
-        aria-hidden
-        className="pointer-events-none absolute left-[10.5%] top-[43%] z-10 h-[13.5%] w-[37%] rounded-[16px] ring-[2.5px] ring-teal/70"
-        initial={reduce ? false : { opacity: 0 }}
-        animate={
-          reduce
-            ? { opacity: 0.75 }
-            : {
-                opacity: [0.55, 1, 0.55],
-                boxShadow: [
-                  "0 0 0 0 rgba(20,196,212,0)",
-                  "0 0 22px 6px rgba(20,196,212,0.4)",
-                  "0 0 0 0 rgba(20,196,212,0)",
-                ],
-              }
-        }
-        transition={reduce ? { duration: 0.3 } : { duration: 2.1, repeat: Infinity, ease: "easeInOut", delay: 0.25 }}
-      />
+      <div className="relative pr-[40%]">
+        <span className="inline-flex rounded-full bg-navy px-3 py-1 text-[10px] font-extrabold tracking-[0.1em] text-white uppercase">
+          Step 01 · Platform
+        </span>
+        <p className="mt-2.5 text-[11px] font-extrabold tracking-[0.16em] text-[#6b849e] uppercase">Assessment case file</p>
+        <h3 className="font-display text-[32px] leading-none font-black tracking-tight text-navy">Project file</h3>
+        <motion.span
+          className="mt-2 block h-1 rounded-full bg-teal"
+          initial={reduce ? false : { width: 0 }}
+          animate={{ width: 56 }}
+          transition={{ duration: 0.5, delay: 0.35 }}
+        />
+        <p className="mt-1.5 text-[13px] font-semibold text-teal">One official file on the Central Platform</p>
+      </div>
+
+      <div className="relative z-10 mt-4 grid grid-cols-2 gap-2.5">
+        {FILE_FACTS.map((f, i) => (
+          <motion.div
+            key={f.label}
+            className={cn(
+              "relative flex min-w-0 items-center gap-3 rounded-2xl px-3 py-2.5 ring-1",
+              f.key ? "ring-2 ring-teal/60" : "ring-navy/6",
+            )}
+            style={{ background: `linear-gradient(90deg, ${f.tint} 0%, #ffffff 100%)` }}
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={
+              f.key && !reduce
+                ? {
+                    opacity: 1,
+                    y: 0,
+                    boxShadow: ["0 0 0 0 rgba(20,196,212,0)", "0 0 18px 4px rgba(20,196,212,0.35)", "0 0 0 0 rgba(20,196,212,0)"],
+                  }
+                : { opacity: 1, y: 0 }
+            }
+            transition={
+              f.key && !reduce
+                ? { opacity: { duration: 0.35, delay: 0.3 }, y: { duration: 0.35, delay: 0.3 }, boxShadow: { duration: 2.2, repeat: Infinity, delay: 1 } }
+                : { duration: 0.35, delay: reduce ? 0 : 0.3 + i * 0.07 }
+            }
+          >
+            <span
+              className={cn("grid size-10 shrink-0 place-items-center rounded-full text-white", stamp3d)}
+              style={{ background: f.grad }}
+            >
+              <f.Icon weight="fill" className="relative z-[1] size-5" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-[9px] font-extrabold tracking-[0.12em] text-[#6b849e] uppercase">{f.label}</span>
+              <b className="block truncate text-[14px] leading-tight text-navy">{f.value}</b>
+              <span className="block truncate text-[10px] font-semibold text-[#6b849e]">{f.note}</span>
+            </span>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="relative mt-3.5 flex items-center justify-between gap-3">
+        <motion.span
+          className="inline-flex items-center gap-2 rounded-full bg-ok-soft px-4 py-2 text-[12px] font-bold text-ok ring-1 ring-ok/15"
+          initial={reduce ? false : { opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.35, delay: 0.85 }}
+        >
+          <CheckCircle weight="fill" className="size-5" />
+          Ready for assignment
+        </motion.span>
+        <span className="inline-flex items-center gap-2 rounded-xl bg-[linear-gradient(90deg,#1558c0,#1f7af0)] px-4 py-2 text-[12px] font-bold text-white shadow-[0_8px_18px_rgba(31,111,216,0.3)]">
+          <FileText weight="fill" className="size-4" />
+          View Project File
+          <ArrowRight weight="bold" className="size-4" />
+        </span>
+      </div>
     </motion.div>
   );
 }
@@ -626,12 +869,12 @@ const DESK_CASE_ART: Record<number, { src: string; alt: string }> = {
     alt: "Field assessment — on-site survey, GPS capture and CESS estimation",
   },
   [B.estimate]: {
-    src: assessEstimate3d,
-    alt: "Assessment case file — Estimation · Verified quantities on the record",
+    src: assessEstimatePoster,
+    alt: "Construction estimation — project information, on-site captured details, measurement capture, estimation details, CESS calculation and supporting documents",
   },
   [B.demand]: {
-    src: assessDemand3d,
-    alt: "Assessment case file — Demand notice · Formal notice on file",
+    src: assessDemandPoster,
+    alt: "Demand notice tracking — notice counts by status, demand notice list, notice details with status timeline, and the demand notice lifecycle",
   },
   [B.status]: {
     src: assessStatus3d,
@@ -658,12 +901,23 @@ function DeskCaseCard({
       animate={reduce ? undefined : { y: [0, -5, 0] }}
       transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
     >
-      <img
-        src={art.src}
-        alt={art.alt}
-        className="block h-auto max-h-[min(52vh,420px)] w-full select-none object-contain drop-shadow-[0_22px_40px_rgba(7,20,51,0.22)]"
-        draggable={false}
-      />
+      {index === B.assign ? (
+        <AssignedOfficerCard reduce={reduce} />
+      ) : index === B.estimate || index === B.demand ? (
+        <img
+          src={art.src}
+          alt={art.alt}
+          className="block h-auto max-h-[min(62vh,520px)] w-full rounded-[18px] select-none object-contain shadow-[0_22px_40px_rgba(7,20,51,0.22)] ring-1 ring-white/70"
+          draggable={false}
+        />
+      ) : (
+        <img
+          src={art.src}
+          alt={art.alt}
+          className="block h-auto max-h-[min(52vh,420px)] w-full select-none object-contain drop-shadow-[0_22px_40px_rgba(7,20,51,0.22)]"
+          draggable={false}
+        />
+      )}
       <span className="sr-only">
         {stage.label}. {stage.hint}.
       </span>

@@ -58,6 +58,11 @@ import karnatakaEmblem from "@/assets/karnataka-emblem.png";
 import problemStageBg from "@/assets/problem-stage-bg.png";
 import savedSafelyOnDevice from "@/assets/saved-safely-on-device.png";
 import { NoticeArt } from "@/components/Art";
+import { GpsAssignedStage } from "@/components/GpsAssignedStage";
+import { GpsEvidenceStage } from "@/components/GpsEvidenceStage";
+import { GpsOfflineStage } from "@/components/GpsOfflineStage";
+import { GpsEstimationStage } from "@/components/GpsEstimationStage";
+import { GpsDemandStage } from "@/components/GpsDemandStage";
 import { Reveal, SceneHead, Stagger } from "@/components/SlideKit";
 import { cn } from "@/lib/utils";
 
@@ -208,23 +213,23 @@ const BEAT_HEAD: readonly { kicker: string; title: string; support: string }[] =
 ];
 
 const SPACE_HINTS = [
-  "Space · Key issues",
   "Space · Works offline",
-  "Space · Online happy path",
   "Space · Survey and estimation",
   "Space · On-spot demand",
+  "Space · Evidence capture",
+  "Space · Online happy path",
   "Space · Next",
 ] as const;
 
-/** Space order → content: projects, evidence, survey, demand notice, offline, online sync. */
-const BEAT_ORDER = [0, 1, 4, 5, 2, 3] as const;
+/** Space order → content: projects, offline, survey, demand notice, evidence, online sync. */
+const BEAT_ORDER = [0, 2, 4, 5, 1, 3] as const;
 
 export function GpsScene({ beat: step }: { beat: number }) {
   const beat: number = BEAT_ORDER[Math.min(Math.max(step, 0), BEAT_ORDER.length - 1)];
   const [issuesOpen, setIssuesOpen] = useState(false);
   const reduce = useReducedMotion();
   const head = BEAT_HEAD[Math.min(beat, BEAT_HEAD.length - 1)];
-  const spaceHint = SPACE_HINTS[Math.min(beat, SPACE_HINTS.length - 1)];
+  const spaceHint = SPACE_HINTS[Math.min(Math.max(step, 0), SPACE_HINTS.length - 1)];
   const offline = beat === 2;
   const happy = beat === 3;
   const sending = beat >= 3;
@@ -234,6 +239,46 @@ export function GpsScene({ beat: step }: { beat: number }) {
   const showCaps = beat === 0;
   const showSendFlow = beat === 2 || beat === 3;
   const capturing = beat >= 2 || happy;
+
+  if (beat === 0) {
+    return (
+      <div className="grid h-full min-h-0 grid-rows-[1fr] gap-2">
+        <GpsAssignedStage />
+      </div>
+    );
+  }
+
+  if (beat === 1) {
+    return (
+      <div className="grid h-full min-h-0 grid-rows-[1fr] gap-2">
+        <GpsEvidenceStage />
+      </div>
+    );
+  }
+
+  if (beat === 2) {
+    return (
+      <div className="grid h-full min-h-0 grid-rows-[1fr] gap-2">
+        <GpsOfflineStage />
+      </div>
+    );
+  }
+
+  if (beat === 4) {
+    return (
+      <div className="grid h-full min-h-0 grid-rows-[1fr] gap-2">
+        <GpsEstimationStage />
+      </div>
+    );
+  }
+
+  if (beat === 5) {
+    return (
+      <div className="grid h-full min-h-0 grid-rows-[1fr] gap-2">
+        <GpsDemandStage />
+      </div>
+    );
+  }
 
   const storyChips = offline
     ? [
