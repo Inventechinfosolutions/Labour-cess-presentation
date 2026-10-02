@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { Link } from "react-router";
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, CaretRight, type Icon } from "@phosphor-icons/react";
 import { WORLD_LAND_D } from "@/lib/worldPath";
 import { EASE } from "../motion";
@@ -28,6 +28,11 @@ export function PageHero({
   visual: ReactNode;
   reduce: boolean;
 }) {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const visualY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+
   const enter = (delay: number) => ({
     initial: reduce ? false : ({ opacity: 0, y: 18 } as const),
     animate: { opacity: 1, y: 0 },
@@ -35,14 +40,14 @@ export function PageHero({
   });
 
   return (
-    <section className="relative isolate overflow-hidden bg-(color:--gc-surface) pt-[76px]">
+    <section ref={ref} className="relative isolate overflow-hidden bg-(color:--gc-surface) pt-[76px]">
       <svg viewBox="0 0 1000 470" aria-hidden className="absolute top-10 right-[-8%] -z-10 w-[78%] opacity-45">
         <path d={WORLD_LAND_D} fill="#e6dec9" />
       </svg>
       <div className="absolute top-1/3 left-[58%] -z-10 size-[520px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(232,194,100,0.22),transparent_65%)]" />
 
       <div className="mx-auto grid max-w-[1320px] items-center gap-10 px-5 pt-8 pb-14 lg:grid-cols-[minmax(0,500px)_1fr] lg:px-8 lg:pt-10 lg:pb-16">
-        <div className="relative z-10">
+        <motion.div className="relative z-10" style={reduce ? undefined : { y: textY }}>
           <motion.nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[12.5px] text-(color:--gc-body)" {...enter(0)}>
             <Link to="/global-connect" className="transition hover:text-(color:--gc-ink)">
               Home
@@ -92,9 +97,11 @@ export function PageHero({
               ))}
             </ul>
           ) : null}
-        </div>
+        </motion.div>
 
-        <div className="relative">{visual}</div>
+        <motion.div className="relative" style={reduce ? undefined : { y: visualY }}>
+          {visual}
+        </motion.div>
       </div>
       <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-(color:--gc-gold-3)/60 to-transparent" />
     </section>

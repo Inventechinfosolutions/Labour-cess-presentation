@@ -1,8 +1,10 @@
-import { motion } from "motion/react";
+import { useRef } from "react";
+import { motion, useInView } from "motion/react";
 import { Coins, GraduationCap, Handshake, Lightbulb, UsersThree, type Icon } from "@phosphor-icons/react";
 import waysBg from "@/assets/heritage/ways-bg.jpg";
 import { HeritageTitle } from "./parts";
-import { EASE } from "./motion";
+import { cn } from "@/lib/utils";
+import { EASE, useCycle } from "./motion";
 
 const WAYS: { label: string; text: string; icon: Icon }[] = [
   { label: "People", text: "A global community of Kannadigas", icon: UsersThree },
@@ -15,6 +17,9 @@ const WAYS: { label: string; text: string; icon: Icon }[] = [
 const XS = [100, 300, 500, 700, 900];
 
 export function WaysToConnect({ reduce }: { reduce: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.4 });
+  const active = useCycle(WAYS.length, 2000, !reduce && inView);
   const draw = (delay: number) => ({
     initial: reduce ? false : { pathLength: 0 },
     whileInView: { pathLength: 1 },
@@ -29,7 +34,7 @@ export function WaysToConnect({ reduce }: { reduce: boolean }) {
 
       <HeritageTitle reduce={reduce}>One Karnataka. Many Ways to Connect.</HeritageTitle>
 
-      <div className="mx-auto mt-12 max-w-[920px]">
+      <div ref={ref} className="mx-auto mt-12 max-w-[920px]">
         <ul className="grid grid-cols-2 gap-y-8 sm:grid-cols-3 md:grid-cols-5">
           {WAYS.map(({ label, text, icon: WayIcon }, i) => (
             <motion.li
@@ -40,7 +45,14 @@ export function WaysToConnect({ reduce }: { reduce: boolean }) {
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
             >
-              <span className="mx-auto grid size-16 place-items-center rounded-full bg-white/90 text-(color:--gc-gold-4) shadow-[0_8px_22px_rgba(201,154,46,0.22)] ring-1 ring-(color:--gc-gold-3)/50">
+              <span
+                className={cn(
+                  "mx-auto grid size-16 place-items-center rounded-full shadow-[0_8px_22px_rgba(201,154,46,0.22)] ring-1 ring-(color:--gc-gold-3)/50 transition-all duration-500",
+                  i === active
+                    ? "scale-110 bg-(color:--gc-navy) text-(color:--gc-gold) shadow-[0_0_0_8px_rgba(212,165,55,0.18),0_14px_30px_rgba(12,58,42,0.3)]"
+                    : "bg-white/90 text-(color:--gc-gold-4)",
+                )}
+              >
                 <WayIcon size={30} weight="duotone" />
               </span>
               <p className="mt-3 text-[12.5px] font-extrabold tracking-[0.14em] text-(color:--gc-ink) uppercase">{label}</p>
@@ -49,7 +61,8 @@ export function WaysToConnect({ reduce }: { reduce: boolean }) {
           ))}
         </ul>
 
-        <svg viewBox="0 0 1000 90" preserveAspectRatio="none" className="hidden h-[70px] w-full md:block" aria-hidden>
+        <div className="relative hidden h-[70px] md:block">
+        <svg viewBox="0 0 1000 90" preserveAspectRatio="none" className="absolute inset-0 size-full" aria-hidden>
           {XS.map((x, i) => (
             <motion.path
               key={x}
@@ -75,6 +88,21 @@ export function WaysToConnect({ reduce }: { reduce: boolean }) {
             />
           ) : null}
         </svg>
+          {active >= 0 ? (
+            <motion.span
+              key={active}
+              aria-hidden
+              className="absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-(color:--gc-gold-4) shadow-[0_0_12px_rgba(212,165,55,0.9)]"
+              initial={{ left: `${XS[active] / 10}%`, top: "0%", opacity: 0 }}
+              animate={{
+                left: [`${XS[active] / 10}%`, `${XS[active] / 10}%`, "50%", "50%"],
+                top: ["0%", "44%", "44%", "100%"],
+                opacity: [0, 1, 1, 0.9],
+              }}
+              transition={{ duration: 1.4, times: [0, 0.25, 0.7, 1], ease: "easeInOut" }}
+            />
+          ) : null}
+        </div>
 
         <motion.div
           className="mt-8 flex flex-col items-center md:mt-0"
@@ -85,6 +113,16 @@ export function WaysToConnect({ reduce }: { reduce: boolean }) {
         >
           <span className="relative rounded-full bg-(color:--gc-navy) px-8 py-3 text-[13px] font-bold tracking-[0.2em] text-white shadow-[0_12px_30px_rgba(12,58,42,0.35)] ring-2 ring-(color:--gc-gold-3)/70">
             A STRONGER KARNATAKA
+            {active >= 0 ? (
+              <motion.span
+                key={active}
+                aria-hidden
+                className="absolute inset-0 rounded-full border-2 border-(color:--gc-gold-3)"
+                initial={{ scale: 1, opacity: 0 }}
+                animate={{ scale: [1, 1, 1.25], opacity: [0, 0.9, 0] }}
+                transition={{ duration: 2, times: [0, 0.65, 1], ease: "easeOut" }}
+              />
+            ) : null}
           </span>
           <p className="mt-5 text-center text-[11.5px] font-bold tracking-[0.2em] text-(color:--gc-ink-2)">
             GREATER OPPORTUNITIES <span className="text-(color:--gc-gold-4)">•</span> SHARED GROWTH{" "}

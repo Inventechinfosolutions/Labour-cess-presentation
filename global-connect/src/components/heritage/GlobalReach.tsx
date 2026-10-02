@@ -113,11 +113,13 @@ export function GlobalReach({ reduce }: { reduce: boolean }) {
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.6, delay: 0.9 + i * 0.12, ease: EASE }}
             >
-              <img
+              <motion.img
                 src={r.img}
                 alt=""
                 loading="lazy"
                 className="size-[68px] shrink-0 rounded-full object-cover shadow-[0_10px_24px_rgba(12,58,42,0.22)] ring-[3px] ring-white xl:size-[76px]"
+                animate={reduce ? undefined : { y: [0, -6, 0] }}
+                transition={{ duration: 3.6 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}
               />
               <div className="leading-tight">
                 <p className="font-display text-[14.5px] font-bold text-(color:--gc-ink)">{r.name}</p>

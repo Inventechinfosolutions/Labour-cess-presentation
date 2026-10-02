@@ -35,7 +35,7 @@ export function HeritageConnectHero({ reduce }: Props) {
   return (
     <PageHero
       reduce={reduce}
-      crumb="Kannadigas"
+      crumb="Connect"
       eyebrow="The Global Kannadiga Community"
       title={["Connect With", "Kannadigas"]}
       sub="Connect the global Kannadiga community with Karnataka, wherever you live."

@@ -1,15 +1,22 @@
-import { Fragment } from "react";
-import { motion } from "motion/react";
+import { Fragment, useRef } from "react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { ArrowRight, GlobeHemisphereEast, MapPin } from "@phosphor-icons/react";
 import panorama from "@/assets/heritage/panorama.jpg";
 import { HeritageTitle } from "./parts";
-import { EASE } from "./motion";
+import { cn } from "@/lib/utils";
+import { EASE, useCycle } from "./motion";
 
 const CHAIN = ["Bengaluru", "Mysuru", "Mangaluru"];
 
 export function ToTheWorld({ reduce }: { reduce: boolean }) {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+  const inView = useInView(ref, { amount: 0.3 });
+  const active = useCycle(CHAIN.length + 1, 1300, !reduce && inView);
+
   return (
-    <section className="relative isolate overflow-hidden bg-(color:--gc-surface)">
+    <section ref={ref} className="relative isolate overflow-hidden bg-(color:--gc-surface)">
       <div className="relative z-10 px-5 pt-16 lg:px-8 lg:pt-20">
         <HeritageTitle reduce={reduce} sub="From the world's technology centres to Karnataka's emerging ecosystems, connections create new possibilities.">
           From Karnataka to the World
@@ -17,16 +24,18 @@ export function ToTheWorld({ reduce }: { reduce: boolean }) {
       </div>
 
       <div className="relative -mt-6 h-[360px] sm:h-[420px]">
-        <motion.img
-          src={panorama}
-          alt="Mysuru Palace and a modern Karnataka campus reflected in a river at sunset"
-          loading="lazy"
-          className="absolute inset-0 size-full object-cover object-[50%_60%]"
-          initial={reduce ? false : { scale: 1.08 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 1.8, ease: EASE }}
-        />
+        <motion.div className="absolute inset-x-0 -top-[60px] h-[calc(100%+120px)]" style={reduce ? undefined : { y: bgY }}>
+          <motion.img
+            src={panorama}
+            alt="Mysuru Palace and a modern Karnataka campus reflected in a river at sunset"
+            loading="lazy"
+            className="size-full object-cover object-[50%_60%]"
+            initial={reduce ? false : { scale: 1.12 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 1.8, ease: EASE }}
+          />
+        </motion.div>
         <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-(color:--gc-surface) to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[rgba(6,36,25,0.85)] to-transparent" />
 
@@ -34,7 +43,10 @@ export function ToTheWorld({ reduce }: { reduce: boolean }) {
           {CHAIN.map((c, i) => (
             <Fragment key={c}>
               <motion.li
-                className="flex items-center gap-2 rounded-full bg-white/92 px-4 py-2 text-[13.5px] font-semibold text-(color:--gc-ink) shadow-[0_8px_20px_rgba(0,0,0,0.2)] backdrop-blur"
+                className={cn(
+                  "flex items-center gap-2 rounded-full bg-white/92 px-4 py-2 text-[13.5px] font-semibold text-(color:--gc-ink) shadow-[0_8px_20px_rgba(0,0,0,0.2)] backdrop-blur transition-all duration-500",
+                  active === i && "scale-110 ring-2 ring-(color:--gc-gold-3)",
+                )}
                 initial={reduce ? false : { opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.9 }}
@@ -52,13 +64,21 @@ export function ToTheWorld({ reduce }: { reduce: boolean }) {
                 transition={{ duration: 0.4, delay: 0.35 + i * 0.25, ease: EASE }}
                 style={{ transformOrigin: "left" }}
               >
-                <span className="hidden h-px w-10 bg-[repeating-linear-gradient(90deg,currentColor_0_5px,transparent_5px_9px)] sm:block lg:w-20" />
+                <span
+                  className={cn(
+                    "hidden h-[2px] w-10 bg-[linear-gradient(90deg,currentColor_0_5px,transparent_5px_9px)] bg-[length:9px_2px] sm:block lg:w-20",
+                    !reduce && "animate-[dash-march_0.8s_linear_infinite]",
+                  )}
+                />
                 <ArrowRight size={14} weight="bold" />
               </motion.li>
             </Fragment>
           ))}
           <motion.li
-            className="flex items-center gap-2 rounded-full bg-(color:--gc-navy) px-5 py-2.5 text-[13.5px] font-bold text-white shadow-[0_10px_26px_rgba(0,0,0,0.3)] ring-2 ring-(color:--gc-gold-3)"
+            className={cn(
+              "relative flex items-center gap-2 rounded-full bg-(color:--gc-navy) px-5 py-2.5 text-[13.5px] font-bold text-white shadow-[0_10px_26px_rgba(0,0,0,0.3)] ring-2 ring-(color:--gc-gold-3) transition-transform duration-500",
+              active === CHAIN.length && "scale-110",
+            )}
             initial={reduce ? false : { opacity: 0, scale: 0.85 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.9 }}

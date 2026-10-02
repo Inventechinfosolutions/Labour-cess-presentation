@@ -173,3 +173,9 @@ body {
     stroke-dashoffset: -20;
   }
 }
+
+@keyframes dash-march {
+  to {
+    background-position: 18px 0;
+  }
+}

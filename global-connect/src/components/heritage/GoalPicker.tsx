@@ -8,7 +8,7 @@ import whyPartner from "@/assets/heritage/why-partner.jpg";
 import whyTalent from "@/assets/heritage/why-talent.jpg";
 import { pathwayHref, type PathwayId } from "@/lib/pathways";
 import { HeritageTitle } from "./parts";
-import { EASE } from "./motion";
+import { EASE, settle } from "./motion";
 
 const GOALS: { id: PathwayId; lead: string; goal: string; icon: Icon; img: string }[] = [
   { id: "invest", lead: "I want to", goal: "invest", icon: ChartLineUp, img: whyInvest },
@@ -52,7 +52,9 @@ export function GoalPicker({ reduce }: { reduce: boolean }) {
                 </span>
               </div>
               <div className="h-[120px] overflow-hidden">
-                <img src={img} alt="" loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.07]" />
+                <motion.div className="size-full" {...settle(reduce, 0.2 + i * 0.08)}>
+                  <img src={img} alt="" loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.07]" />
+                </motion.div>
               </div>
             </Link>
           </motion.li>

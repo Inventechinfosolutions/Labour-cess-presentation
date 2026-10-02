@@ -5,7 +5,6 @@
  */
 export const HERITAGE_COPY: Record<string, string> = {
   // Header, footer and navigation
-  Connect: "Kannadigas",
   "Karnataka Global Connect": "Karnataka Global Connect",
   "One gateway for global investment, talent, partnerships and opportunities in Karnataka.":
     "A global gateway for investment, talent, partnerships, Kannadigas and opportunities.",

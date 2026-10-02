@@ -6,7 +6,7 @@ import featPartner from "@/assets/heritage/feat-partner.jpg";
 import featTalent from "@/assets/heritage/feat-talent.jpg";
 import { pathwayHref, type PathwayId } from "@/lib/pathways";
 import { GoldCircleArrow, HeritageTitle } from "./parts";
-import { EASE, rise } from "./motion";
+import { EASE, rise, settle } from "./motion";
 
 const FEATURED: { id: PathwayId; title: string; text: string; img: string }[] = [
   { id: "invest", title: "Investment Opportunities", text: "Explore high-potential sectors and projects in Karnataka.", img: featInvest },
@@ -47,7 +47,9 @@ export function FeaturedOpps({ reduce }: { reduce: boolean }) {
                 className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_10px_30px_rgba(12,58,42,0.08)] ring-1 ring-(color:--gc-line) transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(12,58,42,0.16)]"
               >
                 <div className="h-[190px] overflow-hidden">
-                  <img src={f.img} alt="" loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
+                  <motion.div className="size-full" {...settle(reduce, 0.15 + i * 0.1)}>
+                    <img src={f.img} alt="" loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
+                  </motion.div>
                 </div>
                 <div className="flex flex-1 items-end gap-4 p-5">
                   <div className="min-w-0 flex-1">

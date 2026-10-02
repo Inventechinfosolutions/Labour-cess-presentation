@@ -52,7 +52,15 @@ export function AtAGlance({ reduce }: { reduce: boolean }) {
         <ul className="grid grid-cols-2 gap-y-10 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-(color:--gc-line)">
           {STATS.map(({ value, prefix, unit, suffix, decimals, label, text, icon: StatIcon }, i) => (
             <motion.li key={label} className="px-4 text-center" {...rise(reduce, 0.08 * i, 0.6)}>
-              <StatIcon size={30} weight="duotone" className="mx-auto text-(color:--gc-gold-4)" />
+              <motion.span
+                className="mx-auto grid size-12 place-items-center rounded-full bg-(color:--gc-primary-soft) text-(color:--gc-gold-4)"
+                initial={reduce ? false : { scale: 0.4, rotate: -30, opacity: 0 }}
+                whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.8 }}
+                transition={{ type: "spring", stiffness: 260, damping: 16, delay: 0.15 + i * 0.1 }}
+              >
+                <StatIcon size={26} weight="duotone" />
+              </motion.span>
               <p className="mt-3 font-display text-[30px] leading-none font-bold whitespace-nowrap text-(color:--gc-ink) xl:text-[34px]">
                 {prefix}
                 <Count to={value} decimals={decimals} reduce={reduce} />

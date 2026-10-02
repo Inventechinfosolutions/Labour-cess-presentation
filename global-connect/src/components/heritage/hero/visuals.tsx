@@ -26,7 +26,7 @@ import talentHero from "@/assets/heritage/heroes/talent-hero.jpg";
 import talentInset from "@/assets/heritage/heroes/talent-inset.jpg";
 import { KARNATAKA_DISTRICTS } from "@/lib/karnatakaMap";
 import { cn } from "@/lib/utils";
-import { EASE } from "../motion";
+import { EASE, useCycle } from "../motion";
 
 /** Visuals are drawn on a 700×540 stage; children are placed in stage units and scale with the column. */
 const W = 700;
@@ -63,16 +63,21 @@ function KenBurns({ src, reduce, className }: { src: string; reduce: boolean; cl
       src={src}
       alt=""
       className={cn("size-full object-cover", className)}
-      animate={reduce ? undefined : { scale: [1, 1.07, 1] }}
-      transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
+      animate={reduce ? undefined : { scale: [1.03, 1.13, 1.03], x: ["0%", "-2.5%", "0%"] }}
+      transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
     />
   );
 }
 
-function Stamp({ icon: StampIcon, size = 46 }: { icon: Icon; size?: number }) {
+function Stamp({ icon: StampIcon, size = 46, active = false }: { icon: Icon; size?: number; active?: boolean }) {
   return (
     <span
-      className="grid shrink-0 place-items-center rounded-full bg-white text-(color:--gc-gold-4) shadow-[0_8px_20px_rgba(12,58,42,0.15)] ring-1 ring-(color:--gc-gold-3)/60"
+      className={cn(
+        "grid shrink-0 place-items-center rounded-full shadow-[0_8px_20px_rgba(12,58,42,0.15)] ring-1 ring-(color:--gc-gold-3)/60 transition-all duration-500",
+        active
+          ? "scale-115 bg-(color:--gc-navy) text-(color:--gc-gold) shadow-[0_0_0_7px_rgba(212,165,55,0.2),0_12px_26px_rgba(12,58,42,0.3)]"
+          : "bg-white text-(color:--gc-gold-4)",
+      )}
       style={{ width: size, height: size }}
     >
       <StampIcon size={size * 0.46} weight="duotone" />
@@ -97,6 +102,7 @@ const INVEST_STAMPS: { at: [number, number]; icon: Icon; label: [string, string]
 ];
 
 export function InvestVisual({ reduce }: { reduce: boolean }) {
+  const active = useCycle(INVEST_STAMPS.length, 1500, !reduce);
   return (
     <Stage label="Heritage building before Bengaluru towers, framed in a palace arch, with the four reasons to invest">
       <motion.div
@@ -156,7 +162,7 @@ export function InvestVisual({ reduce }: { reduce: boolean }) {
           style={box(at[0], at[1])}
           {...pop(reduce, 1.2 + i * 0.15)}
         >
-          <Stamp icon={icon} />
+          <Stamp icon={icon} active={i === active} />
           <span className="hidden text-[12.5px] leading-tight font-semibold text-(color:--gc-ink) sm:block">
             {label[0]}
             <br />
@@ -186,6 +192,7 @@ const onOrbit = (deg: number, r = ORBIT): [number, number] => [
 ];
 
 export function ConnectVisual({ reduce }: { reduce: boolean }) {
+  const active = useCycle(CITIES.length, 1400, !reduce);
   return (
     <Stage label="Kannadiga families celebrating together, ringed by cities where Kannadigas live">
       <Overlay>
@@ -236,7 +243,10 @@ export function ConnectVisual({ reduce }: { reduce: boolean }) {
         return (
           <motion.span
             key={c.name}
-            className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[12px] font-semibold whitespace-nowrap text-(color:--gc-ink) shadow-[0_8px_20px_rgba(12,58,42,0.16)] ring-1 ring-(color:--gc-gold-3)/50"
+            className={cn(
+              "absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold whitespace-nowrap shadow-[0_8px_20px_rgba(12,58,42,0.16)] ring-1 ring-(color:--gc-gold-3)/50 transition-colors duration-500",
+              i === active ? "bg-(color:--gc-navy) text-white" : "bg-white text-(color:--gc-ink)",
+            )}
             style={box(x, y)}
             {...pop(reduce, 0.9 + i * 0.12)}
           >
@@ -279,6 +289,7 @@ const LADDER_X = 525;
 const LADDER_Y = [70, 190, 310, 430];
 
 export function TalentVisual({ reduce }: { reduce: boolean }) {
+  const active = useCycle(LADDER.length, 1300, !reduce);
   return (
     <Stage label="Students in a heritage campus corridor, with the path from learning to a global role">
       <motion.span
@@ -341,7 +352,7 @@ export function TalentVisual({ reduce }: { reduce: boolean }) {
           style={box(LADDER_X, LADDER_Y[i])}
           {...pop(reduce, 1 + i * 0.4)}
         >
-          <Stamp icon={icon} />
+          <Stamp icon={icon} active={i === active} />
           <span className="hidden leading-tight sm:block">
             <span className="block text-[10.5px] font-bold tracking-[0.18em] text-(color:--gc-gold-4)">STEP {i + 1}</span>
             <span className="block font-display text-[16px] font-bold text-(color:--gc-ink)">{title}</span>
@@ -365,6 +376,7 @@ const PARTNER_TYPES: { icon: Icon; label: string }[] = [
 ];
 
 export function PartnerVisual({ reduce }: { reduce: boolean }) {
+  const active = useCycle(PARTNER_TYPES.length, 1400, !reduce);
   const side = (src: string, x: number, rotate: number, tag: string, delay: number) => (
     <motion.figure
       className="absolute overflow-hidden rounded-[26px] shadow-[0_26px_50px_rgba(12,58,42,0.25)] ring-[5px] ring-white"
@@ -422,7 +434,10 @@ export function PartnerVisual({ reduce }: { reduce: boolean }) {
         {PARTNER_TYPES.map(({ icon: TypeIcon, label }, i) => (
           <motion.li
             key={label}
-            className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[12px] font-semibold text-(color:--gc-ink) shadow-[0_6px_16px_rgba(12,58,42,0.12)] ring-1 ring-(color:--gc-gold-3)/50"
+            className={cn(
+              "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold shadow-[0_6px_16px_rgba(12,58,42,0.12)] ring-1 ring-(color:--gc-gold-3)/50 transition-colors duration-500",
+              i === active ? "bg-(color:--gc-navy) text-white" : "bg-white text-(color:--gc-ink)",
+            )}
             {...pop(reduce, 1.8 + i * 0.1)}
           >
             <TypeIcon size={14} weight="duotone" className="text-(color:--gc-gold-4)" />
@@ -452,6 +467,7 @@ const MAP_DOTS: [number, number][] = [
 ];
 
 export function DiscoverVisual({ reduce }: { reduce: boolean }) {
+  const active = useCycle(PHOTO_PINS.length, 1500, !reduce);
   return (
     <Stage label="Coastal Karnataka with its port, rivers and Western Ghats, marked with opportunity areas">
       <motion.div
@@ -469,7 +485,12 @@ export function DiscoverVisual({ reduce }: { reduce: boolean }) {
             style={{ left: `${x}%`, top: `${y}%` }}
             {...pop(reduce, 1.2 + i * 0.25)}
           >
-            <span className="flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-[12px] font-semibold whitespace-nowrap text-(color:--gc-ink) shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
+            <span
+              className={cn(
+                "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold whitespace-nowrap shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition-all duration-500",
+                i === active ? "-translate-y-1.5 bg-(color:--gc-navy) text-white" : "bg-white/95 text-(color:--gc-ink)",
+              )}
+            >
               <PinIcon size={14} weight="duotone" className="text-(color:--gc-gold-4)" />
               <span className="hidden sm:inline">{label}</span>
             </span>
