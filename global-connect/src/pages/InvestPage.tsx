@@ -10,6 +10,7 @@ import { FinalCta } from "@/components/invest/FinalCta";
 import { HowItWorks } from "@/components/invest/HowItWorks";
 import { InvestHero } from "@/components/invest/InvestHero";
 import { HeritageInvestHero } from "@/components/heritage/hero/heroes";
+import { HorizonInvestHero } from "@/components/horizon/hero/heroes";
 import { useTheme } from "@/theme/context";
 import { LookingFor } from "@/components/invest/LookingFor";
 import { Opportunities } from "@/components/invest/Opportunities";
@@ -35,7 +36,13 @@ export function InvestPage() {
       {!reduce ? <ScrollProgress /> : null}
       <SiteHeader />
       <main>
-        {theme === "heritage" ? <HeritageInvestHero reduce={reduce} /> : <InvestHero reduce={reduce} />}
+        {theme === "heritage" ? (
+          <HeritageInvestHero reduce={reduce} />
+        ) : theme === "horizon" ? (
+          <HorizonInvestHero reduce={reduce} />
+        ) : (
+          <InvestHero reduce={reduce} />
+        )}
         <HowItWorks reduce={reduce} />
         <PortalSection reduce={reduce} />
         <LookingFor reduce={reduce} />

@@ -3,6 +3,7 @@ import { LinkedinLogo, XLogo, YoutubeLogo } from "@phosphor-icons/react";
 import emblem from "@/assets/karnataka-emblem.png";
 import { PATHWAYS, pathwayHref } from "@/lib/pathways";
 import { HeritageFooter } from "@/components/heritage/HeritageFooter";
+import { HorizonFooter } from "@/components/horizon/HorizonFooter";
 import { useT, useTheme } from "@/theme/context";
 
 const COLUMNS = [
@@ -18,7 +19,9 @@ const SOCIAL = [
 
 export function SiteFooter() {
   const { theme } = useTheme();
-  return theme === "heritage" ? <HeritageFooter /> : <GlobalFooter />;
+  if (theme === "heritage") return <HeritageFooter />;
+  if (theme === "horizon") return <HorizonFooter />;
+  return <GlobalFooter />;
 }
 
 function GlobalFooter() {

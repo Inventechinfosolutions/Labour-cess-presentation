@@ -4,6 +4,7 @@ import { useReducedMotion } from "motion/react";
 import { DiscoverCta } from "@/components/discover/DiscoverCta";
 import { DiscoverHero } from "@/components/discover/DiscoverHero";
 import { HeritageDiscoverHero } from "@/components/heritage/hero/heroes";
+import { HorizonDiscoverHero } from "@/components/horizon/hero/heroes";
 import { useTheme } from "@/theme/context";
 import { FeaturedAreas } from "@/components/discover/FeaturedAreas";
 import { FindOpportunity } from "@/components/discover/FindOpportunity";
@@ -55,7 +56,13 @@ export function DiscoverPage() {
       {!reduce ? <ScrollProgress /> : null}
       <SiteHeader />
       <main>
-        {theme === "heritage" ? <HeritageDiscoverHero reduce={reduce} /> : <DiscoverHero reduce={reduce} />}
+        {theme === "heritage" ? (
+          <HeritageDiscoverHero reduce={reduce} />
+        ) : theme === "horizon" ? (
+          <HorizonDiscoverHero reduce={reduce} />
+        ) : (
+          <DiscoverHero reduce={reduce} />
+        )}
         <FindOpportunity reduce={reduce} active={filters.category} onPick={(category) => showResults({ category })} />
         <SearchOpportunities reduce={reduce} filters={filters} setFilters={setFilters} saved={saved} toggleSaved={toggleSaved} />
         <section className="relative overflow-x-clip bg-[#fbf7fb] px-5 py-20 lg:px-8">

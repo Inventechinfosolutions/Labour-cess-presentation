@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router";
 import { useReducedMotion } from "motion/react";
 import { HeritageHome } from "@/components/heritage/HeritageHome";
+import { HorizonHome } from "@/components/horizon/HorizonHome";
 import { CentralMessage } from "@/components/home/CentralMessage";
 import { Explore } from "@/components/home/Explore";
 import { Hero } from "@/components/home/Hero";
@@ -32,6 +33,8 @@ export function GlobalConnectPage() {
       <main>
         {theme === "heritage" ? (
           <HeritageHome reduce={reduce} />
+        ) : theme === "horizon" ? (
+          <HorizonHome reduce={reduce} />
         ) : (
           <>
             <Hero reduce={reduce} />

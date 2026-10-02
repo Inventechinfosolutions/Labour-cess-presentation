@@ -12,6 +12,7 @@ import { SkillsJourney } from "@/components/talent/SkillsJourney";
 import { TalentCta } from "@/components/talent/TalentCta";
 import { TalentHero } from "@/components/talent/TalentHero";
 import { HeritageTalentHero } from "@/components/heritage/hero/heroes";
+import { HorizonTalentHero } from "@/components/horizon/hero/heroes";
 import { useTheme } from "@/theme/context";
 import { TalentProfile } from "@/components/talent/TalentProfile";
 import { TwoWays } from "@/components/talent/TwoWays";
@@ -34,7 +35,13 @@ export function TalentPage() {
       {!reduce ? <ScrollProgress /> : null}
       <SiteHeader />
       <main>
-        {theme === "heritage" ? <HeritageTalentHero reduce={reduce} /> : <TalentHero reduce={reduce} />}
+        {theme === "heritage" ? (
+          <HeritageTalentHero reduce={reduce} />
+        ) : theme === "horizon" ? (
+          <HorizonTalentHero reduce={reduce} />
+        ) : (
+          <TalentHero reduce={reduce} />
+        )}
         <SkillsJourney reduce={reduce} />
         <TalentProfile reduce={reduce} />
         <LookingFor reduce={reduce} />

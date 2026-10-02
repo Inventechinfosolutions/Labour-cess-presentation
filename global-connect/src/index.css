@@ -145,6 +145,36 @@
   font-style: normal;
 }
 
+[data-theme="horizon"] {
+  --background: #ffffff;
+  --foreground: #0d2253;
+  --primary: #1f5fd6;
+  --ring: #f5ae1b;
+
+  --gc-ink: #0d2253;
+  --gc-ink-2: #26386a;
+  --gc-body: #4d5b7a;
+  --gc-muted: #8794ad;
+  --gc-primary: #1f5fd6;
+  --gc-primary-deep: #1a4fb5;
+  --gc-primary-soft: #e9f0fd;
+  --gc-accent: #2f80ed;
+  --gc-accent-2: #6fa8ff;
+  --gc-accent-3: #8cbcff;
+  --gc-gold: #ffc83d;
+  --gc-gold-2: #fbbd2e;
+  --gc-gold-3: #f5ae1b;
+  --gc-gold-4: #ef9a0e;
+  --gc-button-a: #ffd24d;
+  --gc-button-b: #f6ac17;
+  --gc-navy: #0c2459;
+  --gc-navy-2: #102c6b;
+  --gc-night: #071841;
+  --gc-surface: #f5f8fe;
+  --gc-line: #e4eaf5;
+  --gc-line-2: #eef2f9;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.45s;

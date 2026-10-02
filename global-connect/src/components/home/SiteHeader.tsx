@@ -6,6 +6,7 @@ import emblem from "@/assets/karnataka-emblem.png";
 import { PATHWAYS, pathwayHref } from "@/lib/pathways";
 import { cn } from "@/lib/utils";
 import { HeritageHeader } from "@/components/heritage/HeritageHeader";
+import { HorizonHeader } from "@/components/horizon/HorizonHeader";
 import { useT, useTheme } from "@/theme/context";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
@@ -16,7 +17,9 @@ const NAV = [
 
 export function SiteHeader({ solid = false }: { solid?: boolean }) {
   const { theme } = useTheme();
-  return theme === "heritage" ? <HeritageHeader /> : <GlobalHeader solid={solid} />;
+  if (theme === "heritage") return <HeritageHeader />;
+  if (theme === "horizon") return <HorizonHeader />;
+  return <GlobalHeader solid={solid} />;
 }
 
 function GlobalHeader({ solid }: { solid: boolean }) {

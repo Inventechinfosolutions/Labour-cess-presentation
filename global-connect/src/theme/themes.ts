@@ -1,6 +1,7 @@
 import { HERITAGE_COPY } from "./copy/heritage";
+import { HORIZON_COPY } from "./copy/horizon";
 
-export type ThemeId = "global" | "heritage";
+export type ThemeId = "global" | "heritage" | "horizon";
 
 export type ThemeMeta = {
   id: ThemeId;
@@ -26,6 +27,13 @@ export const THEMES: ThemeMeta[] = [
     description: "Ivory, forest green and gold",
     swatch: ["#0c3a2a", "#d4a537", "#faf7f0"],
     copy: HERITAGE_COPY,
+  },
+  {
+    id: "horizon",
+    label: "Horizon",
+    description: "White, royal blue and saffron",
+    swatch: ["#0c2459", "#f5ae1b", "#2f6fe0"],
+    copy: HORIZON_COPY,
   },
 ];
 

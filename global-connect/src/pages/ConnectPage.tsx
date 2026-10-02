@@ -7,6 +7,7 @@ import { CommunityMap } from "@/components/connect/CommunityMap";
 import { ConnectCta } from "@/components/connect/ConnectCta";
 import { ConnectHero } from "@/components/connect/ConnectHero";
 import { HeritageConnectHero } from "@/components/heritage/hero/heroes";
+import { HorizonConnectHero } from "@/components/horizon/hero/heroes";
 import { useTheme } from "@/theme/context";
 import { ConnectOpportunities } from "@/components/connect/ConnectOpportunities";
 import { Events } from "@/components/connect/Events";
@@ -37,7 +38,13 @@ export function ConnectPage() {
       {!reduce ? <ScrollProgress /> : null}
       <SiteHeader />
       <main>
-        {theme === "heritage" ? <HeritageConnectHero reduce={reduce} /> : <ConnectHero reduce={reduce} />}
+        {theme === "heritage" ? (
+          <HeritageConnectHero reduce={reduce} />
+        ) : theme === "horizon" ? (
+          <HorizonConnectHero reduce={reduce} />
+        ) : (
+          <ConnectHero reduce={reduce} />
+        )}
         <CommunityJourney reduce={reduce} />
         <JoinNetwork reduce={reduce} />
         <RegisterCta reduce={reduce} />

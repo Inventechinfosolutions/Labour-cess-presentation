@@ -11,6 +11,7 @@ import { GlobalKarnataka } from "@/components/partner/GlobalKarnataka";
 import { PartnerCta } from "@/components/partner/PartnerCta";
 import { PartnerHero } from "@/components/partner/PartnerHero";
 import { HeritagePartnerHero } from "@/components/heritage/hero/heroes";
+import { HorizonPartnerHero } from "@/components/horizon/hero/heroes";
 import { useTheme } from "@/theme/context";
 import { PartnerOpportunities } from "@/components/partner/PartnerOpportunities";
 import { PartnershipJourney } from "@/components/partner/PartnershipJourney";
@@ -37,7 +38,13 @@ export function PartnerPage() {
       {!reduce ? <ScrollProgress /> : null}
       <SiteHeader />
       <main>
-        {theme === "heritage" ? <HeritagePartnerHero reduce={reduce} /> : <PartnerHero reduce={reduce} />}
+        {theme === "heritage" ? (
+          <HeritagePartnerHero reduce={reduce} />
+        ) : theme === "horizon" ? (
+          <HorizonPartnerHero reduce={reduce} />
+        ) : (
+          <PartnerHero reduce={reduce} />
+        )}
         <PartnershipJourney reduce={reduce} />
         <PartnershipTypes reduce={reduce} />
         <BuildSelector reduce={reduce} value={selection} onChange={setSelection} />
