@@ -42,7 +42,7 @@ export function JoinNetwork({ reduce }: { reduce: boolean }) {
   const [picked, setPicked] = useState("Professional");
 
   return (
-    <section id="join" className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-[#f4f8fd] to-white px-5 py-20 lg:px-8">
+    <section id="join" className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-(color:--gc-surface) to-white px-5 py-20 lg:px-8">
       <div className="mx-auto grid max-w-[1220px] items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <SectionHeading
@@ -52,7 +52,7 @@ export function JoinNetwork({ reduce }: { reduce: boolean }) {
             reduce={reduce}
             align="left"
           />
-          <p className="mt-8 text-[13px] font-semibold tracking-wide text-[#4a5a78] uppercase">I am a…</p>
+          <p className="mt-8 text-[13px] font-semibold tracking-wide text-(color:--gc-body) uppercase">I am a…</p>
           <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             {CATEGORIES.map(({ label, icon: Icon, color }, i) => {
               const on = picked === label;
@@ -64,7 +64,7 @@ export function JoinNetwork({ reduce }: { reduce: boolean }) {
                   onClick={() => setPicked(label)}
                   className={cn(
                     "relative flex flex-col items-center gap-2 rounded-2xl border bg-white px-2 py-3.5 text-center transition-colors",
-                    on ? "border-[#e0a91f] bg-[#fffaf0] shadow-[0_10px_24px_rgba(224,169,31,0.18)]" : "border-[#e6ebf3] hover:border-[#1f6fe5]/40",
+                    on ? "border-[#e0a91f] bg-[#fffaf0] shadow-[0_10px_24px_rgba(224,169,31,0.18)]" : "border-(color:--gc-line) hover:border-(color:--gc-primary)/40",
                   )}
                   initial={reduce ? false : { opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -75,7 +75,7 @@ export function JoinNetwork({ reduce }: { reduce: boolean }) {
                   <span className="grid size-10 place-items-center rounded-xl" style={{ background: `${color}14`, color }}>
                     <Icon size={22} weight="duotone" />
                   </span>
-                  <span className="text-[12.5px] leading-tight font-semibold text-[#0b1f4a]">{label}</span>
+                  <span className="text-[12.5px] leading-tight font-semibold text-(color:--gc-ink)">{label}</span>
                   {on ? (
                     <span className="absolute top-1.5 right-1.5 grid size-4.5 place-items-center rounded-full bg-[#e0a91f] text-white">
                       <Check size={10} weight="bold" />
@@ -121,38 +121,38 @@ function ProfilePreview({ reduce, category }: { reduce: boolean; category: strin
   return (
     <div
       ref={ref}
-      className="relative mt-[-40px] w-full rounded-2xl bg-white p-5 shadow-[0_24px_60px_rgba(11,31,74,0.2)] ring-1 ring-[#0b1f4a]/6 sm:absolute sm:top-1/2 sm:left-0 sm:mt-0 sm:w-[54%] sm:-translate-y-1/2"
+      className="relative mt-[-40px] w-full rounded-2xl bg-white p-5 shadow-[0_24px_60px_rgba(11,31,74,0.2)] ring-1 ring-(color:--gc-ink)/6 sm:absolute sm:top-1/2 sm:left-0 sm:mt-0 sm:w-[54%] sm:-translate-y-1/2"
     >
       <div className="flex items-center gap-2.5">
         <img src={emblem} alt="" className="h-7 w-auto" />
         <div className="leading-tight">
-          <p className="text-[10px] font-bold tracking-[0.16em] text-[#1f5fbf] uppercase">My Global Kannadiga Profile</p>
-          <p className="text-[12px] font-semibold text-[#0b1f4a]">{category}</p>
+          <p className="text-[10px] font-bold tracking-[0.16em] text-(color:--gc-primary-deep) uppercase">My Global Kannadiga Profile</p>
+          <p className="text-[12px] font-semibold text-(color:--gc-ink)">{category}</p>
         </div>
       </div>
       <dl className="mt-4 space-y-2">
         {FIELDS.map(([label, value], i) => (
           <motion.div
             key={label}
-            className="rounded-lg border border-[#e6ebf3] px-3 py-1.5"
+            className="rounded-lg border border-(color:--gc-line) px-3 py-1.5"
             initial={false}
             animate={i < shown ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
             transition={{ duration: 0.35, ease: EASE }}
           >
-            <dt className="text-[9.5px] font-medium tracking-wide text-[#8a97ad] uppercase">{label}</dt>
-            <dd className="text-[12.5px] font-semibold text-[#0b1f4a]">{value}</dd>
+            <dt className="text-[9.5px] font-medium tracking-wide text-(color:--gc-muted) uppercase">{label}</dt>
+            <dd className="text-[12.5px] font-semibold text-(color:--gc-ink)">{value}</dd>
           </motion.div>
         ))}
       </dl>
       <motion.span
-        className="mt-4 block rounded-full bg-[#0b1f4a] py-2.5 text-center text-[13px] font-semibold text-white"
+        className="mt-4 block rounded-full bg-(color:--gc-ink) py-2.5 text-center text-[13px] font-semibold text-white"
         initial={false}
         animate={shown >= FIELDS.length ? { opacity: 1, scale: [0.96, 1.04, 1] } : { opacity: 0.35, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
         Create Profile
       </motion.span>
-      <p className="mt-2 text-center text-[10.5px] text-[#8a97ad]">Concept preview. Final fields may differ.</p>
+      <p className="mt-2 text-center text-[10.5px] text-(color:--gc-muted)">Concept preview. Final fields may differ.</p>
     </div>
   );
 }

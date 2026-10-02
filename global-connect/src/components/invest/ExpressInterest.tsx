@@ -20,7 +20,7 @@ export function ExpressInterest({ reduce }: { reduce: boolean }) {
           <>
             Interested in an Opportunity?
             <br />
-            <span className="text-[#1f6fe5]">Start a Conversation.</span>
+            <span className="text-(color:--gc-primary)">Start a Conversation.</span>
           </>
         }
         reduce={reduce}
@@ -42,15 +42,15 @@ export function ExpressInterest({ reduce }: { reduce: boolean }) {
                 show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: EASE } },
               }}
             >
-              <span className="grid size-16 place-items-center rounded-2xl bg-[#e7f0ff] text-[#1f6fe5]">
+              <span className="grid size-16 place-items-center rounded-2xl bg-(color:--gc-primary-soft) text-(color:--gc-primary)">
                 <Icon size={30} weight="duotone" />
               </span>
-              <span className="mt-3 text-[15px] font-semibold text-[#0b1f4a]">{label}</span>
+              <span className="mt-3 text-[15px] font-semibold text-(color:--gc-ink)">{label}</span>
             </motion.li>
             {i < STEPS.length - 1 ? (
               <motion.li
                 aria-hidden
-                className="text-[#1f6fe5]/60 sm:pt-5"
+                className="text-(color:--gc-primary)/60 sm:pt-5"
                 variants={{
                   hidden: { opacity: 0, x: -10 },
                   show: { opacity: 1, x: 0, transition: { duration: 0.4 } },

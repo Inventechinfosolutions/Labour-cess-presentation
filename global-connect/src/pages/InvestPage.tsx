@@ -9,6 +9,8 @@ import { ExpressInterest } from "@/components/invest/ExpressInterest";
 import { FinalCta } from "@/components/invest/FinalCta";
 import { HowItWorks } from "@/components/invest/HowItWorks";
 import { InvestHero } from "@/components/invest/InvestHero";
+import { HeritageInvestHero } from "@/components/heritage/hero/heroes";
+import { useTheme } from "@/theme/context";
 import { LookingFor } from "@/components/invest/LookingFor";
 import { Opportunities } from "@/components/invest/Opportunities";
 import { PortalSection } from "@/components/invest/PortalSection";
@@ -17,6 +19,7 @@ import { TrackJourney } from "@/components/invest/TrackJourney";
 
 export function InvestPage() {
   const reduce = useReducedMotion() ?? false;
+  const { theme } = useTheme();
   const { hash } = useLocation();
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export function InvestPage() {
       {!reduce ? <ScrollProgress /> : null}
       <SiteHeader />
       <main>
-        <InvestHero reduce={reduce} />
+        {theme === "heritage" ? <HeritageInvestHero reduce={reduce} /> : <InvestHero reduce={reduce} />}
         <HowItWorks reduce={reduce} />
         <PortalSection reduce={reduce} />
         <LookingFor reduce={reduce} />

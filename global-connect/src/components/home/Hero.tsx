@@ -2,8 +2,10 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight } from "@phosphor-icons/react";
 import { HeroMap } from "@/components/home/HeroMap";
+import { useT } from "@/theme/context";
 
 export function Hero({ reduce }: { reduce: boolean }) {
+  const t = useT();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const mapY = useTransform(scrollYProgress, [0, 1], [0, 180]);
@@ -17,8 +19,8 @@ export function Hero({ reduce }: { reduce: boolean }) {
         <HeroMap reduce={reduce} />
       </motion.div>
 
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(3,11,34,0.92)_0%,rgba(3,11,34,0.72)_30%,rgba(3,11,34,0.12)_58%,transparent_75%)] max-lg:bg-[linear-gradient(180deg,rgba(3,11,34,0.9)_0%,rgba(3,11,34,0.6)_42%,transparent_62%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#030b22]/80 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(var(--gc-ov,3,11,34),0.92)_0%,rgba(var(--gc-ov,3,11,34),0.72)_30%,rgba(var(--gc-ov,3,11,34),0.12)_58%,transparent_75%)] max-lg:bg-[linear-gradient(180deg,rgba(var(--gc-ov,3,11,34),0.9)_0%,rgba(var(--gc-ov,3,11,34),0.6)_42%,transparent_62%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-(color:--gc-night)/80 to-transparent" />
 
       <motion.div
         className="relative mx-auto flex h-full max-w-[1320px] flex-col px-5 pt-[120px] lg:justify-center lg:px-8 lg:pt-0 lg:pb-16"
@@ -30,13 +32,13 @@ export function Hero({ reduce }: { reduce: boolean }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          Karnataka
+          {t("Karnataka")}
           <br />
-          <span className="inline-block bg-gradient-to-r from-[#3fb4ff] via-[#7fd3ff] to-[#ffd77a] bg-clip-text pr-2 font-serif text-[1.22em] leading-[0.95] font-normal tracking-[-0.01em] text-transparent italic">
-            Connected
+          <span className="inline-block bg-gradient-to-r from-(color:--gc-accent) via-(color:--gc-accent-2) to-(color:--gc-gold) bg-clip-text pr-2 font-serif text-[1.22em] leading-[0.95] font-normal tracking-[-0.01em] text-transparent italic">
+            {t("Connected")}
           </span>
           <br />
-          to the World
+          {t("to the World")}
         </motion.h1>
         <motion.p
           className="mt-5 max-w-[440px] text-[17px] leading-relaxed text-white/85 sm:text-[19px]"
@@ -44,7 +46,7 @@ export function Hero({ reduce }: { reduce: boolean }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
-          One gateway for global investment, talent, partnerships and opportunities.
+          {t("One gateway for global investment, talent, partnerships and opportunities.")}
         </motion.p>
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 14 }}
@@ -53,9 +55,9 @@ export function Hero({ reduce }: { reduce: boolean }) {
         >
           <a
             href="#pathways"
-            className="group mt-8 inline-flex items-center gap-3 rounded-full bg-white py-3 pr-4 pl-6 text-[14.5px] font-semibold text-[#0b1f4a] shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition hover:bg-[#eaf5ff]"
+            className="group mt-8 inline-flex items-center gap-3 rounded-full bg-white py-3 pr-4 pl-6 text-[14.5px] font-semibold text-(color:--gc-ink) shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition hover:bg-[#eaf5ff]"
           >
-            Explore the Global Karnataka Ecosystem
+            {t("Explore the Global Karnataka Ecosystem")}
             <ArrowRight size={18} weight="bold" className="transition-transform group-hover:translate-x-1" />
           </a>
         </motion.div>

@@ -1,6 +1,5 @@
 import {
   ChartBar,
-  ChartLineUp,
   FileText,
   Gear,
   GraduationCap,
@@ -12,12 +11,11 @@ import {
 } from "@phosphor-icons/react";
 import cardConnect from "@/assets/card-connect.jpg";
 import cardDiscover from "@/assets/card-discover.jpg";
-import cardIntelligence from "@/assets/card-intelligence.jpg";
 import cardInvest from "@/assets/card-invest.jpg";
 import cardPartner from "@/assets/card-partner.jpg";
 import cardTalent from "@/assets/card-talent.jpg";
 
-export type PathwayId = "invest" | "connect" | "talent" | "partner" | "discover" | "intelligence";
+export type PathwayId = "invest" | "connect" | "talent" | "partner" | "discover";
 
 export type Pathway = {
   id: PathwayId;
@@ -52,7 +50,7 @@ export const PATHWAYS: Pathway[] = [
     id: "connect",
     title: "Connect",
     text: "Engage with the global Kannada community.",
-    nav: "Kannadigas",
+    nav: "Connect",
     page: "Connect with Kannadigas",
     explore: ["I want to", "connect with Karnataka"],
     color: "#16a05a",
@@ -99,19 +97,6 @@ export const PATHWAYS: Pathway[] = [
     soft: "#fdeaef",
     icon: MapPin,
     image: cardDiscover,
-  },
-  {
-    id: "intelligence",
-    title: "Intelligence",
-    text: "Understand Karnataka's global relationships and outcomes.",
-    nav: "Intelligence",
-    page: "Global Intelligence",
-    explore: ["I want", "global intelligence"],
-    color: "#0e9c97",
-    deep: "#0a7a76",
-    soft: "#e3f6f5",
-    icon: ChartLineUp,
-    image: cardIntelligence,
   },
 ];
 

@@ -73,7 +73,7 @@ export function CommunityMap({ reduce }: { reduce: boolean }) {
       />
 
       <motion.div
-        className="relative mx-auto mt-12 max-w-[1220px] overflow-hidden rounded-[28px] bg-[#eef3f9] ring-1 ring-[#0b1f4a]/8"
+        className="relative mx-auto mt-12 max-w-[1220px] overflow-hidden rounded-[28px] bg-[#eef3f9] ring-1 ring-(color:--gc-ink)/8"
         initial={reduce ? false : { opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -132,7 +132,7 @@ export function CommunityMap({ reduce }: { reduce: boolean }) {
                 </g>
               </svg>
               <span
-                className="pointer-events-none absolute -translate-x-1/2 rounded-full bg-[#0b1f4a] px-2.5 py-1 font-display text-[11px] font-semibold tracking-[0.14em] text-[#ffd77a] shadow"
+                className="pointer-events-none absolute -translate-x-1/2 rounded-full bg-(color:--gc-ink) px-2.5 py-1 font-display text-[11px] font-semibold tracking-[0.14em] text-(color:--gc-gold) shadow"
                 style={{ left: hub[0], top: hub[1] + 26 }}
               >
                 KARNATAKA
@@ -150,13 +150,13 @@ export function CommunityMap({ reduce }: { reduce: boolean }) {
                     aria-label={r.label}
                     className={cn(
                       "absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 rounded-full p-1 sm:py-1.5 sm:pr-3 sm:pl-1.5 text-[12px] font-semibold whitespace-nowrap shadow-[0_6px_16px_rgba(11,31,74,0.15)] transition-colors sm:text-[13px]",
-                      on ? "z-10 bg-[#0b1f4a] text-white" : "bg-white text-[#0b1f4a] hover:bg-[#f2f7ff]",
+                      on ? "z-10 bg-(color:--gc-ink) text-white" : "bg-white text-(color:--gc-ink) hover:bg-[#f2f7ff]",
                     )}
                     style={{ left: x, top: y }}
                     animate={{ scale: on ? 1.1 : 1 }}
                     transition={{ type: "spring", stiffness: 400, damping: 22 }}
                   >
-                    <span className={cn("grid size-5 place-items-center rounded-full", on ? "bg-[#f0c14a] text-[#0b1f4a]" : "bg-[#e7f0ff] text-[#1f6fe5]")}>
+                    <span className={cn("grid size-5 place-items-center rounded-full", on ? "bg-(color:--gc-gold-3) text-(color:--gc-ink)" : "bg-(color:--gc-primary-soft) text-(color:--gc-primary)")}>
                       <MapPin size={12} weight="fill" />
                     </span>
                     <span className="hidden sm:inline">{r.label}</span>
@@ -165,10 +165,10 @@ export function CommunityMap({ reduce }: { reduce: boolean }) {
               })}
             </>
           ) : null}
-          <span className="absolute bottom-2 left-3 text-[9px] text-[#4a5a78]/60">Base map: Esri</span>
+          <span className="absolute bottom-2 left-3 text-[9px] text-(color:--gc-body)/60">Base map: Esri</span>
         </div>
 
-        <div className="flex gap-2 overflow-x-auto border-t border-[#0b1f4a]/8 bg-white px-5 pt-4 sm:hidden">
+        <div className="flex gap-2 overflow-x-auto border-t border-(color:--gc-ink)/8 bg-white px-5 pt-4 sm:hidden">
           {REGIONS.map((r) => (
             <button
               key={r.id}
@@ -176,14 +176,14 @@ export function CommunityMap({ reduce }: { reduce: boolean }) {
               onClick={() => setSelected(r.id)}
               className={cn(
                 "shrink-0 rounded-full px-3 py-1.5 text-[12.5px] font-semibold",
-                r.id === selected ? "bg-[#0b1f4a] text-white" : "bg-[#f4f8fd] text-[#0b1f4a]",
+                r.id === selected ? "bg-(color:--gc-ink) text-white" : "bg-(color:--gc-surface) text-(color:--gc-ink)",
               )}
             >
               {r.label}
             </button>
           ))}
         </div>
-        <div className="relative bg-white p-5 sm:border-t sm:border-[#0b1f4a]/8 lg:absolute lg:top-5 lg:right-5 lg:bottom-5 lg:w-[360px] lg:rounded-2xl lg:border-0 lg:shadow-[0_20px_50px_rgba(11,31,74,0.16)]">
+        <div className="relative bg-white p-5 sm:border-t sm:border-(color:--gc-ink)/8 lg:absolute lg:top-5 lg:right-5 lg:bottom-5 lg:w-[360px] lg:rounded-2xl lg:border-0 lg:shadow-[0_20px_50px_rgba(11,31,74,0.16)]">
           <AnimatePresence mode="wait">
             <motion.div
               key={region.id}
@@ -193,19 +193,19 @@ export function CommunityMap({ reduce }: { reduce: boolean }) {
               transition={{ duration: 0.35, ease: EASE }}
               className="flex h-full flex-col"
             >
-              <p className="text-[11px] font-bold tracking-[0.18em] text-[#1f5fbf] uppercase">Selected region</p>
-              <h3 className="mt-1 font-display text-[22px] font-bold text-[#0b1f4a] uppercase">{region.label}</h3>
-              <p className="mt-0.5 text-[13px] text-[#4a5a78]">{region.countries}</p>
+              <p className="text-[11px] font-bold tracking-[0.18em] text-(color:--gc-primary-deep) uppercase">Selected region</p>
+              <h3 className="mt-1 font-display text-[22px] font-bold text-(color:--gc-ink) uppercase">{region.label}</h3>
+              <p className="mt-0.5 text-[13px] text-(color:--gc-body)">{region.countries}</p>
               <ul className="mt-4 grid grid-cols-2 gap-2 lg:grid-cols-1">
                 {NETWORK.map(({ label, icon: Icon }, i) => (
                   <motion.li
                     key={label}
-                    className="flex items-center gap-2.5 rounded-xl bg-[#f4f8fd] px-3 py-2 text-[13px] font-medium text-[#0b1f4a]"
+                    className="flex items-center gap-2.5 rounded-xl bg-(color:--gc-surface) px-3 py-2 text-[13px] font-medium text-(color:--gc-ink)"
                     initial={reduce ? false : { opacity: 0, x: 14 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
                   >
-                    <Icon size={17} weight="duotone" className="text-[#1f6fe5]" />
+                    <Icon size={17} weight="duotone" className="text-(color:--gc-primary)" />
                     {label}
                   </motion.li>
                 ))}
@@ -219,7 +219,7 @@ export function CommunityMap({ reduce }: { reduce: boolean }) {
               </div>
               <a
                 href="#join"
-                className="group mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-[#0b1f4a] px-5 py-2.5 text-[13.5px] font-semibold text-white transition hover:bg-[#13306d] lg:mt-auto"
+                className="group mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-(color:--gc-ink) px-5 py-2.5 text-[13.5px] font-semibold text-white transition hover:bg-[#13306d] lg:mt-auto"
               >
                 Explore Network
                 <ArrowRight size={16} weight="bold" className="transition-transform group-hover:translate-x-1" />

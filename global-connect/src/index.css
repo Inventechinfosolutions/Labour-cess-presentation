@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -8,6 +8,7 @@
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Sora", "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-script: "Caveat", "Segoe Script", cursive;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -59,6 +60,94 @@
   --border: rgba(20, 35, 63, 0.1);
   --input: rgba(20, 35, 63, 0.14);
   --ring: #14c4d4;
+
+  --gc-ink: #0b1f4a;
+  --gc-ink-2: #24365c;
+  --gc-body: #4a5a78;
+  --gc-muted: #8a97ad;
+  --gc-primary: #1f6fe5;
+  --gc-primary-deep: #1f5fbf;
+  --gc-primary-soft: #e7f0ff;
+  --gc-accent: #3fb4ff;
+  --gc-accent-2: #7fd3ff;
+  --gc-accent-3: #7cc8ff;
+  --gc-gold: #ffd77a;
+  --gc-gold-2: #ffcf6b;
+  --gc-gold-3: #f0c14a;
+  --gc-gold-4: #ffb36b;
+  --gc-button-a: #f7d064;
+  --gc-button-b: #f0b429;
+  --gc-navy: #061536;
+  --gc-navy-2: #071a44;
+  --gc-night: #030b22;
+  --gc-surface: #f4f8fd;
+  --gc-line: #e6ebf3;
+  --gc-line-2: #eef2f8;
+}
+
+[data-theme="heritage"] {
+  --background: #faf7f0;
+  --foreground: #143a2c;
+  --primary: #0f5c3f;
+  --ring: #d4a537;
+
+  --gc-ink: #123a2c;
+  --gc-ink-2: #24493b;
+  --gc-body: #505e56;
+  --gc-muted: #8c968f;
+  --gc-primary: #146c4a;
+  --gc-primary-deep: #9a7015;
+  --gc-primary-soft: #e7f2ec;
+  --gc-accent: #c99a2e;
+  --gc-accent-2: #e4bd5c;
+  --gc-accent-3: #e9c46a;
+  --gc-gold: #e8c264;
+  --gc-gold-2: #e2b546;
+  --gc-gold-3: #d4a537;
+  --gc-gold-4: #c8902a;
+  --gc-button-a: #f2ca5c;
+  --gc-button-b: #d9a335;
+  --gc-navy: #0c3a2a;
+  --gc-navy-2: #0f4431;
+  --gc-night: #072519;
+  --gc-surface: #faf7f0;
+  --gc-line: #ece6d8;
+  --gc-line-2: #f3eee3;
+
+  --gc-ov: 6, 36, 25;
+  --gc-hero-1: #145a40;
+  --gc-hero-2: #0b3727;
+  --gc-hero-3: #061f16;
+  --gc-hl: #e8c264;
+  --gc-pink: #f2d38a;
+  --gc-pink-2: #e2b546;
+  --gc-pink-3: #c8902a;
+  --gc-orange: #e8c264;
+  --gc-peach: #f2d38a;
+}
+
+[data-theme="heritage"] .gc-tint-photo {
+  filter: hue-rotate(-78deg) saturate(0.7) brightness(0.92);
+}
+
+[data-theme="heritage"] body {
+  background: #faf7f0;
+}
+
+[data-theme="heritage"] .font-display {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.01em;
+}
+
+[data-theme="heritage"] .font-serif {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: normal;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
 }
 
 html {
@@ -77,4 +166,10 @@ body {
 
 .font-display {
   font-family: var(--font-display);
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
 }

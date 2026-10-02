@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 import { useReducedMotion } from "motion/react";
+import { HeritageHome } from "@/components/heritage/HeritageHome";
 import { CentralMessage } from "@/components/home/CentralMessage";
 import { Explore } from "@/components/home/Explore";
 import { Hero } from "@/components/home/Hero";
@@ -9,10 +10,12 @@ import { Pathways } from "@/components/home/Pathways";
 import { ScrollProgress } from "@/components/home/ScrollProgress";
 import { SiteFooter } from "@/components/home/SiteFooter";
 import { SiteHeader } from "@/components/home/SiteHeader";
+import { useTheme } from "@/theme/context";
 
 export function GlobalConnectPage() {
   const reduce = useReducedMotion() ?? false;
   const { hash } = useLocation();
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!hash) return;
@@ -27,11 +30,17 @@ export function GlobalConnectPage() {
       {!reduce ? <ScrollProgress /> : null}
       <SiteHeader />
       <main>
-        <Hero reduce={reduce} />
-        <Pathways reduce={reduce} />
-        <Journey reduce={reduce} />
-        <CentralMessage reduce={reduce} />
-        <Explore reduce={reduce} />
+        {theme === "heritage" ? (
+          <HeritageHome reduce={reduce} />
+        ) : (
+          <>
+            <Hero reduce={reduce} />
+            <Pathways reduce={reduce} />
+            <Journey reduce={reduce} />
+            <CentralMessage reduce={reduce} />
+            <Explore reduce={reduce} />
+          </>
+        )}
       </main>
       <SiteFooter />
     </>

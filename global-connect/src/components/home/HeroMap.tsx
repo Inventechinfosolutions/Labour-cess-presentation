@@ -47,8 +47,8 @@ function arcPath([x1, y1]: [number, number], [x2, y2]: [number, number]) {
 
 const DEFAULT_TAGLINE = (
   <>
-    Connect <span className="text-[#ffcf6b]">•</span> Collaborate <span className="text-[#ffcf6b]">•</span> Invest{" "}
-    <span className="text-[#ffcf6b]">•</span> Grow
+    Connect <span className="text-(color:--gc-gold-2)">•</span> Collaborate <span className="text-(color:--gc-gold-2)">•</span> Invest{" "}
+    <span className="text-(color:--gc-gold-2)">•</span> Grow
   </>
 );
 
@@ -89,7 +89,7 @@ export function HeroMap({
   const below = (473 - BENGALURU_POINT.y) * k;
 
   return (
-    <div ref={ref} className="absolute inset-0 overflow-hidden bg-[#030b22]">
+    <div ref={ref} className="absolute inset-0 overflow-hidden bg-(color:--gc-night)">
       {view && size ? (
         <WorldTiles
           view={view}

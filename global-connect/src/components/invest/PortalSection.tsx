@@ -26,7 +26,7 @@ const FIELDS = [
 
 export function PortalSection({ reduce }: { reduce: boolean }) {
   return (
-    <section id="portal" className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-[#f4f8fd] to-white px-5 py-20 lg:px-8">
+    <section id="portal" className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-(color:--gc-surface) to-white px-5 py-20 lg:px-8">
       <div className="mx-auto grid max-w-[1220px] items-center gap-12 lg:grid-cols-[0.85fr_1.15fr]">
         <div>
           <SectionHeading
@@ -40,23 +40,23 @@ export function PortalSection({ reduce }: { reduce: boolean }) {
             {STEPS.map(({ label, icon: Icon }, i) => (
               <motion.li
                 key={label}
-                className="flex items-center gap-4 rounded-2xl bg-white/80 px-4 py-3 ring-1 ring-[#0b1f4a]/6"
+                className="flex items-center gap-4 rounded-2xl bg-white/80 px-4 py-3 ring-1 ring-(color:--gc-ink)/6"
                 initial={reduce ? false : { opacity: 0, x: -28 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.15, ease: EASE }}
               >
-                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#e7f0ff] text-[#1f6fe5]">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-(color:--gc-primary-soft) text-(color:--gc-primary)">
                   <Icon size={22} weight="duotone" />
                 </span>
-                <span className="flex-1 text-[15px] font-medium text-[#0b1f4a]">{label}</span>
-                <span className="font-display text-[12px] font-semibold text-[#8a97ad]">0{i + 1}</span>
+                <span className="flex-1 text-[15px] font-medium text-(color:--gc-ink)">{label}</span>
+                <span className="font-display text-[12px] font-semibold text-(color:--gc-muted)">0{i + 1}</span>
               </motion.li>
             ))}
           </ol>
           <motion.a
             href="#interest"
-            className="group mt-8 inline-flex items-center gap-3 rounded-full bg-[#0b1f4a] py-3 pr-4 pl-6 text-[14.5px] font-semibold text-white shadow-[0_10px_26px_rgba(11,31,74,0.25)] transition hover:bg-[#13306d]"
+            className="group mt-8 inline-flex items-center gap-3 rounded-full bg-(color:--gc-ink) py-3 pr-4 pl-6 text-[14.5px] font-semibold text-white shadow-[0_10px_26px_rgba(11,31,74,0.25)] transition hover:bg-[#13306d]"
             initial={reduce ? false : { opacity: 0, scale: 0.94 }}
             whileInView={{ opacity: 1, scale: [0.94, 1.06, 1] }}
             viewport={{ once: true, amount: 0.8 }}
@@ -97,11 +97,11 @@ function Laptop({ reduce }: { reduce: boolean }) {
   return (
     <div ref={ref} className="relative mx-auto max-w-[620px]">
       <div className="rounded-t-[14px] border-[7px] border-b-0 border-[#1b2333] bg-white">
-        <div className="flex items-center gap-1.5 border-b border-[#e6ebf3] bg-[#f5f7fb] px-3 py-2">
+        <div className="flex items-center gap-1.5 border-b border-(color:--gc-line) bg-[#f5f7fb] px-3 py-2">
           <span className="size-2 rounded-full bg-[#ff6159]" />
           <span className="size-2 rounded-full bg-[#ffbd2e]" />
           <span className="size-2 rounded-full bg-[#28c941]" />
-          <span className="ml-3 flex-1 truncate rounded-full bg-white px-3 py-0.5 text-[10px] text-[#8a97ad] ring-1 ring-[#e6ebf3]">
+          <span className="ml-3 flex-1 truncate rounded-full bg-white px-3 py-0.5 text-[10px] text-(color:--gc-muted) ring-1 ring-(color:--gc-line)">
             globalkarnataka.gov.in/invest/profile
           </span>
         </div>
@@ -109,14 +109,14 @@ function Laptop({ reduce }: { reduce: boolean }) {
           <div className="flex items-center gap-2.5">
             <img src={emblem} alt="" className="h-7 w-auto" />
             <div className="leading-tight">
-              <p className="font-display text-[13.5px] font-semibold text-[#0b1f4a] sm:text-[15px]">Create Your Investor Profile</p>
-              <p className="text-[10.5px] text-[#8a97ad]">Step 3 of 4 · Investor profile</p>
+              <p className="font-display text-[13.5px] font-semibold text-(color:--gc-ink) sm:text-[15px]">Create Your Investor Profile</p>
+              <p className="text-[10.5px] text-(color:--gc-muted)">Step 3 of 4 · Investor profile</p>
             </div>
-            <ListChecks size={18} className="ml-auto text-[#1f6fe5]" />
+            <ListChecks size={18} className="ml-auto text-(color:--gc-primary)" />
           </div>
-          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#e7f0ff]">
+          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-(color:--gc-primary-soft)">
             <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-[#1f6fe5] to-[#3fb4ff]"
+              className="h-full rounded-full bg-gradient-to-r from-(color:--gc-primary) to-(color:--gc-accent)"
               animate={{ width: `${30 + (filled / FIELDS.length) * 70}%` }}
               transition={{ duration: 0.3 }}
             />
@@ -131,8 +131,8 @@ function Laptop({ reduce }: { reduce: boolean }) {
                   animate={{ borderColor: on ? `${BLUE}55` : "#e6ebf3", backgroundColor: on ? "#f7faff" : "#ffffff" }}
                   transition={{ duration: 0.3 }}
                 >
-                  <p className="text-[9.5px] font-medium tracking-wide text-[#8a97ad] uppercase">{label}</p>
-                  <p className="mt-0.5 flex items-center gap-1 truncate text-[11.5px] font-medium text-[#0b1f4a]">
+                  <p className="text-[9.5px] font-medium tracking-wide text-(color:--gc-muted) uppercase">{label}</p>
+                  <p className="mt-0.5 flex items-center gap-1 truncate text-[11.5px] font-medium text-(color:--gc-ink)">
                     <motion.span animate={{ opacity: on ? 1 : 0.15 }} className="truncate">
                       {value}
                     </motion.span>

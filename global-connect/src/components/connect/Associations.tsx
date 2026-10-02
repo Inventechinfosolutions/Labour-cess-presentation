@@ -12,7 +12,7 @@ const ACTIONS: { title: string; text: string; icon: Icon }[] = [
 
 export function Associations({ reduce }: { reduce: boolean }) {
   return (
-    <section id="associations" className="relative scroll-mt-16 bg-[#f4f8fd] px-5 py-20 lg:px-8">
+    <section id="associations" className="relative scroll-mt-16 bg-(color:--gc-surface) px-5 py-20 lg:px-8">
       <div className="mx-auto grid max-w-[1220px] items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
           <SectionHeading
@@ -24,7 +24,7 @@ export function Associations({ reduce }: { reduce: boolean }) {
           />
           <motion.a
             href="#join"
-            className="group mt-7 inline-flex items-center gap-2 rounded-full border border-[#0b1f4a]/20 bg-white px-5 py-2.5 text-[14px] font-semibold text-[#0b1f4a] transition hover:border-[#0b1f4a]/50"
+            className="group mt-7 inline-flex items-center gap-2 rounded-full border border-(color:--gc-ink)/20 bg-white px-5 py-2.5 text-[14px] font-semibold text-(color:--gc-ink) transition hover:border-(color:--gc-ink)/50"
             initial={reduce ? false : { opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -46,11 +46,11 @@ export function Associations({ reduce }: { reduce: boolean }) {
               transition={{ duration: 0.5, delay: reduce ? 0 : i * 0.14, ease: EASE }}
             >
               <span className="font-display text-[12px] font-bold text-[#e0a91f]">0{i + 1}</span>
-              <span className="mt-2 grid size-12 place-items-center rounded-xl bg-[#e7f0ff] text-[#1f6fe5]">
+              <span className="mt-2 grid size-12 place-items-center rounded-xl bg-(color:--gc-primary-soft) text-(color:--gc-primary)">
                 <Icon size={26} weight="duotone" />
               </span>
-              <span className="mt-4 font-display text-[16px] font-semibold text-[#0b1f4a]">{title}</span>
-              <span className="mt-1 text-[13.5px] leading-snug text-[#4a5a78]">{text}</span>
+              <span className="mt-4 font-display text-[16px] font-semibold text-(color:--gc-ink)">{title}</span>
+              <span className="mt-1 text-[13.5px] leading-snug text-(color:--gc-body)">{text}</span>
             </motion.li>
           ))}
         </ol>

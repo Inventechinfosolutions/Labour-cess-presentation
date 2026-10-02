@@ -5,6 +5,9 @@ import { List, MagnifyingGlass, X } from "@phosphor-icons/react";
 import emblem from "@/assets/karnataka-emblem.png";
 import { PATHWAYS, pathwayHref } from "@/lib/pathways";
 import { cn } from "@/lib/utils";
+import { HeritageHeader } from "@/components/heritage/HeritageHeader";
+import { useT, useTheme } from "@/theme/context";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 const NAV = [
   { label: "Home", to: "/global-connect", end: true },
@@ -12,6 +15,12 @@ const NAV = [
 ];
 
 export function SiteHeader({ solid = false }: { solid?: boolean }) {
+  const { theme } = useTheme();
+  return theme === "heritage" ? <HeritageHeader /> : <GlobalHeader solid={solid} />;
+}
+
+function GlobalHeader({ solid }: { solid: boolean }) {
+  const t = useT();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -28,19 +37,19 @@ export function SiteHeader({ solid = false }: { solid?: boolean }) {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
-        filled ? "bg-[#061536]/92 shadow-[0_8px_30px_rgba(3,10,30,0.35)] backdrop-blur-md" : "bg-transparent",
+        filled ? "bg-(color:--gc-navy)/92 shadow-[0_8px_30px_rgba(3,10,30,0.35)] backdrop-blur-md" : "bg-transparent",
       )}
     >
       <div className="mx-auto flex h-[72px] max-w-[1320px] items-center gap-6 px-5 lg:px-8">
         <Link to="/global-connect" className="flex shrink-0 items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="grid size-12 place-items-center rounded-full bg-white shadow-md ring-2 ring-[#f0c14a]/70">
+          <span className="grid size-12 place-items-center rounded-full bg-white shadow-md ring-2 ring-(color:--gc-gold-3)/70">
             <img src={emblem} alt="Government of Karnataka emblem" className="h-9 w-auto" />
           </span>
           <span className="leading-none text-white">
-            <span className="block font-display text-[15px] font-semibold tracking-wide">KARNATAKA</span>
-            <span className="block font-display text-[15px] font-semibold tracking-wide">GLOBAL CONNECT</span>
+            <span className="block font-display text-[15px] font-semibold tracking-wide">{t("KARNATAKA")}</span>
+            <span className="block font-display text-[15px] font-semibold tracking-wide">{t("GLOBAL CONNECT")}</span>
             <span className="mt-1 hidden text-[8.5px] font-medium tracking-[0.18em] text-white/65 sm:block">
-              PEOPLE • PARTNERSHIPS • OPPORTUNITIES
+              {t("PEOPLE • PARTNERSHIPS • OPPORTUNITIES")}
             </span>
           </span>
         </Link>
@@ -60,11 +69,11 @@ export function SiteHeader({ solid = false }: { solid?: boolean }) {
             >
               {({ isActive }) => (
                 <>
-                  {n.label}
+                  {t(n.label)}
                   {isActive ? (
                     <motion.span
                       layoutId="nav-active"
-                      className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-[#3fb4ff] shadow-[0_0_10px_rgba(63,180,255,0.8)]"
+                      className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-(color:--gc-accent) shadow-[0_0_10px_rgba(63,180,255,0.8)]"
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
                   ) : null}
@@ -82,11 +91,12 @@ export function SiteHeader({ solid = false }: { solid?: boolean }) {
           >
             <MagnifyingGlass size={20} />
           </button>
+          <ThemeSwitcher />
           <a
             href="#contact"
-            className="hidden rounded-full border border-white/45 px-5 py-2 text-[13.5px] font-medium text-white transition hover:border-white hover:bg-white/10 sm:inline-block"
+            className="hidden rounded-full border border-white/45 px-5 py-2 text-[13.5px] font-medium whitespace-nowrap text-white transition hover:border-white hover:bg-white/10 sm:inline-block"
           >
-            Contact
+            {t("Contact")}
           </a>
           <button
             type="button"
@@ -121,7 +131,7 @@ export function SiteHeader({ solid = false }: { solid?: boolean }) {
                     cn("rounded-lg px-3 py-2.5 text-[15px] text-white/80 hover:bg-white/5", isActive && "text-white")
                   }
                 >
-                  {n.label}
+                  {t(n.label)}
                 </NavLink>
               ))}
             </div>

@@ -16,7 +16,7 @@ const STEP = 0.35;
 
 export function ExperienceImpact({ reduce }: { reduce: boolean }) {
   return (
-    <section id="experience" className="relative scroll-mt-16 overflow-hidden bg-[#061536] px-5 py-20 text-white lg:px-8">
+    <section id="experience" className="relative scroll-mt-16 overflow-hidden bg-(color:--gc-navy) px-5 py-20 text-white lg:px-8">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_70%_at_15%_20%,rgba(31,111,229,0.35),transparent_60%),radial-gradient(45%_70%_at_90%_90%,rgba(240,193,74,0.2),transparent_60%)]" />
       <div className="relative">
         <SectionHeading
@@ -57,12 +57,12 @@ export function ExperienceImpact({ reduce }: { reduce: boolean }) {
                     <Icon size={last ? 42 : 34} weight="duotone" />
                     {last && !reduce ? (
                       <motion.span
-                        className="absolute inset-[-8px] rounded-full border-2 border-[#ffd77a]"
+                        className="absolute inset-[-8px] rounded-full border-2 border-(color:--gc-gold)"
                         variants={{ hidden: { opacity: 0 }, show: { opacity: [0, 0.9, 0], scale: [1, 1.3], transition: { delay: 1.4, duration: 1.4 } } }}
                       />
                     ) : null}
                   </span>
-                  <span className={cn("mt-4 font-display font-semibold", last ? "text-[19px] text-[#ffd77a]" : "text-[16px]")}>{f.stage}</span>
+                  <span className={cn("mt-4 font-display font-semibold", last ? "text-[19px] text-(color:--gc-gold)" : "text-[16px]")}>{f.stage}</span>
                   <span className="mt-1 rounded-full bg-white/8 px-3 py-1 text-[12px] text-white/75">{f.example}</span>
                 </motion.li>
                 {!last ? (

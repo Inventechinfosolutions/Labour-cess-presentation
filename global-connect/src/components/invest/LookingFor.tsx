@@ -69,8 +69,8 @@ export function LookingFor({ reduce }: { reduce: boolean }) {
               return (
                 <Selectable key={label} on={on} onClick={() => setInterests((l) => toggle(l, label))} reduce={reduce} i={i}>
                   <span className="flex flex-col items-center gap-2 px-2 py-4 text-center">
-                    <Icon size={28} weight="duotone" className={on ? "text-[#1f6fe5]" : "text-[#4a5a78]"} />
-                    <span className="text-[13px] leading-tight font-medium text-[#0b1f4a]">{label}</span>
+                    <Icon size={28} weight="duotone" className={on ? "text-(color:--gc-primary)" : "text-(color:--gc-body)"} />
+                    <span className="text-[13px] leading-tight font-medium text-(color:--gc-ink)">{label}</span>
                   </span>
                 </Selectable>
               );
@@ -94,7 +94,7 @@ export function LookingFor({ reduce }: { reduce: boolean }) {
                   <span className="block overflow-hidden rounded-t-[14px]">
                     <img src={image} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
                   </span>
-                  <span className="block px-3 py-2.5 text-left text-[14px] font-semibold text-[#0b1f4a]">{label}</span>
+                  <span className="block px-3 py-2.5 text-left text-[14px] font-semibold text-(color:--gc-ink)">{label}</span>
                 </Selectable>
               );
             })}
@@ -105,24 +105,24 @@ export function LookingFor({ reduce }: { reduce: boolean }) {
           <div className="flex flex-wrap gap-3">
             {RANGES.map((r, i) => (
               <Selectable key={r} on={range === r} onClick={() => setRange(r)} reduce={reduce} i={i} pill>
-                <span className="block px-5 py-2.5 text-[14px] font-semibold text-[#0b1f4a]">{r}</span>
+                <span className="block px-5 py-2.5 text-[14px] font-semibold text-(color:--gc-ink)">{r}</span>
               </Selectable>
             ))}
           </div>
         </Group>
 
         <motion.div
-          className="flex flex-col gap-3 rounded-2xl bg-[#f4f8fd] px-5 py-4 ring-1 ring-[#1f6fe5]/10 sm:flex-row sm:items-center"
+          className="flex flex-col gap-3 rounded-2xl bg-(color:--gc-surface) px-5 py-4 ring-1 ring-(color:--gc-primary)/10 sm:flex-row sm:items-center"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.5, ease: EASE }}
         >
-          <p className="flex-1 text-[14px] text-[#0b1f4a]">
+          <p className="flex-1 text-[14px] text-(color:--gc-ink)">
             <span className="font-semibold">Your selection: </span>
             {[interests.join(", ") || "No interest chosen", locations.join(", ") || "No location chosen", range].join(" · ")}
           </p>
-          <p className="flex items-center gap-1.5 text-[12.5px] text-[#4a5a78]">
+          <p className="flex items-center gap-1.5 text-[12.5px] text-(color:--gc-body)">
             <Info size={15} /> Preview only. Nothing is submitted.
           </p>
         </motion.div>
@@ -140,9 +140,9 @@ function Group({ n, title, hint, reduce, children }: { n: number; title: string;
       transition={{ duration: 0.5, ease: EASE }}
     >
       <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className="grid size-7 place-items-center rounded-full bg-[#0b1f4a] font-display text-[12px] font-bold text-white">{n}</span>
-        <h3 className="font-display text-[18px] font-semibold text-[#0b1f4a]">{title}</h3>
-        <span className="text-[13px] text-[#8a97ad]">{hint}</span>
+        <span className="grid size-7 place-items-center rounded-full bg-(color:--gc-ink) font-display text-[12px] font-bold text-white">{n}</span>
+        <h3 className="font-display text-[18px] font-semibold text-(color:--gc-ink)">{title}</h3>
+        <span className="text-[13px] text-(color:--gc-muted)">{hint}</span>
       </div>
       {children}
     </motion.div>
@@ -175,8 +175,8 @@ function Selectable({
         "relative border-2 bg-white transition-colors",
         pill ? "rounded-full" : "rounded-2xl",
         on
-          ? "border-[#1f6fe5] bg-[#f2f7ff] shadow-[0_10px_24px_rgba(31,111,229,0.16)]"
-          : "border-[#e6ebf3] hover:border-[#1f6fe5]/40",
+          ? "border-(color:--gc-primary) bg-[#f2f7ff] shadow-[0_10px_24px_rgba(31,111,229,0.16)]"
+          : "border-(color:--gc-line) hover:border-(color:--gc-primary)/40",
         className,
       )}
       initial={reduce ? false : { opacity: 0, y: 14 }}

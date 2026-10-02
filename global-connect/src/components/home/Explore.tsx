@@ -5,9 +5,11 @@ import pathwaysBg from "@/assets/pathways-bg.jpg";
 import { SectionHeading } from "@/components/home/SectionHeading";
 import { useCardTransition } from "@/lib/pageTransition";
 import { PATHWAYS, pathwayHref } from "@/lib/pathways";
+import { useT } from "@/theme/context";
 
 export function Explore({ reduce }: { reduce: boolean }) {
   const go = useCardTransition();
+  const t = useT();
   return (
     <section id="explore" className="relative isolate scroll-mt-16 overflow-hidden bg-[#f5f8fc] px-5 pt-16 pb-24 lg:px-8">
       <img
@@ -22,7 +24,7 @@ export function Explore({ reduce }: { reduce: boolean }) {
         reduce={reduce}
       />
 
-      <div className="mx-auto mt-10 grid max-w-[1320px] grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
+      <div className="mx-auto mt-10 grid max-w-[1320px] grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5 max-md:[&>*:last-child]:col-span-2">
         {PATHWAYS.map((p, i) => {
           const Icon = p.icon;
           return (
@@ -35,7 +37,7 @@ export function Explore({ reduce }: { reduce: boolean }) {
             >
               <Link
                 to={pathwayHref(p.id)}
-                onClick={(e) => go(e, { image: p.image, title: p.page, color: p.color, to: pathwayHref(p.id) })}
+                onClick={(e) => go(e, { image: p.image, title: t(p.page), color: p.color, to: pathwayHref(p.id) })}
                 className="group relative flex h-full min-h-[172px] flex-col items-center justify-between overflow-hidden rounded-2xl px-4 pt-5 pb-4 text-center text-white shadow-[0_10px_26px_rgba(11,31,74,0.14)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_rgba(11,31,74,0.22)]"
                 style={{ background: `linear-gradient(150deg, ${p.color} 0%, ${p.deep} 100%)` }}
               >
@@ -51,9 +53,9 @@ export function Explore({ reduce }: { reduce: boolean }) {
                   <Icon size={30} weight="fill" className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110" />
                 </motion.span>
                 <span className="relative mt-2 text-[15px] leading-snug">
-                  {p.explore[0]}
+                  {t(p.explore[0])}
                   <br />
-                  <strong className="font-semibold">{p.explore[1]}</strong>
+                  <strong className="font-semibold">{t(p.explore[1])}</strong>
                 </span>
                 <span
                   className="relative mt-3 grid size-8 place-items-center rounded-full border border-white/60 transition group-hover:translate-x-1 group-hover:bg-white group-hover:text-[color:var(--c)]"

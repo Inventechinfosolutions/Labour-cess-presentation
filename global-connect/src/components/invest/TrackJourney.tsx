@@ -52,7 +52,7 @@ export function TrackJourney({ reduce }: { reduce: boolean }) {
           transition={{ duration: 0.8, ease: EASE }}
         >
           <img src={track} alt="An investor reviewing a project journey on a digital display" className="aspect-[4/3] w-full object-cover" loading="lazy" />
-          <div className="absolute inset-x-4 bottom-4 rounded-2xl bg-[#061536]/70 p-4 text-white backdrop-blur-md sm:inset-x-6 sm:bottom-6">
+          <div className="absolute inset-x-4 bottom-4 rounded-2xl bg-(color:--gc-navy)/70 p-4 text-white backdrop-blur-md sm:inset-x-6 sm:bottom-6">
             <div className="flex items-center justify-between text-[13px]">
               <span className="font-display font-semibold">My Investment Journey</span>
               <span className="text-white/70">
@@ -65,7 +65,7 @@ export function TrackJourney({ reduce }: { reduce: boolean }) {
                   key={s.title}
                   className={cn(
                     "h-1.5 flex-1 rounded-full",
-                    s.status === "done" ? "bg-[#5fe0a0]" : s.status === "current" ? "bg-[#3fb4ff]" : "bg-white/20",
+                    s.status === "done" ? "bg-[#5fe0a0]" : s.status === "current" ? "bg-(color:--gc-accent)" : "bg-white/20",
                   )}
                   initial={reduce ? false : { scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
@@ -107,7 +107,7 @@ function Stage({
       transition={{ duration: 0.45, delay: i * 0.1, ease: EASE }}
     >
       {i < STAGES.length - 1 ? (
-        <span aria-hidden className="absolute top-[42px] -bottom-[6px] left-[17px] w-0.5 bg-[#e6ebf3]">
+        <span aria-hidden className="absolute top-[42px] -bottom-[6px] left-[17px] w-0.5 bg-(color:--gc-line)">
           {i < CURRENT ? (
             <motion.span
               className="absolute inset-0 origin-top bg-gradient-to-b from-[#16a05a] to-[#1f9a7a]"
@@ -124,7 +124,7 @@ function Stage({
           className={cn(
             "relative mt-1.5 grid size-9 shrink-0 place-items-center rounded-full ring-4 ring-white",
             done && "bg-[#16a05a] text-white",
-            current && "bg-[#1f6fe5]",
+            current && "bg-(color:--gc-primary)",
             s.status === "upcoming" && "border-2 border-[#cfd7e4] bg-white",
           )}
         >
@@ -132,7 +132,7 @@ function Stage({
           {current ? <span className="size-2.5 rounded-full bg-white" /> : null}
           {current && !reduce ? (
             <motion.span
-              className="absolute inset-0 rounded-full bg-[#1f6fe5]"
+              className="absolute inset-0 rounded-full bg-(color:--gc-primary)"
               animate={{ scale: [1, 1.7], opacity: [0.45, 0] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut" }}
             />
@@ -140,18 +140,18 @@ function Stage({
         </span>
         <span className="flex-1 pt-2">
           <span className="flex items-center gap-3">
-            <span className={cn("text-[15.5px] font-semibold", s.status === "upcoming" ? "text-[#8a97ad]" : "text-[#0b1f4a]")}>{s.title}</span>
+            <span className={cn("text-[15.5px] font-semibold", s.status === "upcoming" ? "text-(color:--gc-muted)" : "text-(color:--gc-ink)")}>{s.title}</span>
             <span
               className={cn(
                 "shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold whitespace-nowrap",
                 done && "bg-[#e6f6ee] text-[#16a05a]",
-                current && "bg-[#e7f0ff] text-[#1f6fe5]",
-                s.status === "upcoming" && "bg-[#f1f4f8] text-[#8a97ad]",
+                current && "bg-(color:--gc-primary-soft) text-(color:--gc-primary)",
+                s.status === "upcoming" && "bg-[#f1f4f8] text-(color:--gc-muted)",
               )}
             >
               {LABEL[s.status]}
             </span>
-            <CaretDown size={14} className={cn("ml-auto text-[#8a97ad] transition-transform", open && "rotate-180")} />
+            <CaretDown size={14} className={cn("ml-auto text-(color:--gc-muted) transition-transform", open && "rotate-180")} />
           </span>
           <AnimatePresence initial={false}>
             {open ? (
@@ -162,7 +162,7 @@ function Stage({
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3, ease: EASE }}
               >
-                <span className="mt-2 mb-3 block rounded-xl bg-[#f4f8fd] px-4 py-3 text-[13.5px] leading-relaxed text-[#4a5a78]">{s.info}</span>
+                <span className="mt-2 mb-3 block rounded-xl bg-(color:--gc-surface) px-4 py-3 text-[13.5px] leading-relaxed text-(color:--gc-body)">{s.info}</span>
               </motion.span>
             ) : null}
           </AnimatePresence>

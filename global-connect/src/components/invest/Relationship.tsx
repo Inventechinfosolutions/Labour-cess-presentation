@@ -16,7 +16,7 @@ const LAST = STEPS.length - 1;
 
 export function Relationship({ reduce }: { reduce: boolean }) {
   return (
-    <section id="growth" className="relative scroll-mt-16 bg-gradient-to-b from-white to-[#f4f8fd] px-5 py-20 lg:px-8">
+    <section id="growth" className="relative scroll-mt-16 bg-gradient-to-b from-white to-(color:--gc-surface) px-5 py-20 lg:px-8">
       <SectionHeading
         eyebrow="Beyond investment"
         title="Our Relationship Does Not End With Investment"
@@ -46,24 +46,24 @@ export function Relationship({ reduce }: { reduce: boolean }) {
                   className={cn(
                     "relative grid size-[70px] place-items-center rounded-full",
                     last
-                      ? "bg-gradient-to-br from-[#f0c14a] to-[#e0a91f] text-[#0b1f4a] shadow-[0_14px_32px_rgba(224,169,31,0.45)]"
-                      : "bg-white text-[#1f6fe5] shadow-[0_10px_24px_rgba(11,31,74,0.1)] ring-1 ring-[#0b1f4a]/6",
+                      ? "bg-gradient-to-br from-(color:--gc-gold-3) to-[#e0a91f] text-(color:--gc-ink) shadow-[0_14px_32px_rgba(224,169,31,0.45)]"
+                      : "bg-white text-(color:--gc-primary) shadow-[0_10px_24px_rgba(11,31,74,0.1)] ring-1 ring-(color:--gc-ink)/6",
                   )}
                 >
                   <Icon size={30} weight="duotone" />
                   {last && !reduce ? (
                     <motion.span
-                      className="absolute inset-[-6px] rounded-full border-2 border-[#f0c14a]"
+                      className="absolute inset-[-6px] rounded-full border-2 border-(color:--gc-gold-3)"
                       variants={{ hidden: { opacity: 0 }, show: { opacity: [0, 0.9, 0], scale: [1, 1.35], transition: { delay: 0.9, duration: 1.4 } } }}
                     />
                   ) : null}
                 </span>
-                <span className={cn("mt-3 text-[15px] font-semibold", last ? "text-[#a87a0a]" : "text-[#0b1f4a]")}>{label}</span>
+                <span className={cn("mt-3 text-[15px] font-semibold", last ? "text-[#a87a0a]" : "text-(color:--gc-ink)")}>{label}</span>
               </motion.li>
               {i < LAST ? (
                 <motion.li
                   aria-hidden
-                  className="hidden pt-6 text-[#1f6fe5]/50 sm:block"
+                  className="hidden pt-6 text-(color:--gc-primary)/50 sm:block"
                   variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0, transition: { duration: 0.35 } } }}
                 >
                   <ArrowRight size={22} weight="bold" />

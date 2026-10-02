@@ -50,7 +50,7 @@ function ExpandingCard({ t, onExpanded }: { t: CardTransition; onExpanded: () =>
 
   return (
     <motion.div
-      className="fixed z-[80] overflow-hidden bg-[#061536] shadow-[0_30px_80px_rgba(3,10,30,0.45)]"
+      className="fixed z-[80] overflow-hidden bg-(color:--gc-navy) shadow-[0_30px_80px_rgba(3,10,30,0.45)]"
       initial={{ top, left, width, height, borderRadius: 16, opacity: 1 }}
       animate={{
         top: [top, top - (height * grow) / 2, 0],
@@ -71,7 +71,7 @@ function ExpandingCard({ t, onExpanded }: { t: CardTransition; onExpanded: () =>
         animate={{ scale: 1.08 }}
         transition={{ duration: 0.9, ease: "easeOut" }}
       />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,21,54,0.35),rgba(6,21,54,0.85))]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(var(--gc-ov,6,21,54),0.35),rgba(var(--gc-ov,6,21,54),0.85))]" />
       <motion.div
         className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white"
         initial={{ opacity: 0, y: 16 }}

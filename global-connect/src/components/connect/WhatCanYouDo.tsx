@@ -20,7 +20,7 @@ const ACTIONS: { title: string; text: string; icon: Icon; color: string; image: 
 
 export function WhatCanYouDo({ reduce }: { reduce: boolean }) {
   return (
-    <section id="do" className="relative scroll-mt-16 bg-gradient-to-b from-white to-[#f4f8fd] px-5 py-20 lg:px-8">
+    <section id="do" className="relative scroll-mt-16 bg-gradient-to-b from-white to-(color:--gc-surface) px-5 py-20 lg:px-8">
       <SectionHeading eyebrow="What can you do?" title="Connect. Collaborate. Contribute." sub="Many ways to connect, collaborate and contribute." reduce={reduce} />
 
       <div className="mx-auto mt-12 grid max-w-[1320px] grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 xl:grid-cols-6">
@@ -30,7 +30,7 @@ export function WhatCanYouDo({ reduce }: { reduce: boolean }) {
             <motion.a
               key={a.title}
               href="#join"
-              className="group flex flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_10px_30px_rgba(11,31,74,0.08)] ring-1 ring-[#0b1f4a]/6 transition-shadow hover:shadow-[0_20px_44px_rgba(11,31,74,0.16)]"
+              className="group flex flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_10px_30px_rgba(11,31,74,0.08)] ring-1 ring-(color:--gc-ink)/6 transition-shadow hover:shadow-[0_20px_44px_rgba(11,31,74,0.16)]"
               initial={reduce ? false : { opacity: 0, y: 40, scale: 0.94 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               whileHover={reduce ? undefined : { y: -6 }}
@@ -56,7 +56,7 @@ export function WhatCanYouDo({ reduce }: { reduce: boolean }) {
                 <span className="font-display text-[17px] font-semibold" style={{ color: a.color }}>
                   {a.title}
                 </span>
-                <span className="mt-1.5 flex-1 text-[13.5px] leading-snug text-[#4a5a78]">{a.text}</span>
+                <span className="mt-1.5 flex-1 text-[13.5px] leading-snug text-(color:--gc-body)">{a.text}</span>
                 <span
                   className="mt-4 grid size-8 place-items-center rounded-full transition-transform duration-300 group-hover:translate-x-1.5"
                   style={{ background: `${a.color}18`, color: a.color }}

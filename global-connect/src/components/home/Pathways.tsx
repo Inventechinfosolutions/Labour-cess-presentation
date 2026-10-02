@@ -6,6 +6,7 @@ import pathwaysBg from "@/assets/pathways-bg.jpg";
 import { SectionHeading } from "@/components/home/SectionHeading";
 import { useCardTransition } from "@/lib/pageTransition";
 import { PATHWAYS, pathwayHref, type Pathway } from "@/lib/pathways";
+import { useT } from "@/theme/context";
 
 /** Parallax drift per card, alternating so the row moves like a wave. */
 const DRIFT = [36, -18, 28, -26, 20, -32];
@@ -35,6 +36,7 @@ function CardPhoto({ p, reduce }: { p: Pathway; reduce: boolean }) {
 function PathwayCard({ p, i, progress, reduce }: { p: Pathway; i: number; progress: MotionValue<number>; reduce: boolean }) {
   const y = useTransform(progress, [0, 1], [DRIFT[i], -DRIFT[i]]);
   const go = useCardTransition();
+  const t = useT();
   const Icon = p.icon;
 
   return (
@@ -48,8 +50,8 @@ function PathwayCard({ p, i, progress, reduce }: { p: Pathway; i: number; progre
       >
         <Link
           to={pathwayHref(p.id)}
-          onClick={(e) => go(e, { image: p.image, title: p.page, color: p.color, to: pathwayHref(p.id) })}
-          className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_6px_24px_rgba(11,31,74,0.08)] ring-1 ring-[#0b1f4a]/8 transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_40px_rgba(11,31,74,0.16)] focus-visible:ring-2 focus-visible:ring-[#3fb4ff] focus-visible:outline-none"
+          onClick={(e) => go(e, { image: p.image, title: t(p.page), color: p.color, to: pathwayHref(p.id) })}
+          className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_6px_24px_rgba(11,31,74,0.08)] ring-1 ring-(color:--gc-ink)/8 transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_40px_rgba(11,31,74,0.16)] focus-visible:ring-2 focus-visible:ring-(color:--gc-accent) focus-visible:outline-none"
         >
           <CardPhoto p={p} reduce={reduce} />
           <div className="relative flex flex-1 flex-col px-5 pt-8 pb-5">
@@ -64,9 +66,9 @@ function PathwayCard({ p, i, progress, reduce }: { p: Pathway; i: number; progre
               <Icon size={24} weight="fill" />
             </motion.span>
             <h3 className="font-display text-[19px] font-semibold" style={{ color: p.color }}>
-              {p.title}
+              {t(p.title)}
             </h3>
-            <p className="mt-1.5 flex-1 text-[14px] leading-relaxed text-[#4a5a78]">{p.text}</p>
+            <p className="mt-1.5 flex-1 text-[14px] leading-relaxed text-(color:--gc-body)">{t(p.text)}</p>
             <span
               className="mt-4 grid size-9 place-items-center rounded-full transition-all duration-300 group-hover:translate-x-1"
               style={{ background: p.soft, color: p.color }}
@@ -97,7 +99,7 @@ export function Pathways({ reduce }: { reduce: boolean }) {
 
       <SectionHeading eyebrow="What brings the world to Karnataka?" title="Multiple Pathways. A Stronger Karnataka." reduce={reduce} />
 
-      <div ref={gridRef} className="mx-auto mt-12 grid max-w-[1320px] grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
+      <div ref={gridRef} className="mx-auto mt-12 grid max-w-[1320px] grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
         {PATHWAYS.map((p, i) => (
           <PathwayCard key={p.id} p={p} i={i} progress={scrollYProgress} reduce={reduce} />
         ))}

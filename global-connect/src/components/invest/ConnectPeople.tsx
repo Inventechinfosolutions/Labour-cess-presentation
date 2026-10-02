@@ -35,7 +35,7 @@ const T = { investor: 0, toHub: 0.35, hub: 0.8, dept: 1.15, deptStep: 0.16, toFi
 
 export function ConnectPeople({ reduce }: { reduce: boolean }) {
   return (
-    <section id="connect" className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-[#f4f8fd] to-[#fbf7ef] px-5 py-20 lg:px-8">
+    <section id="connect" className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-(color:--gc-surface) to-[#fbf7ef] px-5 py-20 lg:px-8">
       <SectionHeading
         eyebrow="Coordinated support"
         title="We Connect You With the Right People"
@@ -95,8 +95,8 @@ function Diagram({ reduce }: { reduce: boolean }) {
       </svg>
 
       <motion.div className="absolute -translate-x-1/2 -translate-y-1/2" style={pos(500, INVESTOR_Y)} {...pop(T.investor)}>
-        <span className="flex items-center gap-2 rounded-full bg-white py-2 pr-4 pl-2 text-[14px] font-semibold text-[#0b1f4a] shadow-[0_8px_22px_rgba(11,31,74,0.12)] ring-1 ring-[#0b1f4a]/8">
-          <span className="grid size-8 place-items-center rounded-full bg-[#e7f0ff] text-[#1f6fe5]">
+        <span className="flex items-center gap-2 rounded-full bg-white py-2 pr-4 pl-2 text-[14px] font-semibold text-(color:--gc-ink) shadow-[0_8px_22px_rgba(11,31,74,0.12)] ring-1 ring-(color:--gc-ink)/8">
+          <span className="grid size-8 place-items-center rounded-full bg-(color:--gc-primary-soft) text-(color:--gc-primary)">
             <Briefcase size={18} weight="duotone" />
           </span>
           Investor
@@ -104,14 +104,14 @@ function Diagram({ reduce }: { reduce: boolean }) {
       </motion.div>
 
       <motion.div className="absolute -translate-x-1/2 -translate-y-1/2" style={pos(500, HUB_Y)} {...pop(T.hub)}>
-        <span className="relative flex items-center gap-3 rounded-full bg-[#0b1f4a] py-2 pr-6 pl-2 text-white shadow-[0_14px_34px_rgba(11,31,74,0.35)]">
+        <span className="relative flex items-center gap-3 rounded-full bg-(color:--gc-ink) py-2 pr-6 pl-2 text-white shadow-[0_14px_34px_rgba(11,31,74,0.35)]">
           {!reduce ? (
             <motion.span
-              className="absolute inset-0 rounded-full ring-2 ring-[#3fb4ff]"
+              className="absolute inset-0 rounded-full ring-2 ring-(color:--gc-accent)"
               variants={{ hidden: { opacity: 0 }, show: { opacity: [0, 0.8, 0], scale: [1, 1.12, 1.2], transition: { delay: T.hub + 0.3, duration: 1.2 } } }}
             />
           ) : null}
-          <span className="grid size-12 place-items-center rounded-full bg-white ring-2 ring-[#f0c14a]">
+          <span className="grid size-12 place-items-center rounded-full bg-white ring-2 ring-(color:--gc-gold-3)">
             <img src={emblem} alt="" className="h-8 w-auto" />
           </span>
           <span className="font-display text-[16px] font-semibold">Global Karnataka</span>
@@ -127,7 +127,7 @@ function Diagram({ reduce }: { reduce: boolean }) {
             style={pos(XS[i], DEPT_Y)}
             {...pop(T.dept + i * T.deptStep + 0.3)}
           >
-            <span className="flex w-[150px] items-center gap-2 rounded-xl bg-white px-2.5 py-2 text-[12.5px] leading-tight font-semibold text-[#0b1f4a] shadow-[0_8px_20px_rgba(11,31,74,0.1)] lg:w-[160px]">
+            <span className="flex w-[150px] items-center gap-2 rounded-xl bg-white px-2.5 py-2 text-[12.5px] leading-tight font-semibold text-(color:--gc-ink) shadow-[0_8px_20px_rgba(11,31,74,0.1)] lg:w-[160px]">
               <span className="grid size-8 shrink-0 place-items-center rounded-lg text-white" style={{ background: d.color }}>
                 <Icon size={18} weight="bold" />
               </span>
@@ -138,7 +138,7 @@ function Diagram({ reduce }: { reduce: boolean }) {
       })}
 
       <motion.div className="absolute -translate-x-1/2 -translate-y-1/2" style={pos(500, FINAL_Y)} {...pop(T.final)}>
-        <span className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#e0a91f] to-[#f0c14a] py-2 pr-5 pl-2 text-[15px] font-semibold text-[#0b1f4a] shadow-[0_12px_28px_rgba(224,169,31,0.4)]">
+        <span className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#e0a91f] to-(color:--gc-gold-3) py-2 pr-5 pl-2 text-[15px] font-semibold text-(color:--gc-ink) shadow-[0_12px_28px_rgba(224,169,31,0.4)]">
           <span className="grid size-8 place-items-center rounded-full bg-white/70">
             <HandHeart size={18} weight="duotone" />
           </span>
@@ -156,15 +156,15 @@ function MobileFlow({ reduce }: { reduce: boolean }) {
     viewport: { once: true, amount: 0.6 },
     transition: { duration: 0.45, delay, ease: EASE },
   });
-  const connector = <span aria-hidden className="mx-auto block h-6 w-0.5 bg-[#1f6fe5]/30" />;
+  const connector = <span aria-hidden className="mx-auto block h-6 w-0.5 bg-(color:--gc-primary)/30" />;
 
   return (
     <div className="mx-auto mt-10 max-w-[420px] md:hidden">
-      <motion.div className="mx-auto w-fit rounded-full bg-white px-5 py-2 text-[14px] font-semibold text-[#0b1f4a] shadow ring-1 ring-[#0b1f4a]/8" {...item(0)}>
+      <motion.div className="mx-auto w-fit rounded-full bg-white px-5 py-2 text-[14px] font-semibold text-(color:--gc-ink) shadow ring-1 ring-(color:--gc-ink)/8" {...item(0)}>
         Investor
       </motion.div>
       {connector}
-      <motion.div className="mx-auto flex w-fit items-center gap-2 rounded-full bg-[#0b1f4a] py-1.5 pr-5 pl-1.5 text-white" {...item(0.1)}>
+      <motion.div className="mx-auto flex w-fit items-center gap-2 rounded-full bg-(color:--gc-ink) py-1.5 pr-5 pl-1.5 text-white" {...item(0.1)}>
         <span className="grid size-9 place-items-center rounded-full bg-white">
           <img src={emblem} alt="" className="h-6 w-auto" />
         </span>
@@ -177,7 +177,7 @@ function MobileFlow({ reduce }: { reduce: boolean }) {
           return (
             <motion.div
               key={d.label}
-              className="flex items-center gap-2 rounded-xl bg-white px-2.5 py-2 text-[12.5px] font-semibold text-[#0b1f4a] shadow-sm"
+              className="flex items-center gap-2 rounded-xl bg-white px-2.5 py-2 text-[12.5px] font-semibold text-(color:--gc-ink) shadow-sm"
               {...item(0.1 + i * 0.08)}
             >
               <span className="grid size-7 shrink-0 place-items-center rounded-lg text-white" style={{ background: d.color }}>
@@ -189,7 +189,7 @@ function MobileFlow({ reduce }: { reduce: boolean }) {
         })}
       </div>
       {connector}
-      <motion.div className="mx-auto w-fit rounded-full bg-gradient-to-r from-[#e0a91f] to-[#f0c14a] px-5 py-2 text-[14px] font-semibold text-[#0b1f4a]" {...item(0.2)}>
+      <motion.div className="mx-auto w-fit rounded-full bg-gradient-to-r from-[#e0a91f] to-(color:--gc-gold-3) px-5 py-2 text-[14px] font-semibold text-(color:--gc-ink)" {...item(0.2)}>
         Coordinated Support
       </motion.div>
     </div>

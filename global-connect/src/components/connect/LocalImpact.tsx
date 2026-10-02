@@ -16,7 +16,7 @@ const STEP = 0.32;
 
 export function LocalImpact({ reduce }: { reduce: boolean }) {
   return (
-    <section id="impact" className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-[#f4f8fd] to-[#fbf7ef] px-5 py-20 lg:px-8">
+    <section id="impact" className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-(color:--gc-surface) to-[#fbf7ef] px-5 py-20 lg:px-8">
       <SectionHeading eyebrow="Global to local" title="Bring the World Back to Karnataka" sub="Global connections can create local impact." reduce={reduce} />
 
       <motion.div
@@ -49,17 +49,17 @@ export function LocalImpact({ reduce }: { reduce: boolean }) {
                 >
                   <Icon size={30} weight="duotone" />
                 </motion.span>
-                <span className="mt-3 font-display text-[15px] font-semibold text-[#0b1f4a]">{label}</span>
+                <span className="mt-3 font-display text-[15px] font-semibold text-(color:--gc-ink)">{label}</span>
               </motion.li>
               {i < STAGES.length - 1 ? (
                 <li aria-hidden className="flex items-center md:h-[68px]">
-                  <span className="relative hidden h-[3px] w-10 overflow-hidden rounded-full bg-[#0b1f4a]/10 md:block lg:w-14">
+                  <span className="relative hidden h-[3px] w-10 overflow-hidden rounded-full bg-(color:--gc-ink)/10 md:block lg:w-14">
                     <motion.span
-                      className="absolute inset-0 origin-left rounded-full bg-gradient-to-r from-[#1f6fe5] to-[#e0a91f]"
+                      className="absolute inset-0 origin-left rounded-full bg-gradient-to-r from-(color:--gc-primary) to-[#e0a91f]"
                       variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { delay: i * STEP + 0.2, duration: 0.3 } } }}
                     />
                   </span>
-                  <span className="h-5 w-[3px] rounded-full bg-[#1f6fe5]/30 md:hidden" />
+                  <span className="h-5 w-[3px] rounded-full bg-(color:--gc-primary)/30 md:hidden" />
                 </li>
               ) : null}
             </Fragment>
@@ -67,7 +67,7 @@ export function LocalImpact({ reduce }: { reduce: boolean }) {
         </ol>
 
         <motion.div
-          className="relative mx-auto flex items-center gap-5 overflow-hidden rounded-[24px] bg-[#0b1f4a] py-6 pr-8 pl-6 text-white shadow-[0_24px_60px_rgba(11,31,74,0.3)]"
+          className="relative mx-auto flex items-center gap-5 overflow-hidden rounded-[24px] bg-(color:--gc-ink) py-6 pr-8 pl-6 text-white shadow-[0_24px_60px_rgba(11,31,74,0.3)]"
           variants={{
             hidden: { opacity: 0, x: 30, scale: 0.95 },
             show: { opacity: 1, x: 0, scale: 1, transition: { delay: STAGES.length * STEP, duration: 0.6, ease: EASE } },
@@ -81,8 +81,8 @@ export function LocalImpact({ reduce }: { reduce: boolean }) {
           </svg>
           <div className="relative">
             <p className="font-display text-[15px] font-semibold text-white/80">Global Connections</p>
-            <ArrowRight size={20} weight="bold" className="my-1 rotate-90 text-[#ffd77a]" />
-            <p className="font-display text-[26px] leading-none font-bold text-[#ffd77a]">Local Impact</p>
+            <ArrowRight size={20} weight="bold" className="my-1 rotate-90 text-(color:--gc-gold)" />
+            <p className="font-display text-[26px] leading-none font-bold text-(color:--gc-gold)">Local Impact</p>
           </div>
         </motion.div>
       </motion.div>

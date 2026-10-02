@@ -47,10 +47,10 @@ export function CommunityJourney({ reduce }: { reduce: boolean }) {
       />
 
       <div ref={ref} className="relative mx-auto mt-14 max-w-[1220px]">
-        <div className="pointer-events-none absolute top-[35px] right-[7%] left-[7%] hidden h-[3px] overflow-hidden rounded-full bg-[#0b1f4a]/8 lg:block">
+        <div className="pointer-events-none absolute top-[35px] right-[7%] left-[7%] hidden h-[3px] overflow-hidden rounded-full bg-(color:--gc-ink)/8 lg:block">
           <motion.div className="absolute inset-0 origin-left rounded-full" style={{ background: TRACK, scaleX: reduce ? 1 : fill }} />
         </div>
-        <div className="pointer-events-none absolute top-[35px] bottom-[35px] left-[34px] w-[3px] overflow-hidden rounded-full bg-[#0b1f4a]/8 lg:hidden">
+        <div className="pointer-events-none absolute top-[35px] bottom-[35px] left-[34px] w-[3px] overflow-hidden rounded-full bg-(color:--gc-ink)/8 lg:hidden">
           <motion.div
             className="absolute inset-0 origin-top rounded-full"
             style={{ background: TRACK.replace("90deg", "180deg"), scaleY: reduce ? 1 : fill }}
@@ -76,7 +76,7 @@ export function CommunityJourney({ reduce }: { reduce: boolean }) {
                   >
                     <Icon size={30} weight="duotone" />
                     <span
-                      className="absolute -top-1 -right-1 grid size-6 place-items-center rounded-full bg-white font-display text-[10.5px] font-bold ring-1 ring-[#0b1f4a]/10"
+                      className="absolute -top-1 -right-1 grid size-6 place-items-center rounded-full bg-white font-display text-[10.5px] font-bold ring-1 ring-(color:--gc-ink)/10"
                       style={{ color: s.color }}
                     >
                       {String(i + 1).padStart(2, "0")}
@@ -88,8 +88,8 @@ export function CommunityJourney({ reduce }: { reduce: boolean }) {
                     animate={{ opacity: on ? 1 : 0.45, y: on ? 0 : 6 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <span className="block font-display text-[16px] font-semibold text-[#0b1f4a]">{s.title}</span>
-                    <span className="mt-1 block max-w-[220px] text-[13px] leading-snug text-[#4a5a78] lg:mx-auto lg:max-w-[150px]">{s.text}</span>
+                    <span className="block font-display text-[16px] font-semibold text-(color:--gc-ink)">{s.title}</span>
+                    <span className="mt-1 block max-w-[220px] text-[13px] leading-snug text-(color:--gc-body) lg:mx-auto lg:max-w-[150px]">{s.text}</span>
                   </motion.span>
                 </li>
                 {i < LAST ? (

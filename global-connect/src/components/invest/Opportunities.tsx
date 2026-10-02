@@ -34,7 +34,7 @@ const OPPORTUNITIES = [
 
 export function Opportunities({ reduce }: { reduce: boolean }) {
   return (
-    <section id="opportunities" className="relative scroll-mt-16 overflow-hidden bg-[#061536] px-5 py-20 text-white lg:px-8">
+    <section id="opportunities" className="relative scroll-mt-16 overflow-hidden bg-(color:--gc-navy) px-5 py-20 text-white lg:px-8">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_0%,rgba(31,111,229,0.35),transparent_60%),radial-gradient(50%_60%_at_0%_100%,rgba(240,193,74,0.12),transparent_60%)]" />
       <div className="relative mx-auto max-w-[1220px]">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">

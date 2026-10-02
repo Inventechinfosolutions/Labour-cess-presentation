@@ -27,7 +27,7 @@ export function Journey({ reduce }: { reduce: boolean }) {
     <section
       ref={sectionRef}
       id="journey"
-      className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-[#f4f8fd] via-[#fbf7ef] to-[#eef4fb] px-5 pt-16 pb-20 lg:px-8"
+      className="relative scroll-mt-16 overflow-hidden bg-gradient-to-b from-(color:--gc-surface) via-[#fbf7ef] to-[#eef4fb] px-5 pt-16 pb-20 lg:px-8"
     >
       <motion.img
         src={journeyBg}
@@ -41,7 +41,7 @@ export function Journey({ reduce }: { reduce: boolean }) {
         <SectionHeading eyebrow="One global journey" title="From Possibilities to Progress" reduce={reduce} />
 
         <div ref={stepsRef} className="relative mx-auto mt-12 max-w-[1180px]">
-          <div className="pointer-events-none absolute top-[33px] right-[6%] left-[6%] hidden h-1 overflow-hidden rounded-full bg-[#0b1f4a]/8 lg:block">
+          <div className="pointer-events-none absolute top-[33px] right-[6%] left-[6%] hidden h-1 overflow-hidden rounded-full bg-(color:--gc-ink)/8 lg:block">
             <motion.div
               className="absolute inset-0 origin-left rounded-full"
               style={{ background: TRACK, scaleX: reduce ? 1 : fill }}
@@ -93,7 +93,7 @@ export function Journey({ reduce }: { reduce: boolean }) {
                       {s.title}
                     </motion.span>
                     <motion.span
-                      className="mt-1 max-w-[140px] text-[13px] leading-snug text-[#4a5a78]"
+                      className="mt-1 max-w-[140px] text-[13px] leading-snug text-(color:--gc-body)"
                       initial={false}
                       animate={{ opacity: on ? 1 : 0.35, y: on ? 0 : 6 }}
                       transition={{ duration: 0.4, delay: on ? 0.08 : 0 }}
@@ -119,12 +119,12 @@ export function Journey({ reduce }: { reduce: boolean }) {
           </ol>
 
           <motion.p
-            className="mx-auto mt-12 flex w-fit items-center gap-3 rounded-full bg-white/85 px-6 py-2.5 text-center text-[15px] font-medium text-[#0b1f4a] shadow-[0_6px_20px_rgba(11,31,74,0.08)] ring-1 ring-[#0b1f4a]/8 backdrop-blur"
+            className="mx-auto mt-12 flex w-fit items-center gap-3 rounded-full bg-white/85 px-6 py-2.5 text-center text-[15px] font-medium text-(color:--gc-ink) shadow-[0_6px_20px_rgba(11,31,74,0.08)] ring-1 ring-(color:--gc-ink)/8 backdrop-blur"
             initial={false}
             animate={lit >= LAST ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 16, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
-            <span className="size-2 rounded-full bg-[#3fb4ff]" />
+            <span className="size-2 rounded-full bg-(color:--gc-accent)" />
             From the first conversation to measurable outcomes.
           </motion.p>
         </div>

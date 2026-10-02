@@ -22,9 +22,9 @@ export function PathwayPage() {
           >
             <Icon size={38} weight="duotone" />
           </span>
-          <h1 className="mt-6 font-display text-[34px] font-bold text-[#0b1f4a]">{p.page}</h1>
-          <p className="mt-2 text-[16px] text-[#4a5a78]">{p.text}</p>
-          <p className="mt-6 rounded-full bg-[#eef3fa] px-4 py-1.5 text-[13px] text-[#4a5a78]">This page is being designed.</p>
+          <h1 className="mt-6 font-display text-[34px] font-bold text-(color:--gc-ink)">{p.page}</h1>
+          <p className="mt-2 text-[16px] text-(color:--gc-body)">{p.text}</p>
+          <p className="mt-6 rounded-full bg-[#eef3fa] px-4 py-1.5 text-[13px] text-(color:--gc-body)">This page is being designed.</p>
           <Link to="/global-connect" className="mt-8 inline-flex items-center gap-2 font-medium" style={{ color: p.color }}>
             <ArrowLeft size={16} weight="bold" /> Back to Global Karnataka
           </Link>

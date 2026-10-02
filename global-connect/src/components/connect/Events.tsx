@@ -32,7 +32,7 @@ export function Events({ reduce }: { reduce: boolean }) {
             transition={{ duration: 0.55, delay: reduce ? 0 : i * 0.12, ease: EASE, y: { duration: 0.3 } }}
           >
             <img src={e.image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.07]" />
-            <span className="absolute inset-0 bg-gradient-to-t from-[#061536] via-[#061536]/30 to-transparent" />
+            <span className="absolute inset-0 bg-gradient-to-t from-(color:--gc-navy) via-(color:--gc-navy)/30 to-transparent" />
             <span className="absolute top-4 left-4 rounded-full px-3 py-1 text-[11.5px] font-semibold text-white" style={{ background: e.color }}>
               {e.tag}
             </span>

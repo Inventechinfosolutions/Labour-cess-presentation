@@ -41,10 +41,10 @@ export function HowItWorks({ reduce }: { reduce: boolean }) {
       <SectionHeading eyebrow="How it works" title="How Does It Work?" sub="A simple, guided journey to invest in Karnataka." reduce={reduce} />
 
       <div className="relative mx-auto mt-14 max-w-[1220px]">
-        <div className="pointer-events-none absolute top-[38px] right-[7%] left-[7%] hidden h-1 rounded-full bg-[#0b1f4a]/8 lg:block">
+        <div className="pointer-events-none absolute top-[38px] right-[7%] left-[7%] hidden h-1 rounded-full bg-(color:--gc-ink)/8 lg:block">
           <motion.div className="absolute inset-0 origin-left rounded-full" style={{ background: TRACK }} {...line(false)} />
         </div>
-        <div className="pointer-events-none absolute top-[38px] bottom-[38px] left-[37px] w-1 rounded-full bg-[#0b1f4a]/8 lg:hidden">
+        <div className="pointer-events-none absolute top-[38px] bottom-[38px] left-[37px] w-1 rounded-full bg-(color:--gc-ink)/8 lg:hidden">
           <motion.div className="absolute inset-0 origin-top rounded-full" style={{ background: TRACK_V }} {...line(true)} />
         </div>
 
@@ -79,8 +79,8 @@ export function HowItWorks({ reduce }: { reduce: boolean }) {
                     </span>
                   </span>
                   <span className="lg:mt-4">
-                    <span className="block font-display text-[16.5px] font-semibold text-[#0b1f4a]">{s.title}</span>
-                    <span className="mt-1 block max-w-[220px] text-[13.5px] leading-snug text-[#4a5a78] lg:mx-auto lg:max-w-[150px]">
+                    <span className="block font-display text-[16.5px] font-semibold text-(color:--gc-ink)">{s.title}</span>
+                    <span className="mt-1 block max-w-[220px] text-[13.5px] leading-snug text-(color:--gc-body) lg:mx-auto lg:max-w-[150px]">
                       {s.text}
                     </span>
                   </span>

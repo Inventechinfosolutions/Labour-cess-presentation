@@ -1,12 +1,14 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import ctaBg from "@/assets/connect/cta.jpg";
+import { useT } from "@/theme/context";
 import { GoldButton } from "./GoldButton";
 import { EASE } from "./shared";
 
 const ARCS = ["M560 -10 Q 900 20 1150 190", "M720 430 Q 900 220 1150 190", "M1460 30 Q 1300 40 1150 190", "M1460 400 Q 1300 260 1150 190"];
 
 export function ConnectCta({ reduce }: { reduce: boolean }) {
+  const t = useT();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
@@ -19,7 +21,7 @@ export function ConnectCta({ reduce }: { reduce: boolean }) {
   });
 
   return (
-    <section ref={ref} className="relative isolate overflow-hidden bg-[#0b1430] px-5 py-24 text-white lg:px-8 lg:py-32">
+    <section ref={ref} className="relative isolate overflow-hidden bg-[color:var(--gc-hero-3,#0b1430)] px-5 py-24 text-white lg:px-8 lg:py-32">
       <motion.img
         src={ctaBg}
         alt="Western Ghats and a waterfall in Karnataka at sunset"
@@ -27,7 +29,7 @@ export function ConnectCta({ reduce }: { reduce: boolean }) {
         style={reduce ? undefined : { y: bgY }}
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,21,54,0.92)_0%,rgba(6,21,54,0.65)_45%,rgba(6,21,54,0.15)_85%)] max-md:bg-[rgba(6,21,54,0.65)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(var(--gc-ov,6,21,54),0.92)_0%,rgba(var(--gc-ov,6,21,54),0.65)_45%,rgba(var(--gc-ov,6,21,54),0.15)_85%)] max-md:bg-[rgba(var(--gc-ov,6,21,54),0.65)]" />
       <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 1440 420" preserveAspectRatio="none" aria-hidden>
         {ARCS.map((d, i) => (
           <motion.path
@@ -48,11 +50,13 @@ export function ConnectCta({ reduce }: { reduce: boolean }) {
 
       <div className="relative mx-auto max-w-[1220px]">
         <motion.h2 className="font-display text-[34px] leading-tight font-bold tracking-[-0.03em] sm:text-[48px]" {...enter(0)}>
-          Stay Connected With{" "}
-          <span className="bg-gradient-to-r from-[#ffd77a] to-[#ffb36b] bg-clip-text font-serif font-normal text-transparent italic">Karnataka</span>
+          {t("Stay Connected With")}{" "}
+          <span className="bg-gradient-to-r from-(color:--gc-gold) to-(color:--gc-gold-4) bg-clip-text font-serif font-normal text-transparent italic">
+            {t("Karnataka")}
+          </span>
         </motion.h2>
         <motion.p className="mt-4 max-w-[480px] text-[17px] text-white/85" {...enter(0.12)}>
-          Join a global network of people, ideas, expertise and opportunities.
+          {t("Join a global network of people, ideas, expertise and opportunities.")}
         </motion.p>
         <motion.div className="mt-8 flex flex-wrap gap-3" {...enter(0.24)}>
           <GoldButton href="#join">Join the Global Kannadiga Network</GoldButton>
@@ -60,7 +64,7 @@ export function ConnectCta({ reduce }: { reduce: boolean }) {
             href="#opportunities"
             className="inline-flex items-center rounded-full border border-white/50 px-6 py-3 text-[14.5px] font-semibold text-white transition hover:border-white hover:bg-white/10"
           >
-            Explore Karnataka Opportunities
+            {t("Explore Karnataka Opportunities")}
           </a>
         </motion.div>
       </div>
