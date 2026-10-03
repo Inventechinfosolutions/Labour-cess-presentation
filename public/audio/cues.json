@@ -168,15 +168,27 @@
         "marker": "next"
       },
       {
-        "at": 64.32,
+        "at": 53.6,
         "slide": 3,
         "beat": 3,
         "marker": "next"
       },
       {
-        "at": 84.216,
+        "at": 69.3,
         "slide": 3,
         "beat": 4,
+        "marker": "next"
+      },
+      {
+        "at": 79.3,
+        "slide": 3,
+        "beat": 5,
+        "marker": "next"
+      },
+      {
+        "at": 84.216,
+        "slide": 3,
+        "beat": 6,
         "marker": "next"
       }
     ],
@@ -382,16 +394,30 @@
         "segment": "03b-gps-field-app"
       },
       {
-        "at": 437.256,
+        "at": 426.52,
         "slide": 3,
         "beat": 3,
         "marker": "next",
         "segment": "03b-gps-field-app"
       },
       {
-        "at": 457.152,
+        "at": 442.24,
         "slide": 3,
         "beat": 4,
+        "marker": "next",
+        "segment": "03b-gps-field-app"
+      },
+      {
+        "at": 452.2,
+        "slide": 3,
+        "beat": 5,
+        "marker": "next",
+        "segment": "03b-gps-field-app"
+      },
+      {
+        "at": 457.152,
+        "slide": 3,
+        "beat": 6,
         "marker": "next",
         "segment": "03b-gps-field-app"
       },

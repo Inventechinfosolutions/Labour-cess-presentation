@@ -21,6 +21,7 @@ export { Coins } from "@phosphor-icons/react/dist/csr/Coins";
 export { ArrowsLeftRight } from "@phosphor-icons/react/dist/csr/ArrowsLeftRight";
 export { ArrowsSplit } from "@phosphor-icons/react/dist/csr/ArrowsSplit";
 export { Factory } from "@phosphor-icons/react/dist/csr/Factory";
+export { Flag } from "@phosphor-icons/react/dist/csr/Flag";
 export { GearSix } from "@phosphor-icons/react/dist/csr/GearSix";
 export { Monitor } from "@phosphor-icons/react/dist/csr/Monitor";
 export { Shuffle } from "@phosphor-icons/react/dist/csr/Shuffle";

@@ -61,7 +61,6 @@ import { NoticeArt } from "@/components/Art";
 import { GpsAssignedStage } from "@/components/GpsAssignedStage";
 import { GpsEvidenceStage } from "@/components/GpsEvidenceStage";
 import { GpsOfflineStage } from "@/components/GpsOfflineStage";
-import { GpsEstimationStage } from "@/components/GpsEstimationStage";
 import { GpsDemandStage } from "@/components/GpsDemandStage";
 import { Reveal, SceneHead, Stagger } from "@/components/SlideKit";
 import { cn } from "@/lib/utils";
@@ -207,21 +206,24 @@ const BEAT_HEAD: readonly { kicker: string; title: string; support: string }[] =
   },
   {
     kicker: "Mobile application",
-    title: "Demand Notice Generation",
-    support: "Complete the assessment and generate the demand notice on the spot.",
+    title: "Survey, Estimation & Demand Notice",
+    support: "Survey the site, estimate the CESS and issue the demand notice on the spot.",
   },
 ];
 
 const SPACE_HINTS = [
   "Space · Evidence capture",
-  "Space · Survey and estimation",
-  "Space · On-spot demand",
+  "Space · Survey and demand notice",
+  "Space · Estimate and CESS",
+  "Space · Demand notice",
+  "Space · Issue notice",
   "Space · Works offline",
   "Space · Next",
 ] as const;
 
-/** Space order → content: projects, evidence, survey, demand notice, offline. */
-const BEAT_ORDER = [0, 1, 4, 5, 2] as const;
+/** Space order → content: projects, evidence, survey-to-demand notice (4 phones, one per Space), offline. */
+const BEAT_ORDER = [0, 1, 5, 5, 5, 5, 2] as const;
+const DEMAND_FIRST_STEP = BEAT_ORDER.indexOf(5);
 
 export function GpsScene({ beat: step }: { beat: number }) {
   const beat: number = BEAT_ORDER[Math.min(Math.max(step, 0), BEAT_ORDER.length - 1)];
@@ -263,18 +265,10 @@ export function GpsScene({ beat: step }: { beat: number }) {
     );
   }
 
-  if (beat === 4) {
-    return (
-      <div className="grid h-full min-h-0 grid-rows-[1fr] gap-2">
-        <GpsEstimationStage />
-      </div>
-    );
-  }
-
   if (beat === 5) {
     return (
       <div className="grid h-full min-h-0 grid-rows-[1fr] gap-2">
-        <GpsDemandStage />
+        <GpsDemandStage step={step - DEMAND_FIRST_STEP} />
       </div>
     );
   }

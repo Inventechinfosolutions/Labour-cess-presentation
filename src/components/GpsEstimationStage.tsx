@@ -127,16 +127,10 @@ function useCountUp(target: number, delay: number, reduce: boolean) {
   return value;
 }
 
-/** Poster-style "Survey & Construction Estimation" stage — survey, measure, estimate, calculate CESS. */
-export function GpsEstimationStage() {
+/** Poster-style "Survey & Construction Estimation" stage — one phone per Space: survey, measure, estimate, calculate CESS. */
+export function GpsEstimationStage({ step = STEPS.length - 1 }: { step?: number }) {
   const reduce = !!useReducedMotion();
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    if (reduce) return;
-    const t = window.setInterval(() => setActive((s) => (s + 1) % STEPS.length), 2400);
-    return () => clearInterval(t);
-  }, [reduce]);
+  const active = Math.min(Math.max(step, 0), STEPS.length - 1);
 
   const rise = (delay: number, x = 0, y = 10) =>
     reduce
@@ -163,14 +157,19 @@ export function GpsEstimationStage() {
           className="flex w-[50%] items-center rounded-2xl bg-white/92 px-[2.4%] shadow-[0_10px_28px_rgba(20,60,120,0.14)] ring-1 ring-[#d7e5f4]"
         >
           {FLOW.map((f, i) => {
-            const on = !reduce && active === i;
+            const on = active === i;
+            const reached = i <= active;
             return (
               <div key={f.label.join(" ")} className="contents">
-                <div className="flex shrink-0 items-center gap-[0.5em]">
+                <motion.div
+                  className="flex shrink-0 items-center gap-[0.5em]"
+                  animate={{ opacity: reached ? 1 : 0.4 }}
+                  transition={{ duration: 0.35, ease }}
+                >
                   <motion.span
                     className="grid size-[2.5em] shrink-0 place-items-center rounded-full text-[length:var(--gs-16)] text-white shadow-[0_5px_12px_rgba(0,0,0,0.18)] ring-2 ring-white"
-                    style={{ background: f.grad }}
-                    animate={{ scale: on ? 1.12 : 1 }}
+                    style={{ background: reached ? f.grad : "#b8c6d8" }}
+                    animate={{ scale: on && !reduce ? 1.12 : 1 }}
                     transition={{ duration: 0.35, ease }}
                   >
                     <f.Icon weight="fill" className="size-[50%]" />
@@ -180,7 +179,7 @@ export function GpsEstimationStage() {
                     <br />
                     {f.label[1]}
                   </span>
-                </div>
+                </motion.div>
                 {i < FLOW.length - 1 && <FlowLink delay={0.6 + i * 0.5} reduce={reduce} />}
               </div>
             );
@@ -204,23 +203,30 @@ export function GpsEstimationStage() {
         >
           <img src={inspectorPhone} alt="Labour Inspector recording survey and measurements on site" draggable={false} className="size-full object-cover object-[14%_22%]" />
         </motion.div>
-        {STEPS.map((s, i) => (
-          <div key={s.title} className="contents">
-            <div className="flex min-h-0 flex-col gap-[2.5%]">
-              <StepPill n={i + 1} title={s.title} grad={s.grad} on={!reduce && active === i} delay={0.2 + i * 0.12} reduce={reduce} />
-              <div className="min-h-0 flex-1">
-                <Phone delay={0.3 + i * 0.15} reduce={reduce}>
-                  {i === 0 && <SurveyScreen reduce={reduce} />}
-                  {i === 1 && <MeasureScreen />}
-                  {i === 2 && <EstimateScreen reduce={reduce} />}
-                  {i === 3 && <CessScreen reduce={reduce} />}
-                </Phone>
-              </div>
+        {STEPS.map((s, i) => {
+          const shown = i <= active;
+          return (
+            <div key={s.title} className="contents">
+              {shown ? (
+                <div className="flex min-h-0 flex-col gap-[2.5%]">
+                  <StepPill n={i + 1} title={s.title} grad={s.grad} on={!reduce && active === i} delay={i === 0 ? 0.2 : 0.05} reduce={reduce} />
+                  <div className="min-h-0 flex-1">
+                    <Phone delay={i === 0 ? 0.3 : 0.12} reduce={reduce}>
+                      {i === 0 && <SurveyScreen reduce={reduce} />}
+                      {i === 1 && <MeasureScreen />}
+                      {i === 2 && <EstimateScreen reduce={reduce} />}
+                      {i === 3 && <CessScreen reduce={reduce} />}
+                    </Phone>
+                  </div>
+                </div>
+              ) : (
+                <PhoneSlot n={i + 1} title={s.title} Icon={FLOW[i].Icon} />
+              )}
+              {i < STEPS.length - 1 && (i < active ? <StepArrow delay={0.4} reduce={reduce} /> : <span />)}
             </div>
-            {i < STEPS.length - 1 && <StepArrow delay={0.9 + i * 0.45} reduce={reduce} />}
-          </div>
-        ))}
-        <CapsPanel active={reduce ? -1 : [0, 0, 1, 2][active]} reduce={reduce} />
+          );
+        })}
+        <CapsPanel active={[0, 0, 1, 2][active]} reduce={reduce} />
       </div>
 
       {/* Row 3 — outcome chain */}
@@ -313,6 +319,23 @@ export function StepArrow({ delay, reduce }: { delay: number; reduce: boolean })
             transition={{ duration: 1, repeat: Infinity, delay, repeatDelay: 0.8, ease: "easeInOut" }}
           />
         )}
+      </div>
+    </div>
+  );
+}
+
+/** Dashed placeholder for a phone step not yet revealed. */
+export function PhoneSlot({ n, title, Icon }: { n: number; title: string; Icon: CessIcon }) {
+  return (
+    <div className="flex min-h-0 flex-col gap-[2.5%] opacity-60">
+      <span className="flex items-center gap-[0.5em] self-center rounded-full bg-white/70 py-[0.3em] pr-[0.9em] pl-[0.3em] text-[length:var(--gs-13)] font-bold whitespace-nowrap text-[#7d93ad] ring-1 ring-[#c9d8ea]">
+        <span className="grid size-[1.6em] place-items-center rounded-full bg-[#dfe8f3] text-[#7d93ad]">{n}</span>
+        {title}
+      </span>
+      <div className="flex min-h-0 flex-1 items-center justify-center py-[2%]">
+        <div className="grid aspect-[9/18.6] h-full max-h-full max-w-full place-items-center rounded-[2.2em] border-2 border-dashed border-[#b9cbe0] bg-white/35">
+          <Icon weight="fill" className="size-[28%] text-[#b9cbe0]" />
+        </div>
       </div>
     </div>
   );
@@ -414,7 +437,7 @@ function MeasureScreen() {
 }
 
 function EstimateScreen({ reduce }: { reduce: boolean }) {
-  const value = useCountUp(EST_VALUE, 1.6, reduce);
+  const value = useCountUp(EST_VALUE, 0.9, reduce);
   return (
     <>
       <AppBar title="Estimation Details" />
@@ -443,7 +466,7 @@ function EstimateScreen({ reduce }: { reduce: boolean }) {
 }
 
 function CessScreen({ reduce }: { reduce: boolean }) {
-  const cess = useCountUp(CESS_VALUE, 2.6, reduce);
+  const cess = useCountUp(CESS_VALUE, 0.9, reduce);
   return (
     <>
       <AppBar title="CESS Assessment" />

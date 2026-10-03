@@ -11,17 +11,64 @@ import { SCENES } from "@/lib/deck";
 import { FULL_VOICE } from "@/lib/voiceover";
 import { cn } from "@/lib/utils";
 import headerSkyline from "@/assets/header-skyline-band.jpg";
+import { ArchitectureScene } from "@/scenes/ArchitectureScene";
 import { AssessScene } from "@/scenes/AssessScene";
 import { CoreScene } from "@/scenes/CoreScene";
 import { LeakScene } from "@/scenes/LeakScene";
+import { MilestonesScene } from "@/scenes/MilestonesScene";
 import { GisScene } from "@/scenes/GisScene";
 import { GpsScene } from "@/scenes/GpsScene";
 import { ProblemScene } from "@/scenes/ProblemScene";
+import { ThanksScene } from "@/scenes/ThanksScene";
 import { TitleScene } from "@/scenes/TitleScene";
 import { useEffect, type ReactNode } from "react";
 
+const FIELD_DEMAND_HEAD = {
+  title: (
+    <>
+      Survey, Estimation &amp;{" "}
+      <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Demand Notice</span>
+    </>
+  ),
+  titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
+};
+
+const ARCH_HEAD = {
+  title: (
+    <>
+      Architecture,{" "}
+      <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Technology &amp; Security</span>
+      <span className="mt-[0.45em] block font-sans text-[0.42em] font-medium tracking-[0.06em] text-white/85 normal-case">
+        Scalable&nbsp;&nbsp;·&nbsp;&nbsp;Secure&nbsp;&nbsp;·&nbsp;&nbsp;Integrated&nbsp;&nbsp;·&nbsp;&nbsp;Citizen Centric
+      </span>
+    </>
+  ),
+  titleClass: "text-[length:clamp(15px,min(1.95vw,3.6vh),32px)] tracking-[-0.02em]",
+};
+
+const PLAN_HEAD = {
+  title: (
+    <>
+      Project Delivery{" "}
+      <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Milestones</span>
+      <span className="mt-[0.45em] block font-sans text-[0.42em] font-medium tracking-[0.06em] text-white/85 normal-case">
+        From Planning to Impact&nbsp;&nbsp;·&nbsp;&nbsp;Transparent Governance&nbsp;&nbsp;·&nbsp;&nbsp;Empowering Workers
+      </span>
+    </>
+  ),
+  titleClass: ARCH_HEAD.titleClass,
+};
+
 /** Poster-style header title per slide/beat (key: "slide/beat"). */
 const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
+  "7/0": ARCH_HEAD,
+  "7/1": ARCH_HEAD,
+  "7/2": ARCH_HEAD,
+  "8/0": PLAN_HEAD,
+  "8/1": PLAN_HEAD,
+  "8/2": PLAN_HEAD,
+  "8/3": PLAN_HEAD,
+  "8/4": PLAN_HEAD,
   "1/0": {
     title: (
       <>
@@ -66,25 +113,11 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
   },
-  "3/2": {
-    title: (
-      <>
-        Survey &amp;{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Construction Estimation</span>
-      </>
-    ),
-    titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
-  },
-  "3/3": {
-    title: (
-      <>
-        Demand Notice{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Generation</span>
-      </>
-    ),
-    titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
-  },
-  "3/4": {
+  "3/2": FIELD_DEMAND_HEAD,
+  "3/3": FIELD_DEMAND_HEAD,
+  "3/4": FIELD_DEMAND_HEAD,
+  "3/5": FIELD_DEMAND_HEAD,
+  "3/6": {
     title: (
       <>
         Offline Field{" "}
@@ -158,6 +191,8 @@ const TITLE_HIGHLIGHT: Record<string, string> = {
   gis: "Map",
   leak: "Closure",
   core: "Management Platform",
+  arch: "Technology & Security",
+  plan: "Milestones",
 };
 
 function scenePoster(id: string, title: string) {
@@ -214,7 +249,7 @@ export default function App() {
         else document.exitFullscreen().catch(() => {});
       }}
     >
-      {p.slide !== 0 && !(p.scene.id === "core" && p.beat === p.scene.beats - 1) && (
+      {p.slide !== 0 && p.scene.id !== "thanks" && (
       <header
         className="relative isolate z-20 flex h-14 shrink-0 items-center gap-2 overflow-hidden bg-linear-to-b from-navy-deep to-navy px-2.5 text-white sm:h-[clamp(4.75rem,min(6vw,10vh),6.25rem)] sm:gap-4 sm:px-4 [&_button]:drop-shadow-[0_1px_3px_rgba(4,12,40,0.85)]"
         onClick={(e) => e.stopPropagation()}
@@ -254,7 +289,7 @@ export default function App() {
           <div className={cn(poster.titleClass, "font-display leading-none font-black uppercase")}>{poster.title}</div>
         </div>
         <div className="rounded-full bg-navy-deep/60 px-2 py-1 font-display text-[10px] tracking-widest ring-1 ring-white/15 backdrop-blur-sm sm:px-3 sm:text-xs">
-          {p.slide === 0 ? "Opening" : `${String(p.slide).padStart(2, "0")} / ${String(SCENES.length - 1).padStart(2, "0")}`}
+          {p.slide === 0 ? "Opening" : `${String(p.slide).padStart(2, "0")} / ${String(SCENES.length - 2).padStart(2, "0")}`}
         </div>
         <Button
           variant="ghost"
@@ -323,6 +358,9 @@ export default function App() {
             {p.slide === 4 && <GisScene beat={p.beat} onBeat={(n) => p.goTo(4, n)} />}
             {p.slide === 5 && <LeakScene beat={p.beat} onBeat={(n) => p.goTo(5, n)} />}
             {p.slide === 6 && <CoreScene beat={p.beat} onBeat={(n) => p.goTo(6, n)} />}
+            {p.slide === 7 && <ArchitectureScene beat={p.beat} />}
+            {p.slide === 8 && <MilestonesScene beat={p.beat} />}
+            {p.slide === 9 && <ThanksScene />}
           </SlideViewport>
         )}
       </main>

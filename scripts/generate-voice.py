@@ -30,7 +30,7 @@ SCENES: list[tuple[str, int]] = [
     ("title", 1),
     ("problem", 6),
     ("assess", 6),
-    ("gps", 5),
+    ("gps", 7),
     ("gis", 6),
     ("leak", 6),
     ("command", 9),

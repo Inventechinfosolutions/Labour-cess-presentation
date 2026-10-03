@@ -283,15 +283,78 @@ function KarnatakaOutline({ reduce }: { reduce: boolean }) {
           <stop offset="0" stopColor="#fff" stopOpacity="0.75" />
           <stop offset="0.5" stopColor="#fff" stopOpacity="0" />
         </radialGradient>
+        <mask id="splash-ka-outside" maskUnits="userSpaceOnUse" x="-20" y="-20" width="340" height="513">
+          <rect x="-20" y="-20" width="340" height="513" fill="#fff" />
+          {KARNATAKA_DISTRICTS.map((d) => (
+            <path key={d.name} d={d.d} fill="#000" />
+          ))}
+        </mask>
+        <mask id="splash-ka-inside" maskUnits="userSpaceOnUse" x="-20" y="-20" width="340" height="513">
+          {KARNATAKA_DISTRICTS.map((d) => (
+            <path key={d.name} d={d.d} fill="#fff" />
+          ))}
+        </mask>
+        <radialGradient id="splash-ka-land" cx="0.75" cy="0.8" r="0.9">
+          <stop offset="0" stopColor="#f0c14a" stopOpacity="0.16" />
+          <stop offset="0.55" stopColor="#7ec8ff" stopOpacity="0.07" />
+          <stop offset="1" stopColor="#7ec8ff" stopOpacity="0.03" />
+        </radialGradient>
+        <filter id="splash-ka-glow" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="1.4" />
+        </filter>
       </defs>
-      <g opacity="0.25">
+      {KARNATAKA_DISTRICTS.map((d, i) => (
+        <motion.path
+          key={d.name}
+          d={d.d}
+          fill="url(#splash-ka-land)"
+          stroke="none"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 + (i % 10) * 0.08, duration: 2.2, ease: "easeInOut" }}
+        />
+      ))}
+      <g mask="url(#splash-ka-inside)">
+        <g filter="url(#splash-ka-glow)" opacity="0.45">
+          {KARNATAKA_DISTRICTS.map((d, i) => (
+            <motion.path
+              key={`glow-${d.name}`}
+              d={d.d}
+              fill="none"
+              stroke="#f0c14a"
+              strokeWidth="1.6"
+              strokeLinejoin="round"
+              initial={reduce ? false : { pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ delay: 0.6 + (i % 10) * 0.08, duration: 2.2, ease: "easeInOut" }}
+            />
+          ))}
+        </g>
+        <g opacity="0.9">
+          {KARNATAKA_DISTRICTS.map((d, i) => (
+            <motion.path
+              key={`inner-${d.name}`}
+              d={d.d}
+              fill="none"
+              stroke="#ffd36b"
+              strokeWidth="0.55"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              initial={reduce ? false : { pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ delay: 0.6 + (i % 10) * 0.08, duration: 2.2, ease: "easeInOut" }}
+            />
+          ))}
+        </g>
+      </g>
+      <g mask="url(#splash-ka-outside)" opacity="0.9">
         {KARNATAKA_DISTRICTS.map((d, i) => (
           <motion.path
-            key={d.name}
+            key={`outer-${d.name}`}
             d={d.d}
-            fill="rgba(126,200,255,0.05)"
-            stroke="url(#splash-ka)"
-            strokeWidth="0.7"
+            fill="none"
+            stroke="#e5484d"
+            strokeWidth="3.2"
             strokeLinejoin="round"
             initial={reduce ? false : { pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
