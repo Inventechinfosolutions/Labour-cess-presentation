@@ -23,6 +23,7 @@ import zoning from "@/assets/folder-zoning-solo.png";
 import delay30 from "@/assets/impact-3d-delay.jpg";
 import alertOfficer from "@/assets/impact-3d-visibility.jpg";
 import demand from "@/assets/issue-3d-demand.jpg";
+import oldDues from "@/assets/issue-3d-olddues.jpg";
 import track from "@/assets/issue-3d-track.jpg";
 import unifiedView from "@/assets/issue-3d-visible.jpg";
 import access from "@/assets/mw-cap-access.jpg";
@@ -73,6 +74,7 @@ export const CORE_ART: Record<string, string> = {
   Collection: wallet,
   "Remittance (30 days)": delay30,
   "Interest on delay": clockRed,
+  "Old dues brought forward": oldDues,
   Reconciliation: recon,
   "Accounts / DCB": sheet,
 

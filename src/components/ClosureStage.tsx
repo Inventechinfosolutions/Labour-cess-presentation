@@ -13,12 +13,15 @@ import {
   CheckCircle,
   ClipboardText,
   Clock,
+  Coins,
   DeviceMobile,
   EnvelopeSimple,
   Eye,
   FileText,
+  Hourglass,
   House,
   MagnifyingGlass,
+  PaperPlaneTilt,
   PencilSimple,
   SealCheck,
   ShieldCheck,
@@ -55,6 +58,7 @@ type Step = {
   Icon: CessIcon;
   img: string;
   screen: "right" | "centre";
+  old: { sub: string; text: string };
 };
 
 const STEPS: Step[] = [
@@ -68,6 +72,7 @@ const STEPS: Step[] = [
     Icon: WarningCircle,
     img: imgDetect,
     screen: "right",
+    old: { sub: "Old dues found", text: "Old dues from earlier years are brought forward." },
   },
   {
     n: "2",
@@ -79,6 +84,7 @@ const STEPS: Step[] = [
     Icon: Bell,
     img: imgOffice,
     screen: "centre",
+    old: { sub: "Statement sent", text: "A year-wise dues statement goes to the agency." },
   },
   {
     n: "3",
@@ -90,6 +96,7 @@ const STEPS: Step[] = [
     Icon: UsersThree,
     img: imgAssign,
     screen: "right",
+    old: { sub: "Route to the officer", text: "The case goes to the officer for that territory and role." },
   },
   {
     n: "4",
@@ -101,6 +108,7 @@ const STEPS: Step[] = [
     Icon: ClipboardText,
     img: imgResolve,
     screen: "right",
+    old: { sub: "Confirm or dispute", text: "The agency confirms or disputes each year. Replies are saved." },
   },
   {
     n: "5",
@@ -112,6 +120,7 @@ const STEPS: Step[] = [
     Icon: ShieldCheck,
     img: imgVerify,
     screen: "right",
+    old: { sub: "Check and match", text: "Payments are verified. They are matched with Board records." },
   },
   {
     n: "6",
@@ -123,6 +132,7 @@ const STEPS: Step[] = [
     Icon: CheckCircle,
     img: imgOffice2,
     screen: "centre",
+    old: { sub: "Dues closed", text: "Paid years are closed. Full history stays on file." },
   },
 ];
 
@@ -138,6 +148,7 @@ const ROWS: { project: string; agency: string; type: string; amount: string; sta
   { project: "XYZ Housing Project", agency: "BBMP", type: "Amount Mismatch", amount: "₹ 12,30,000", status: "Open" },
   { project: "Metro Extension", agency: "BMRCL", type: "Unmatched Record", amount: "₹ 8,75,000", status: "Open" },
   { project: "Tech Park Phase 3", agency: "KIADB", type: "Assessment Not Filed", amount: "₹ 15,60,000", status: "In Review" },
+  { project: "Skyline Offices", agency: "BBMP", type: "Interior Cost Not Declared", amount: "₹ 3,75,000", status: "Open" },
 ];
 
 const NAV: { label: string; Icon: CessIcon; badge?: string }[] = [
@@ -167,23 +178,24 @@ const ACTIONS: { label: string; Icon: CessIcon; primary?: boolean }[] = [
   { label: "Add Remarks", Icon: PencilSimple },
 ];
 
-export function ClosureStage() {
+/** `old` switches the top row to old dues brought forward from earlier records. */
+export function ClosureStage({ old = false }: { old?: boolean }) {
   const reduce = !!useReducedMotion();
   const active = useCycle(reduce);
 
   return (
     <div className="relative grid h-full min-h-0 grid-rows-[minmax(0,40fr)_minmax(0,50fr)_auto] gap-3.5 text-[#23395f]">
-      <div className="grid min-h-0 grid-cols-[minmax(0,1.32fr)_34px_minmax(0,0.92fr)] items-stretch">
-        <DashboardCard reduce={reduce} />
+      <div key={old ? "old" : "now"} className="grid min-h-0 grid-cols-[minmax(0,1.32fr)_34px_minmax(0,0.92fr)] items-stretch">
+        {old ? <OldDuesCard reduce={reduce} /> : <DashboardCard reduce={reduce} />}
         <FlowArrow reduce={reduce} />
-        <DetailsCard reduce={reduce} />
+        {old ? <AgencyDuesCard reduce={reduce} /> : <DetailsCard reduce={reduce} />}
       </div>
 
       <div className="relative min-h-0">
         <DownElbow reduce={reduce} />
         <div className="grid h-full min-h-0 grid-cols-6 gap-3.5">
           {STEPS.map((s, i) => (
-            <StepCard key={s.n} step={s} index={i} active={active === i} reduce={reduce} />
+            <StepCard key={s.n} step={s} index={i} active={active === i} reduce={reduce} old={old} />
           ))}
         </div>
       </div>
@@ -257,21 +269,29 @@ function Card({ children, className, delay, reduce, from = "left" }: { children:
 function DashboardCard({ reduce }: { reduce: boolean }) {
   return (
     <Card reduce={reduce} delay={0} className="grid grid-cols-[136px_minmax(0,1fr)]">
+      <Sidebar items={NAV} active="Dashboard" reduce={reduce} />
+      <DashboardMain reduce={reduce} />
+    </Card>
+  );
+}
+
+function Sidebar({ items, active, reduce }: { items: typeof NAV; active: string; reduce: boolean }) {
+  return (
       <aside className="flex min-h-0 flex-col bg-[linear-gradient(180deg,#0a2a63_0%,#06204d_60%,#041a40_100%)] px-2 py-2.5 text-white">
         <span className="mb-1.5 flex items-center gap-1 px-1 text-[8.5px] font-extrabold tracking-[0.08em] whitespace-nowrap text-[#8fb4ec] uppercase">
           <CaretRight weight="bold" className="size-3 rotate-180" />
           Central Platform
         </span>
         <nav className="flex flex-col gap-[3px]">
-          {NAV.map((n, i) => (
+          {items.map((n) => (
             <span
               key={n.label}
               className={cn(
                 "flex items-center gap-2 rounded-lg px-2 py-[5px] text-[10px] font-semibold",
-                i === 0 ? "bg-[linear-gradient(90deg,#2f7df0,#1f5fd6)] shadow-[0_5px_14px_rgba(31,95,214,0.45)]" : "text-[#c9dafa]",
+                n.label === active ? "bg-[linear-gradient(90deg,#2f7df0,#1f5fd6)] shadow-[0_5px_14px_rgba(31,95,214,0.45)]" : "text-[#c9dafa]",
               )}
             >
-              <n.Icon weight={i === 0 ? "fill" : "regular"} className="size-3.5 shrink-0" />
+              <n.Icon weight={n.label === active ? "fill" : "regular"} className="size-3.5 shrink-0" />
               <span className="truncate">{n.label}</span>
               {n.badge ? (
                 <motion.span
@@ -286,7 +306,11 @@ function DashboardCard({ reduce }: { reduce: boolean }) {
           ))}
         </nav>
       </aside>
+  );
+}
 
+function DashboardMain({ reduce }: { reduce: boolean }) {
+  return (
       <div className="flex min-h-0 flex-col gap-2 p-2.5">
         <header className="flex items-center justify-between gap-2">
           <h2 className="text-[13px] font-black" style={{ color: INK }}>
@@ -393,7 +417,6 @@ function DashboardCard({ reduce }: { reduce: boolean }) {
           </div>
         </div>
       </div>
-    </Card>
   );
 }
 
@@ -523,6 +546,268 @@ function DetailsCard({ reduce }: { reduce: boolean }) {
   );
 }
 
+/* ------------------------------------------------------------------ old dues brought forward */
+
+const YEARS = ["2019–20", "2020–21", "2021–22", "2022–23", "2023–24", "2024–25"];
+
+/** Older years carry a deeper tint. */
+const AGE_TINT = ["#f4a9ad", "#f7bcbf", "#f9cdb8", "#fbdcb9", "#fde8c4", "#fef2d9"];
+
+/** Unremitted CESS per agency and year, ₹ lakh (illustrative). */
+const OLD_DUES: { agency: string; dues: number[]; on?: boolean }[] = [
+  { agency: "BDA", dues: [42, 58, 0, 76, 64, 102], on: true },
+  { agency: "BBMP", dues: [85, 0, 120, 96, 0, 140] },
+  { agency: "PWD", dues: [0, 34, 48, 0, 72, 66] },
+  { agency: "KHB", dues: [28, 22, 0, 18, 30, 0] },
+  { agency: "KIADB", dues: [0, 0, 64, 88, 110, 95] },
+  { agency: "BMRCL", dues: [0, 46, 0, 0, 58, 124] },
+];
+
+const OLD_KPIS: { title: string; value: string; Icon: CessIcon; c: string; hot?: boolean }[] = [
+  { title: "Old Dues", value: "₹ 16.86 Cr", Icon: Coins, c: RED, hot: true },
+  { title: "Agencies", value: "6", Icon: Buildings, c: "#2f7df0" },
+  { title: "Oldest Year", value: "2019–20", Icon: CalendarBlank, c: "#8b5cf6" },
+  { title: "Interest (indicative)", value: "₹ 2.9 Cr", Icon: Hourglass, c: "#f59e0b" },
+];
+
+const OLD_NAV: typeof NAV = [...NAV.slice(0, 5), { label: "Old Dues", Icon: Coins }, ...NAV.slice(5)];
+
+const lakh = (n: number) => n.toLocaleString("en-IN");
+
+function OldDuesCard({ reduce }: { reduce: boolean }) {
+  const colTotals = YEARS.map((_, y) => OLD_DUES.reduce((t, r) => t + r.dues[y], 0));
+  const grand = colTotals.reduce((a, b) => a + b, 0);
+  const cols = "grid-cols-[0.9fr_repeat(6,minmax(0,1fr))_0.95fr]";
+
+  return (
+    <Card reduce={reduce} delay={0} className="grid grid-cols-[136px_minmax(0,1fr)]">
+      <Sidebar items={OLD_NAV} active="Old Dues" reduce={reduce} />
+      <div className="flex min-h-0 flex-col gap-2 p-2.5">
+        <header className="flex items-center justify-between gap-2">
+          <h2 className="text-[13px] font-black" style={{ color: INK }}>
+            Old Dues Brought Forward
+          </h2>
+          <span className="inline-flex items-center gap-1 rounded-full border border-dashed border-[#e0a94a] bg-[#fff8e8] px-2 py-0.5 text-[8.5px] font-black tracking-[0.04em] text-[#8a5a12]">
+            <FileText weight="bold" className="size-3" />
+            From earlier records · Illustrative
+          </span>
+        </header>
+
+        <div className="grid grid-cols-4 gap-2">
+          {OLD_KPIS.map((k, i) => (
+            <motion.div
+              key={k.title}
+              className="flex items-center gap-2 rounded-xl px-2 py-1.5"
+              style={{ background: k.hot ? "linear-gradient(180deg,#fff5f5,#ffe6e7)" : "#fff", boxShadow: slab3D(k.c) }}
+              initial={reduce ? false : { opacity: 0, y: 10, rotateX: -25 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease }}
+            >
+              <Orb3D c={k.c} Icon={k.Icon} className="size-7" iconClassName="size-3.5" />
+              <span className="min-w-0 leading-tight">
+                <span className="block truncate text-[8.5px] font-semibold text-[#64748b]">{k.title}</span>
+                <b className="block truncate text-[14px] font-black" style={{ color: k.hot ? RED : INK }}>
+                  {k.value.includes("–") ? k.value : <CountText value={k.value} reduce={reduce} delay={0.3 + i * 0.08} />}
+                </b>
+              </span>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl bg-white/90 ring-1 ring-[#e2ecf7]">
+          <div className={cn("grid items-center bg-[#f1f7ff] px-2 py-1 text-[8.5px] font-black text-[#183b70]", cols)}>
+            <span>Agency</span>
+            {YEARS.map((y) => (
+              <span key={y} className="text-center">
+                {y}
+              </span>
+            ))}
+            <span className="text-right">Total</span>
+          </div>
+          <div className="grid min-h-0 flex-1" style={{ gridTemplateRows: `repeat(${OLD_DUES.length + 1}, minmax(0, 1fr))` }}>
+            {OLD_DUES.map((r, ri) => {
+              const total = r.dues.reduce((a, b) => a + b, 0);
+              return (
+                <div key={r.agency} className={cn("relative grid items-center gap-[3px] border-t border-[#eef2f8] px-2 text-[9px]", cols, r.on && "bg-[#fff8f3]")}>
+                  {r.on ? (
+                    <motion.span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-[#f3a3a6]"
+                      initial={reduce ? false : { opacity: 0 }}
+                      animate={reduce ? { opacity: 1 } : { opacity: [0, 1, 0.4, 1] }}
+                      transition={{ delay: 1.2, duration: 1.2 }}
+                    />
+                  ) : null}
+                  <b className="truncate font-bold text-[#17366b]">{r.agency}</b>
+                  {r.dues.map((d, y) => (
+                    <motion.span
+                      key={y}
+                      className={cn("grid h-[78%] place-items-center rounded-[5px] text-[8.5px] font-black", d ? "text-[#5c1d12]" : "bg-[#eaf7ef] text-[#16a34a]")}
+                      style={d ? { background: AGE_TINT[y] } : undefined}
+                      initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.35 + y * 0.12 + ri * 0.03, ease }}
+                    >
+                      {d ? lakh(d) : "Nil"}
+                    </motion.span>
+                  ))}
+                  <b className="relative text-right font-black" style={{ color: r.on ? RED : INK }}>
+                    <CountText value={lakh(total)} reduce={reduce} delay={1.05 + ri * 0.04} />
+                    {r.on ? <Pointer reduce={reduce} /> : null}
+                  </b>
+                </div>
+              );
+            })}
+            <div className={cn("grid items-center gap-[3px] border-t-2 border-[#dbe7f5] bg-[#f6f9fe] px-2 text-[9px]", cols)}>
+              <b className="font-black text-[#17366b]">Total</b>
+              {colTotals.map((t, y) => (
+                <b key={YEARS[y]} className="text-center font-black text-[#17366b]">
+                  {lakh(t)}
+                </b>
+              ))}
+              <b className="text-right font-black" style={{ color: RED }}>
+                <CountText value={lakh(grand)} reduce={reduce} delay={1.2} />
+              </b>
+            </div>
+          </div>
+          <div className="flex items-center justify-between border-t border-[#eef2f8] px-2 py-[3px] text-[8px] font-semibold text-[#64748b]">
+            <span>₹ in lakh · Not remitted</span>
+            <span className="flex items-center gap-1.5">
+              Older
+              {AGE_TINT.map((c) => (
+                <span key={c} className="size-2 rounded-[2px]" style={{ background: c }} />
+              ))}
+              Newer
+            </span>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+type YearStatus = "Confirmed" | "Disputed" | "Awaiting" | "Nil";
+
+const STATUS_TONE: Record<YearStatus, string> = {
+  Confirmed: "bg-[#dcfce7] text-[#15803d]",
+  Disputed: "bg-[#fee2e2] text-[#dc2626]",
+  Awaiting: "bg-[#ffedd5] text-[#c2410c]",
+  Nil: "bg-[#eef2f8] text-[#64748b]",
+};
+
+const BDA_YEARS: { year: string; due: number; status: YearStatus }[] = [
+  { year: "2019–20", due: 42, status: "Confirmed" },
+  { year: "2020–21", due: 58, status: "Confirmed" },
+  { year: "2021–22", due: 0, status: "Nil" },
+  { year: "2022–23", due: 76, status: "Disputed" },
+  { year: "2023–24", due: 64, status: "Awaiting" },
+  { year: "2024–25", due: 102, status: "Awaiting" },
+];
+
+const BDA_SUMMARY: { k: string; v: string; hot?: boolean }[] = [
+  { k: "Principal", v: "₹ 3.42 Cr", hot: true },
+  { k: "Interest (indicative)", v: "₹ 0.61 Cr" },
+  { k: "Statement sent", v: "05 Oct 2026" },
+  { k: "Reply due", v: "04 Nov 2026" },
+];
+
+const OLD_ACTIONS: { label: string; Icon: CessIcon; primary?: boolean }[] = [
+  { label: "Send Statement", Icon: PaperPlaneTilt, primary: true },
+  { label: "View Old Records", Icon: FileText },
+  { label: "Record Reply", Icon: PencilSimple },
+  { label: "View History", Icon: Clock },
+];
+
+function AgencyDuesCard({ reduce }: { reduce: boolean }) {
+  const max = Math.max(...BDA_YEARS.map((y) => y.due));
+  return (
+    <Card reduce={reduce} delay={1.65} from="right" className="flex flex-col">
+      <header className="relative flex shrink-0 items-center justify-between overflow-hidden bg-[linear-gradient(180deg,#1a4bb0_0%,#123a8f_45%,#0b2462_100%)] px-3 py-2 text-white">
+        <span className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0))]" />
+        <b className="relative text-[13px] font-black">Agency Dues Statement</b>
+        <span className="relative font-mono text-[9px] text-[#a9c4f0]">OD-BDA-01</span>
+      </header>
+      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1.25fr)_minmax(0,0.95fr)_minmax(0,0.8fr)] gap-2.5 p-2.5">
+        <div className="flex min-h-0 flex-col">
+          <b className="text-[12px] leading-tight font-black" style={{ color: INK }}>
+            BDA · Year-wise dues
+          </b>
+          <ul className="mt-1.5 flex min-h-0 flex-1 flex-col justify-between">
+            {BDA_YEARS.map((y, i) => (
+              <motion.li
+                key={y.year}
+                className="grid grid-cols-[44px_minmax(0,1fr)_34px_58px] items-center gap-1.5 text-[9px]"
+                initial={reduce ? false : { opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.9 + i * 0.06, duration: 0.3 }}
+              >
+                <span className="font-semibold text-[#64748b]">{y.year}</span>
+                <span className="h-1.5 overflow-hidden rounded-full bg-[#eef2f8]">
+                  <motion.span
+                    className="block h-full origin-left rounded-full"
+                    style={{ width: `${(y.due / max) * 100}%`, background: `linear-gradient(90deg, ${RED}, #f59e0b)` }}
+                    initial={reduce ? false : { scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: 2.1 + i * 0.06, duration: 0.5, ease }}
+                  />
+                </span>
+                <b className="text-right font-black text-[#17366b]">{y.due ? `${y.due} L` : "—"}</b>
+                <span className={cn("rounded-full px-1.5 py-[1px] text-center text-[7.5px] font-black", STATUS_TONE[y.status])}>{y.status}</span>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex min-h-0 flex-col justify-center border-l border-[#eef2f8] pl-2.5">
+          <motion.span
+            className="inline-flex w-fit items-center gap-1 rounded-md bg-[#fff7ed] px-1.5 py-[3px] text-[9px] font-black text-[#c2410c] ring-1 ring-[#fed7aa]"
+            animate={reduce ? undefined : { scale: [1, 1.05, 1] }}
+            transition={{ duration: 1.8, repeat: Infinity, delay: 2.4 }}
+          >
+            <Hourglass weight="fill" className="size-3.5" />
+            Awaiting confirmation
+          </motion.span>
+          <dl className="mt-2.5 flex flex-col gap-2.5">
+            {BDA_SUMMARY.map((d, i) => (
+              <motion.div
+                key={d.k}
+                className="text-[9px] leading-tight"
+                initial={reduce ? false : { opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 2 + i * 0.06, duration: 0.3 }}
+              >
+                <dt className="font-semibold text-[#64748b]">{d.k}</dt>
+                <dd className={cn("font-black", d.hot ? "text-[12px] text-[#dc2626]" : "text-[#17366b]")}>{d.v}</dd>
+              </motion.div>
+            ))}
+          </dl>
+          <p className="mt-2.5 rounded-md bg-[#fff8e8] px-1.5 py-1 text-[8px] leading-tight font-semibold text-[#8a5a12]">Interest as per rules. Subject to Board decision.</p>
+        </div>
+
+        <div className="flex min-h-0 flex-col justify-center gap-1.5 border-l border-[#eef2f8] pl-2.5">
+          {OLD_ACTIONS.map((a, i) => (
+            <motion.span
+              key={a.label}
+              className={cn(
+                "relative flex items-center gap-1.5 overflow-hidden rounded-lg px-2 py-[7px] text-[9.5px] font-black",
+                a.primary ? "text-white" : "bg-white text-[#17366b] ring-1 ring-[#dbe7f5]",
+              )}
+              style={a.primary ? { ...tileStyle("#2f7df0") } : undefined}
+              initial={reduce ? false : { opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.1 + i * 0.06, duration: 0.3 }}
+            >
+              {a.primary ? <span className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-[linear-gradient(180deg,rgba(255,255,255,0.3),transparent)]" /> : null}
+              <a.Icon weight={a.primary ? "fill" : "bold"} className="relative size-3.5 shrink-0" />
+              <span className="relative truncate">{a.label}</span>
+            </motion.span>
+          ))}
+        </div>
+      </div>
+    </Card>
+  );
+}
+
 function DownElbow({ reduce }: { reduce: boolean }) {
   return (
     <svg aria-hidden className="pointer-events-none absolute -top-3.5 right-[27%] z-10 h-3.5 w-4 overflow-visible" viewBox="0 0 16 14">
@@ -553,8 +838,9 @@ function DownElbow({ reduce }: { reduce: boolean }) {
 
 /* ------------------------------------------------------------------ lifecycle */
 
-function StepCard({ step, index, active, reduce }: { step: Step; index: number; active: boolean; reduce: boolean }) {
+function StepCard({ step, index, active, reduce, old }: { step: Step; index: number; active: boolean; reduce: boolean; old: boolean }) {
   const delay = STEPS_AT + index * STEP_GAP;
+  const words = old ? step.old : step;
   return (
     <motion.div
       className="relative min-h-0"
@@ -580,17 +866,17 @@ function StepCard({ step, index, active, reduce }: { step: Step; index: number; 
             <b className="block text-[13px] font-black tracking-wide" style={{ color: step.c }}>
               {step.title}
             </b>
-            <span className="block truncate text-[9px] font-bold text-[#17366b]">{step.sub}</span>
+            <span className="block truncate text-[9px] font-bold text-[#17366b]">{words.sub}</span>
           </span>
         </header>
 
         <div className="relative min-h-0 flex-1 overflow-hidden">
           <img src={step.img} alt="" aria-hidden draggable={false} className="absolute inset-0 h-full w-full object-cover object-[20%_center]" />
           <span className="absolute inset-0 bg-[linear-gradient(0deg,rgba(11,36,98,0.18),transparent_45%)]" />
-          <ScreenMock step={step} index={index} reduce={reduce} delay={delay + 0.25} />
+          <ScreenMock step={step} index={index} reduce={reduce} delay={delay + 0.25} old={old} />
         </div>
 
-        <p className="shrink-0 px-2 py-1.5 text-[10px] leading-snug font-semibold text-[#17366b]">{step.text}</p>
+        <p className="shrink-0 px-2 py-1.5 text-[10px] leading-snug font-semibold text-[#17366b]">{words.text}</p>
       </div>
 
       {index < STEPS.length - 1 ? (
@@ -616,7 +902,7 @@ function orbStyleLite(c: string) {
   };
 }
 
-function ScreenMock({ step, index, reduce, delay }: { step: Step; index: number; reduce: boolean; delay: number }) {
+function ScreenMock({ step, index, reduce, delay, old }: { step: Step; index: number; reduce: boolean; delay: number; old: boolean }) {
   const centre = step.screen === "centre";
   return (
     <motion.div
@@ -629,33 +915,33 @@ function ScreenMock({ step, index, reduce, delay }: { step: Step; index: number;
       <span aria-hidden className="absolute top-[calc(100%+8px)] left-1/2 h-[3px] w-[38%] -translate-x-1/2 rounded-full bg-[#334155] shadow-[0_3px_6px_rgba(0,0,0,0.35)]" />
       <div className="aspect-[4/3] overflow-hidden rounded-md bg-[#0f172a] p-[3px] shadow-[0_12px_22px_-6px_rgba(0,0,0,0.6)]">
       <div className="flex h-full flex-col overflow-hidden rounded-[4px] bg-white px-1.5 py-1 text-[7px] leading-tight text-[#17366b]">
-        {index === 0 && <DetectScreen />}
-        {index === 1 && <NotifyScreen reduce={reduce} delay={delay} />}
-        {index === 2 && <AssignScreen />}
-        {index === 3 && <ResolveScreen reduce={reduce} delay={delay} />}
-        {index === 4 && <VerifyScreen />}
-        {index === 5 && <CloseScreen reduce={reduce} delay={delay} />}
+        {index === 0 && <DetectScreen old={old} />}
+        {index === 1 && <NotifyScreen reduce={reduce} delay={delay} old={old} />}
+        {index === 2 && <AssignScreen old={old} />}
+        {index === 3 && <ResolveScreen reduce={reduce} delay={delay} old={old} />}
+        {index === 4 && <VerifyScreen old={old} />}
+        {index === 5 && <CloseScreen reduce={reduce} delay={delay} old={old} />}
       </div>
       </div>
     </motion.div>
   );
 }
 
-function DetectScreen() {
+function DetectScreen({ old }: { old: boolean }) {
   return (
     <div className="flex h-full flex-col justify-center gap-[3px]">
       <span className="flex items-center gap-1">
         <WarningCircle weight="fill" className="size-3.5 shrink-0 text-[#dc2626]" />
-        <b className="text-[8px] font-black text-[#dc2626]">Remittance Overdue</b>
+        <b className="text-[8px] font-black text-[#dc2626]">{old ? "Old Dues Found" : "Remittance Overdue"}</b>
       </span>
-      <span className="font-semibold">ABC Commercial Complex</span>
-      <b className="text-[9.5px] font-black">₹ 24,50,000</b>
-      <span className="font-semibold text-[#64748b]">Due: 10 Aug 2025</span>
+      <span className="font-semibold">{old ? "BDA · 2019–20 to 2024–25" : "ABC Commercial Complex"}</span>
+      <b className="text-[9.5px] font-black">{old ? "₹ 3,42,00,000" : "₹ 24,50,000"}</b>
+      <span className="font-semibold text-[#64748b]">{old ? "From earlier records" : "Due: 10 Aug 2025"}</span>
     </div>
   );
 }
 
-function NotifyScreen({ reduce, delay }: { reduce: boolean; delay: number }) {
+function NotifyScreen({ reduce, delay, old }: { reduce: boolean; delay: number; old: boolean }) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-[3px] text-center">
       <span className="relative">
@@ -670,9 +956,9 @@ function NotifyScreen({ reduce, delay }: { reduce: boolean; delay: number }) {
         </motion.span>
       </span>
       <b className="text-[8.5px] font-black" style={{ color: INK }}>
-        Alert Sent
+        {old ? "Statement Sent" : "Alert Sent"}
       </b>
-      <span className="font-semibold">Remittance overdue for ABC Commercial Complex.</span>
+      <span className="font-semibold">{old ? "Year-wise dues statement sent to BDA." : "Remittance overdue for ABC Commercial Complex."}</span>
       <span className="mt-0.5 flex gap-2 text-[6.5px] font-bold text-[#2f7df0]">
         {[
           { l: "Email", I: EnvelopeSimple },
@@ -689,12 +975,12 @@ function NotifyScreen({ reduce, delay }: { reduce: boolean; delay: number }) {
   );
 }
 
-function AssignScreen() {
+function AssignScreen({ old }: { old: boolean }) {
   return (
     <div className="flex h-full flex-col gap-[2px]">
       <b className="text-[7.5px] font-black text-[#2f7df0]">Assign Exception</b>
       {[
-        ["Project", "ABC Commercial"],
+        old ? ["Case", "Old dues"] : ["Project", "ABC Commercial"],
         ["Agency", "BDA"],
         ["Territory", "Bengaluru Urban"],
       ].map(([k, v]) => (
@@ -712,8 +998,10 @@ function AssignScreen() {
   );
 }
 
-function ResolveScreen({ reduce, delay }: { reduce: boolean; delay: number }) {
-  const items = ["Agency contacted", "Details requested", "Reply received", "Papers uploaded"];
+function ResolveScreen({ reduce, delay, old }: { reduce: boolean; delay: number; old: boolean }) {
+  const items = old
+    ? ["Statement sent", "Agency replied", "Years confirmed", "Papers uploaded"]
+    : ["Agency contacted", "Details requested", "Reply received", "Papers uploaded"];
   return (
     <div className="flex h-full flex-col gap-[2px]">
       <b className="text-[7.5px] font-black text-[#8b5cf6]">Action in Progress</b>
@@ -735,19 +1023,26 @@ function ResolveScreen({ reduce, delay }: { reduce: boolean; delay: number }) {
   );
 }
 
-function VerifyScreen() {
+function VerifyScreen({ old }: { old: boolean }) {
   return (
     <div className="flex h-full flex-col gap-[2px]">
-      <b className="text-[7.5px] font-black text-[#0e7490]">Verify Remittance</b>
+      <b className="text-[7.5px] font-black text-[#0e7490]">{old ? "Verify Payment" : "Verify Remittance"}</b>
       <span className="flex items-center gap-1 font-black text-[#16a34a]">
         <CheckCircle weight="fill" className="size-3" />
         Payment Received
       </span>
-      {[
-        ["Amount", "₹ 24,50,000"],
-        ["Date", "20 Aug 2025"],
-        ["Ref.", "RTGS/098765"],
-      ].map(([k, v]) => (
+      {(old
+        ? [
+            ["Amount", "₹ 1,00,00,000"],
+            ["Date", "02 Dec 2026"],
+            ["Ref.", "RTGS/120456"],
+          ]
+        : [
+            ["Amount", "₹ 24,50,000"],
+            ["Date", "20 Aug 2025"],
+            ["Ref.", "RTGS/098765"],
+          ]
+      ).map(([k, v]) => (
         <span key={k} className="grid grid-cols-[28px_1fr] gap-0.5">
           <span className="text-[#64748b]">{k}</span>
           <b className="truncate font-bold">{v}</b>
@@ -758,7 +1053,7 @@ function VerifyScreen() {
   );
 }
 
-function CloseScreen({ reduce, delay }: { reduce: boolean; delay: number }) {
+function CloseScreen({ reduce, delay, old }: { reduce: boolean; delay: number; old: boolean }) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-[3px] text-center">
       <motion.span
@@ -770,8 +1065,8 @@ function CloseScreen({ reduce, delay }: { reduce: boolean; delay: number }) {
       >
         <SealCheck weight="fill" className="size-4" />
       </motion.span>
-      <b className="text-[8.5px] font-black text-[#15803d]">Exception Closed</b>
-      <span className="font-semibold">ABC Commercial Complex. Remittance verified and closed.</span>
+      <b className="text-[8.5px] font-black text-[#15803d]">{old ? "Dues Closed" : "Exception Closed"}</b>
+      <span className="font-semibold">{old ? "BDA 2019–20 and 2020–21 dues verified and closed." : "ABC Commercial Complex. Remittance verified and closed."}</span>
     </div>
   );
 }

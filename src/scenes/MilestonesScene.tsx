@@ -56,7 +56,7 @@ const PHASES: Phase[] = [
   { name: "AMC Support", time: "2 years", Icon: ShieldCheck, color: "#0e8f9c", soft: "#e0f5f6", fr: 1.35 },
 ];
 
-type Module = { n: number; label: string; Icon: CessIcon; star?: boolean };
+type Module = { n: number; label: string; Icon: CessIcon; star?: boolean; note?: string };
 
 const MILESTONES: { n: number; days: string; from: ReactNode; color: string; art: string; modules: Module[] }[] = [
   {
@@ -95,7 +95,7 @@ const MILESTONES: { n: number; days: string; from: ReactNode; color: string; art
     modules: [
       { n: 10, label: "Appeals", Icon: Scales },
       { n: 11, label: "Smart Middleware", Icon: ArrowsSplit, star: true },
-      { n: 12, label: "Accounts", Icon: Wallet },
+      { n: 12, label: "Accounts", Icon: Wallet, note: "Old records and old dues moved in" },
       { n: 13, label: "Back-office GIS Analytics", Icon: MapPin },
       { n: 14, label: "Auto Alerts & Notification", Icon: Bell },
       { n: 15, label: "Reports & Decision Support", Icon: ChartBar },
@@ -497,6 +497,9 @@ function BuildLane({ reduce }: { reduce: boolean }) {
                   <span className={`min-w-0 flex-1 ${mod.star ? "font-extrabold" : "font-semibold"}`} style={{ color: mod.star ? m.color : "#17365f" }}>
                     <span className="mr-[0.3em]">{mod.n}</span>
                     {mod.label}
+                    {mod.note && (
+                      <span className="mt-[0.15em] block text-[length:var(--gs-12)] font-semibold text-[#5b7390]">{mod.note}</span>
+                    )}
                   </span>
                   {mod.star && (
                     <motion.span

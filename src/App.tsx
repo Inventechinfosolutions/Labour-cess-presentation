@@ -19,6 +19,7 @@ import { MilestonesScene } from "@/scenes/MilestonesScene";
 import { GisScene } from "@/scenes/GisScene";
 import { GpsScene } from "@/scenes/GpsScene";
 import { ProblemScene } from "@/scenes/ProblemScene";
+import { RisksScene } from "@/scenes/RisksScene";
 import { ThanksScene } from "@/scenes/ThanksScene";
 import { TitleScene } from "@/scenes/TitleScene";
 import { useEffect, type ReactNode } from "react";
@@ -59,6 +60,19 @@ const PLAN_HEAD = {
   titleClass: ARCH_HEAD.titleClass,
 };
 
+const RISK_HEAD = {
+  title: (
+    <>
+      Risks &amp; Their{" "}
+      <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Mitigation</span>
+      <span className="mt-[0.45em] block font-sans text-[0.42em] font-medium tracking-[0.06em] text-white/85 normal-case">
+        Each Risk&nbsp;&nbsp;·&nbsp;&nbsp;A Clear Plan&nbsp;&nbsp;·&nbsp;&nbsp;A Named Owner
+      </span>
+    </>
+  ),
+  titleClass: ARCH_HEAD.titleClass,
+};
+
 /** Poster-style header title per slide/beat (key: "slide/beat"). */
 const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
   "7/0": ARCH_HEAD,
@@ -69,6 +83,10 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
   "8/2": PLAN_HEAD,
   "8/3": PLAN_HEAD,
   "8/4": PLAN_HEAD,
+  "9/0": RISK_HEAD,
+  "9/1": RISK_HEAD,
+  "9/2": RISK_HEAD,
+  "9/3": RISK_HEAD,
   "1/0": {
     title: (
       <>
@@ -176,6 +194,15 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
       <>
         CESS Exception to{" "}
         <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Closure</span>
+      </>
+    ),
+    titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
+  },
+  "5/1": {
+    title: (
+      <>
+        Old CESS Dues{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Brought Forward</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
@@ -360,7 +387,8 @@ export default function App() {
             {p.slide === 6 && <CoreScene beat={p.beat} onBeat={(n) => p.goTo(6, n)} />}
             {p.slide === 7 && <ArchitectureScene beat={p.beat} />}
             {p.slide === 8 && <MilestonesScene beat={p.beat} />}
-            {p.slide === 9 && <ThanksScene />}
+            {p.slide === 9 && <RisksScene beat={p.beat} />}
+            {p.slide === 10 && <ThanksScene />}
           </SlideViewport>
         )}
       </main>

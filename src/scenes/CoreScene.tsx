@@ -86,7 +86,7 @@ const NODES: OrbitNode[] = [
     Icon: Wallet,
     angle: 0,
     metric: "capabilities",
-    items: ["Demand", "Collection", "Remittance (30 days)", "Interest on delay", "Reconciliation", "Accounts / DCB"],
+    items: ["Demand", "Collection", "Remittance (30 days)", "Interest on delay", "Old dues brought forward", "Reconciliation", "Accounts / DCB"],
   },
   {
     id: "comm",

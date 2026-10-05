@@ -14,6 +14,7 @@ import {
   EnvelopeSimple,
   Eye,
   FileText,
+  PaintRoller,
   PaperPlaneTilt,
   Ruler,
   ShareNetwork,
@@ -51,14 +52,16 @@ const SURVEY_ROWS: [string, string][] = [
 const MEASURE_ROWS: { label: string; value: string; Icon: CessIcon }[] = [
   { label: "Built-up Area (sq.ft)", value: "25,000", Icon: Buildings },
   { label: "Number of Floors", value: "6", Icon: Stack },
-  { label: "Plot Area (sq.ft)", value: "40,000", Icon: Ruler },
   { label: "Structure (sq.ft)", value: "25,000", Icon: Columns },
+  { label: "Interiors (sq.ft)", value: "10,000", Icon: PaintRoller },
 ];
 
-const ESTIMATE_ROWS: [string, string][] = [
-  ["Unit Rate (₹/sq.ft)", "8,000"],
-  ["Built-up Area (sq.ft)", "25,000"],
-  ["Applicable CESS Rate", "1%"],
+const INTERIOR_LEVELS = ["Basic", "Standard", "Premium"] as const;
+const INTERIOR_LEVEL: (typeof INTERIOR_LEVELS)[number] = "Standard";
+
+const VALUE_PARTS: { label: string; calc: string; value: string; share: number; c: string; flag?: string }[] = [
+  { label: "Structure", calc: "25,000 sq.ft × ₹ 6,500", value: "₹ 16.25 Cr", share: 81.25, c: "#1d66dc" },
+  { label: "Interiors", calc: "10,000 sq.ft × ₹ 3,750", value: "₹ 3.75 Cr", share: 18.75, c: "#e8860c", flag: "Not declared" },
 ];
 
 const NOTICE_ROWS: [string, string][] = [
@@ -86,13 +89,13 @@ const ACTIONS: { label: string; Icon: CessIcon }[] = [
 const CAPS: { title: string; body: string; Icon: CessIcon; grad: string }[] = [
   {
     title: "Site Survey",
-    body: "Record construction details, stage and measurements.",
+    body: "Record construction stage, measurements and interior level.",
     Icon: ClipboardText,
     grad: G.blue,
   },
   {
     title: "Estimate & CESS",
-    body: "Estimate construction value and apply the CESS rate.",
+    body: "Value structure and interiors. Then apply the CESS rate.",
     Icon: Calculator,
     grad: G.green,
   },
@@ -112,7 +115,7 @@ const CAPS: { title: string; body: string; Icon: CessIcon; grad: string }[] = [
 
 const OUTCOMES: { title: string; body: string; Icon: CessIcon; grad: string }[] = [
   { title: "Survey and measure", body: "Recorded on site", Icon: ClipboardText, grad: G.blue },
-  { title: "Estimate value and CESS", body: "Calculated on the phone", Icon: Calculator, grad: G.green },
+  { title: "Estimate value and CESS", body: "Structure and interiors included", Icon: Calculator, grad: G.green },
   { title: "Digital demand notice", body: "With notice number and due date", Icon: FileText, grad: G.orange },
   { title: "Shared and synced", body: "Stakeholder and Central Platform", Icon: ShareNetwork, grad: G.purple },
 ];
@@ -317,6 +320,34 @@ function SurveyScreen({ reduce }: { reduce: boolean }) {
               </span>
             </motion.div>
           ))}
+          <motion.div
+            initial={reduce ? false : { opacity: 0, x: 8 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.35, delay: 1 + MEASURE_ROWS.length * 0.1, ease }}
+            className="space-y-[0.5cqh]"
+          >
+            <p className="text-[1.86cqh] leading-none font-semibold text-[#2c4668]">Interior Level</p>
+            <div className="grid grid-cols-3 gap-[0.5cqh] rounded-[0.9cqh] bg-[#fff3e2] p-[0.4cqh] ring-1 ring-[#f6d6a8]">
+              {INTERIOR_LEVELS.map((lv) => {
+                const on = lv === INTERIOR_LEVEL;
+                return (
+                  <motion.span
+                    key={lv}
+                    initial={reduce || !on ? false : { scale: 0.85, opacity: 0.5 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.35, delay: 1.6, ease }}
+                    className={
+                      on
+                        ? "rounded-[0.7cqh] bg-[linear-gradient(135deg,#e06a06,#f7a23a)] py-[0.6cqh] text-center text-[1.74cqh] leading-none font-extrabold text-white shadow-[0_2px_6px_rgba(224,106,6,0.35)]"
+                        : "py-[0.6cqh] text-center text-[1.74cqh] leading-none font-semibold text-[#9a6a2c]"
+                    }
+                  >
+                    {lv}
+                  </motion.span>
+                );
+              })}
+            </div>
+          </motion.div>
         </div>
         <NextButton label="Estimate Value" />
       </div>
@@ -333,20 +364,56 @@ function EstimateCessScreen({ reduce }: { reduce: boolean }) {
       <div className="flex min-h-0 flex-1 flex-col gap-[0.9cqh] px-[4.5%] pt-[1.3cqh] pb-[1.4cqh]">
         <ProjectCard />
         <div className="flex min-h-0 flex-1 flex-col justify-evenly">
-          <ScreenSection title="Estimation Parameters" Icon={Calculator} tone="#1d66dc" />
-          {ESTIMATE_ROWS.map(([k, v]) => (
-            <p key={k} className="flex items-center justify-between gap-[1cqh] border-b border-[#eef2f7] pb-[0.7cqh] text-[1.95cqh] leading-none">
-              <span className="font-semibold text-[#3f5b7c]">{k}</span>
-              <span className="font-bold whitespace-nowrap text-[#17365f]">{v}</span>
-            </p>
+          <ScreenSection title="Construction Value" Icon={Calculator} tone="#1d66dc" />
+          {VALUE_PARTS.map((p, i) => (
+            <motion.div
+              key={p.label}
+              initial={reduce ? false : { opacity: 0, x: 8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, delay: 0.4 + i * 0.15, ease }}
+              className="flex items-center gap-[0.9cqh] border-b border-[#eef2f7] pb-[0.6cqh] leading-none"
+            >
+              <span className="size-[1.3cqh] shrink-0 rounded-full" style={{ background: p.c }} />
+              <span className="min-w-0 flex-1">
+                <span className="flex items-center gap-[0.6cqh] text-[1.95cqh] font-bold text-[#17365f]">
+                  {p.label}
+                  {p.flag && (
+                    <span className="rounded-full bg-[#fff3e2] px-[0.7cqh] py-[0.25cqh] text-[1.4cqh] font-extrabold text-[#c2410c] ring-1 ring-[#f6d6a8]">
+                      {p.flag}
+                    </span>
+                  )}
+                </span>
+                <span className="mt-[0.4cqh] block text-[1.56cqh] font-semibold whitespace-nowrap text-[#5b7390]">{p.calc}</span>
+              </span>
+              <span className="text-[1.95cqh] font-extrabold whitespace-nowrap tabular-nums" style={{ color: p.c }}>
+                {p.value}
+              </span>
+            </motion.div>
           ))}
-          <div className="flex items-center gap-[1.1cqh] rounded-[1.4cqh] bg-[linear-gradient(135deg,#e6f0fd,#e3f6fb)] px-[1.3cqh] py-[1.1cqh] ring-1 ring-[#cfe0f5]">
-            <Buildings weight="fill" className="size-[4.2cqh] shrink-0 text-[#1d66dc]" />
-            <div className="min-w-0 flex-1 text-center leading-none">
-              <p className="text-[1.74cqh] font-bold text-[#123a6e]">Estimated Construction Value</p>
-              <p className="font-display mt-[0.5cqh] text-[2.9cqh] font-black whitespace-nowrap text-[#1552c4] tabular-nums">{inr(value)}</p>
-              <p className="mt-[0.4cqh] text-[1.56cqh] font-semibold text-[#5b7390]">(₹ 20.00 Crore)</p>
+          <div className="rounded-[1.4cqh] bg-[linear-gradient(135deg,#e6f0fd,#e3f6fb)] px-[1.3cqh] py-[1cqh] ring-1 ring-[#cfe0f5]">
+            <div className="flex items-center gap-[1.1cqh]">
+              <Buildings weight="fill" className="size-[4cqh] shrink-0 text-[#1d66dc]" />
+              <div className="min-w-0 flex-1 text-center leading-none">
+                <p className="text-[1.74cqh] font-bold text-[#123a6e]">Estimated Construction Value</p>
+                <p className="font-display mt-[0.5cqh] text-[2.9cqh] font-black whitespace-nowrap text-[#1552c4] tabular-nums">{inr(value)}</p>
+              </div>
             </div>
+            <div className="mt-[0.9cqh] flex h-[1.1cqh] overflow-hidden rounded-full bg-[#dbe6f3]">
+              {VALUE_PARTS.map((p, i) => (
+                <motion.span
+                  key={p.label}
+                  className="h-full"
+                  style={{ background: p.c }}
+                  initial={reduce ? false : { width: "0%" }}
+                  animate={{ width: `${p.share}%` }}
+                  transition={{ duration: 0.7, delay: 0.9 + i * 0.6, ease }}
+                />
+              ))}
+            </div>
+            <p className="mt-[0.5cqh] flex justify-between text-[1.44cqh] leading-none font-semibold text-[#5b7390]">
+              <span>Structure + Interiors</span>
+              <span>(₹ 20.00 Crore)</span>
+            </p>
           </div>
           <motion.p
             className="flex items-center justify-center gap-[0.6cqh] text-[1.8cqh] leading-none font-bold text-[#1d66dc]"

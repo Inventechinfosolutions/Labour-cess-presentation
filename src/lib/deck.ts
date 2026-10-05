@@ -24,10 +24,11 @@ export const SCENES: SceneMeta[] = [
     nav: "GIS",
     beats: 5,
   },
-  { id: "leak", title: "CESS Exception to Closure", kicker: "Detect · Notify · Assign · Resolve · Verify · Close", nav: "Closure", beats: 1 },
+  { id: "leak", title: "CESS Exception to Closure", kicker: "Detect · Notify · Assign · Resolve · Verify · Close · Old dues", nav: "Closure", beats: 2 },
   { id: "core", title: "Complete CESS Management Platform", kicker: "Access · Appeals · KSK · Portal · Remittance at source", nav: "Core", beats: 9 },
   { id: "arch", title: "Architecture, Technology & Security", kicker: "Layers · Stack · Sign-in · Roles · Audit", nav: "Tech", beats: 3 },
   { id: "plan", title: "Project Delivery Milestones", kicker: "SRS · Build · Integrate · Train · AMC", nav: "Plan", beats: 5 },
+  { id: "risks", title: "Risks and Their Mitigation", kicker: "Agencies · Rules and data · People and maps · Safety", nav: "Risks", beats: 4 },
   { id: "thanks", title: "Thank You", kicker: "Labour CESS Tracking & Monitoring System", nav: "Thanks", beats: 1 },
 ];
 
@@ -52,7 +53,7 @@ export const CORE = {
   fin: {
     title: "Finance & CESS Operations",
     body: "What is owed, collected and remitted — including 30-day remittance, interest on delay and matching accounts (DCB).",
-    items: ["Demand", "Collection", "Remittance (30 days)", "Interest on delay", "Matching accounts", "Accounts / DCB"],
+    items: ["Demand", "Collection", "Remittance (30 days)", "Interest on delay", "Old dues brought forward", "Matching accounts", "Accounts / DCB"],
   },
   comm: {
     title: "Alerts & Compliance",

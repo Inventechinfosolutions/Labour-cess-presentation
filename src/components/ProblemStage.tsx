@@ -37,6 +37,7 @@ import issue3dVisible from "@/assets/issue-3d-visible.jpg";
 import issue3dDemand from "@/assets/issue-3d-demand.jpg";
 import issue3dTrack from "@/assets/issue-3d-track.jpg";
 import issue3dDelay from "@/assets/issue-3d-delay.jpg";
+import issue3dOldDues from "@/assets/issue-3d-olddues.jpg";
 import issue3dRecon from "@/assets/issue-3d-recon.jpg";
 import impact3dShortfall from "@/assets/impact-3d-shortfall.jpg";
 import impact3dDelay from "@/assets/impact-3d-delay.jpg";
@@ -473,6 +474,14 @@ const KEY_ISSUES: {
     icon3d: issue3dDelay,
     tint: "#fdf4db",
     numSoft: "linear-gradient(135deg,#f5b820,#e39505)",
+  },
+  {
+    id: "olddues",
+    label: "Old CESS dues are not tracked",
+    support: "Unremitted CESS from past years has no year-wise record.",
+    icon3d: issue3dOldDues,
+    tint: "#f6efe3",
+    numSoft: "linear-gradient(135deg,#b98a4a,#8f6428)",
   },
   {
     id: "lumpsum",

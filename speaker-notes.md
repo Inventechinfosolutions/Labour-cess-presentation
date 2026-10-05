@@ -165,7 +165,7 @@ Do not read sample costs. This slide shows the **journey**, not live data.
 
 ### Optional — Key issues (problem phase)
 
-Only if you have time: multiple records of the same project; duplicate/conflicting data; field verification constraints; delayed remittance and interest loss; shortfall affecting welfare.
+Only if you have time: multiple records of the same project; duplicate/conflicting data; field verification constraints; delayed remittance and interest loss; old CESS dues from past years not tracked year-wise; shortfall affecting welfare.
 
 ### Watch for (solution phase)
 
@@ -272,6 +272,13 @@ Capture must work **online or offline**.
 <p class="cue">**⟶ Space** — **Works offline.** The mobile app keeps the capture on the phone.</p>
 <p class="cue">**⟶ Space** — **Online · happy path.** Network is good. Every capture reaches the Board file. Same Project ID.</p>
 <p class="cue">**⟶ Space** — **On-spot demand notice** drafted from the mobile app. Same Project ID.</p>
+
+On the survey phone, the inspector records the interior area and the interior level: Basic, Standard or Premium.
+
+On the estimate phone, structure and interiors are valued separately. Here interiors were not declared. The app still adds them.
+
+Key message: Structure is declared. Interiors are often missed. We capture both.
+
 <p class="cue">**⟶ Space** → Scene 4 — territory map (GIS).</p>
 
 </div>
@@ -284,6 +291,8 @@ M08 GPS-enabled assessment · offline session · geo-tagging · spoofing control
 
 - *“Can demand be raised on the spot?”* — Yes, after site confirmation; it still follows demand rules, approval where configured, and a full exchange record.
 - *“What if send fails?”* — Waiting and needs-attention states are visible; conflicts are handled under controlled rules — not silent overwrite.
+- *“Builders do not tell us the interior cost. How is it valued?”* — The inspector records the interior area and level. The Board's rate table gives the value. At completion, a final check confirms it. Any difference is raised as a demand.
+- *“Are tenant fit-outs covered?”* — The app can record them. Whether CESS applies is for the Board's legal view.
 
 ---
 
@@ -387,6 +396,56 @@ M01 compliance / defaulters · M10 decision support · M15 alerts · F05 escalat
 - *“Who gets the alert?”* — Mapped user by territory and designation; SLA escalation along the post manager chain if configured.
 - *“How is GIS in the system if registration / GPS is incomplete?”* — Provisional spatial context (from approval/ULB/address) can sit on a stub record with flags. Lifecycle actions that need registration or field GPS stay blocked until validation passes — see Scene 4 pocket answer.
 
+### Closure slide · first beat — Interior Cost Not Declared
+
+**On screen:** The exception list has a row for Skyline Offices · BBMP · Interior Cost Not Declared · ₹ 3,75,000.
+
+<div class="speak" markdown="1">
+
+Some projects declare only the structure cost. The interior cost is left out.
+
+The Central Platform lists this as a potential exception. The officer checks the site and adds the interior value.
+
+The CESS on the difference is raised as a demand. It then follows the same six steps.
+
+</div>
+
+### Closure slide · second beat — Old CESS Dues Brought Forward
+
+**On screen:** Agency × year grid of unremitted CESS (left) · BDA dues statement (right) · the same six closure steps, worded for old dues.
+
+<div class="speak" markdown="1">
+
+<p class="cue">**⟶ Space** — Old dues.</p>
+
+Many departments hold CESS from past years. It was never remitted to the Board.
+
+When we move the old records, these dues come with them. Each agency's dues are shown year by year.
+
+Darker cells are older dues. Green cells are years with nothing pending.
+
+Take BDA. A year-wise statement goes to the agency. The agency confirms or disputes each year.
+
+Interest is shown as indicative only. It follows the rules and the Board's decision.
+
+The same steps apply: detect, notify, assign, resolve, verify and close.
+
+Key message: Old records → Opening balance → Agency confirms → Recover → Close.
+
+</div>
+
+### Watch for
+
+- Say **potential dues** until the agency confirms. Never call them leakage.
+- Do not read the sample amounts as Board figures. They are illustrative.
+
+### If they ask
+
+- *“Are these figures final?”* — No. They are as per earlier records. Each agency confirms them first.
+- *“Is interest charged automatically?”* — No. Interest is indicative. It follows the rules and the Board's decision.
+- *“What if an agency disputes a year?”* — The year stays open with the agency's reply and papers. An authorised officer settles it.
+- *“When is this data moved?”* — During delivery, with the Accounts module (Milestone 3). Old records and old dues are moved in with opening balances.
+
 ---
 
 # Scene 6 — From construction activity to CESS intelligence and DCB
@@ -449,6 +508,7 @@ M01 lifecycle · M13 payment · remittance tracking · auto/manual reconciliatio
 
 - *“Does payment equal remittance?”* — No. Payment/collection and remittance to the Board can diverge; reconciliation exists to close that gap.
 - *“Who does manual reconciliation?”* — Finance officer under M01/M03, with justification logged to audit.
+- *“Where do old unpaid dues sit?”* — In the Finance module as old dues brought forward. They are tracked agency-wise and year-wise, like current dues.
 
 ---
 
@@ -500,6 +560,71 @@ Operating model spans foundation modules F01–F05 and domain M01–M15; Scene 7
 
 ---
 
+# Risks and Their Mitigation (just before Thank You)
+
+**Absolute title on screen:** Risks & Their Mitigation — Each Risk · A Clear Plan · A Named Owner  
+**On screen:** Four themes on the left · one risk board in the centre (risk · impact → shield → mitigation · owner) · "Risk Cover" ring on the right, filling 10 segments · key message in the footer.
+
+| Beat | Space shows |
+|------|-------------|
+| 0 | Agencies & Links — 3 risks |
+| 1 | Rules & Data — 2 risks |
+| 2 | People & Maps — 3 risks |
+| 3 | Safety & Continuity — 2 risks · key message |
+
+### Story — <span style="font-family:Georgia,serif;color:#0e9aa7;">read aloud</span>
+
+<div class="speak" markdown="1">
+
+Before we close, we show the risks that can slow this work. Each risk has a plan and an owner.
+
+<p class="cue">**⟶ Space** — **Agencies & Links.**</p>
+
+Some agencies may not report or link. A Government order makes reporting mandatory. Agency scorecards and escalation follow.
+
+Some agency systems are not ready. We link through common platforms. A periodic file transfer works in the meantime.
+
+KSK link access may be delayed. We ask for the link details in Month 1. Our build does not wait.
+
+<p class="cue">**⟶ Space** — **Rules & Data.**</p>
+
+CESS rules must be signed in the SRS. Rates and slabs stay changeable by the Board.
+
+Duplicate projects are matched by location, plan number and GSTIN. An officer reviews the exceptions.
+
+<p class="cue">**⟶ Space** — **People & Maps.**</p>
+
+Officers get Kannada and English screens and an offline mobile app. About 2,000 users are trained. A helpdesk sits on site.
+
+Map layers are requested from KSRSAC and Bhuvan in Month 1. GPS field points fill the gaps.
+
+Each key role has a named backup.
+
+<p class="cue">**⟶ Space** — **Safety & Continuity.**</p>
+
+A disaster recovery site runs at KSDC. Data loss stays under one hour. Service returns within four hours.
+
+Aadhaar is kept only where permitted. Data is encrypted. A CERT-In audit is done before go-live.
+
+Key message: Every risk has a plan and a named owner.
+
+<p class="cue">**⟶ Space** → Thank You.</p>
+
+</div>
+
+### Watch for
+
+- Say **"CESS may go uncollected"**, not leakage.
+- "RFP 12.7" tags mark the risks the RFP itself lists.
+
+### If they ask
+
+- *“Why is the Board an owner?”* — Some steps need the Board: the Government order, KSK access, rule sign-off and map layer requests.
+- *“What do 1 hour and 4 hours mean?”* — At most one hour of data can be lost. Service comes back within four hours.
+- *“Who tracks these risks?”* — CMS keeps the risk list and reports it in each progress review.
+
+---
+
 ## Quick glossary (keep in your pocket)
 
 | Term | Plain meaning |
@@ -527,6 +652,7 @@ Operating model spans foundation modules F01–F05 and domain M01–M15; Scene 7
 | Territory map (GIS) | 4–5 | 4 |
 | Exceptions | 5–6 | 5 |
 | Finance + operating model + close | 6–8 | 6, 7 |
+| Risks and mitigation | 2–3 | Risks (before Thank You) |
 | Buffer / questions | rest | — |
 
 If short on time: keep full story on Scenes 1, 3, 4, 5, 6, 7; accelerate where needed.
