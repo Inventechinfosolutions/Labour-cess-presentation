@@ -40,8 +40,8 @@ function GlobalHeader({ solid }: { solid: boolean }) {
     >
       <div className="mx-auto flex h-[72px] max-w-[1320px] items-center gap-6 px-5 lg:px-8">
         <Link to="/global-connect" className="flex shrink-0 items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="grid size-12 place-items-center rounded-full bg-white shadow-md ring-2 ring-(color:--gc-gold-3)/70">
-            <img src={emblem} alt="Government of Karnataka emblem" className="h-9 w-auto" />
+          <span className="grid size-12 place-items-center overflow-hidden rounded-full bg-white shadow-md ring-2 ring-(color:--gc-gold-3)/70">
+            <img src={emblem} alt="Government of Karnataka emblem" className="h-auto w-[38px]" />
           </span>
           <span className="leading-none text-white">
             <span className="block font-display text-[15px] font-semibold tracking-wide">{t("KARNATAKA")}</span>

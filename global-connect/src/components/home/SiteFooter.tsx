@@ -41,8 +41,8 @@ function GlobalFooter() {
       <div className="mx-auto grid max-w-[1320px] grid-cols-2 gap-10 sm:grid-cols-3 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div className="col-span-2 sm:col-span-3 md:col-span-1">
           <div className="flex items-center gap-3">
-            <span className="grid size-12 place-items-center rounded-full bg-white ring-2 ring-(color:--gc-gold-3)/70">
-              <img src={emblem} alt="" className="h-9 w-auto" />
+            <span className="grid size-12 place-items-center overflow-hidden rounded-full bg-white ring-2 ring-(color:--gc-gold-3)/70">
+              <img src={emblem} alt="" className="h-auto w-[38px]" />
             </span>
             <span className="leading-tight">
               <span className="block font-display text-[15px] font-semibold text-white">{t("Karnataka Global Connect")}</span>
