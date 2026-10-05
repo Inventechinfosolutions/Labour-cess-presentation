@@ -24,7 +24,7 @@ export const SCENES: SceneMeta[] = [
     nav: "GIS",
     beats: 5,
   },
-  { id: "leak", title: "CESS Exception to Closure", kicker: "Detect · Notify · Assign · Resolve · Verify · Close · Old dues", nav: "Closure", beats: 2 },
+  { id: "leak", title: "Exception Management", kicker: "Detect · Notify · Assign · Resolve · Verify · Close · Old dues", nav: "Closure", beats: 2 },
   { id: "core", title: "Complete CESS Management Platform", kicker: "Access · Appeals · KSK · Portal · Remittance at source", nav: "Core", beats: 9 },
   { id: "arch", title: "Architecture, Technology & Security", kicker: "Layers · Stack · Sign-in · Roles · Audit", nav: "Tech", beats: 3 },
   { id: "plan", title: "Project Delivery Milestones", kicker: "SRS · Build · Integrate · Train · AMC", nav: "Plan", beats: 5 },

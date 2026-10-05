@@ -192,8 +192,8 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
   "5/0": {
     title: (
       <>
-        CESS Exception to{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Closure</span>
+        Exception{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Management</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
@@ -202,7 +202,7 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
     title: (
       <>
         Old CESS Dues{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Brought Forward</span>
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Management</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",
@@ -216,7 +216,7 @@ const TITLE_HIGHLIGHT: Record<string, string> = {
   assess: "Lifecycle",
   gps: "Mobile App",
   gis: "Map",
-  leak: "Closure",
+  leak: "Management",
   core: "Management Platform",
   arch: "Technology & Security",
   plan: "Milestones",

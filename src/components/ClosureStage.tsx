@@ -585,7 +585,7 @@ function OldDuesCard({ reduce }: { reduce: boolean }) {
       <div className="flex min-h-0 flex-col gap-2 p-2.5">
         <header className="flex items-center justify-between gap-2">
           <h2 className="text-[13px] font-black" style={{ color: INK }}>
-            Old Dues Brought Forward
+            Old CESS Dues Management
           </h2>
           <span className="inline-flex items-center gap-1 rounded-full border border-dashed border-[#e0a94a] bg-[#fff8e8] px-2 py-0.5 text-[8.5px] font-black tracking-[0.04em] text-[#8a5a12]">
             <FileText weight="bold" className="size-3" />

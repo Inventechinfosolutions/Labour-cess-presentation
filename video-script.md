@@ -1027,7 +1027,7 @@
 | 02 · Project-to-CESS Lifecycle           | 6      | 2:00         |
 | 03 · Field Officer Mobile App            | 5      | 2:15         |
 | 04 · Territory Map                       | 5      | 2:00         |
-| 05 · CESS Exception to Closure           | 1      | 1:15         |
+| 05 · Exception Management                | 1      | 1:15         |
 | 06 · Complete CESS Management Platform   | 10     | 2:00         |
 | **Total**                                | **31** | **≈ 12 min** |
 

@@ -410,7 +410,7 @@ The CESS on the difference is raised as a demand. It then follows the same six s
 
 </div>
 
-### Closure slide · second beat — Old CESS Dues Brought Forward
+### Closure slide · second beat — Old CESS Dues Management
 
 **On screen:** Agency × year grid of unremitted CESS (left) · BDA dues statement (right) · the same six closure steps, worded for old dues.
 
