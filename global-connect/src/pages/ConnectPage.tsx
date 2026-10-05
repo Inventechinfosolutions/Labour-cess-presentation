@@ -16,6 +16,7 @@ import { JoinNetwork } from "@/components/connect/JoinNetwork";
 import { LocalImpact } from "@/components/connect/LocalImpact";
 import { RegisterCta } from "@/components/connect/RegisterCta";
 import { WhatCanYouDo } from "@/components/connect/WhatCanYouDo";
+import { HelpBand } from "@/components/nri/HelpBand";
 import { ScrollProgress } from "@/components/home/ScrollProgress";
 import { SiteFooter } from "@/components/home/SiteFooter";
 import { SiteHeader } from "@/components/home/SiteHeader";
@@ -55,6 +56,13 @@ export function ConnectPage() {
         <Associations reduce={reduce} />
         <Events reduce={reduce} />
         <LocalImpact reduce={reduce} />
+        <HelpBand
+          reduce={reduce}
+          id="nri-services"
+          eyebrow="NRI services"
+          title="Support for Kannadigas Abroad"
+          sub="Raise a concern, ask about a scheme or track a request with the NRI Help Desk."
+        />
         <ConnectCta reduce={reduce} />
       </main>
       <SiteFooter />

@@ -4,14 +4,9 @@ import { AnimatePresence, motion } from "motion/react";
 import { CaretDown, GlobeSimple, List, MagnifyingGlass, X } from "@phosphor-icons/react";
 import emblem from "@/assets/karnataka-emblem.png";
 import { ThemeSwitcher } from "@/components/home/ThemeSwitcher";
-import { PATHWAYS, pathwayHref } from "@/lib/pathways";
+import { HELP_DESK, NAV } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 import { useT } from "@/theme/context";
-
-const NAV = [
-  { label: "Home", to: "/global-connect", end: true },
-  ...PATHWAYS.map((p) => ({ label: p.nav, to: pathwayHref(p.id), end: false })),
-];
 
 export function HorizonHeader() {
   const t = useT();
@@ -33,7 +28,7 @@ export function HorizonHeader() {
       )}
     >
       <div className="mx-auto flex h-[76px] max-w-[1320px] items-center gap-3 px-4 sm:gap-5 sm:px-5 lg:px-8">
-        <Link to="/global-connect" className="flex min-w-0 shrink items-center gap-2.5 sm:gap-3" onClick={() => setOpen(false)}>
+        <Link to="/global-connect" className="flex min-w-0 shrink items-center xl:shrink-0 gap-2.5 sm:gap-3" onClick={() => setOpen(false)}>
           <img src={emblem} alt="Government of Karnataka emblem" className="h-10 w-auto sm:h-12" />
           <span className="leading-none">
             <span className="block text-[7.5px] font-bold tracking-[0.14em] text-(color:--gc-primary) sm:text-[8.5px] sm:tracking-[0.16em]">
@@ -48,7 +43,7 @@ export function HorizonHeader() {
           </span>
         </Link>
 
-        <nav className="ml-auto hidden items-center gap-0.5 lg:flex" aria-label="Main">
+        <nav className="ml-auto hidden items-center gap-0.5 xl:flex" aria-label="Main">
           {NAV.map((n) => (
             <NavLink
               key={n.to}
@@ -56,7 +51,7 @@ export function HorizonHeader() {
               end={n.end}
               className={({ isActive }) =>
                 cn(
-                  "relative px-3 py-2 text-[13.5px] font-medium text-(color:--gc-ink-2)/80 transition-colors hover:text-(color:--gc-primary)",
+                  "relative px-3 py-2 text-[13.5px] xl:px-2 2xl:px-3 font-medium text-(color:--gc-ink-2)/80 transition-colors hover:text-(color:--gc-primary)",
                   isActive && "font-semibold text-(color:--gc-primary)",
                 )
               }
@@ -77,7 +72,7 @@ export function HorizonHeader() {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-1 lg:ml-3">
+        <div className="ml-auto flex items-center gap-1 xl:ml-3">
           <button
             type="button"
             aria-label="Search"
@@ -95,18 +90,18 @@ export function HorizonHeader() {
             <CaretDown size={11} weight="bold" />
           </button>
           <ThemeSwitcher light />
-          <a
-            href="#contact"
+          <Link
+            to={HELP_DESK}
             className="ml-1 hidden rounded-full bg-gradient-to-r from-(color:--gc-navy) to-(color:--gc-primary) px-5 py-2.5 text-[13px] font-semibold whitespace-nowrap text-white shadow-[0_6px_18px_rgba(13,34,83,0.25)] transition hover:brightness-110 sm:inline-block"
           >
-            Login / Register
-          </a>
+            NRI Help Desk
+          </Link>
           <button
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="grid size-10 place-items-center rounded-full text-(color:--gc-ink) transition hover:bg-(color:--gc-ink)/5 lg:hidden"
+            className="grid size-10 place-items-center rounded-full text-(color:--gc-ink) transition hover:bg-(color:--gc-ink)/5 xl:hidden"
           >
             {open ? <X size={22} /> : <List size={22} />}
           </button>
@@ -121,7 +116,7 @@ export function HorizonHeader() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-(color:--gc-line) lg:hidden"
+            className="overflow-hidden border-t border-(color:--gc-line) xl:hidden"
           >
             <div className="flex flex-col px-5 py-3">
               {NAV.map((n) => (
@@ -140,13 +135,13 @@ export function HorizonHeader() {
                   {t(n.label)}
                 </NavLink>
               ))}
-              <a
-                href="#contact"
+              <Link
+                to={HELP_DESK}
                 onClick={() => setOpen(false)}
                 className="mt-2 rounded-full bg-(color:--gc-navy) px-5 py-2.5 text-center text-[14px] font-semibold text-white"
               >
-                Login / Register
-              </a>
+                NRI Help Desk
+              </Link>
             </div>
           </motion.nav>
         ) : null}

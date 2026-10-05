@@ -1,3 +1,5 @@
+import { HelpBand } from "@/components/nri/HelpBand";
+import { HeritageFunnel, HeritageLoop } from "@/components/outcomes/themed";
 import { AtAGlance } from "./AtAGlance";
 import { FeaturedOpps } from "./FeaturedOpps";
 import { GlobalReach } from "./GlobalReach";
@@ -14,10 +16,13 @@ export function HeritageHome({ reduce }: { reduce: boolean }) {
       <HeritageHero reduce={reduce} />
       <PathwayTiles reduce={reduce} />
       <AtAGlance reduce={reduce} />
+      <HeritageLoop reduce={reduce} />
       <GlobalReach reduce={reduce} />
       <WaysToConnect reduce={reduce} />
       <GoalPicker reduce={reduce} />
       <ToTheWorld reduce={reduce} />
+      <HeritageFunnel reduce={reduce} />
+      <HelpBand reduce={reduce} />
       <FeaturedOpps reduce={reduce} />
       <HeritageCta reduce={reduce} />
     </>

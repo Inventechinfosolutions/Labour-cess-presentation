@@ -2,10 +2,18 @@ import { Link } from "react-router";
 import { InstagramLogo, LinkedinLogo, XLogo, YoutubeLogo } from "@phosphor-icons/react";
 import emblem from "@/assets/karnataka-emblem.png";
 import skyline from "@/assets/horizon/footer-skyline.jpg";
+import { ABOUT, SERVICE_LINKS } from "@/lib/nav";
 import { PATHWAYS, pathwayHref } from "@/lib/pathways";
 import { useT } from "@/theme/context";
 
-const ABOUT = ["Vision", "Government", "News & Events", "Resources", "Contact"];
+const ABOUT_LINKS = [
+  { label: "About the Department", to: ABOUT },
+  { label: "Vision", to: `${ABOUT}#vision` },
+  { label: "Government", to: `${ABOUT}#government` },
+  { label: "News & Events", to: `${ABOUT}#news` },
+  { label: "Resources", to: `${ABOUT}#resources` },
+  { label: "Contact", to: `${ABOUT}#contact-us` },
+];
 const LEGAL = ["Privacy", "Terms", "Accessibility", "Site Map"];
 
 const SOCIAL = [
@@ -27,7 +35,7 @@ export function HorizonFooter() {
         className="absolute right-0 bottom-0 -z-10 h-[78%] w-auto max-w-none opacity-40 mix-blend-screen [mask-image:linear-gradient(90deg,transparent,black_35%)] max-md:opacity-20"
       />
 
-      <div className="mx-auto grid max-w-[1320px] gap-10 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+      <div className="mx-auto grid max-w-[1320px] gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr_1fr]">
         <div className="flex items-start gap-3">
           <span className="grid size-14 shrink-0 place-items-center rounded-full bg-white">
             <img src={emblem} alt="" className="h-10 w-auto" />
@@ -62,11 +70,24 @@ export function HorizonFooter() {
         <nav aria-label="About">
           <p className="text-[13px] font-bold text-white">About</p>
           <ul className="mt-3 space-y-2 text-[13px]">
-            {ABOUT.map((l) => (
-              <li key={l}>
-                <a href="#contact" className="transition hover:text-white">
-                  {l}
-                </a>
+            {ABOUT_LINKS.map((l) => (
+              <li key={l.label}>
+                <Link to={l.to} className="transition hover:text-white">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label="NRI Help Desk">
+          <p className="text-[13px] font-bold text-white">NRI Help Desk</p>
+          <ul className="mt-3 space-y-2 text-[13px]">
+            {SERVICE_LINKS.map((l) => (
+              <li key={l.label}>
+                <Link to={l.to} className="transition hover:text-white">
+                  {l.label}
+                </Link>
               </li>
             ))}
           </ul>

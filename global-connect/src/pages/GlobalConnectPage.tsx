@@ -7,6 +7,8 @@ import { CentralMessage } from "@/components/home/CentralMessage";
 import { Explore } from "@/components/home/Explore";
 import { Hero } from "@/components/home/Hero";
 import { Journey } from "@/components/home/Journey";
+import { HelpBand } from "@/components/nri/HelpBand";
+import { GlobalFunnel, GlobalLoop } from "@/components/outcomes/themed";
 import { Pathways } from "@/components/home/Pathways";
 import { ScrollProgress } from "@/components/home/ScrollProgress";
 import { SiteFooter } from "@/components/home/SiteFooter";
@@ -40,7 +42,10 @@ export function GlobalConnectPage() {
             <Hero reduce={reduce} />
             <Pathways reduce={reduce} />
             <Journey reduce={reduce} />
+            <GlobalLoop reduce={reduce} />
             <CentralMessage reduce={reduce} />
+            <GlobalFunnel reduce={reduce} />
+            <HelpBand reduce={reduce} />
             <Explore reduce={reduce} />
           </>
         )}

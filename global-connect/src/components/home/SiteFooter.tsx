@@ -1,14 +1,24 @@
 import { Link } from "react-router";
 import { LinkedinLogo, XLogo, YoutubeLogo } from "@phosphor-icons/react";
 import emblem from "@/assets/karnataka-emblem.png";
+import { ABOUT, SERVICE_LINKS } from "@/lib/nav";
 import { PATHWAYS, pathwayHref } from "@/lib/pathways";
 import { HeritageFooter } from "@/components/heritage/HeritageFooter";
 import { HorizonFooter } from "@/components/horizon/HorizonFooter";
 import { useT, useTheme } from "@/theme/context";
 
 const COLUMNS = [
-  { title: "About", links: ["About the Platform", "Government of Karnataka", "Policies", "Resources"] },
-  { title: "Support", links: ["Support", "Contact", "FAQs", "Events"] },
+  {
+    title: "About",
+    links: [
+      { label: "About the Department", to: ABOUT },
+      { label: "Our Mandate", to: `${ABOUT}#vision` },
+      { label: "Events and News", to: `${ABOUT}#news` },
+      { label: "Resources", to: `${ABOUT}#resources` },
+      { label: "Contact", to: `${ABOUT}#contact-us` },
+    ],
+  },
+  { title: "NRI Help Desk", links: SERVICE_LINKS },
 ];
 
 const SOCIAL = [
@@ -74,10 +84,10 @@ function GlobalFooter() {
             <p className="font-display text-[13px] font-semibold tracking-wide text-white">{c.title}</p>
             <ul className="mt-4 space-y-2.5 text-[13px]">
               {c.links.map((l) => (
-                <li key={l}>
-                  <a href="#contact" className="transition hover:text-white">
-                    {l}
-                  </a>
+                <li key={l.label}>
+                  <Link to={l.to} className="transition hover:text-white">
+                    {l.label}
+                  </Link>
                 </li>
               ))}
             </ul>

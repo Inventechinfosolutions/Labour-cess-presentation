@@ -3,17 +3,12 @@ import { Link, NavLink } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { List, MagnifyingGlass, X } from "@phosphor-icons/react";
 import emblem from "@/assets/karnataka-emblem.png";
-import { PATHWAYS, pathwayHref } from "@/lib/pathways";
+import { HELP_DESK, NAV } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 import { HeritageHeader } from "@/components/heritage/HeritageHeader";
 import { HorizonHeader } from "@/components/horizon/HorizonHeader";
 import { useT, useTheme } from "@/theme/context";
 import { ThemeSwitcher } from "./ThemeSwitcher";
-
-const NAV = [
-  { label: "Home", to: "/global-connect", end: true },
-  ...PATHWAYS.map((p) => ({ label: p.nav, to: pathwayHref(p.id), end: false })),
-];
 
 export function SiteHeader({ solid = false }: { solid?: boolean }) {
   const { theme } = useTheme();
@@ -57,7 +52,7 @@ function GlobalHeader({ solid }: { solid: boolean }) {
           </span>
         </Link>
 
-        <nav className="ml-auto hidden items-center gap-1 lg:flex" aria-label="Main">
+        <nav className="ml-auto hidden items-center gap-0.5 xl:flex" aria-label="Main">
           {NAV.map((n) => (
             <NavLink
               key={n.to}
@@ -65,7 +60,7 @@ function GlobalHeader({ solid }: { solid: boolean }) {
               end={n.end}
               className={({ isActive }) =>
                 cn(
-                  "relative px-3 py-2 text-[13.5px] font-medium text-white/80 transition-colors hover:text-white",
+                  "relative px-3 py-2 text-[13.5px] xl:px-2 2xl:px-3 font-medium text-white/80 transition-colors hover:text-white",
                   isActive && "text-white",
                 )
               }
@@ -86,7 +81,7 @@ function GlobalHeader({ solid }: { solid: boolean }) {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-2 lg:ml-2">
+        <div className="ml-auto flex items-center gap-2 xl:ml-2">
           <button
             type="button"
             aria-label="Search"
@@ -95,18 +90,18 @@ function GlobalHeader({ solid }: { solid: boolean }) {
             <MagnifyingGlass size={20} />
           </button>
           <ThemeSwitcher />
-          <a
-            href="#contact"
+          <Link
+            to={HELP_DESK}
             className="hidden rounded-full border border-white/45 px-5 py-2 text-[13.5px] font-medium whitespace-nowrap text-white transition hover:border-white hover:bg-white/10 sm:inline-block"
           >
-            {t("Contact")}
-          </a>
+            NRI Help Desk
+          </Link>
           <button
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="grid size-10 place-items-center rounded-full text-white transition hover:bg-white/10 lg:hidden"
+            className="grid size-10 place-items-center rounded-full text-white transition hover:bg-white/10 xl:hidden"
           >
             {open ? <X size={22} /> : <List size={22} />}
           </button>
@@ -121,7 +116,7 @@ function GlobalHeader({ solid }: { solid: boolean }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-white/10 lg:hidden"
+            className="overflow-hidden border-t border-white/10 xl:hidden"
           >
             <div className="flex flex-col px-5 py-3">
               {NAV.map((n) => (
@@ -137,6 +132,13 @@ function GlobalHeader({ solid }: { solid: boolean }) {
                   {t(n.label)}
                 </NavLink>
               ))}
+              <Link
+                to={HELP_DESK}
+                onClick={() => setOpen(false)}
+                className="mt-2 rounded-full border border-white/45 px-5 py-2.5 text-center text-[14px] font-medium text-white"
+              >
+                NRI Help Desk
+              </Link>
             </div>
           </motion.nav>
         ) : null}
