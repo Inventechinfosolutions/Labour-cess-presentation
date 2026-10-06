@@ -31,7 +31,6 @@ import {
   Stack,
   TreeStructure,
   UsersThree,
-  Wallet,
 } from "@/lib/icons";
 import { STAGE_TYPE } from "@/components/GpsEstimationStage";
 import artSrs from "@/assets/plan-srs.jpg";
@@ -95,18 +94,17 @@ const MILESTONES: { n: number; days: string; from: ReactNode; color: string; art
     modules: [
       { n: 10, label: "Appeals", Icon: Scales },
       { n: 11, label: "Smart Middleware", Icon: ArrowsSplit, star: true },
-      { n: 12, label: "Accounts", Icon: Wallet },
-      { n: 13, label: "Back-office GIS Analytics", Icon: MapPin },
-      { n: 14, label: "Auto Alerts & Notification", Icon: Bell },
-      { n: 15, label: "Reports & Decision Support", Icon: ChartBar },
-      { n: 16, label: "Labour CESS Portal Go-Live", Icon: Globe, star: true },
+      { n: 12, label: "Back-office GIS Analytics", Icon: MapPin },
+      { n: 13, label: "Auto Alerts & Notification", Icon: Bell },
+      { n: 14, label: "Reports & Decision Support", Icon: ChartBar },
+      { n: 15, label: "Labour CESS Portal Go-Live", Icon: Globe, star: true },
     ],
   },
 ];
 
 const STATS: { value: string; label: string; Icon: CessIcon; color: string }[] = [
   { value: "5", label: "Phases", Icon: Stack, color: "#1d66dc" },
-  { value: "17", label: "Modules", Icon: SquaresFour, color: "#0f8a4c" },
+  { value: "16", label: "Modules", Icon: SquaresFour, color: "#0f8a4c" },
   { value: "3", label: "Milestones", Icon: Flag, color: "#e8650a" },
   { value: "2", label: "Years AMC", Icon: Clock, color: "#0e8f9c" },
 ];
@@ -545,7 +543,7 @@ function IntegrationLane({ reduce }: { reduce: boolean }) {
   const p = PHASES[2];
   const steps = [
     { code: "3.1", title: <><Hi color={p.color}>KSK</Hi> Platform Integration</>, note: "As per clause 7", days: "90 days", from: <>After <Hi color={p.color}>Milestone 3</Hi> is deployed</>, Icon: Plugs },
-    { code: "3.2", title: <>Module 17 · <Hi color={p.color}>Agency Connectors</Hi></>, note: "Connectors listed in Module 8", days: "30 days", from: <>After <Hi color={p.color}>Phase 3.1</Hi> is deployed</>, Icon: LinkSimple },
+    { code: "3.2", title: <>Module 16 · <Hi color={p.color}>Agency Connectors</Hi></>, note: "Connectors listed in Module 8", days: "30 days", from: <>After <Hi color={p.color}>Phase 3.1</Hi> is deployed</>, Icon: LinkSimple },
   ];
   return (
     <LaneBody>

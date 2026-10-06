@@ -95,19 +95,19 @@ const BEAT_HEAD: readonly {
 }[] = [
   {
     kicker: "Government of Karnataka · Labour CESS",
-    title: "Project Location",
+    title: "Project GPS Location",
     step: "01 · Location",
     accent: "#1a4e8a",
   },
   {
     kicker: "Territory · MIS & GIS",
-    title: "Project Territory Map",
+    title: "Project GIS Territory Map",
     step: "02 · Territory",
     accent: HEX.teal,
   },
   {
     kicker: "Territory · MIS & GIS",
-    title: "Mapped Responsible Officer",
+    title: "Territory Mapped Office",
     step: "03 · Officers",
     accent: HEX.goldDeep,
   },

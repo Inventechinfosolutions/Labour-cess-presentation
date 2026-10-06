@@ -444,7 +444,7 @@ Key message: Old records → Opening balance → Agency confirms → Recover →
 - *“Are these figures final?”* — No. They are as per earlier records. Each agency confirms them first.
 - *“Is interest charged automatically?”* — No. Interest is indicative. It follows the rules and the Board's decision.
 - *“What if an agency disputes a year?”* — The year stays open with the agency's reply and papers. An authorised officer settles it.
-- *“When is this data moved?”* — During delivery, with the Accounts module (Milestone 3). Old records and old dues are moved in with opening balances.
+- *“When is this data moved?”* — During delivery, in Milestone 3. Old records and old dues are moved in with opening balances.
 
 ---
 

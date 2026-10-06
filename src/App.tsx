@@ -158,7 +158,7 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
   "4/0": {
     title: (
       <>
-        Project{" "}
+        Project GPS{" "}
         <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Location</span>
       </>
     ),
@@ -167,7 +167,7 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
   "4/1": {
     title: (
       <>
-        Project Territory{" "}
+        Project GIS Territory{" "}
         <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Map</span>
       </>
     ),
@@ -176,8 +176,8 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
   "4/2": {
     title: (
       <>
-        Mapped Responsible{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Officer</span>
+        Territory Mapped{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Office</span>
       </>
     ),
     titleClass: "text-[length:clamp(16px,min(2.2vw,4vh),36px)] tracking-[-0.02em]",

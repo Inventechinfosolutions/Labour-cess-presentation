@@ -623,9 +623,9 @@
 
 *Beats: 5 · About 2 min*
 
-### Beat 1 — Project Location
+### Beat 1 — Project GPS Location
 
-**ON SCREEN** — Header: **PROJECT LOCATION** · Step: *01 · Location*
+**ON SCREEN** — Header: **PROJECT GPS LOCATION** · Step: *01 · Location*
 
 - A satellite map of east Bengaluru. The ABC pin pulses (**ABC · GPS**). A trail of field visits: 02 Jan · 08 Jan · 15 Jan 10:42.
 - Card: **Project Details with GPS Location** — ABC Commercial Complex · PRJ-000245 · *On Map · GPS Captured*.
@@ -642,9 +642,9 @@
 
 **[Space]**
 
-### Beat 2 — Project Territory Map
+### Beat 2 — Project GIS Territory Map
 
-**ON SCREEN** — Header: **PROJECT TERRITORY MAP** · Step: *02 · Territory*
+**ON SCREEN** — Header: **PROJECT GIS TERRITORY MAP** · Step: *02 · Territory*
 
 - The map outlines **Bengaluru East Taluk** and **Ward No. 86 · Marathahalli**.
 - Card: **Assigned GIS Territory — Administrative Jurisdiction**
@@ -673,9 +673,9 @@
 
 **[Space]**
 
-### Beat 3 — Mapped Responsible Officer
+### Beat 3 — Territory Mapped Office
 
-**ON SCREEN** — Header: **MAPPED RESPONSIBLE OFFICER** · Step: *03 · Officers*
+**ON SCREEN** — Header: **TERRITORY MAPPED OFFICE** · Step: *03 · Officers*
 
 - The map shows the office pin: **BBMP East Zone Office · Inspector R. Kumar · ≈ 1.4 km** from the site.
 - Card: **Assigned Office Details — Department and Responsible Officials** · *This project is assigned to BBMP East Zone Office for assessment and follow-up.*
