@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { animate, motion, useReducedMotion } from "motion/react";
 import type { CessIcon } from "@/lib/icons";
 import {
@@ -31,6 +31,7 @@ import {
   WarningCircle,
 } from "@/lib/icons";
 import { cn } from "@/lib/utils";
+import { stageFont } from "@/lib/stageFont";
 import { Gloss, Orb3D, slab3D, tileStyle } from "@/components/Depth";
 import siteThumb from "@/assets/prj-site-photo.jpg";
 import imgDetect from "@/assets/closure-detect.jpg";
@@ -43,6 +44,14 @@ import imgOffice2 from "@/assets/closure-office-2.jpg";
 const INK = "#0b2462";
 const RED = "#e5484d";
 const ease = [0.22, 1, 0.36, 1] as const;
+
+/** Same stage-relative type scale as the Current Issues stage. */
+const STAGE_TYPE = {
+  containerType: "size",
+  "--ps-18": stageFont(18, 11),
+  "--ps-16": stageFont(16, 10),
+  "--ps-14": stageFont(14, 9),
+} as CSSProperties;
 
 const STEPS_AT = 2.1;
 const STEP_GAP = 0.16;
@@ -143,12 +152,12 @@ const KPIS: { title: string; value: string; Icon: CessIcon; c: string; hot?: boo
   { title: "Open Exceptions", value: "24", Icon: WarningCircle, c: RED, hot: true },
 ];
 
-const ROWS: { project: string; agency: string; type: string; amount: string; status: "Open" | "In Review"; on?: boolean }[] = [
+const ROWS: { project: string; agency: string; type: string; amount: string; status: "Open" | "In Review"; on?: boolean; alert?: boolean }[] = [
   { project: "ABC Commercial Complex", agency: "BDA", type: "Remittance Overdue", amount: "₹ 24,50,000", status: "Open", on: true },
   { project: "XYZ Housing Project", agency: "BBMP", type: "Amount Mismatch", amount: "₹ 12,30,000", status: "Open" },
   { project: "Metro Extension", agency: "BMRCL", type: "Unmatched Record", amount: "₹ 8,75,000", status: "Open" },
   { project: "Tech Park Phase 3", agency: "KIADB", type: "Assessment Not Filed", amount: "₹ 15,60,000", status: "In Review" },
-  { project: "Skyline Offices", agency: "BBMP", type: "Interior Cost Not Declared", amount: "₹ 3,75,000", status: "Open" },
+  { project: "Skyline Offices", agency: "BBMP", type: "Interior Cost Not Declared", amount: "₹ 3,75,000", status: "Open", alert: true },
 ];
 
 const NAV: { label: string; Icon: CessIcon; badge?: string }[] = [
@@ -184,7 +193,7 @@ export function ClosureStage({ old = false }: { old?: boolean }) {
   const active = useCycle(reduce);
 
   return (
-    <div className="relative grid h-full min-h-0 grid-rows-[minmax(0,57fr)_minmax(0,33fr)_auto] gap-2 text-[#23395f]">
+    <div className="relative grid h-full min-h-0 grid-rows-[minmax(0,57fr)_minmax(0,33fr)_auto] gap-2 text-[#23395f]" style={STAGE_TYPE}>
       <div key={old ? "old" : "now"} className="grid min-h-0 grid-cols-[minmax(0,1.42fr)_28px_minmax(0,0.86fr)] items-stretch">
         {old ? <OldDuesCard reduce={reduce} /> : <DashboardCard reduce={reduce} />}
         <FlowArrow reduce={reduce} />
@@ -376,7 +385,7 @@ function DashboardMain({ reduce }: { reduce: boolean }) {
                 className={cn(
                   "relative grid min-h-0 items-center border-t border-[#eef2f8] px-2 leading-none",
                   DASH_COLS,
-                  r.on && "bg-[#fff3f4]",
+                  (r.on || r.alert) && "bg-[#fff3f4]",
                 )}
                 initial={reduce ? false : { opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -389,7 +398,7 @@ function DashboardMain({ reduce }: { reduce: boolean }) {
                     animate={{ opacity: [0, 1, 0.4, 1] }}
                     transition={{ delay: 0.95, duration: 1.4 }}
                   />
-                ) : r.on ? (
+                ) : r.on || r.alert ? (
                   <span aria-hidden className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-[#f3a3a6]" />
                 ) : null}
                 <span className="min-w-0">
@@ -495,7 +504,7 @@ function DetailsCard({ reduce }: { reduce: boolean }) {
         <b className="relative text-[13px] font-black">Exception Details</b>
         <span className="relative font-mono text-[9px] text-[#a9c4f0]">PRJ-000245</span>
       </header>
-      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,0.9fr)_minmax(0,1.15fr)_minmax(0,0.85fr)] gap-2.5 p-2.5">
+      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,0.75fr)_minmax(0,1.15fr)_minmax(0,1fr)] gap-2.5 p-2.5">
         <div className="relative min-h-0 overflow-hidden rounded-xl shadow-[0_8px_16px_-6px_rgba(11,36,98,0.45)] ring-2 ring-white">
           <img src={siteThumb} alt="ABC Commercial Complex site" className="h-full w-full object-cover" draggable={false} />
           <span className="absolute inset-x-0 bottom-0 bg-[linear-gradient(0deg,rgba(6,20,52,0.75),transparent)] px-2 pt-4 pb-1 text-[8.5px] font-bold text-white">
@@ -503,22 +512,22 @@ function DetailsCard({ reduce }: { reduce: boolean }) {
           </span>
         </div>
         <div className="flex min-h-0 flex-col">
-          <b className="text-[13px] leading-tight font-black" style={{ color: INK }}>
+          <b className="text-[length:var(--ps-18)] leading-tight font-black" style={{ color: INK }}>
             ABC Commercial Complex
           </b>
           <motion.span
-            className="mt-1 inline-flex w-fit items-center gap-1 rounded-md bg-[#fff1f1] px-1.5 py-[3px] text-[9.5px] font-black text-[#dc2626] ring-1 ring-[#fecaca]"
+            className="mt-1 inline-flex w-fit items-center gap-1 rounded-md bg-[#fff1f1] px-1.5 py-[3px] text-[length:var(--ps-14)] font-black text-[#dc2626] ring-1 ring-[#fecaca]"
             animate={reduce ? undefined : { scale: [1, 1.05, 1] }}
             transition={{ duration: 1.8, repeat: Infinity, delay: 2.4 }}
           >
-            <WarningCircle weight="fill" className="size-3.5" />
+            <WarningCircle weight="fill" className="size-[1.2em]" />
             Remittance Overdue
           </motion.span>
           <dl className="mt-1.5 flex min-h-0 flex-1 flex-col justify-between">
             {DETAILS.map((d, i) => (
               <motion.div
                 key={d.k}
-                className="grid grid-cols-[86px_minmax(0,1fr)] text-[9.5px]"
+                className="grid grid-cols-[7.4em_minmax(0,1fr)] text-[length:var(--ps-14)] leading-tight"
                 initial={reduce ? false : { opacity: 0, x: 8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 1.9 + i * 0.05, duration: 0.3 }}
@@ -534,7 +543,7 @@ function DetailsCard({ reduce }: { reduce: boolean }) {
             <motion.span
               key={a.label}
               className={cn(
-                "relative flex items-center gap-1.5 overflow-hidden rounded-lg px-2 py-[7px] text-[9.5px] font-black",
+                "relative flex items-center gap-1.5 overflow-hidden rounded-lg px-2 py-[0.6em] text-[length:var(--ps-14)] font-black",
                 a.primary ? "text-white" : "bg-white text-[#17366b] ring-1 ring-[#dbe7f5]",
               )}
               style={a.primary ? { ...tileStyle("#2f7df0") } : undefined}
@@ -543,7 +552,7 @@ function DetailsCard({ reduce }: { reduce: boolean }) {
               transition={{ delay: 2 + i * 0.06, duration: 0.3 }}
             >
               {a.primary ? <span className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-[linear-gradient(180deg,rgba(255,255,255,0.3),transparent)]" /> : null}
-              <a.Icon weight={a.primary ? "fill" : "bold"} className="relative size-3.5 shrink-0" />
+              <a.Icon weight={a.primary ? "fill" : "bold"} className="relative size-[1.2em] shrink-0" />
               <span className="relative truncate">{a.label}</span>
             </motion.span>
           ))}
@@ -734,22 +743,26 @@ function AgencyDuesCard({ reduce }: { reduce: boolean }) {
         <b className="relative text-[13px] font-black">Agency Dues Statement</b>
         <span className="relative font-mono text-[9px] text-[#a9c4f0]">OD-BDA-01</span>
       </header>
-      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1.25fr)_minmax(0,0.95fr)_minmax(0,0.8fr)] gap-2.5 p-2.5">
+      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1.15fr)_minmax(0,0.9fr)_minmax(0,1fr)] gap-2.5 p-2.5">
         <div className="flex min-h-0 flex-col">
-          <b className="text-[12px] leading-tight font-black" style={{ color: INK }}>
+          <b className="truncate text-[length:var(--ps-16)] leading-tight font-black" style={{ color: INK }}>
             BDA · Year-wise dues
           </b>
           <ul className="mt-1.5 flex min-h-0 flex-1 flex-col justify-between">
             {BDA_YEARS.map((y, i) => (
               <motion.li
                 key={y.year}
-                className="grid grid-cols-[44px_minmax(0,1fr)_34px_58px] items-center gap-1.5 text-[9px]"
+                className="flex flex-col gap-[3px] text-[length:var(--ps-14)] leading-none"
                 initial={reduce ? false : { opacity: 0, x: 8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 1.9 + i * 0.06, duration: 0.3 }}
               >
-                <span className="font-semibold text-[#64748b]">{y.year}</span>
-                <span className="h-1.5 overflow-hidden rounded-full bg-[#eef2f8]">
+                <span className="flex items-center gap-1.5">
+                  <span className="font-semibold text-[#64748b]">{y.year}</span>
+                  <b className="ml-auto font-black text-[#17366b]">{y.due ? `${y.due} L` : "—"}</b>
+                  <span className={cn("w-[5.4em] rounded-full py-[2px] text-center text-[0.72em] font-black", STATUS_TONE[y.status])}>{y.status}</span>
+                </span>
+                <span className="h-[5px] overflow-hidden rounded-full bg-[#eef2f8]">
                   <motion.span
                     className="block h-full origin-left rounded-full"
                     style={{ width: `${(y.due / max) * 100}%`, background: `linear-gradient(90deg, ${RED}, #f59e0b)` }}
@@ -758,37 +771,37 @@ function AgencyDuesCard({ reduce }: { reduce: boolean }) {
                     transition={{ delay: 2.1 + i * 0.06, duration: 0.5, ease }}
                   />
                 </span>
-                <b className="text-right font-black text-[#17366b]">{y.due ? `${y.due} L` : "—"}</b>
-                <span className={cn("rounded-full px-1.5 py-[1px] text-center text-[7.5px] font-black", STATUS_TONE[y.status])}>{y.status}</span>
               </motion.li>
             ))}
           </ul>
         </div>
 
-        <div className="flex min-h-0 flex-col justify-center border-l border-[#eef2f8] pl-2.5">
+        <div className="flex min-h-0 flex-col border-l border-[#eef2f8] pl-2.5">
           <motion.span
-            className="inline-flex w-fit items-center gap-1 rounded-md bg-[#fff7ed] px-1.5 py-[3px] text-[9px] font-black text-[#c2410c] ring-1 ring-[#fed7aa]"
+            className="inline-flex w-fit items-center gap-1 rounded-md bg-[#fff7ed] px-1.5 py-[3px] text-[length:var(--ps-14)] font-black whitespace-nowrap text-[#c2410c] ring-1 ring-[#fed7aa]"
             animate={reduce ? undefined : { scale: [1, 1.05, 1] }}
             transition={{ duration: 1.8, repeat: Infinity, delay: 2.4 }}
           >
-            <Hourglass weight="fill" className="size-3.5" />
-            Awaiting confirmation
+            <Hourglass weight="fill" className="size-[1.2em]" />
+            Awaiting reply
           </motion.span>
-          <dl className="mt-2.5 flex flex-col gap-2.5">
+          <dl className="mt-1.5 flex min-h-0 flex-1 flex-col justify-between">
             {BDA_SUMMARY.map((d, i) => (
               <motion.div
                 key={d.k}
-                className="text-[9px] leading-tight"
+                className="text-[length:var(--ps-14)] leading-tight"
                 initial={reduce ? false : { opacity: 0, x: 8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 2 + i * 0.06, duration: 0.3 }}
               >
-                <dt className="font-semibold text-[#64748b]">{d.k}</dt>
-                <dd className={cn("font-black", d.hot ? "text-[12px] text-[#dc2626]" : "text-[#17366b]")}>{d.v}</dd>
+                <dt className="truncate font-semibold text-[#64748b]">{d.k}</dt>
+                <dd className={cn("font-black", d.hot ? "text-[length:var(--ps-18)] text-[#dc2626]" : "text-[#17366b]")}>{d.v}</dd>
               </motion.div>
             ))}
           </dl>
-          <p className="mt-2.5 rounded-md bg-[#fff8e8] px-1.5 py-1 text-[8px] leading-tight font-semibold text-[#8a5a12]">Interest as per rules. Subject to Board decision.</p>
+          <p className="mt-1.5 rounded-md bg-[#fff8e8] px-1.5 py-1 text-[length:var(--ps-14)] leading-tight font-semibold text-[#8a5a12]">
+            <span className="block text-[0.85em]">Interest as per rules. Subject to Board decision.</span>
+          </p>
         </div>
 
         <div className="flex min-h-0 flex-col justify-center gap-1.5 border-l border-[#eef2f8] pl-2.5">
@@ -796,7 +809,7 @@ function AgencyDuesCard({ reduce }: { reduce: boolean }) {
             <motion.span
               key={a.label}
               className={cn(
-                "relative flex items-center gap-1.5 overflow-hidden rounded-lg px-2 py-[7px] text-[9.5px] font-black",
+                "relative flex items-center gap-1.5 overflow-hidden rounded-lg px-2 py-[0.6em] text-[length:var(--ps-14)] font-black",
                 a.primary ? "text-white" : "bg-white text-[#17366b] ring-1 ring-[#dbe7f5]",
               )}
               style={a.primary ? { ...tileStyle("#2f7df0") } : undefined}
@@ -805,7 +818,7 @@ function AgencyDuesCard({ reduce }: { reduce: boolean }) {
               transition={{ delay: 2.1 + i * 0.06, duration: 0.3 }}
             >
               {a.primary ? <span className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-[linear-gradient(180deg,rgba(255,255,255,0.3),transparent)]" /> : null}
-              <a.Icon weight={a.primary ? "fill" : "bold"} className="relative size-3.5 shrink-0" />
+              <a.Icon weight={a.primary ? "fill" : "bold"} className="relative size-[1.2em] shrink-0" />
               <span className="relative truncate">{a.label}</span>
             </motion.span>
           ))}

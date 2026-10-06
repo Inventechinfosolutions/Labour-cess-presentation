@@ -60,7 +60,7 @@ const SOURCES: {
     Icon: Bank,
     color: "#1f6fd8",
     grad: "linear-gradient(135deg,#0a3f8f,#1561c4)",
-    tag: "API / File",
+    tag: "Data",
     photo: srcGov,
   },
   {
@@ -70,7 +70,7 @@ const SOURCES: {
     Icon: Buildings,
     color: "#e0800b",
     grad: "linear-gradient(135deg,#9a4d00,#c96f00)",
-    tag: "API / File",
+    tag: "Data",
     photo: srcUlb,
   },
   {
@@ -80,7 +80,7 @@ const SOURCES: {
     Icon: Factory,
     color: "#7041d9",
     grad: "linear-gradient(135deg,#3f1a8c,#5b2bc0)",
-    tag: "API / File",
+    tag: "Data",
     photo: srcBoards,
   },
   {
@@ -90,7 +90,7 @@ const SOURCES: {
     Icon: Lightning,
     color: "#169c57",
     grad: "linear-gradient(135deg,#0b5e33,#138049)",
-    tag: "API / File",
+    tag: "Data",
     photo: srcUtil,
   },
   {
@@ -100,7 +100,7 @@ const SOURCES: {
     Icon: UsersThree,
     color: "#e43a70",
     grad: "linear-gradient(135deg,#8f1640,#bc2257)",
-    tag: "API / File",
+    tag: "Data",
     photo: srcAgency,
   },
   {
@@ -138,14 +138,14 @@ const HUB_FUNCTIONS: { label: string; Icon: CessIcon; grad: string }[] = [
   { label: "Monitor", Icon: Monitor, grad: "linear-gradient(135deg,#e0335f,#ff6a8e)" },
 ];
 
-const PROTOCOLS = ["API", "File", "REST", "SOAP", "Portal", "Manual"];
+const PROTOCOLS = ["Data", "REST", "SOAP", "Portal", "Manual"];
 
 const PORTAL_STEPS: { label: string; color: string }[] = [
-  { label: "Register Agency", color: "#1f7fe3" },
+  { label: "Agency Registration", color: "#1f7fe3" },
   { label: "Configure Connector", color: "#ee9212" },
-  { label: "Map Data", color: "#1f7fe3" },
-  { label: "Test in Sandbox", color: "#ee9212" },
-  { label: "Activate", color: "#1aa55f" },
+  { label: "Data Mapping", color: "#1f7fe3" },
+  { label: "Sandbox Testing", color: "#ee9212" },
+  { label: "Activation", color: "#1aa55f" },
   { label: "Monitor & Manage", color: "#1f7fe3" },
 ];
 

@@ -118,8 +118,8 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
   "1/3": {
     title: (
       <>
-        CESS Integrated{" "}
-        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Agencies</span>
+        CESS Integration{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Workflow</span>
       </>
     ),
     titleClass: "text-[length:clamp(15px,min(1.95vw,3.6vh),32px)] tracking-[-0.02em]",
@@ -224,7 +224,7 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
 const TITLE_HIGHLIGHT: Record<string, string> = {
   title: "Tracking & Monitoring",
   problem: "One Project File",
-  assess: "Lifecycle",
+  assess: "Assessment Flow",
   gps: "Mobile App",
   gis: "Map",
   leak: "Management",

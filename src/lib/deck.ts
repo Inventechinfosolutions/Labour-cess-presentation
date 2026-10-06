@@ -15,7 +15,7 @@ export const SCENES: SceneMeta[] = [
     nav: "Gap → File",
     beats: 4,
   },
-  { id: "assess", title: "Project-to-CESS Lifecycle", kicker: "Register · Allot · Inspect · Value · Notify · Monitor", nav: "Assess", beats: 6 },
+  { id: "assess", title: "Project Assessment Flow", kicker: "Register · Allot · Inspect · Value · Notify · Monitor", nav: "Assess", beats: 6 },
   { id: "gps", title: "Field Officer Mobile App", kicker: "Online or offline · Capture · Send · On-spot demand", nav: "GPS", beats: 7 },
   {
     id: "gis",

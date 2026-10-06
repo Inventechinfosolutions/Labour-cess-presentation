@@ -73,8 +73,8 @@ const STAGES: Stage[] = [
   {
     id: "record",
     sub: "Project file opened",
-    label: "Project registration",
-    short: "Registration",
+    label: "Project details",
+    short: "Project Details",
     hint: "One official file on the Central Platform",
     Icon: Buildings,
     who: "Platform",
@@ -200,7 +200,7 @@ const CHALLENGES: { title: string; body: string; Icon: CessIcon }[] = [
 const BEAT_HEAD: readonly { kicker: string; title: string; support: string }[] = [
   {
     kicker: "Government of Karnataka · Labour CESS",
-    title: "Project Registration",
+    title: "Project Details",
     support: "One official project file on the Central Platform. Assessment starts here.",
   },
   {
@@ -720,7 +720,7 @@ function ProjectFileCard({ reduce }: { reduce: boolean }) {
           Step 01 · Platform
         </span>
         <p className="mt-2.5 text-[11px] font-extrabold tracking-[0.16em] text-[#6b849e] uppercase">Assessment case file</p>
-        <h3 className="font-display text-[32px] leading-none font-black tracking-tight text-navy">Project file</h3>
+        <h3 className="font-display text-[32px] leading-none font-black tracking-tight text-navy">Project details</h3>
         <motion.span
           className="mt-2 block h-1 rounded-full bg-teal"
           initial={reduce ? false : { width: 0 }}
