@@ -108,6 +108,53 @@ html { scroll-behavior: smooth; }
 }
 .ul:hover::after { transform: scaleX(1); }
 
+/* Mobile menu (button + full-screen panel are added by motion.js) */
+.menu-btn { display: none; place-content: center; gap: 5px; width: 40px; height: 40px; margin-right: -8px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+.menu-btn span { display: block; width: 22px; height: 1.5px; background: currentColor; transition: width 0.4s var(--ease); }
+.menu-btn span:nth-child(2) { width: 15px; justify-self: end; }
+.menu-btn:hover span:nth-child(2) { width: 22px; }
+@media (max-width: 960px) {
+  .menu-btn { display: grid; }
+}
+
+.menu-open { overflow: hidden; }
+.menu-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 6vw 30px;
+  overflow-y: auto;
+  background: var(--paper, var(--cream, var(--bg, #fbf7f1)));
+  color: var(--maroon, var(--ink));
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-14px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease), visibility 0s linear 0.45s;
+}
+.menu-open .menu-panel { opacity: 1; visibility: visible; transform: none; transition: opacity 0.45s var(--ease), transform 0.45s var(--ease); }
+.menu-top { display: flex; justify-content: space-between; align-items: center; }
+.menu-top img { height: 46px; width: auto; }
+.menu-close { position: relative; width: 44px; height: 44px; margin-right: -10px; border: 0; background: none; color: inherit; cursor: pointer; }
+.menu-close span { position: absolute; left: 11px; right: 11px; top: 50%; height: 1.5px; background: currentColor; transform: rotate(45deg); }
+.menu-close span + span { transform: rotate(-45deg); }
+.menu-links { display: grid; margin: 6vh 0 0; }
+.menu-links a {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.1));
+  font-family: var(--serif, Georgia, serif);
+  font-size: 28px;
+  line-height: 1.2;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.menu-open .menu-links a { opacity: 1; transform: none; transition-delay: calc(var(--i) * 0.05s + 0.12s); }
+.menu-extra { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 26px; font-size: 14px; color: var(--muted, inherit); }
+.menu-extra:empty { display: none; }
+.menu-note { margin: auto 0 0; padding-top: 30px; font-size: 12px; letter-spacing: 0.06em; color: var(--muted, inherit); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }

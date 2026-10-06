@@ -70,6 +70,54 @@
     }, 3200);
   });
 
+  // Mobile menu, built from each design's own header links.
+  const nav = document.querySelector(".site-header nav");
+  const links = nav ? [...nav.querySelectorAll("a.ul")] : [];
+  if (links.length) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "menu-btn";
+    btn.setAttribute("aria-label", "Open menu");
+    btn.setAttribute("aria-expanded", "false");
+    btn.innerHTML = "<span></span><span></span><span></span>";
+    (nav.querySelector(".icons") || nav).append(btn);
+
+    const logo = nav.querySelector(".logo img");
+    const panel = document.createElement("div");
+    panel.className = "menu-panel";
+    panel.innerHTML = `
+      <div class="menu-top">
+        ${logo ? `<img src="${logo.getAttribute("src")}" alt="${logo.alt}" />` : "<span></span>"}
+        <button type="button" class="menu-close" aria-label="Close menu"><span></span><span></span></button>
+      </div>
+      <nav class="menu-links" aria-label="Main"></nav>
+      <div class="menu-extra"></div>
+      <p class="menu-note">Government of Karnataka Initiative · A Heritage Since 1912</p>`;
+    const copy = (a, i) => {
+      const item = document.createElement("a");
+      item.href = a.getAttribute("href");
+      item.textContent = a.textContent.trim();
+      item.style.setProperty("--i", i);
+      return item;
+    };
+    panel.querySelector(".menu-links").append(...links.map(copy));
+    panel.querySelector(".menu-extra").append(...[...document.querySelectorAll(".topbar a.ul")].map(copy));
+    document.body.append(panel);
+
+    const close = panel.querySelector(".menu-close");
+    const setOpen = (open) => {
+      document.body.classList.toggle("menu-open", open);
+      btn.setAttribute("aria-expanded", String(open));
+      panel.inert = !open;
+      (open ? close : btn).focus({ preventScroll: true });
+    };
+    panel.inert = true;
+    btn.addEventListener("click", () => setOpen(true));
+    close.addEventListener("click", () => setOpen(false));
+    panel.addEventListener("click", (e) => e.target.closest(".menu-links a, .menu-extra a") && setOpen(false));
+    addEventListener("keydown", (e) => e.key === "Escape" && document.body.classList.contains("menu-open") && setOpen(false));
+  }
+
   document.querySelectorAll("form[data-subscribe]").forEach((form) =>
     form.addEventListener("submit", (e) => {
       e.preventDefault();
