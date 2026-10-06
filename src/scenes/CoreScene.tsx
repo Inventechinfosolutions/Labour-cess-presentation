@@ -28,7 +28,7 @@ import hubSite from "@/assets/core-hub-site.jpg";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const INK = "#0b2462";
-const CLOSE_BEAT = 8;
+const CLOSE_BEAT = 6;
 
 type OrbitNode = {
   id: string;
@@ -43,7 +43,7 @@ type OrbitNode = {
   angle: number;
 };
 
-/** Eight orbit nodes — beats 1–5 zones, then audit · loop · pillars */
+/** Six orbit nodes, evenly spaced — beats 1–5 zones, then audit */
 const NODES: OrbitNode[] = [
   {
     id: "gov",
@@ -67,12 +67,12 @@ const NODES: OrbitNode[] = [
   {
     id: "doc",
     at: 2,
-    title: "Document & Office Workflow",
-    chip: "Workflow",
+    title: "Other Supporting Modules",
+    chip: "Other Supporting Modules",
     establishes: "Documents, E-Office and appeals on the same file.",
     color: "#8b5cf6",
     Icon: Files,
-    angle: -38,
+    angle: -30,
     metric: "capabilities",
     items: ["DMS", "E-Office", "Inward / Outward", "Appeals", "Grievances", "Exception resolution", "Meetings"],
   },
@@ -84,7 +84,7 @@ const NODES: OrbitNode[] = [
     establishes: "What is owed, collected and remitted.",
     color: "#f59e0b",
     Icon: Wallet,
-    angle: 0,
+    angle: 30,
     metric: "capabilities",
     items: ["Demand", "Collection", "Remittance (30 days)", "Interest on delay", "Old dues brought forward", "Reconciliation", "Accounts / DCB"],
   },
@@ -96,21 +96,30 @@ const NODES: OrbitNode[] = [
     establishes: "Alert → Assign → Follow up → Close.",
     color: "#06b6d4",
     Icon: ShieldCheck,
-    angle: 38,
+    angle: 90,
     metric: "capabilities",
-    items: ["Alerts & escalation", "Assignment", "Follow-up", "Resolution", "Appeals", "Grievances", "Decision support"],
+    items: ["Alerts & escalation", "Assignment", "Follow-up", "Resolution"],
   },
   {
     id: "ext",
     at: 5,
     title: "External Ecosystem",
     chip: "External",
-    establishes: "Portal, remittance at source, KSK and system links.",
+    establishes: "Portal, KSK, treasury, RERA and approval systems.",
     color: "#f43f5e",
     Icon: Plugs,
-    angle: 90,
+    angle: 150,
     metric: "capabilities",
-    items: ["Labour CESS Portal", "Cash counter / QR", "Remittance at source (LCDRS)", "KSK integration", "System links"],
+    items: [
+      "Labour CESS Portal",
+      "Cash counter / QR",
+      "Remittance at source (LCDRS)",
+      "KSK integration",
+      "Khajane 2.0 (Treasury)",
+      "K-RERA",
+      "BBMP · BDA plan approvals",
+      "e-Swathu · Panchatantra",
+    ],
   },
   {
     id: "audit",
@@ -120,7 +129,7 @@ const NODES: OrbitNode[] = [
     establishes: "Who did what — then Alert → Assign → Follow up → Close.",
     color: "#f97316",
     Icon: Scroll,
-    angle: 142,
+    angle: 210,
     metric: "records",
     items: [
       "Who created or changed a project",
@@ -132,36 +141,12 @@ const NODES: OrbitNode[] = [
       "Alert → Assign → Follow up → Close",
     ],
   },
-  {
-    id: "loop",
-    at: 7,
-    title: "Complete Operating Loop",
-    chip: "Full loop",
-    establishes: "Capture through report — one connected departmental platform.",
-    color: "#6366f1",
-    Icon: Stack,
-    angle: 180,
-    metric: "steps",
-    items: ["Capture", "Validate", "Consolidate", "Assess", "Locate", "Map", "Monitor", "Detect", "Act", "Audit", "Report"],
-  },
-  {
-    id: "close",
-    at: 8,
-    title: "Closing Pillars",
-    chip: "Pillars",
-    establishes: "One project. One unified view. Actionable governance.",
-    color: "#10b981",
-    Icon: Lightning,
-    angle: 218,
-    metric: "pillars",
-    items: ["One Project", "One Unified View", "Connected Data", "Field Evidence", "Spatial Context", "CESS Intelligence", "Actionable Governance"],
-  },
 ];
 
 const INTRO = {
   chip: "Operating model",
-  title: "Eight modules. One view.",
-  establishes: "Eight modules work around one common project view.",
+  title: "Six modules. One view.",
+  establishes: "Six modules work around one common project view.",
   color: "#2f7df0",
   Icon: Stack,
   items: NODES.map((n) => n.chip),
@@ -176,9 +161,9 @@ export function CoreScene({ beat, onBeat }: { beat: number; onBeat?: (n: number)
   const [picked, setPicked] = useState<string | null>(null);
   useEffect(() => setPicked(null), [beat]);
 
-  const current = beat >= 1 ? NODES[Math.min(beat, 8) - 1] : null;
+  const current = beat >= 1 ? NODES[Math.min(beat, NODES.length) - 1] : null;
   const shown = (picked ? NODES.find((n) => n.id === picked) : null) ?? current;
-  const lit = Math.min(Math.max(beat, 0), 8);
+  const lit = Math.min(Math.max(beat, 0), NODES.length);
 
   return (
     <div className="h-full min-h-0 text-[#23395f]">
@@ -191,7 +176,7 @@ export function CoreScene({ beat, onBeat }: { beat: number; onBeat?: (n: number)
           <div className="flex items-center justify-end">
             <div className="flex items-center gap-1.5">
               <span className="rounded-full bg-white/95 px-3 py-1.5 text-[9.5px] font-extrabold shadow-[0_2px_0_#dbe6f3] ring-1 ring-white" style={{ color: INK }}>
-                {lit}/8 modules · one view
+                {lit}/{NODES.length} modules · one view
               </span>
               {beat >= CLOSE_BEAT ? (
                 <motion.span
@@ -332,7 +317,7 @@ function Orbit({
 }
 
 function Hub({ d, cx, cy, beat, reduce }: { d: number; cx: number; cy: number; beat: number; reduce: boolean }) {
-  const lit = Math.min(Math.max(beat, 0), 8);
+  const lit = Math.min(Math.max(beat, 0), NODES.length);
   const done = beat >= CLOSE_BEAT;
   return (
     <motion.div
@@ -362,7 +347,7 @@ function Hub({ d, cx, cy, beat, reduce }: { d: number; cx: number; cy: number; b
           <KaMark className="size-7" />
         </span>
         <b className="font-display mt-1 text-[14px] leading-tight font-black drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Central Platform</b>
-        <span className="text-[9px] font-semibold text-[#bae6fd]">{lit}/8 modules · one view</span>
+        <span className="text-[9px] font-semibold text-[#bae6fd]">{lit}/{NODES.length} modules · one view</span>
         <AnimatePresence mode="wait">
           <motion.span
             key={done ? "done" : lit}
@@ -447,7 +432,7 @@ function NodeCard({
           </motion.span>
         ) : null}
       </span>
-      <b className="block truncate text-[11.5px] leading-tight font-black" style={{ color: on ? INK : "#94a3b8" }}>
+      <b className="line-clamp-2 block text-[11.5px] leading-tight font-black" style={{ color: on ? INK : "#94a3b8" }}>
         {node.chip}
       </b>
       <span className="block truncate text-[9px] font-semibold text-[#64748b]">
@@ -492,9 +477,11 @@ function DetailPanel({ node, reduce }: { node: OrbitNode | null; reduce: boolean
                 >
                   {module}
                 </span>
-                <span className="text-[10px] font-extrabold tracking-[0.18em] uppercase" style={{ color }}>
-                  {d.chip}
-                </span>
+                {d.chip !== d.title && (
+                  <span className="text-[10px] font-extrabold tracking-[0.18em] uppercase" style={{ color }}>
+                    {d.chip}
+                  </span>
+                )}
               </span>
               <b className="font-display mt-0.5 block text-[19px] leading-[1.1] font-black" style={{ color: INK }}>
                 {d.title}

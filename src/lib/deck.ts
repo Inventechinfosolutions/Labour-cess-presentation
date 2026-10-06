@@ -25,7 +25,7 @@ export const SCENES: SceneMeta[] = [
     beats: 5,
   },
   { id: "leak", title: "Exception Management", kicker: "Detect · Notify · Assign · Resolve · Verify · Close · Old dues", nav: "Closure", beats: 2 },
-  { id: "core", title: "Complete CESS Management Platform", kicker: "Access · Appeals · KSK · Portal · Remittance at source", nav: "Core", beats: 9 },
+  { id: "core", title: "Complete CESS Management Platform", kicker: "Access · Appeals · KSK · Portal · Remittance at source", nav: "Core", beats: 7 },
   { id: "arch", title: "Architecture, Technology & Security", kicker: "Layers · Stack · Sign-in · Roles · Audit", nav: "Tech", beats: 3 },
   { id: "plan", title: "Project Delivery Milestones", kicker: "SRS · Build · Integrate · Train · AMC", nav: "Plan", beats: 5 },
   { id: "risks", title: "Risks and Their Mitigation", kicker: "Agencies · Rules and data · People and maps · Safety", nav: "Risks", beats: 4 },
@@ -57,12 +57,21 @@ export const CORE = {
   },
   comm: {
     title: "Alerts & Compliance",
-    body: "Alert → Assign → Follow up → Close, plus appeals, grievances and decision support.",
-    items: ["Alerts & escalation", "Assignment", "Follow-up", "Resolution", "Appeals", "Grievances", "Decision support"],
+    body: "Alert → Assign → Follow up → Close.",
+    items: ["Alerts & escalation", "Assignment", "Follow-up", "Resolution"],
   },
   ext: {
     title: "External Systems",
     body: "Labour CESS Portal and remittance-at-source (LCDRS), KSK links, and connections to other government systems.",
-    items: ["Labour CESS Portal", "Cash counter / QR", "Remittance at source (LCDRS)", "KSK integration", "System links (APIs)"],
+    items: [
+      "Labour CESS Portal",
+      "Cash counter / QR",
+      "Remittance at source (LCDRS)",
+      "KSK integration",
+      "Khajane 2.0 (Treasury)",
+      "K-RERA",
+      "BBMP · BDA plan approvals",
+      "e-Swathu · Panchatantra",
+    ],
   },
 } as const;

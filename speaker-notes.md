@@ -514,7 +514,7 @@ M01 lifecycle · M13 payment · remittance tracking · auto/manual reconciliatio
 
 # Scene 7 — Departmental operating model around the common project view
 
-**On screen:** Five zones around the hub · audit trail · exception path · full loop · final pillars
+**On screen:** Five zones around the hub · audit trail · exception path
 
 ### Story — <span style="font-family:Georgia,serif;color:#0e9aa7;">read aloud</span>
 
@@ -525,20 +525,14 @@ The last scene answers: **how does the Department live with this every day?**
 <p class="cue">**⟶ Space** through five zones around the common project view:</p>
 
 1. **Governance & Control** — Role-based access, organisational hierarchy, territory responsibility, permissions by designation, Territory MIS & GIS, department · territory · user. (F01, F02, M02)  
-2. **Document & Office Workflow** — DMS, E-Office, inward/outward, **appeals**, grievances, exception resolution, meetings. (M04, M07, M09, F05)  
+2. **Other Supporting Modules** — DMS, E-Office, inward/outward, **appeals**, grievances, exception resolution, meetings. (M04, M07, M09, F05)  
 3. **Finance & CESS Operations** — Demand, collection, remittance within 30 days, interest on delay, reconciliation, accounts/DCB. (M01, M13)  
-4. **Communication & Compliance** — Alert → Assignment → Follow-up → Resolution, plus appeals/grievances and DSS. (M15, M10)  
-5. **External Ecosystem** — Labour CESS Portal, cash counter/QR, LCDRS, KSK, APIs and connectors. (M11, M14, M06)
+4. **Communication & Compliance** — Alert → Assignment → Follow-up → Resolution. (M15)  
+5. **External Ecosystem** — Labour CESS Portal, cash counter/QR, LCDRS, KSK, Khajane 2.0 (treasury), K-RERA, BBMP and BDA plan approvals, e-Swathu and Panchatantra. (M11, M14, M06)
 
 <p class="cue">**⟶ Space** — Audit trail: who created or changed a project, who assessed, who raised demand, who recorded payment, who uploaded a document, what changed over time. Auditors need this for AG/CAG readiness (F04).</p>
 
 <p class="cue">**⟶ Space** — Exception path again: Alert → Assignment → Follow-up → Resolution — governance, not a dashboard toy.</p>
-
-<p class="cue">**⟶ Space** — The full operating loop: Capture → Validate → Consolidate → Assess → Locate → Map → Monitor → Detect → Act → Audit → Report.</p>
-
-<p class="cue">**⟶ Space** — Close on the pillars:</p>
-
-**One Project · One Unified View · Connected Data · Field Evidence · Spatial Context · CESS Intelligence · Actionable Governance**
 
 Closing line (memorise):
 

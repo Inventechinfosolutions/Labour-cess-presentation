@@ -313,14 +313,16 @@ export function focusFor(id: string): Focus {
 
 export type PhaseId = "assessment" | "demand" | "payment" | "remittance" | "reconciliation" | "closed";
 
-export const PHASES: { id: PhaseId; label: string; short: string; date: string }[] = [
-  { id: "assessment", label: "Assessment", short: "Assess", date: "15 Jan 2025" },
-  { id: "demand", label: "Demand", short: "Demand", date: "15 Jan 2025" },
-  { id: "payment", label: "Payment", short: "Payment", date: "14 Feb 2025" },
-  { id: "remittance", label: "Remittance", short: "Remit", date: "20 Feb 2025" },
-  { id: "reconciliation", label: "Reconciliation", short: "Recon", date: "25 Feb 2025" },
-  { id: "closed", label: "Closed", short: "Closed", date: "28 Feb 2025" },
+export const PHASES: { id: PhaseId; label: string; short: string; date: string; color: string }[] = [
+  { id: "assessment", label: "Assessment", short: "Assess", date: "15 Jan 2025", color: "#8b5cf6" },
+  { id: "demand", label: "Demand", short: "Demand", date: "15 Jan 2025", color: "#ea580c" },
+  { id: "payment", label: "Payment", short: "Payment", date: "14 Feb 2025", color: "#db2777" },
+  { id: "remittance", label: "Remittance", short: "Remit", date: "20 Feb 2025", color: "#0ea5e9" },
+  { id: "reconciliation", label: "Reconciliation", short: "Recon", date: "25 Feb 2025", color: "#ca8a04" },
+  { id: "closed", label: "Closed", short: "Closed", date: "28 Feb 2025", color: "#16a34a" },
 ];
+
+export const PHASE_BY_ID = Object.fromEntries(PHASES.map((ph) => [ph.id, ph])) as Record<PhaseId, (typeof PHASES)[number]>;
 
 export const PHASE_INDEX = Object.fromEntries(PHASES.map((ph, i) => [ph.id, i])) as Record<PhaseId, number>;
 

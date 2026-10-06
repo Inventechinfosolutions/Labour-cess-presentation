@@ -827,12 +827,12 @@
 
 ## SCENE 06 · COMPLETE CESS MANAGEMENT PLATFORM
 
-*Beats: 10 · About 2 min*
+*Beats: 8 · About 2 min*
 
-**Constant on beats 1–9**
+**Constant on beats 1–7**
 
-- The **Central Platform** sits as a hub. Eight module nodes orbit it and light up one per beat.
-- Top right: a counter, **"X/8 modules · one view"**.
+- The **Central Platform** sits as a hub. Six module nodes orbit it and light up one per beat.
+- Top right: a counter, **"X/6 modules · one view"**.
 - Right: a detail panel with 3D icons for the active module.
 - Bottom: **Current Focus → Module 0X · Title — one-line purpose** · *Space · Next*.
 
@@ -842,16 +842,16 @@
 
 **ON SCREEN**
 
-- Hub label: **Operating model**. Panel: **Eight modules. One view.** — *Eight modules work around one common project view.*
-- Module chips: Governance · Workflow · Finance · Compliance · External · Audit trail · Full loop · Pillars.
-- Status bar: *Operating model · 8 modules — Press Space to reveal each module around the Central Platform.*
+- Hub label: **Operating model**. Panel: **Six modules. One view.** — *Six modules work around one common project view.*
+- Module chips: Governance · Other Supporting Modules · Finance · Compliance · External · Audit trail.
+- Status bar: *Operating model · 6 modules — Press Space to reveal each module around the Central Platform.*
 
 **VOICEOVER**
 
 > Finally, the complete CESS management platform.
 >
-> Eight modules work around one common project view.
-> Governance. Workflow. Finance. Compliance. External links. Audit trail. The full loop. And the closing pillars.
+> Six modules work around one common project view.
+> Governance. Supporting modules. Finance. Compliance. External systems. And the audit trail.
 
 **[Space]**
 
@@ -872,7 +872,7 @@
 
 **[Space]**
 
-### Beat 3 — Module 02 · Document & Office Workflow
+### Beat 3 — Module 02 · Other Supporting Modules
 
 **ON SCREEN**
 
@@ -881,7 +881,7 @@
 
 **VOICEOVER**
 
-> Module two — Document and Office Workflow.
+> Module two — Other Supporting Modules.
 > Documents, E-Office and appeals sit on the same file.
 > Document store. E-Office. Inward and outward.
 > Appeals. Grievances. Exception resolution. And meetings.
@@ -909,14 +909,13 @@
 **ON SCREEN**
 
 - *Alert → Assign → Follow up → Close.*
-- Alerts & escalation · Assignment · Follow-up · Resolution · Decision support.
+- Alerts & escalation · Assignment · Follow-up · Resolution.
 
 **VOICEOVER**
 
 > Module four — Communication and Compliance.
 > Alert. Assign. Follow up. Close.
-> Alerts and escalation. Assignment. Follow-up. Resolution.
-> And decision support for senior officers.
+> Alerts and escalation. Assignment. Follow-up. And resolution.
 
 **[Space]**
 
@@ -924,8 +923,8 @@
 
 **ON SCREEN**
 
-- *Portal, remittance at source, KSK and system links.*
-- Labour CESS Portal · Cash counter / QR · Remittance at source (LCDRS) · KSK integration · System links.
+- *Portal, KSK, treasury, RERA and approval systems.*
+- Labour CESS Portal · Cash counter / QR · Remittance at source (LCDRS) · KSK integration · Khajane 2.0 (Treasury) · K-RERA · BBMP · BDA plan approvals · e-Swathu · Panchatantra.
 
 **VOICEOVER**
 
@@ -934,7 +933,10 @@
 > Cash counter and QR payment.
 > Remittance at source, through LCDRS.
 > Integration with KSK.
-> And links to other government systems.
+> Khajane 2.0, the State treasury.
+> K-RERA for registered projects.
+> BBMP and BDA plan approvals.
+> And e-Swathu and Panchatantra for rural property records.
 
 **[Space]**
 
@@ -942,6 +944,7 @@
 
 **ON SCREEN**
 
+- All six modules are lit. The hub turns to **Complete** and green **Complete** badges appear.
 - *Who did what — then Alert → Assign → Follow up → Close.*
 - Who created or changed a project · Who performed an assessment · Who generated a demand · Who recorded a payment · Who uploaded a document · What changed over time · Alert → Assign → Follow up → Close.
 
@@ -956,52 +959,13 @@
 > Who uploaded a document.
 > And what changed over time.
 > Then the same path follows. Alert. Assign. Follow up. Close.
-
-**[Space]**
-
-### Beat 8 — Module 07 · Complete Operating Loop
-
-**ON SCREEN**
-
-- *Capture through report — one connected departmental platform.*
-- Capture · Validate · Consolidate · Assess · Locate · Map · Monitor · Detect · Act · Audit · Report.
-
-**VOICEOVER**
-
-> Module seven — the Complete Operating Loop.
-> From capture to report, on one connected departmental platform.
-> Capture. Validate. Consolidate. Assess.
-> Locate. Map. Monitor.
-> Detect. Act. Audit. Report.
-
-**[Space]**
-
-### Beat 9 — Module 08 · Closing Pillars
-
-**ON SCREEN**
-
-- All eight modules are lit. The hub turns to **Complete** and green **Complete** badges appear.
-- *One project. One unified view. Actionable governance.*
-- One Project · One Unified View · Connected Data · Field Evidence · Spatial Context · CESS Intelligence · Actionable Governance.
-
-**VOICEOVER**
-
-> Module eight — the closing pillars.
 >
-> One project.
-> One unified view.
-> Connected data.
-> Field evidence.
-> Spatial context.
-> CESS intelligence.
-> And actionable governance.
->
-> All eight modules. One Central Platform.
+> All six modules. One Central Platform.
 > In support of CESS administration and worker welfare in Karnataka.
 
 **[Space]**
 
-### Beat 10 — Thank You
+### Beat 8 — Thank You
 
 **ON SCREEN**
 
@@ -1028,8 +992,8 @@
 | 03 · Field Officer Mobile App            | 5      | 2:15         |
 | 04 · Territory Map                       | 5      | 2:00         |
 | 05 · Exception Management                | 1      | 1:15         |
-| 06 · Complete CESS Management Platform   | 10     | 2:00         |
-| **Total**                                | **31** | **≈ 12 min** |
+| 06 · Complete CESS Management Platform   | 8      | 2:00         |
+| **Total**                                | **29** | **≈ 12 min** |
 
 
 ---

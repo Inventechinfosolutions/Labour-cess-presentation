@@ -220,7 +220,7 @@ const BEAT_HEAD: readonly { kicker: string; title: string; support: string }[] =
   },
   {
     kicker: "Assessment desk",
-    title: "Demand Notice",
+    title: "Demand Notice Management",
     support: "A formal demand notice is issued on the project file.",
   },
   {
@@ -805,7 +805,7 @@ const DESK_CASE_ART: Record<number, { src: string; alt: string }> = {
   },
   [B.demand]: {
     src: assessDemandPoster,
-    alt: "Demand notice tracking — notice counts by status, demand notice list, notice details with status timeline, and the demand notice lifecycle",
+    alt: "Demand notice management — notice counts by status, demand notice list, notice details with status timeline, and the demand notice lifecycle",
   },
   [B.status]: {
     src: assessStatus3d,

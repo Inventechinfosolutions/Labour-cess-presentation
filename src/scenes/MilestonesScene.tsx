@@ -95,7 +95,7 @@ const MILESTONES: { n: number; days: string; from: ReactNode; color: string; art
     modules: [
       { n: 10, label: "Appeals", Icon: Scales },
       { n: 11, label: "Smart Middleware", Icon: ArrowsSplit, star: true },
-      { n: 12, label: "Accounts", Icon: Wallet, note: "Old records and old dues moved in" },
+      { n: 12, label: "Accounts", Icon: Wallet },
       { n: 13, label: "Back-office GIS Analytics", Icon: MapPin },
       { n: 14, label: "Auto Alerts & Notification", Icon: Bell },
       { n: 15, label: "Reports & Decision Support", Icon: ChartBar },

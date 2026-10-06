@@ -26,7 +26,7 @@ import {
 } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { TileLayer, type TileSize, type TileView } from "@/components/TileLayer";
-import { project, tileZoomFor } from "@/scenes/gisTerritoryData";
+import { PHASE_BY_ID, PHASES, project, STATUS_BY_ID, tileZoomFor, type PhaseId, type StatusId } from "@/scenes/gisTerritoryData";
 import karnatakaEmblem from "@/assets/karnataka-emblem.png";
 import abcSite from "@/assets/abc-site.png";
 
@@ -46,15 +46,6 @@ const OUTLINE_LL: Pt[] = [
   [15.85, 74.1], [16.05, 74.35], [16.4, 74.55], [16.75, 74.9], [17.1, 75.3], [17.45, 75.85], [17.7, 76.25],
   [17.95, 76.55], [18.15, 76.9],
 ];
-type PinStatus = "completed" | "progress" | "pending" | "due";
-
-const PIN_STATUS: Record<PinStatus, { label: string; color: string }> = {
-  completed: { label: "Completed", color: "#16a34a" },
-  progress: { label: "In Progress", color: "#f59e0b" },
-  pending: { label: "Pending", color: "#ef4444" },
-  due: { label: "Assessment Due", color: "#2563eb" },
-};
-
 const MAP_PROJECTS: {
   id: string;
   name: string;
@@ -62,35 +53,48 @@ const MAP_PROJECTS: {
   district: string;
   lat: number;
   lng: number;
-  status: PinStatus;
+  status: StatusId;
   demand: string;
   collected: string;
 }[] = [
-  { id: "PRJ-000245", name: "ABC Commercial Complex", place: "Marathahalli, Bengaluru", district: "Bengaluru Urban", lat: 12.96, lng: 77.7, status: "progress", demand: "₹ 20,00,000", collected: "₹ 0 · Payment due" },
-  { id: "PRJ-000321", name: "Metro Retail Building", place: "Peenya, Bengaluru", district: "Bengaluru Urban", lat: 13.03, lng: 77.52, status: "pending", demand: "₹ 12,40,000", collected: "₹ 0" },
-  { id: "PRJ-000198", name: "Tech Park Phase 2", place: "Whitefield, Bengaluru", district: "Bengaluru Urban", lat: 12.9, lng: 77.78, status: "completed", demand: "₹ 81,00,000", collected: "₹ 81,00,000" },
-  { id: "PRJ-000412", name: "Mysuru Heritage Mall", place: "Hebbal, Mysuru", district: "Mysuru", lat: 12.3, lng: 76.62, status: "completed", demand: "₹ 18,20,000", collected: "₹ 18,20,000" },
-  { id: "PRJ-000433", name: "Belagavi Textile Park", place: "Udyambag, Belagavi", district: "Belagavi", lat: 15.85, lng: 74.5, status: "progress", demand: "₹ 26,50,000", collected: "₹ 14,00,000" },
-  { id: "PRJ-000451", name: "Hubballi Logistics Hub", place: "Gokul Road, Hubballi", district: "Dharwad", lat: 15.35, lng: 75.12, status: "due", demand: "Assessment due", collected: "—" },
-  { id: "PRJ-000468", name: "Kalaburagi Medical Block", place: "Sedam Road, Kalaburagi", district: "Kalaburagi", lat: 17.33, lng: 76.83, status: "completed", demand: "₹ 9,80,000", collected: "₹ 9,80,000" },
-  { id: "PRJ-000472", name: "Mangaluru Port Towers", place: "Panambur, Mangaluru", district: "Dakshina Kannada", lat: 12.92, lng: 74.86, status: "progress", demand: "₹ 32,00,000", collected: "₹ 20,00,000" },
-  { id: "PRJ-000485", name: "Shivamogga Civic Centre", place: "Vinoba Nagar, Shivamogga", district: "Shivamogga", lat: 13.93, lng: 75.57, status: "completed", demand: "₹ 7,60,000", collected: "₹ 7,60,000" },
-  { id: "PRJ-000497", name: "Ballari Steel Housing", place: "Toranagallu, Ballari", district: "Ballari", lat: 15.18, lng: 76.7, status: "pending", demand: "₹ 15,30,000", collected: "₹ 0" },
-  { id: "PRJ-000503", name: "Tumakuru Industrial Shed", place: "Vasanthanarasapura", district: "Tumakuru", lat: 13.4, lng: 77.1, status: "due", demand: "Assessment due", collected: "—" },
-  { id: "PRJ-000511", name: "Vijayapura Solar Campus", place: "Athani Road, Vijayapura", district: "Vijayapura", lat: 16.83, lng: 75.7, status: "completed", demand: "₹ 11,10,000", collected: "₹ 11,10,000" },
-  { id: "PRJ-000526", name: "Udupi Coastal Resort", place: "Malpe, Udupi", district: "Udupi", lat: 13.35, lng: 74.75, status: "progress", demand: "₹ 8,40,000", collected: "₹ 4,00,000" },
-  { id: "PRJ-000534", name: "Hassan Agro Market", place: "BM Road, Hassan", district: "Hassan", lat: 13.0, lng: 76.1, status: "completed", demand: "₹ 5,90,000", collected: "₹ 5,90,000" },
-  { id: "PRJ-000547", name: "Davanagere Textile Mill", place: "PB Road, Davanagere", district: "Davanagere", lat: 14.46, lng: 75.92, status: "pending", demand: "₹ 6,70,000", collected: "₹ 0" },
-  { id: "PRJ-000552", name: "Chitradurga Wind Yard", place: "Hiriyur, Chitradurga", district: "Chitradurga", lat: 14.0, lng: 76.6, status: "completed", demand: "₹ 4,40,000", collected: "₹ 4,40,000" },
-  { id: "PRJ-000561", name: "Bidar Aero Housing", place: "Naubad, Bidar", district: "Bidar", lat: 17.92, lng: 77.52, status: "progress", demand: "₹ 6,10,000", collected: "₹ 3,00,000" },
-  { id: "PRJ-000574", name: "Raichur Power Colony", place: "Shaktinagar, Raichur", district: "Raichur", lat: 16.2, lng: 77.35, status: "due", demand: "Assessment due", collected: "—" },
-  { id: "PRJ-000588", name: "Mandya Sugar Complex", place: "Maddur, Mandya", district: "Mandya", lat: 12.58, lng: 76.9, status: "completed", demand: "₹ 3,80,000", collected: "₹ 3,80,000" },
-  { id: "PRJ-000592", name: "Kolar Gold Township", place: "KGF, Kolar", district: "Kolar", lat: 12.95, lng: 78.27, status: "pending", demand: "₹ 5,20,000", collected: "₹ 0" },
-  { id: "PRJ-000603", name: "Karwar Naval Housing", place: "Karwar, Uttara Kannada", district: "Uttara Kannada", lat: 14.8, lng: 74.2, status: "completed", demand: "₹ 9,90,000", collected: "₹ 9,90,000" },
-  { id: "PRJ-000617", name: "Gadag Wind Park", place: "Mundargi, Gadag", district: "Gadag", lat: 15.3, lng: 75.75, status: "progress", demand: "₹ 4,20,000", collected: "₹ 2,00,000" },
-  { id: "PRJ-000629", name: "Devanahalli Aero City", place: "Devanahalli", district: "Bengaluru Rural", lat: 13.25, lng: 77.7, status: "due", demand: "Assessment due", collected: "—" },
-  { id: "PRJ-000634", name: "Madikeri Hill Resort", place: "Madikeri, Kodagu", district: "Kodagu", lat: 12.42, lng: 75.74, status: "completed", demand: "₹ 3,10,000", collected: "₹ 3,10,000" },
+  { id: "PRJ-000245", name: "ABC Commercial Complex", place: "Marathahalli, Bengaluru", district: "Bengaluru Urban", lat: 12.96, lng: 77.7, status: "notice-issued", demand: "₹ 20,00,000", collected: "₹ 0 · Payment due" },
+  { id: "PRJ-000321", name: "Metro Retail Building", place: "Peenya, Bengaluru", district: "Bengaluru Urban", lat: 13.03, lng: 77.52, status: "assess-pending", demand: "Not yet assessed", collected: "—" },
+  { id: "PRJ-000198", name: "Tech Park Phase 2", place: "Whitefield, Bengaluru", district: "Bengaluru Urban", lat: 12.9, lng: 77.78, status: "closed", demand: "₹ 81,00,000", collected: "₹ 81,00,000" },
+  { id: "PRJ-000412", name: "Mysuru Heritage Mall", place: "Hebbal, Mysuru", district: "Mysuru", lat: 12.3, lng: 76.62, status: "closed", demand: "₹ 18,20,000", collected: "₹ 18,20,000" },
+  { id: "PRJ-000433", name: "Belagavi Textile Park", place: "Udyambag, Belagavi", district: "Belagavi", lat: 15.85, lng: 74.5, status: "payment-due", demand: "₹ 26,50,000", collected: "₹ 14,00,000" },
+  { id: "PRJ-000451", name: "Hubballi Logistics Hub", place: "Gokul Road, Hubballi", district: "Dharwad", lat: 15.35, lng: 75.12, status: "assess-progress", demand: "Assessment underway", collected: "—" },
+  { id: "PRJ-000468", name: "Kalaburagi Medical Block", place: "Sedam Road, Kalaburagi", district: "Kalaburagi", lat: 17.33, lng: 76.83, status: "reconciled", demand: "₹ 9,80,000", collected: "₹ 9,80,000" },
+  { id: "PRJ-000472", name: "Mangaluru Port Towers", place: "Panambur, Mangaluru", district: "Dakshina Kannada", lat: 12.92, lng: 74.86, status: "remit-pending", demand: "₹ 32,00,000", collected: "₹ 32,00,000" },
+  { id: "PRJ-000485", name: "Shivamogga Civic Centre", place: "Vinoba Nagar, Shivamogga", district: "Shivamogga", lat: 13.93, lng: 75.57, status: "closed", demand: "₹ 7,60,000", collected: "₹ 7,60,000" },
+  { id: "PRJ-000497", name: "Ballari Steel Housing", place: "Toranagallu, Ballari", district: "Ballari", lat: 15.18, lng: 76.7, status: "demand-generated", demand: "₹ 15,30,000", collected: "₹ 0" },
+  { id: "PRJ-000503", name: "Tumakuru Industrial Shed", place: "Vasanthanarasapura", district: "Tumakuru", lat: 13.4, lng: 77.1, status: "assess-pending", demand: "Not yet assessed", collected: "—" },
+  { id: "PRJ-000511", name: "Vijayapura Solar Campus", place: "Athani Road, Vijayapura", district: "Vijayapura", lat: 16.83, lng: 75.7, status: "under-recon", demand: "₹ 11,10,000", collected: "₹ 11,10,000" },
+  { id: "PRJ-000526", name: "Udupi Coastal Resort", place: "Malpe, Udupi", district: "Udupi", lat: 13.35, lng: 74.75, status: "cess-deducted", demand: "₹ 8,40,000", collected: "₹ 8,40,000 · At source" },
+  { id: "PRJ-000534", name: "Hassan Agro Market", place: "BM Road, Hassan", district: "Hassan", lat: 13.0, lng: 76.1, status: "closed", demand: "₹ 5,90,000", collected: "₹ 5,90,000" },
+  { id: "PRJ-000547", name: "Davanagere Textile Mill", place: "PB Road, Davanagere", district: "Davanagere", lat: 14.46, lng: 75.92, status: "notice-issued", demand: "₹ 6,70,000", collected: "₹ 0" },
+  { id: "PRJ-000552", name: "Chitradurga Wind Yard", place: "Hiriyur, Chitradurga", district: "Chitradurga", lat: 14.0, lng: 76.6, status: "closed", demand: "₹ 4,40,000", collected: "₹ 4,40,000" },
+  { id: "PRJ-000561", name: "Bidar Aero Housing", place: "Naubad, Bidar", district: "Bidar", lat: 17.92, lng: 77.52, status: "remit-overdue", demand: "₹ 6,10,000", collected: "₹ 6,10,000 · Not remitted" },
+  { id: "PRJ-000574", name: "Raichur Power Colony", place: "Shaktinagar, Raichur", district: "Raichur", lat: 16.2, lng: 77.35, status: "assess-pending", demand: "Not yet assessed", collected: "—" },
+  { id: "PRJ-000588", name: "Mandya Sugar Complex", place: "Maddur, Mandya", district: "Mandya", lat: 12.58, lng: 76.9, status: "remit-received", demand: "₹ 3,80,000", collected: "₹ 3,80,000" },
+  { id: "PRJ-000592", name: "Kolar Gold Township", place: "KGF, Kolar", district: "Kolar", lat: 12.95, lng: 78.27, status: "demand-generated", demand: "₹ 5,20,000", collected: "₹ 0" },
+  { id: "PRJ-000603", name: "Karwar Naval Housing", place: "Karwar, Uttara Kannada", district: "Uttara Kannada", lat: 14.8, lng: 74.2, status: "discrepancy", demand: "₹ 9,90,000", collected: "₹ 8,40,000 · Mismatch" },
+  { id: "PRJ-000617", name: "Gadag Wind Park", place: "Mundargi, Gadag", district: "Gadag", lat: 15.3, lng: 75.75, status: "payment-due", demand: "₹ 4,20,000", collected: "₹ 2,00,000" },
+  { id: "PRJ-000629", name: "Devanahalli Aero City", place: "Devanahalli", district: "Bengaluru Rural", lat: 13.25, lng: 77.7, status: "assess-progress", demand: "Assessment underway", collected: "—" },
+  { id: "PRJ-000634", name: "Madikeri Hill Resort", place: "Madikeri, Kodagu", district: "Kodagu", lat: 12.42, lng: 75.74, status: "closed", demand: "₹ 3,10,000", collected: "₹ 3,10,000" },
 ];
+
+const pinColor = (id: StatusId) => PHASE_BY_ID[STATUS_BY_ID[id].phase].color;
+
+/** State-wide project counts per lifecycle phase; Assessment + later phases = Total Projects (12,846). */
+const PHASE_COUNTS: Record<PhaseId, number> = {
+  assessment: 3904,
+  demand: 1120,
+  payment: 1486,
+  remittance: 1062,
+  reconciliation: 738,
+  closed: 4536,
+};
+const PHASE_TOTAL = Object.values(PHASE_COUNTS).reduce((a, b) => a + b, 0);
 
 const NAV: { label: string; Icon: CessIcon; active?: boolean }[] = [
   { label: "Dashboard", Icon: House, active: true },
@@ -453,12 +457,15 @@ function GisDistribution({ reduce }: { reduce: boolean }) {
                   <g transform={`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${on ? 0.95 : 0.66})`}>
                     <path
                       d={MINI_PIN}
-                      fill={PIN_STATUS[p.status].color}
+                      fill={pinColor(p.status)}
                       stroke="#ffffff"
                       strokeWidth="2"
                       filter="drop-shadow(0 2px 2px rgba(7,20,51,0.35))"
                     />
                     <circle cx="0" cy="-15" r="3.4" fill="#ffffff" />
+                    {STATUS_BY_ID[p.status].exception ? (
+                      <circle cx="0" cy="-15" r="12.5" fill="none" stroke="#dc2626" strokeWidth="2.2" strokeDasharray="3 2" />
+                    ) : null}
                   </g>
                 </motion.g>
               );
@@ -470,7 +477,7 @@ function GisDistribution({ reduce }: { reduce: boolean }) {
                 cx={sx}
                 cy={sy - 14}
                 fill="none"
-                stroke={PIN_STATUS[sel.status].color}
+                stroke={pinColor(sel.status)}
                 strokeWidth="2"
                 animate={{ r: [8, 20], opacity: [0.75, 0] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
@@ -494,12 +501,16 @@ function GisDistribution({ reduce }: { reduce: boolean }) {
       </div>
 
       <div className="absolute bottom-1.5 left-1.5 w-[102px] rounded-md bg-white/95 px-1.5 py-1 text-[8.5px] font-semibold whitespace-nowrap text-navy shadow-sm ring-1 ring-navy/10">
-        {(Object.keys(PIN_STATUS) as PinStatus[]).map((k) => (
-          <div key={k} className="flex items-center gap-1.5 py-px">
-            <span className="size-2 rounded-full" style={{ background: PIN_STATUS[k].color }} />
-            {PIN_STATUS[k].label}
+        {PHASES.map((ph) => (
+          <div key={ph.id} className="flex items-center gap-1.5 py-px">
+            <span className="size-2 rounded-full" style={{ background: ph.color }} />
+            {ph.label}
           </div>
         ))}
+        <div className="flex items-center gap-1.5 py-px text-[#b91c1c]">
+          <span className="size-2 rounded-full border-[1.5px] border-dashed border-[#dc2626]" />
+          Exception
+        </div>
         <div className="flex items-center gap-1.5 py-px">
           <span className="h-0 w-2.5 border-t-2 border-dashed border-[#1476e8]" />
           State Boundary
@@ -536,15 +547,16 @@ function GisDistribution({ reduce }: { reduce: boolean }) {
               <b className="block truncate text-[10px] leading-tight text-navy">{sel.name}</b>
               <span
                 className="mt-0.5 inline-flex items-center gap-1 rounded-full px-1.5 py-px text-[8.5px] font-bold text-white"
-                style={{ background: PIN_STATUS[sel.status].color }}
+                style={{ background: STATUS_BY_ID[sel.status].color }}
               >
-                {PIN_STATUS[sel.status].label}
+                {STATUS_BY_ID[sel.status].label}
               </span>
             </div>
           </div>
           <dl className="mt-1 grid grid-cols-[58px_minmax(0,1fr)] gap-y-px text-[8.5px]">
             {[
               ["Project ID", sel.id],
+              ["Stage", PHASE_BY_ID[STATUS_BY_ID[sel.status].phase].label],
               ["Location", sel.place],
               ["CESS Demand", sel.demand],
               ["Collected", sel.collected],
@@ -613,28 +625,30 @@ function Donut({
 }
 
 function StatusDonut({ reduce }: { reduce: boolean }) {
-  const rows = [
-    { label: "Completed", value: 8942, pct: "70%", color: "#16a34a" },
-    { label: "In Progress", value: 2156, pct: "17%", color: "#f59e0b" },
-    { label: "Pending", value: 1748, pct: "14%", color: "#ef4444" },
-  ];
+  const rows = PHASES.map((ph) => ({ label: ph.label, value: PHASE_COUNTS[ph.id], color: ph.color }));
   return (
     <div className="flex h-full items-center gap-3">
       <Donut segments={rows} size={104} thickness={16} reduce={reduce}>
         <div className="leading-tight">
-          <b className="font-display block text-[15px] text-navy">12,846</b>
+          <b className="font-display block text-[15px] text-navy">{PHASE_TOTAL.toLocaleString("en-IN")}</b>
           <span className="text-[9px] text-navy/60">Projects</span>
         </div>
       </Donut>
-      <ul className="flex min-w-0 flex-1 flex-col gap-1.5 text-[10px]">
+      <ul className="flex min-w-0 flex-1 flex-col gap-[3px] text-[9.5px]">
         {rows.map((r) => (
           <li key={r.label} className="flex items-center gap-1.5">
             <span className="size-2.5 shrink-0 rounded-full" style={{ background: r.color }} />
-            <span className="min-w-0 flex-1 text-navy/80">{r.label}</span>
+            <span className="min-w-0 flex-1 truncate text-navy/80">{r.label}</span>
             <b className="text-navy">{r.value.toLocaleString("en-IN")}</b>
-            <span className="w-8 text-right text-navy/55">({r.pct})</span>
+            <span className="w-8 text-right text-navy/55">({Math.round((r.value / PHASE_TOTAL) * 100)}%)</span>
           </li>
         ))}
+        <li className="mt-0.5 flex items-center gap-1.5 border-t border-navy/8 pt-1 text-[#b91c1c]">
+          <WarningCircle weight="fill" className="size-2.5 shrink-0" />
+          <span className="min-w-0 flex-1 truncate">Exceptions</span>
+          <b>452</b>
+          <span className="w-8" />
+        </li>
       </ul>
     </div>
   );

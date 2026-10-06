@@ -34,7 +34,6 @@ import {
   Scroll,
   ShieldCheck,
   Stack,
-  TreeStructure,
   User,
   UsersThree,
 } from "@/lib/icons";
@@ -161,7 +160,7 @@ const AGENCIES: Item[] = [
 const STACK: { name: string; desc: string; items: string[]; badge?: string; Icon: CessIcon; color: string }[] = [
   { name: "Frontend", desc: "Modern & responsive user experience", items: ["React", "Vite", "TanStack (Query / Router / Table)", "Tailwind CSS", "shadcn/ui", "Zod validation"], Icon: Monitor, color: "#1d66dc" },
   { name: "Backend", desc: "Robust microservices and event-driven", items: ["Java", "Spring Boot microservices", "Keycloak (IAM)", "MySQL", "Redis", "Kafka"], Icon: GearSix, color: "#6b35d6" },
-  { name: "Mobile", desc: "Field operations and inspector tools", items: ["Field-inspector assessment app", "Board-staff app", "GPS, image & video capture", "Offline"], Icon: DeviceMobile, color: "#0d9488" },
+  { name: "Mobile", desc: "One cross-platform app for field officers", items: ["React Native", "TypeScript", "Android & iOS", "SQLite (offline store)", "Device GPS & camera", "Background sync"], Icon: DeviceMobile, color: "#0d9488" },
   { name: "Platform", desc: "Containerised and scalable deployment", items: ["Kubernetes", "Containerised", "CI/CD", "Deployed on Karnataka SDC + DR"], badge: "SDC + DR", Icon: Cube, color: "#e8650a" },
   { name: "Security", desc: "Identity, access control and data protection", items: ["OIDC / OAuth2", "JWT", "RBAC", "Encryption (rest & transit)", "Full audit"], badge: "IT Act compliant", Icon: ShieldCheck, color: "#e11d48" },
 ];
@@ -180,12 +179,6 @@ const POST_MODEL: Node[] = [
   { label: "Post / Designation", note: "Scope from territory + department", Icon: IdentificationCard, color: "#e11d48" },
   { label: "Role", Icon: UsersThree, color: "#e8650a" },
   { label: "Permissions", Icon: ShieldCheck, color: "#1d66dc" },
-];
-
-const BADGES: { label: string; note: string; Icon: CessIcon }[] = [
-  { label: "ALC/LO Officer Mapping", note: "KSK-aligned", Icon: TreeStructure },
-  { label: "Immutable Audit", note: "Timestamped", Icon: Scroll },
-  { label: "IT Act Compliant", note: "Secure & Governed", Icon: Scales },
 ];
 
 const FACTS: Item[] = [
@@ -631,26 +624,6 @@ function SecurityPanel({ reduce }: { reduce: boolean }) {
             reduce={reduce}
           />
         </div>
-      </div>
-
-      <div className="grid shrink-0 grid-cols-3 gap-x-[2%]">
-        {BADGES.map((b, k) => (
-          <motion.div
-            key={b.label}
-            initial={reduce ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.9 + k * 0.08, ease }}
-            className="flex items-center gap-[0.5em] rounded-xl bg-[linear-gradient(135deg,#fffaf0,#fff2d6)] px-[0.6em] py-[0.35em] ring-1 ring-[#f0d89a]"
-          >
-            <span className="grid size-[2em] shrink-0 place-items-center rounded-lg text-white" style={{ background: `linear-gradient(135deg, #e0a83a, ${GOLD})` }}>
-              <b.Icon weight="fill" className="size-[55%]" />
-            </span>
-            <span className="min-w-0 leading-tight">
-              <span className="font-display block text-[length:var(--gs-12)] font-extrabold text-[#6b4a05]">{b.label}</span>
-              <span className="block text-[length:var(--gs-12)] font-semibold text-[#8a6a2a]">{b.note}</span>
-            </span>
-          </motion.div>
-        ))}
       </div>
     </div>
   );
