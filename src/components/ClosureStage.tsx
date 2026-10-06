@@ -184,8 +184,8 @@ export function ClosureStage({ old = false }: { old?: boolean }) {
   const active = useCycle(reduce);
 
   return (
-    <div className="relative grid h-full min-h-0 grid-rows-[minmax(0,40fr)_minmax(0,50fr)_auto] gap-3.5 text-[#23395f]">
-      <div key={old ? "old" : "now"} className="grid min-h-0 grid-cols-[minmax(0,1.32fr)_34px_minmax(0,0.92fr)] items-stretch">
+    <div className="relative grid h-full min-h-0 grid-rows-[minmax(0,57fr)_minmax(0,33fr)_auto] gap-2 text-[#23395f]">
+      <div key={old ? "old" : "now"} className="grid min-h-0 grid-cols-[minmax(0,1.42fr)_28px_minmax(0,0.86fr)] items-stretch">
         {old ? <OldDuesCard reduce={reduce} /> : <DashboardCard reduce={reduce} />}
         <FlowArrow reduce={reduce} />
         {old ? <AgencyDuesCard reduce={reduce} /> : <DetailsCard reduce={reduce} />}
@@ -268,7 +268,7 @@ function Card({ children, className, delay, reduce, from = "left" }: { children:
 
 function DashboardCard({ reduce }: { reduce: boolean }) {
   return (
-    <Card reduce={reduce} delay={0} className="grid grid-cols-[136px_minmax(0,1fr)]">
+    <Card reduce={reduce} delay={0} className="grid grid-cols-[132px_minmax(0,1fr)]">
       <Sidebar items={NAV} active="Dashboard" reduce={reduce} />
       <DashboardMain reduce={reduce} />
     </Card>
@@ -309,34 +309,36 @@ function Sidebar({ items, active, reduce }: { items: typeof NAV; active: string;
   );
 }
 
+const DASH_COLS = "grid-cols-[minmax(0,1.7fr)_minmax(0,0.42fr)_minmax(0,0.82fr)_minmax(0,0.58fr)_minmax(0,0.38fr)]";
+
 function DashboardMain({ reduce }: { reduce: boolean }) {
   return (
-      <div className="flex min-h-0 flex-col gap-2 p-2.5">
+      <div className="flex min-h-0 flex-col gap-1.5 p-2">
         <header className="flex items-center justify-between gap-2">
-          <h2 className="text-[13px] font-black" style={{ color: INK }}>
+          <h2 className="text-[17px] leading-none font-black" style={{ color: INK }}>
             CESS Compliance Dashboard
           </h2>
-          <span className="inline-flex items-center gap-1.5 rounded-lg bg-white px-2 py-1 text-[9px] font-bold ring-1 ring-[#dbe7f5]" style={{ color: INK }}>
-            <CalendarBlank weight="bold" className="size-3 text-[#2f7df0]" />
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-white px-2 py-1 text-[12px] leading-none font-bold ring-1 ring-[#dbe7f5]" style={{ color: INK }}>
+            <CalendarBlank weight="bold" className="size-3.5 text-[#2f7df0]" />
             01 Apr 2024 – 30 Sep 2025
-            <CaretDown weight="bold" className="size-2.5" />
+            <CaretDown weight="bold" className="size-3" />
           </span>
         </header>
 
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-1.5">
           {KPIS.map((k, i) => (
             <motion.div
               key={k.title}
-              className="flex items-center gap-2 rounded-xl px-2 py-1.5"
+              className="flex min-w-0 items-center gap-1 rounded-xl px-1 py-1.5"
               style={{ background: k.hot ? "linear-gradient(180deg,#fff5f5,#ffe6e7)" : "#fff", boxShadow: slab3D(k.c) }}
               initial={reduce ? false : { opacity: 0, y: 10, rotateX: -25 }}
               animate={{ opacity: 1, y: 0, rotateX: 0 }}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease }}
             >
-              <Orb3D c={k.c} Icon={k.Icon} className="size-7" iconClassName="size-3.5" />
-              <span className="min-w-0 leading-tight">
-                <span className="block truncate text-[8.5px] font-semibold text-[#64748b]">{k.title}</span>
-                <b className="block text-[15px] font-black" style={{ color: k.hot ? RED : INK }}>
+              <Orb3D c={k.c} Icon={k.Icon} className="size-7" iconClassName="size-4" />
+              <span className="min-w-0 leading-none">
+                <span className="block text-[11.5px] leading-tight font-bold tracking-tight whitespace-nowrap text-[#475569]">{k.title}</span>
+                <b className="mt-0.5 block text-[19px] leading-none font-black tracking-tight" style={{ color: k.hot ? RED : INK }}>
                   <CountText value={k.value} reduce={reduce} delay={0.3 + i * 0.08} />
                 </b>
               </span>
@@ -344,24 +346,26 @@ function DashboardMain({ reduce }: { reduce: boolean }) {
           ))}
         </div>
 
-        <div className="flex min-h-0 flex-1 flex-col rounded-xl bg-white/90 p-2 ring-1 ring-[#e2ecf7]">
-          <div className="mb-1.5 flex items-center justify-between gap-2">
-            <b className="text-[11.5px] font-black" style={{ color: INK }}>
+        <div className="flex min-h-0 flex-1 flex-col rounded-xl bg-white/90 px-2 pt-1.5 pb-1 ring-1 ring-[#e2ecf7]">
+          <div className="mb-1 flex items-center gap-2">
+            <b className="shrink-0 text-[14px] leading-none font-black" style={{ color: INK }}>
               Recent Exceptions
             </b>
-            <span className="flex min-w-0 flex-1 items-center gap-1.5 rounded-md bg-[#f5f8fc] px-2 py-1 text-[8.5px] text-[#94a3b8] ring-1 ring-[#e8eef6]">
-              <MagnifyingGlass className="size-3" />
-              Search project, agency or type
+            <span className="flex min-w-0 flex-1 items-center gap-1.5 rounded-md bg-[#f5f8fc] px-2 py-1 text-[12px] leading-none text-[#64748b] ring-1 ring-[#e8eef6]">
+              <MagnifyingGlass className="size-3.5 shrink-0" />
+              <span className="truncate">Search project, agency or type</span>
             </span>
-            <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-[#2f7df0]">
-              View All <CaretRight weight="bold" className="size-2.5" />
+            <span className="inline-flex shrink-0 items-center gap-0.5 text-[12px] leading-none font-bold text-[#2f7df0]">
+              View All <CaretRight weight="bold" className="size-3" />
             </span>
           </div>
-          <div className="min-h-0 flex-1 overflow-hidden rounded-lg ring-1 ring-[#eef2f8]">
-            <div className="grid grid-cols-[1.6fr_0.6fr_1.3fr_0.9fr_0.6fr_0.6fr] bg-[#f1f7ff] px-2 py-1 text-[8.5px] font-black text-[#183b70]">
-              <span>Project Name</span>
+          <div
+            className="grid min-h-0 flex-1 overflow-hidden rounded-lg ring-1 ring-[#eef2f8]"
+            style={{ gridTemplateRows: `auto repeat(${ROWS.length}, minmax(0, 1fr))` }}
+          >
+            <div className={cn("grid items-center bg-[#f1f7ff] px-2 py-1 text-[12px] leading-none font-black text-[#183b70]", DASH_COLS)}>
+              <span>Project / Exception</span>
               <span>Agency</span>
-              <span>Exception Type</span>
               <span>Amount</span>
               <span>Status</span>
               <span>Action</span>
@@ -370,7 +374,8 @@ function DashboardMain({ reduce }: { reduce: boolean }) {
               <motion.div
                 key={r.project}
                 className={cn(
-                  "relative grid grid-cols-[1.6fr_0.6fr_1.3fr_0.9fr_0.6fr_0.6fr] items-center border-t border-[#eef2f8] px-2 py-[5px] text-[9px]",
+                  "relative grid min-h-0 items-center border-t border-[#eef2f8] px-2 leading-none",
+                  DASH_COLS,
                   r.on && "bg-[#fff3f4]",
                 )}
                 initial={reduce ? false : { opacity: 0, x: -10 }}
@@ -387,14 +392,16 @@ function DashboardMain({ reduce }: { reduce: boolean }) {
                 ) : r.on ? (
                   <span aria-hidden className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-[#f3a3a6]" />
                 ) : null}
-                <b className="truncate font-bold text-[#17366b]">{r.project}</b>
-                <span className="text-[#475569]">{r.agency}</span>
-                <span className="truncate text-[#475569]">{r.type}</span>
-                <b className="font-bold text-[#17366b]">{r.amount}</b>
-                <span>
+                <span className="min-w-0">
+                  <b className="block truncate text-[14px] font-bold text-[#17366b]">{r.project}</b>
+                  <span className="mt-px block truncate text-[12px] font-semibold text-[#3d5274]">{r.type}</span>
+                </span>
+                <span className="truncate text-[13px] font-semibold text-[#334155]">{r.agency}</span>
+                <b className="truncate text-[14px] font-bold text-[#17366b]">{r.amount}</b>
+                <span className="min-w-0">
                   <span
                     className={cn(
-                      "rounded-full px-1.5 py-[1px] text-[8px] font-black",
+                      "inline-flex rounded-full px-1.5 py-0.5 text-[12px] leading-none font-black whitespace-nowrap",
                       r.status === "Open" ? "bg-[#fee2e2] text-[#dc2626]" : "bg-[#ffedd5] text-[#ea580c]",
                     )}
                   >
@@ -404,7 +411,7 @@ function DashboardMain({ reduce }: { reduce: boolean }) {
                 <span className="relative">
                   <span
                     className={cn(
-                      "inline-flex rounded-md px-2 py-[2px] text-[8.5px] font-black",
+                      "inline-flex rounded-md px-2 py-0.5 text-[12px] leading-none font-black",
                       r.on ? "bg-[#2f7df0] text-white shadow-[0_3px_8px_rgba(47,125,240,0.45)]" : "bg-white text-[#2f7df0] ring-1 ring-[#dbe7f5]",
                     )}
                   >
