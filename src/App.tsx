@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 import headerSkyline from "@/assets/header-skyline-band.jpg";
 import { ArchitectureScene } from "@/scenes/ArchitectureScene";
 import { AssessScene } from "@/scenes/AssessScene";
-import { CoreScene } from "@/scenes/CoreScene";
 import { LeakScene } from "@/scenes/LeakScene";
 import { MilestonesScene } from "@/scenes/MilestonesScene";
 import { GisScene } from "@/scenes/GisScene";
@@ -75,18 +74,18 @@ const RISK_HEAD = {
 
 /** Poster-style header title per slide/beat (key: "slide/beat"). */
 const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
-  "7/0": ARCH_HEAD,
-  "7/1": ARCH_HEAD,
-  "7/2": ARCH_HEAD,
-  "8/0": PLAN_HEAD,
-  "8/1": PLAN_HEAD,
-  "8/2": PLAN_HEAD,
-  "8/3": PLAN_HEAD,
-  "8/4": PLAN_HEAD,
-  "9/0": RISK_HEAD,
-  "9/1": RISK_HEAD,
-  "9/2": RISK_HEAD,
-  "9/3": RISK_HEAD,
+  "6/0": ARCH_HEAD,
+  "6/1": ARCH_HEAD,
+  "6/2": ARCH_HEAD,
+  "7/0": PLAN_HEAD,
+  "7/1": PLAN_HEAD,
+  "7/2": PLAN_HEAD,
+  "7/3": PLAN_HEAD,
+  "7/4": PLAN_HEAD,
+  "8/0": RISK_HEAD,
+  "8/1": RISK_HEAD,
+  "8/2": RISK_HEAD,
+  "8/3": RISK_HEAD,
   "1/0": {
     title: (
       <>
@@ -98,13 +97,25 @@ const POSTER_HEAD: Record<string, { title: ReactNode; titleClass: string }> = {
   "1/1": {
     title: (
       <>
+        Complete Platform –{" "}
+        <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">17 Modules Connected</span>
+        <span className="mt-[0.45em] block font-sans text-[0.42em] font-medium tracking-[0.06em] text-white/85 normal-case">
+          One Platform&nbsp;&nbsp;·&nbsp;&nbsp;Complete CESS Lifecycle&nbsp;&nbsp;·&nbsp;&nbsp;Project Onboarding to Department Action
+        </span>
+      </>
+    ),
+    titleClass: ARCH_HEAD.titleClass,
+  },
+  "1/2": {
+    title: (
+      <>
         Smart Middleware &amp; CESS{" "}
         <span className="rounded-md bg-[#f5b21b] px-[0.25em] py-[0.04em] whitespace-nowrap text-navy-deep">Self-Service Portal</span>
       </>
     ),
     titleClass: "text-[length:clamp(15px,min(1.95vw,3.6vh),32px)] tracking-[-0.02em] whitespace-nowrap",
   },
-  "1/2": {
+  "1/3": {
     title: (
       <>
         CESS Integrated{" "}
@@ -217,7 +228,6 @@ const TITLE_HIGHLIGHT: Record<string, string> = {
   gps: "Mobile App",
   gis: "Map",
   leak: "Management",
-  core: "Management Platform",
   arch: "Technology & Security",
   plan: "Milestones",
 };
@@ -384,11 +394,10 @@ export default function App() {
             {p.slide === 3 && <GpsScene beat={p.beat} />}
             {p.slide === 4 && <GisScene beat={p.beat} onBeat={(n) => p.goTo(4, n)} />}
             {p.slide === 5 && <LeakScene beat={p.beat} onBeat={(n) => p.goTo(5, n)} />}
-            {p.slide === 6 && <CoreScene beat={p.beat} onBeat={(n) => p.goTo(6, n)} />}
-            {p.slide === 7 && <ArchitectureScene beat={p.beat} />}
-            {p.slide === 8 && <MilestonesScene beat={p.beat} />}
-            {p.slide === 9 && <RisksScene beat={p.beat} />}
-            {p.slide === 10 && <ThanksScene />}
+            {p.slide === 6 && <ArchitectureScene beat={p.beat} />}
+            {p.slide === 7 && <MilestonesScene beat={p.beat} />}
+            {p.slide === 8 && <RisksScene beat={p.beat} />}
+            {p.slide === 9 && <ThanksScene />}
           </SlideViewport>
         )}
       </main>

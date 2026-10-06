@@ -58,10 +58,6 @@
     {
       "id": "03d-compare-records",
       "startSlide": 5
-    },
-    {
-      "id": "04-operating-close",
-      "startSlide": 6
     }
   ],
   "durations": {
@@ -100,14 +96,14 @@
       {
         "at": 75.672,
         "slide": 1,
-        "beat": 1,
-        "marker": "goto:problem/1"
+        "beat": 2,
+        "marker": "goto:problem/2"
       },
       {
         "at": 87.984,
         "slide": 1,
-        "beat": 2,
-        "marker": "goto:problem/2"
+        "beat": 3,
+        "marker": "goto:problem/3"
       }
     ],
     "03a-assess": [
@@ -319,15 +315,15 @@
       {
         "at": 136.04,
         "slide": 1,
-        "beat": 1,
-        "marker": "goto:problem/1",
+        "beat": 2,
+        "marker": "goto:problem/2",
         "segment": "02-product"
       },
       {
         "at": 148.352,
         "slide": 1,
-        "beat": 2,
-        "marker": "goto:problem/2",
+        "beat": 3,
+        "marker": "goto:problem/3",
         "segment": "02-product"
       },
       {
@@ -469,69 +465,6 @@
         "beat": 0,
         "marker": "start",
         "segment": "03d-compare-records"
-      },
-      {
-        "at": 968.168,
-        "slide": 6,
-        "beat": 0,
-        "marker": "start",
-        "segment": "04-operating-close"
-      },
-      {
-        "at": 993.104,
-        "slide": 6,
-        "beat": 1,
-        "marker": "next",
-        "segment": "04-operating-close"
-      },
-      {
-        "at": 1017.56,
-        "slide": 6,
-        "beat": 2,
-        "marker": "next",
-        "segment": "04-operating-close"
-      },
-      {
-        "at": 1038.584,
-        "slide": 6,
-        "beat": 3,
-        "marker": "next",
-        "segment": "04-operating-close"
-      },
-      {
-        "at": 1064.384,
-        "slide": 6,
-        "beat": 4,
-        "marker": "next",
-        "segment": "04-operating-close"
-      },
-      {
-        "at": 1083.488,
-        "slide": 6,
-        "beat": 5,
-        "marker": "next",
-        "segment": "04-operating-close"
-      },
-      {
-        "at": 1103.456,
-        "slide": 6,
-        "beat": 6,
-        "marker": "next",
-        "segment": "04-operating-close"
-      },
-      {
-        "at": 1131.512,
-        "slide": 6,
-        "beat": 7,
-        "marker": "next",
-        "segment": "04-operating-close"
-      },
-      {
-        "at": 1155.656,
-        "slide": 6,
-        "beat": 8,
-        "marker": "next",
-        "segment": "04-operating-close"
       }
     ]
   }

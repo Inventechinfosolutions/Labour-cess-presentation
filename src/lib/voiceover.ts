@@ -38,11 +38,6 @@ export const SCENE_VOICE: Record<number, VoiceTrack> = {
     file: "/audio/03d-compare-records.mp3",
     title: "Compare project records",
   },
-  6: {
-    id: "04-operating-close",
-    file: "/audio/04-operating-close.mp3",
-    title: "Operating model and close",
-  },
 };
 
 export const FULL_VOICE: VoiceTrack = {

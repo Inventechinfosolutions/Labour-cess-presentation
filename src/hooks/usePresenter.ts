@@ -56,7 +56,7 @@ export function usePresenter() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
       const key = e.key;
       if (key === "Escape") {
         if (help) {

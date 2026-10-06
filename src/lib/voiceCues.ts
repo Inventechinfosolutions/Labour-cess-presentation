@@ -20,7 +20,6 @@ const FALLBACK_CHAIN: { id: string; startSlide: number }[] = [
   { id: "03b-gps-field-app", startSlide: 3 },
   { id: "03c-gis-territory-map", startSlide: 4 },
   { id: "03d-compare-records", startSlide: 5 },
-  { id: "04-operating-close", startSlide: 6 },
 ];
 
 let cache: CuesFile | null = null;
