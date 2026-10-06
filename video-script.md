@@ -94,7 +94,7 @@
 
 *Footer band — IMPACT ON THE BOARD*
 
-- **Collection Shortfall** — Only 30–40% of eligible CESS is collected (estimated).
+- **Revenue Loss** — Shortfall in collection and interest loss.
 - **Delayed Remittance** — Agencies may not remit within the stipulated period.
 - **Difficult Reconciliation** — Project-wise and year-wise matching is often not possible.
 - **Limited Compliance Visibility** — Outstanding amounts and exceptions are hard to follow up.

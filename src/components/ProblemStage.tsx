@@ -525,8 +525,8 @@ const IMPACTS: {
 }[] = [
   {
     id: "shortfall",
-    label: "Collection Shortfall",
-    support: "Only 30–40% of eligible CESS is collected (estimated).",
+    label: "Revenue Loss",
+    support: "Shortfall in collection and interest loss.",
     icon3d: impact3dShortfall,
   },
   {
