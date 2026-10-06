@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KSIC · Design Gallery</title>
+    <style>
+      :root {
+        --ink: #2a1418;
+        --muted: #7a5a5f;
+        --maroon: #7a1230;
+        --gold: #c99a2e;
+        --gold-soft: #f6ead0;
+        --paper: #fbf7f1;
+        --line: #eadfd2;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+        color: var(--ink);
+        background: var(--paper);
+      }
+      header {
+        padding: 40px 6vw 28px;
+        background: linear-gradient(135deg, #5e0d24, var(--maroon));
+        color: #fff;
+        border-bottom: 4px solid var(--gold);
+      }
+      header { display: flex; align-items: center; gap: 26px; }
+      header .badge { flex-shrink: 0; padding: 10px 16px; border-radius: 14px; background: #fff; box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.45); }
+      header .badge img { display: block; height: 60px; width: auto; }
+      header .kicker {
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+      }
+      header h1 { margin: 6px 0 4px; font-size: 34px; font-weight: 800; }
+      header p { margin: 0; opacity: 0.85; }
+      main { padding: 32px 6vw 56px; }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+      }
+      .slot {
+        display: flex;
+        flex-direction: column;
+        border-radius: 16px;
+        background: #fff;
+        border: 1px solid var(--line);
+        box-shadow: 0 10px 24px -14px rgba(90, 20, 40, 0.35);
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .slot:hover { transform: translateY(-3px); box-shadow: 0 16px 30px -14px rgba(90, 20, 40, 0.45); }
+      .preview {
+        position: relative;
+        aspect-ratio: 16 / 10;
+        display: grid;
+        place-items: center;
+        background:
+          repeating-linear-gradient(45deg, transparent 0 14px, rgba(201, 154, 46, 0.08) 14px 28px),
+          var(--gold-soft);
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .num {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--maroon);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .body { padding: 16px 18px 18px; }
+      .body h2 { margin: 0 0 4px; font-size: 18px; }
+      .body p { margin: 0; color: var(--muted); font-size: 14px; }
+      .status {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        background: var(--gold-soft);
+        color: #8a6414;
+      }
+      .status.ready { background: #e3f4ea; color: #1b7a43; }
+      footer { padding: 0 6vw 32px; color: var(--muted); font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span class="badge"><img src="assets/ksic-logo.png" alt="KSIC Mysore Silk" /></span>
+      <div>
+        <div class="kicker">Karnataka Silk Industries Corporation</div>
+        <h1>KSIC · Design Gallery</h1>
+        <p>Design concepts for review. Each slot links to one design.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid" id="designs"></section>
+    </main>
+
+    <footer>Add a design by filling in its entry in the list at the bottom of this file.</footer>
+
+    <script>
+      // Fill in title, summary, file (e.g. "designs/home.html") and image (e.g. "previews/home.png") as designs arrive.
+      const DESIGNS = [
+        { title: "Timeless Elegance", summary: "Editorial home page — model hero, light serif, soft cream palette.", file: "design-01/index.html", image: "previews/design-01.jpg" },
+        { title: "A Legacy of Grace", summary: "Royal heritage home page — sepia palace art, maroon and gold.", file: "design-02/index.html", image: "previews/design-02.jpg" },
+        { title: "A Timeless Heritage", summary: "Bright ivory home page — silk hero, services strip, blush newsletter.", file: "design-03/index.html", image: "previews/design-03.jpg" },
+        { title: "Design 04", summary: "Placeholder — design to be added.", file: "", image: "" },
+        { title: "Design 05", summary: "Placeholder — design to be added.", file: "", image: "" },
+        { title: "Design 06", summary: "Placeholder — design to be added.", file: "", image: "" },
+      ];
+
+      const grid = document.getElementById("designs");
+      DESIGNS.forEach((d, i) => {
+        const ready = Boolean(d.file);
+        const slot = document.createElement(ready ? "a" : "div");
+        slot.className = "slot";
+        if (ready) slot.href = d.file;
+        const num = String(i + 1).padStart(2, "0");
+        slot.innerHTML = `
+          <div class="preview">
+            ${d.image ? `<img src="${d.image}" alt="${d.title} preview" />` : "Design preview"}
+            <span class="num">${num}</span>
+          </div>
+          <div class="body">
+            <h2>${d.title}</h2>
+            <p>${d.summary}</p>
+            <span class="status ${ready ? "ready" : ""}">${ready ? "Ready to view" : "Coming soon"}</span>
+          </div>`;
+        grid.appendChild(slot);
+      });
+    </script>
+  </body>
+</html>

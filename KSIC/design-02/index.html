@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KSIC Mysore Silk · A Legacy of Grace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../shared/motion.css" />
+    <style>
+      :root {
+        --paper: #f6efe3;
+        --paper-2: #efe5d4;
+        --ink: #3a2418;
+        --muted: #7b6252;
+        --maroon: #6e1a2c;
+        --maroon-2: #5a1222;
+        --gold: #b1843c;
+        --line: #e2d3bc;
+        --serif: "Playfair Display", Georgia, serif;
+        --sans: "DM Sans", "Avenir Next", system-ui, sans-serif;
+        --wrap: min(1240px, 92vw);
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; max-width: 100%; }
+      .ic { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+      .wrap { width: var(--wrap); margin: 0 auto; }
+      .kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+      h1, h2, h3 { font-family: var(--serif); color: var(--maroon); margin: 0; }
+
+      .topbar { font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); }
+      .topbar .wrap { display: flex; justify-content: space-between; padding: 9px 0; }
+      .topbar span { display: inline-flex; align-items: center; gap: 8px; }
+      .site-header { position: sticky; top: 0; z-index: 25; padding: 16px 0; background: rgba(246, 239, 227, 0); }
+      .site-header.scrolled { background: rgba(246, 239, 227, 0.94); backdrop-filter: blur(10px); box-shadow: 0 10px 28px -22px rgba(70, 30, 15, 0.55); padding: 9px 0; }
+      .nav { display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+      .logo { display: grid; justify-items: center; color: var(--maroon); line-height: 1; }
+      .logo img { height: 58px; width: auto; transition: height 0.5s var(--ease); }
+      .site-header.scrolled .logo img { height: 46px; }
+      footer .logo img { height: 56px; }
+      .nav ul { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; font-size: 14px; font-weight: 500; }
+      .nav li a { display: inline-flex; align-items: center; gap: 3px; }
+      .nav li .ic { width: 14px; height: 14px; }
+      .icons { display: flex; gap: 20px; font-size: 19px; color: var(--ink); }
+      .cart { position: relative; }
+      .cart i { position: absolute; top: -6px; right: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--maroon); color: #fff; font-size: 9.5px; font-style: normal; display: grid; place-items: center; }
+
+      /* Hero */
+      .hero { position: relative; margin-top: -88px; height: min(760px, 92vh); min-height: 600px; overflow: hidden; }
+      .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65% center; }
+      .hero .wrap { position: relative; z-index: 2; height: 100%; display: flex; align-items: center; padding-top: 60px; }
+      .hero-copy { max-width: 470px; }
+      .hero h1 { font-size: clamp(46px, 5.2vw, 76px); line-height: 1.05; font-weight: 600; margin: 14px 0 20px; }
+      .hero h1 em { font-style: normal; display: block; font-weight: 500; }
+      .hero p { font-size: 17px; line-height: 1.6; color: var(--muted); margin: 0 0 30px; }
+      .btn { display: inline-flex; align-items: center; gap: 12px; padding: 15px 26px; border-radius: 3px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+      .btn.solid { background: var(--maroon); color: #fff; --sweep: var(--maroon-2); box-shadow: 0 12px 26px -14px rgba(110, 26, 44, 0.8); }
+      .btn.line { border: 1px solid var(--maroon); color: var(--maroon); --sweep: var(--maroon); transition: color 0.5s var(--ease); }
+      .btn.line:hover { color: #fff; }
+
+      /* Trust strip */
+      .trust { background: rgba(255, 252, 246, 0.7); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .trust .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+      .trust div { display: grid; justify-items: center; gap: 10px; padding: 30px 10px; text-align: center; font-size: 14px; font-weight: 500; line-height: 1.35; }
+      .trust div + div { border-left: 1px solid var(--line); }
+      .trust .ic { width: 38px; height: 38px; color: var(--gold); stroke-width: 1.1; transition: transform 0.6s var(--ease); }
+      .trust div:hover .ic { transform: translateY(-4px) rotate(-4deg); }
+
+      section.block { padding: 80px 0; }
+      .head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 34px; }
+      .head h2 { font-size: clamp(32px, 3.4vw, 46px); font-weight: 600; line-height: 1.12; margin-top: 10px; }
+      .more { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--maroon); }
+
+      .cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+      .tile { background: #fffaf2; border-radius: 6px; overflow: hidden; box-shadow: 0 16px 32px -26px rgba(70, 30, 15, 0.6); }
+      .tile .zoom { aspect-ratio: 1 / 0.82; }
+      .tile img { width: 100%; height: 100%; object-fit: cover; }
+      .tile .row { display: flex; justify-content: space-between; align-items: center; padding: 13px 14px; font-size: 14px; font-weight: 500; }
+      .tile .row .nudge { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; color: var(--maroon); font-size: 14px; }
+
+      /* Heritage + craft */
+      .split { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
+      .split .copy { padding: 80px 9% 80px max(4vw, calc((100vw - 1240px) / 2)); display: flex; flex-direction: column; justify-content: center; }
+      .split h2 { font-size: clamp(32px, 3.4vw, 46px); font-weight: 600; line-height: 1.12; margin: 12px 0 18px; }
+      .split p { font-size: 16px; line-height: 1.7; color: var(--muted); margin: 0 0 28px; max-width: 430px; }
+      .split .copy > a { align-self: flex-start; }
+      .heritage { background: linear-gradient(90deg, var(--paper), var(--paper-2)); }
+      .heritage .art { position: relative; min-height: 440px; overflow: hidden; }
+      .heritage .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%); mask-image: linear-gradient(90deg, transparent 0%, #000 22%); }
+      .ornament { position: absolute; left: -18px; top: 50%; translate: 0 -50%; width: 36px; height: 36px; color: var(--gold); z-index: 2; }
+      .craft .art { position: relative; min-height: 440px; overflow: hidden; }
+      .craft .art img { position: absolute; inset: -6% 0; width: 100%; height: 112%; object-fit: cover; }
+      .craft .copy { padding: 80px max(4vw, calc((100vw - 1240px) / 2)) 80px 7%; background: #fbf6ee; }
+
+      /* Products */
+      .prods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+      .prods article { background: #fffaf2; border-radius: 6px; overflow: hidden; box-shadow: 0 16px 32px -26px rgba(70, 30, 15, 0.6); }
+      .prods .zoom { aspect-ratio: 4 / 3; }
+      .prods img { width: 100%; height: 100%; object-fit: cover; }
+      .prods .meta { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px 16px; }
+      .prods h4 { margin: 0 0 4px; font-size: 15px; font-weight: 500; }
+      .prods .price { font-size: 14px; font-weight: 700; color: var(--maroon); }
+      .add { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); color: var(--maroon); font-size: 16px; transition: background 0.4s, color 0.4s; }
+      .prods article:hover .add { background: var(--maroon); color: #fff; }
+
+      /* Inspired banner */
+      .inspired { position: relative; overflow: hidden; min-height: 460px; display: flex; align-items: center; }
+      .inspired > img { position: absolute; inset: -6% 0; width: 100%; height: 112%; object-fit: cover; object-position: right center; }
+      .inspired::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(246, 239, 227, 0.95) 0%, rgba(246, 239, 227, 0.8) 34%, rgba(246, 239, 227, 0) 58%); }
+      .inspired .wrap { position: relative; z-index: 2; }
+      .inspired h2 { font-size: clamp(32px, 3.4vw, 46px); font-weight: 600; line-height: 1.12; margin: 12px 0 16px; max-width: 460px; }
+      .inspired p { font-size: 16px; line-height: 1.7; color: var(--muted); margin: 0 0 28px; max-width: 420px; }
+
+      /* Newsletter */
+      .news { background: linear-gradient(90deg, var(--maroon-2), var(--maroon)); color: #f6e7d6; }
+      .news .wrap { display: grid; grid-template-columns: auto 1fr 1.1fr; gap: 34px; align-items: center; padding: 50px 0; }
+      .news .ic.big { width: 64px; height: 64px; color: #e2b86a; stroke-width: 1; }
+      .news h3 { color: #fff; font-size: 32px; margin: 6px 0 8px; }
+      .news p { margin: 0; font-size: 14.5px; opacity: 0.85; }
+      .news .kicker { color: #e2b86a; }
+      .news form { display: flex; gap: 10px; }
+      .news input { flex: 1; padding: 15px 16px; border-radius: 3px; border: 1px solid rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.08); color: #fff; font: inherit; }
+      .news input::placeholder { color: rgba(255, 255, 255, 0.6); }
+      .news button { padding: 0 24px; border: 0; border-radius: 3px; background: var(--gold); color: #fff; font: 700 12.5px var(--sans); letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; --sweep: #9a7030; }
+
+      footer { padding: 54px 0 30px; font-size: 14px; color: var(--muted); }
+      footer .wrap { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr) 1.2fr; gap: 30px; }
+      footer h5 { margin: 0 0 14px; font-size: 15px; color: var(--ink); }
+      footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+      footer .logo { justify-items: start; }
+      .social { display: flex; gap: 12px; align-items: flex-start; justify-content: flex-end; }
+      .social a { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; font-size: 17px; color: var(--maroon); transition: background 0.4s, color 0.4s; }
+      .social a:hover { background: var(--maroon); color: #fff; }
+      .legal { width: var(--wrap); margin: 36px auto 0; padding-top: 18px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 12.5px; }
+
+      @media (max-width: 960px) {
+        .nav ul { display: none; }
+        .cols { grid-template-columns: repeat(2, 1fr); }
+        .prods, .trust .wrap { grid-template-columns: repeat(2, 1fr); }
+        .split, .news .wrap, footer .wrap { grid-template-columns: 1fr; }
+        .split .copy, .craft .copy { padding: 50px 6vw; }
+      }
+    </style>
+  </head>
+  <body>
+    <script src="../shared/icons.js"></script>
+
+    <div class="topbar">
+      <div class="wrap"><span><svg class="ic"><use href="#i-temple" /></svg>Government of Karnataka Initiative</span><span><svg class="ic"><use href="#i-crown" /></svg>A Heritage Since 1912</span></div>
+    </div>
+
+    <header class="site-header">
+      <nav class="wrap nav">
+        <a class="logo" href="#"><img src="../assets/ksic-logo.png" alt="KSIC Mysore Silk — heritage weaves, 100% pure silk since 1912" /></a>
+        <ul>
+          <li><a class="ul" href="#">Shop <svg class="ic"><use href="#i-chev" /></svg></a></li>
+          <li><a class="ul" href="#collections">Collections <svg class="ic"><use href="#i-chev" /></svg></a></li>
+          <li><a class="ul" href="#">Wedding</a></li>
+          <li><a class="ul" href="#">Festive</a></li>
+          <li><a class="ul" href="#">Sarees <svg class="ic"><use href="#i-chev" /></svg></a></li>
+          <li><a class="ul" href="#heritage">Heritage</a></li>
+          <li><a class="ul" href="#">About</a></li>
+        </ul>
+        <span class="icons">
+          <a href="#" aria-label="Search"><svg class="ic"><use href="#i-search" /></svg></a>
+          <a href="#" aria-label="Account"><svg class="ic"><use href="#i-user" /></svg></a>
+          <a href="#" aria-label="Wishlist"><svg class="ic"><use href="#i-heart" /></svg></a>
+          <a href="#" class="cart" aria-label="Cart"><svg class="ic"><use href="#i-bag" /></svg><i>0</i></a>
+        </span>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <img class="settle" src="../assets/d2-hero.jpg" alt="Illustration of Mysore Palace with a royal elephant and flowing crimson silk" />
+      <div class="wrap">
+        <div class="hero-copy intro">
+          <div class="kicker">Karnataka's Pride</div>
+          <h1>Mysore Silk <em>A Legacy<br />of Grace</em></h1>
+          <p>Timeless weaves. Royal traditions.<br />From the royal land of Mysore to the world.</p>
+          <div><a class="btn solid sweep nudge" href="#collections">Explore Collections <svg class="ic"><use href="#i-arrow" /></svg></a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust">
+      <div class="wrap" data-stagger>
+        <div><svg class="ic"><use href="#i-lotus" /></svg>100+ Years<br />of Heritage</div>
+        <div><svg class="ic"><use href="#i-mandala" /></svg>Pure<br />Mysore Silk</div>
+        <div><svg class="ic"><use href="#i-leaf" /></svg>GI Certified</div>
+        <div><svg class="ic"><use href="#i-temple" /></svg>Authentic &amp;<br />Sustainable</div>
+      </div>
+    </section>
+
+    <section class="block" id="collections">
+      <div class="wrap">
+        <div class="head rv"><div><div class="kicker">Explore Our Collections</div><h2>Tradition for<br />Every Occasion</h2></div><a class="more nudge" href="#">View All Collections <svg class="ic"><use href="#i-arrow" /></svg></a></div>
+        <div class="cols" data-stagger>
+          <a class="tile lift" href="#"><div class="zoom"><img src="../assets/col-sarees.jpg" alt="Sarees" /></div><div class="row">Sarees <span class="nudge"><svg class="ic"><use href="#i-arrow" /></svg></span></div></a>
+          <a class="tile lift" href="#"><div class="zoom"><img src="../assets/col-festive.jpg" alt="Festive" /></div><div class="row">Festive <span class="nudge"><svg class="ic"><use href="#i-arrow" /></svg></span></div></a>
+          <a class="tile lift" href="#"><div class="zoom"><img src="../assets/col-wedding.jpg" alt="Wedding" /></div><div class="row">Wedding <span class="nudge"><svg class="ic"><use href="#i-arrow" /></svg></span></div></a>
+          <a class="tile lift" href="#"><div class="zoom"><img src="../assets/col-menswear.jpg" alt="Menswear" /></div><div class="row">Menswear <span class="nudge"><svg class="ic"><use href="#i-arrow" /></svg></span></div></a>
+          <a class="tile lift" href="#"><div class="zoom"><img src="../assets/col-gifts.jpg" alt="Gifts" /></div><div class="row">Gifts <span class="nudge"><svg class="ic"><use href="#i-arrow" /></svg></span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="split heritage" id="heritage">
+      <div class="copy rv rv-left">
+        <div class="kicker">Our Heritage</div>
+        <h2>A Royal Story<br />Woven in Silk</h2>
+        <p>For over a century, KSIC Mysore Silk has carried forward the rich weaving traditions of Karnataka, a legacy inspired by the royal heritage of Mysore.</p>
+        <a class="btn line sweep nudge" href="#">Discover Our Story <svg class="ic"><use href="#i-arrow" /></svg></a>
+      </div>
+      <div class="art">
+        <svg class="ic ornament float"><use href="#i-mandala" /></svg>
+        <img class="rv rv-zoom" src="../assets/d2-arch.jpg" alt="Mysore Palace seen through a carved arch" />
+      </div>
+    </section>
+
+    <section class="split craft">
+      <div class="art"><img data-parallax="0.06" src="../assets/loom.jpg" alt="Silk being woven on a traditional loom" /></div>
+      <div class="copy rv rv-right">
+        <div class="kicker">The Art of Mysore Silk</div>
+        <h2>Crafted by<br />Generations</h2>
+        <p>From the finest mulberry silk to intricate zari weaves, every KSIC creation is a tribute to exceptional craftsmanship and timeless beauty.</p>
+        <a class="btn line sweep nudge" href="#">Our Craftsmanship <svg class="ic"><use href="#i-arrow" /></svg></a>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <div class="head rv"><div class="kicker">Featured Products</div><a class="more nudge" href="#">View All <svg class="ic"><use href="#i-arrow" /></svg></a></div>
+        <div class="prods" data-stagger>
+          <article class="lift"><div class="zoom"><img src="../assets/prod-red.jpg" alt="Classic Zari saree" /></div><div class="meta"><div><h4>Classic Zari Saree</h4><div class="price">₹ 24,500</div></div><a class="add" href="#" aria-label="Add to bag"><svg class="ic"><use href="#i-bag" /></svg></a></div></article>
+          <article class="lift"><div class="zoom"><img src="../assets/prod-cream.jpg" alt="Temple Border saree" /></div><div class="meta"><div><h4>Temple Border Saree</h4><div class="price">₹ 28,900</div></div><a class="add" href="#" aria-label="Add to bag"><svg class="ic"><use href="#i-bag" /></svg></a></div></article>
+          <article class="lift"><div class="zoom"><img src="../assets/prod-green.jpg" alt="Butta Collection saree" /></div><div class="meta"><div><h4>Butta Collection</h4><div class="price">₹ 26,800</div></div><a class="add" href="#" aria-label="Add to bag"><svg class="ic"><use href="#i-bag" /></svg></a></div></article>
+          <article class="lift"><div class="zoom"><img src="../assets/prod-purple.jpg" alt="Checks and Stripes saree" /></div><div class="meta"><div><h4>Checks &amp; Stripes</h4><div class="price">₹ 25,600</div></div><a class="add" href="#" aria-label="Add to bag"><svg class="ic"><use href="#i-bag" /></svg></a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="inspired">
+      <img data-parallax="0.05" src="../assets/d2-banner.jpg" alt="Illustration of the Mysore Dasara procession" />
+      <div class="wrap rv">
+        <div class="kicker">A Symbol of Karnataka</div>
+        <h2>Inspired by Mysore's Royal Heritage</h2>
+        <p>Our weaves reflect the art, culture and legacy of Mysore — a tradition that continues to inspire the world.</p>
+        <a class="btn line sweep nudge" href="#">Explore Heritage <svg class="ic"><use href="#i-arrow" /></svg></a>
+      </div>
+    </section>
+
+    <section class="news">
+      <div class="wrap rv">
+        <svg class="ic big float"><use href="#i-lotus" /></svg>
+        <div><div class="kicker">Stay Connected</div><h3>Be the First to Know</h3><p>Get updates on new collections, festive launches and exclusive offers.</p></div>
+        <form data-subscribe><input type="email" placeholder="Enter your email address" required aria-label="Email address" /><button class="sweep" type="submit">Subscribe</button></form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap rv">
+        <div><a class="logo" href="#"><img src="../assets/ksic-logo.png" alt="KSIC Mysore Silk — heritage weaves, 100% pure silk since 1912" /></a></div>
+        <div><h5>Shop</h5><ul><li>Sarees</li><li>Menswear</li><li>Festive</li><li>Wedding</li></ul></div>
+        <div><h5>About</h5><ul><li>Our Heritage</li><li>Craftsmanship</li><li>Sustainability</li><li>News &amp; Events</li></ul></div>
+        <div><h5>Help</h5><ul><li>Track Order</li><li>Store Locator</li><li>FAQs</li><li>Contact Us</li></ul></div>
+        <div class="social"><a href="#" aria-label="Facebook"><svg class="ic"><use href="#i-fb" /></svg></a><a href="#" aria-label="Instagram"><svg class="ic"><use href="#i-ig" /></svg></a><a href="#" aria-label="YouTube"><svg class="ic"><use href="#i-yt" /></svg></a></div>
+      </div>
+      <div class="legal"><span>© 2026 KSIC Mysore Silk. All rights reserved.</span><span>Government of Karnataka Initiative · A Heritage Since 1912</span></div>
+    </footer>
+
+    <script src="../shared/motion.js"></script>
+  </body>
+</html>

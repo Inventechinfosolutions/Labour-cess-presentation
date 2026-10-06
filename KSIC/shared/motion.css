@@ -1,0 +1,116 @@
+/* Shared, gentle motion for all KSIC designs. */
+:root {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+/* Scroll reveal */
+.rv {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--d, 0s);
+}
+.rv.rv-left { transform: translateX(-32px); }
+.rv.rv-right { transform: translateX(32px); }
+.rv.rv-zoom { transform: scale(0.96); }
+.rv.in { opacity: 1; transform: none; }
+
+/* Hero intro — children rise one after another */
+.intro > * {
+  opacity: 0;
+  animation: ksic-rise 1s var(--ease) forwards;
+  animation-delay: calc(var(--i, 0) * 0.14s + 0.25s);
+}
+@keyframes ksic-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Hero image settles in */
+.settle { animation: ksic-settle 2.6s var(--ease) both; }
+@keyframes ksic-settle {
+  from { opacity: 0; transform: scale(1.07); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Image zoom on hover */
+.zoom { overflow: hidden; }
+.zoom img { transition: transform 1.2s var(--ease); }
+.zoom:hover img, a:hover > .zoom img, article:hover .zoom img { transform: scale(1.06); }
+
+/* Arrow nudges on hover */
+.nudge svg { transition: translate 0.4s var(--ease); }
+.nudge:hover svg, a:hover .nudge svg { translate: 4px 0; }
+
+/* Soft lift on hover (uses `translate` so it never fights reveal transforms) */
+.lift {
+  transition: opacity 0.9s var(--ease) var(--d, 0s), transform 0.9s var(--ease) var(--d, 0s), translate 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.lift:hover { translate: 0 -6px; }
+
+/* Button sweep fill */
+.sweep { position: relative; overflow: hidden; isolation: isolate; }
+.sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep, currentColor);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.55s var(--ease);
+}
+.sweep:hover::before { transform: scaleX(1); transform-origin: left; }
+
+/* Gentle pulse ring (play buttons, badges) */
+.pulse { position: relative; }
+.pulse::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid currentColor;
+  animation: ksic-pulse 2.4s var(--ease) infinite;
+}
+@keyframes ksic-pulse {
+  from { opacity: 0.7; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.6); }
+}
+
+/* Slow float for decorative art */
+.float { animation: ksic-float 7s ease-in-out infinite; }
+@keyframes ksic-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Thin line that draws in */
+.draw { transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease) 0.3s; }
+.in .draw, .draw.in { transform: scaleX(1); }
+
+/* Header that firms up on scroll */
+.site-header { transition: background-color 0.5s var(--ease), box-shadow 0.5s var(--ease), padding 0.5s var(--ease), backdrop-filter 0.5s; }
+
+/* Underline grow on nav links */
+.ul { position: relative; }
+.ul::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.45s var(--ease);
+}
+.ul:hover::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .rv, .intro > * { opacity: 1 !important; transform: none !important; }
+  .draw { transform: none !important; }
+}
