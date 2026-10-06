@@ -1,6 +1,7 @@
 ---
 description: CESS presenter deck — GoK language, common-man terms, visualization-first, animated
-alwaysApply: true
+globs: labour-cess/**
+alwaysApply: false
 ---
 
 # Labour CESS presenter deck standards
@@ -57,7 +58,7 @@ Never say “Board system”, “CESS portal”, or “Worker Welfare system” 
 ### Story as a picture
 
 - Layout must **read the story**: e.g. many offices → construction project → gap / Smart Middleware → one Board file.
-- Reference tone: `1.png` / `2.png` in the repo (sources flow into ABC site, then into the platform) — not a spreadsheet of widgets.
+- Reference tone: `labour-cess/1.png` / `labour-cess/2.png` (sources flow into ABC site, then into the platform) — not a spreadsheet of widgets.
 - Prefer **one continuous composition** (left → centre → right, or constellation → hub). Do not bolt a “problem UI” and a “solution UI” as two unrelated screens.
 - When merging scenes, **keep order**: problem beats first, then solution beats; do not drop ideas.
 
@@ -92,7 +93,7 @@ Never say “Board system”, “CESS portal”, or “Worker Welfare system” 
 
 ## Where this lives
 
-- This rule: `.cursor/rules/cess-presenter-deck.mdc` (always on for this project)
-- Speaker story tone: `speaker-notes.md` (lexicon + read-aloud boxes)
-- Scene UI copy: `src/scenes/*.tsx` and `src/lib/deck.ts`
-- Visual references: `1.png`, `2.png` (and other numbered refs) at repo root
+- This rule: `.cursor/rules/cess-presenter-deck.mdc` (applies to files under `labour-cess/`)
+- Speaker story tone: `labour-cess/speaker-notes.md` (lexicon + read-aloud boxes)
+- Scene UI copy: `labour-cess/src/scenes/*.tsx` and `labour-cess/src/lib/deck.ts`
+- Visual references: `1.png`, `2.png` (and other numbered refs) in `labour-cess/`

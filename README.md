@@ -1,32 +1,34 @@
-# React + TypeScript + Vite
+# Inventech demos
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+All Inventech demo sites live in this repo and deploy together as one Cloudflare Worker, `inventech-demos`.
 
-Currently, two official plugins are available:
+| Folder | URL path | Type |
+|---|---|---|
+| `labour-cess/` | `/labour-cess/` | Vite + React presenter deck |
+| `global-connect/` | `/global-connect/` | Vite + React site |
+| `KSIC/` | `/ksic/` | Static HTML designs |
+| `home/` | `/` | Landing page that lists every demo |
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Work on one demo
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+cd labour-cess && npm install && npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+KSIC needs no build. Open `KSIC/index.html` in a browser.
+
+## Build and deploy everything
+
+```bash
+npm run build     # builds every demo into dist/
+npm run preview   # serves dist/ locally with Cloudflare's runtime
+npm run deploy    # builds and deploys to Cloudflare
+```
+
+## Add a new demo
+
+1. Add the demo in its own folder.
+2. Register it in `scripts/build.mjs`. Vite apps go in `VITE_APPS` and static sites go in `STATIC_SITES`.
+3. Vite apps must set `base: process.env.DEMO_BASE ?? "/"` (or `"./"` for hash-routed apps) and load public files through `import.meta.env.BASE_URL`, not from `/`.
+4. If the app uses browser routes instead of hash routes, add its path to `SPA_APPS` in `worker/index.js`.
+5. Add a card to `DEMOS` in `home/index.html`, with a preview image in `home/previews/`.

@@ -35,7 +35,7 @@ function fallbackCues(trackId: string): VoiceCue[] {
 export async function ensureVoiceCues(): Promise<void> {
   if (cache) return;
   if (!loadPromise) {
-    loadPromise = fetch("/audio/cues.json")
+    loadPromise = fetch(`${import.meta.env.BASE_URL}audio/cues.json`)
       .then(async (res) => {
         if (!res.ok) throw new Error(`cues.json ${res.status}`);
         return (await res.json()) as CuesFile;

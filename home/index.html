@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inventech · Demo Sites</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #0f172a;
+        --muted: #64748b;
+        --line: #e2e8f0;
+        --accent: #2563eb;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        font-family: Inter, system-ui, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(1200px 600px at 10% -10%, #dbeafe 0%, transparent 60%),
+          radial-gradient(900px 500px at 100% 0%, #ede9fe 0%, transparent 55%), #f8fafc;
+        min-height: 100vh;
+      }
+      main { max-width: 1180px; margin: 0 auto; padding: 72px 28px 96px; }
+      .kicker { font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+      h1 { font-size: clamp(34px, 4.4vw, 52px); font-weight: 700; letter-spacing: -0.02em; margin: 12px 0 14px; }
+      .lead { font-size: 18px; color: var(--muted); max-width: 560px; line-height: 1.6; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 28px; margin-top: 56px; }
+      .demo {
+        display: flex; flex-direction: column; text-decoration: none; color: inherit;
+        background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+        box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+        transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease);
+      }
+      .demo:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -20px rgb(15 23 42 / 0.25); border-color: #cbd5e1; }
+      .shot { aspect-ratio: 16 / 10; overflow: hidden; background: #f1f5f9; border-bottom: 1px solid var(--line); }
+      .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 1.2s var(--ease); }
+      .demo:hover .shot img { transform: scale(1.04); }
+      .body { padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+      .client { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+      h2 { font-size: 21px; font-weight: 600; }
+      .body p { color: var(--muted); line-height: 1.55; font-size: 15px; flex: 1; }
+      .open { margin-top: 10px; font-weight: 600; font-size: 15px; color: var(--accent); display: inline-flex; gap: 8px; align-items: center; }
+      .open span { transition: transform 0.4s var(--ease); }
+      .demo:hover .open span { transform: translateX(5px); }
+      footer { margin-top: 72px; color: var(--muted); font-size: 14px; }
+
+      .rv { opacity: 0; transform: translateY(18px); animation: rise 0.9s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 110ms); }
+      @keyframes rise { to { opacity: 1; transform: none; } }
+      @media (prefers-reduced-motion: reduce) {
+        .rv { animation: none; opacity: 1; transform: none; }
+        .demo, .shot img, .open span { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="kicker rv">Inventech Info Solutions</div>
+      <h1 class="rv" style="--i: 1">Demo Sites</h1>
+      <p class="lead rv" style="--i: 2">Live demos and design concepts we have built for our clients. Choose one to open it.</p>
+
+      <section class="grid" id="demos"></section>
+
+      <footer class="rv" style="--i: 6">© Inventech Info Solutions</footer>
+    </main>
+
+    <script>
+      const DEMOS = [
+        {
+          client: "Government of Karnataka · KBOCWWB",
+          title: "Labour CESS Tracking & Monitoring System",
+          summary: "Animated presenter deck for the Board committee. Use Space to move through each scene.",
+          href: "labour-cess/",
+          image: "previews/labour-cess.jpg",
+        },
+        {
+          client: "Global Connect",
+          title: "Global Connect",
+          summary: "Multi-page portal demo for investors, talent and partners, with themes and page transitions.",
+          href: "global-connect/",
+          image: "previews/global-connect.jpg",
+        },
+        {
+          client: "Karnataka Silk Industries Corporation",
+          title: "KSIC · Design Gallery",
+          summary: "Three home page concepts for Mysore Silk, with simple and pleasant animation.",
+          href: "ksic/",
+          image: "previews/ksic.jpg",
+        },
+      ];
+
+      document.getElementById("demos").innerHTML = DEMOS.map(
+        (d, i) => `
+          <a class="demo rv" style="--i: ${i + 3}" href="${d.href}">
+            <div class="shot"><img src="${d.image}" alt="${d.title} preview" loading="lazy" /></div>
+            <div class="body">
+              <div class="client">${d.client}</div>
+              <h2>${d.title}</h2>
+              <p>${d.summary}</p>
+              <div class="open">Open demo <span>→</span></div>
+            </div>
+          </a>`,
+      ).join("");
+    </script>
+  </body>
+</html>
