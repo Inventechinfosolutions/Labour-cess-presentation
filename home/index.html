@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Inventech · Demo Sites</title>
+    <link rel="icon" type="image/png" href="brand/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -24,6 +25,7 @@
         min-height: 100vh;
       }
       main { max-width: 1180px; margin: 0 auto; padding: 72px 28px 96px; }
+      .brand { display: block; height: 58px; width: auto; }
       .kicker { font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
       h1 { font-size: clamp(34px, 4.4vw, 52px); font-weight: 700; letter-spacing: -0.02em; margin: 12px 0 14px; }
       .lead { font-size: 18px; color: var(--muted); max-width: 560px; line-height: 1.6; }
@@ -46,6 +48,19 @@
       .open span { transition: transform 0.4s var(--ease); }
       .demo:hover .open span { transform: translateX(5px); }
       footer { margin-top: 72px; color: var(--muted); font-size: 14px; }
+      h1 { margin-top: 22px; }
+      .admin { float: right; display: flex; align-items: center; gap: 10px; margin-left: 20px; }
+      .admin a {
+        display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px;
+        font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid var(--line); background: #fff; color: var(--ink);
+        transition: background 0.3s, color 0.3s, transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      }
+      .admin a:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -14px rgb(15 23 42 / 0.4); }
+      .admin a.primary { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 10px 22px -12px rgb(37 99 235 / 0.7); }
+      .admin a.primary:hover { background: #1d4ed8; }
+      @media (max-width: 640px) {
+        .admin { float: none; margin: 0 0 28px; }
+      }
 
       .rv { opacity: 0; transform: translateY(18px); animation: rise 0.9s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 110ms); }
       @keyframes rise { to { opacity: 1; transform: none; } }
@@ -57,7 +72,8 @@
   </head>
   <body>
     <main>
-      <div class="kicker rv">Inventech Info Solutions</div>
+      <nav class="admin rv"><a class="primary" href="/admin"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg>Share links &amp; PINs</a><a href="/logout">Sign out</a></nav>
+      <img class="brand rv" src="brand/inventech-logo.png" alt="Inventech Info Solutions" />
       <h1 class="rv" style="--i: 1">Demo Sites</h1>
       <p class="lead rv" style="--i: 2">Live demos and design concepts we have built for our clients. Choose one to open it.</p>
 

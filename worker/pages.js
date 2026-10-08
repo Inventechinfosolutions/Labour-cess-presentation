@@ -1,0 +1,128 @@
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+const shell = (title, body) => `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>${esc(title)} · Inventech Demos</title>
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<style>
+  :root { --ink: #0f172a; --muted: #64748b; --line: #e2e8f0; --accent: #2563eb; --ease: cubic-bezier(0.22, 1, 0.36, 1); }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 32px 18px; font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink);
+    background: radial-gradient(1000px 520px at 10% -10%, #dbeafe 0%, transparent 60%), radial-gradient(800px 460px at 100% 0%, #ede9fe 0%, transparent 55%), #f8fafc; }
+  .card { width: min(100%, 420px); background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 34px 30px; box-shadow: 0 24px 48px -28px rgb(15 23 42 / 0.35); animation: rise 0.7s var(--ease) both; }
+  .wide { width: min(100%, 860px); }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .brand { display: block; height: 44px; width: auto; margin: 0 0 22px; }
+  .kicker { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-size: 24px; margin: 8px 0 6px; letter-spacing: -0.01em; }
+  p { color: var(--muted); line-height: 1.55; margin: 0 0 22px; font-size: 15px; }
+  label { display: block; font-size: 13px; font-weight: 600; margin: 0 0 6px; }
+  input { width: 100%; padding: 13px 14px; border: 1px solid #cbd5e1; border-radius: 10px; font: inherit; font-size: 16px; margin-bottom: 16px; transition: border-color 0.3s, box-shadow 0.3s; }
+  input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgb(37 99 235 / 0.12); }
+  input.pin { text-align: center; font-size: 28px; letter-spacing: 0.5em; padding-left: calc(14px + 0.5em); font-variant-numeric: tabular-nums; }
+  button, .btn { display: inline-flex; justify-content: center; align-items: center; gap: 8px; width: 100%; padding: 13px 18px; border: 0; border-radius: 10px; background: var(--ink); color: #fff; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; text-decoration: none; transition: background 0.3s, transform 0.3s var(--ease); }
+  button:hover, .btn:hover { background: var(--accent); transform: translateY(-1px); }
+  .error { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; padding: 10px 12px; border-radius: 10px; font-size: 14px; margin-bottom: 16px; }
+  .top { display: flex; justify-content: space-between; align-items: start; gap: 16px; margin-bottom: 22px; }
+  .top p { margin: 0; }
+  .links { display: flex; gap: 16px; font-size: 14px; white-space: nowrap; }
+  .links a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; padding: 0 10px 10px; border-bottom: 1px solid var(--line); }
+  td { padding: 14px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  td a { color: var(--accent); text-decoration: none; word-break: break-all; }
+  .code { font: 600 18px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.12em; }
+  .copy { width: auto; padding: 8px 12px; font-size: 13px; background: #f1f5f9; color: var(--ink); }
+  .copy:hover { color: #fff; }
+  .note { margin: 20px 0 0; font-size: 13px; }
+  @media (max-width: 680px) {
+    thead { display: none; }
+    tr { display: grid; gap: 6px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    td { padding: 0; border: 0; }
+    .top { flex-direction: column; }
+  }
+</style>
+</head>
+<body>${body}</body>
+</html>`;
+
+const error = (msg) => (msg ? `<div class="error" role="alert">${esc(msg)}</div>` : "");
+
+export const loginPage = (next = "/", msg = "") =>
+  shell(
+    "Admin sign in",
+    `<form class="card" method="post" action="/login">
+      <img class="brand" src="/brand/inventech-logo.png" alt="Inventech Info Solutions" />
+      <div class="kicker">Demo sites</div>
+      <h1>Admin sign in</h1>
+      <p>Sign in to see every demo and the share PINs.</p>
+      ${error(msg)}
+      <input type="hidden" name="next" value="${esc(next)}" />
+      <label for="u">Username</label>
+      <input id="u" name="username" autocomplete="username" required autofocus />
+      <label for="p">Password</label>
+      <input id="p" name="password" type="password" autocomplete="current-password" required />
+      <button type="submit">Sign in</button>
+    </form>`,
+  );
+
+export const pinPage = (demo, msg = "") =>
+  shell(
+    demo.name,
+    `<form class="card" method="post">
+      <img class="brand" src="/brand/inventech-logo.png" alt="Inventech Info Solutions" />
+      <div class="kicker">Private preview</div>
+      <h1>${esc(demo.name)}</h1>
+      <p>Enter the 6-digit PIN you received to view this demo.</p>
+      ${error(msg)}
+      <label for="pin">PIN</label>
+      <input id="pin" class="pin" name="pin" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" required autofocus />
+      <button type="submit">View demo</button>
+    </form>`,
+  );
+
+export const adminPage = (demos, origin) =>
+  shell(
+    "Share links",
+    `<main class="card wide">
+      <div class="top">
+        <div><img class="brand" src="/brand/inventech-logo.png" alt="Inventech Info Solutions" /><div class="kicker">Admin</div><h1>Share links &amp; PINs</h1><p>Send a client the link and PIN for one demo. The PIN unlocks only that demo.</p></div>
+        <div class="links"><a href="/">All demos</a><a href="/logout">Sign out</a></div>
+      </div>
+      <table>
+        <thead><tr><th>Demo</th><th>Link</th><th>PIN</th><th></th></tr></thead>
+        <tbody>
+          ${demos
+            .map((d) => {
+              const link = `${origin}/${d.id}/`;
+              const message = `${d.name}\nLink: ${link}\nPIN: ${d.pin}`;
+              return `<tr>
+                <td><strong>${esc(d.name)}</strong></td>
+                <td><a href="${esc(link)}" target="_blank" rel="noopener">${esc(link)}</a></td>
+                <td class="code">${esc(d.pin)}</td>
+                <td><button class="copy" type="button" data-copy="${esc(message)}">Copy message</button></td>
+              </tr>`;
+            })
+            .join("")}
+        </tbody>
+      </table>
+      <p class="note">To change a demo's PIN, raise its <code>pinVersion</code> in <code>worker/demos.js</code> and deploy. The old PIN stops working and clients it unlocked must enter the new one.</p>
+    </main>
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((b) =>
+        b.addEventListener("click", async () => {
+          await navigator.clipboard.writeText(b.dataset.copy);
+          const label = b.textContent;
+          b.textContent = "Copied ✓";
+          setTimeout(() => (b.textContent = label), 1600);
+        }),
+      );
+    </script>`,
+  );
+
+export const messagePage = (title, text) =>
+  shell(title, `<main class="card"><img class="brand" src="/brand/inventech-logo.png" alt="Inventech Info Solutions" /><h1>${esc(title)}</h1><p>${esc(text)}</p></main>`);

@@ -31,3 +31,6 @@ dist-ssr
 .tmp-*
 .cursor-*.png
 :memory:.ses
+
+# Local Worker secrets
+.dev.vars

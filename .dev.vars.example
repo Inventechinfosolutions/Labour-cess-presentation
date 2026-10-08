@@ -1,0 +1,5 @@
+# Copy to .dev.vars for local `npm run preview`. In production set these as Secrets on the Worker.
+ADMIN_USER=admin
+ADMIN_PASSWORD=choose-a-strong-password
+# Any long random string, e.g. the output of: openssl rand -hex 32
+AUTH_SECRET=
