@@ -24,6 +24,9 @@ document.body.insertAdjacentHTML(
     <symbol id="i-ig" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><circle cx="16.8" cy="7.2" r=".8" fill="currentColor"/></symbol>
     <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></symbol>
     <symbol id="i-crown" viewBox="0 0 40 24"><path d="M5 19 7.5 7.5l6.5 5.5L20 3.5l6 9.5 6.5-5.5L35 19z" fill="currentColor" stroke="none"/><rect x="5" y="20" width="30" height="2.4" rx="1" fill="currentColor" stroke="none"/><circle cx="7.5" cy="6" r="1.6" fill="currentColor" stroke="none"/><circle cx="20" cy="2.2" r="1.6" fill="currentColor" stroke="none"/><circle cx="32.5" cy="6" r="1.6" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="d-sprig" viewBox="0 0 120 160"><path d="M60 158C58 120 52 80 30 20" fill="none"/><path d="M57 130c-18-4-30-16-34-34 18 3 30 15 34 34z"/><path d="M58 128c14-10 30-12 46-6-12 12-28 14-46 6z"/><path d="M52 95c-16-6-26-20-27-38 16 6 26 19 27 38z"/><path d="M53 92c12-12 26-16 42-12-10 13-25 17-42 12z"/><path d="M42 60c-12-8-18-22-16-38 13 9 19 22 16 38z"/><path d="M43 58c10-12 22-16 36-14-8 12-21 16-36 14z"/></symbol>
+    <symbol id="d-flower" viewBox="0 0 120 120"><g fill="none"><circle cx="60" cy="60" r="7"/><path d="M60 53c-8-14-8-30 0-42 8 12 8 28 0 42zM60 67c8 14 8 30 0 42-8-12-8-28 0-42zM53 60c-14 8-30 8-42 0 12-8 28-8 42 0zM67 60c14-8 30-8 42 0-12 8-28 8-42 0z"/><path d="M55 55c-12-6-20-18-20-30 12 2 22 12 25 25M65 65c12 6 20 18 20 30-12-2-22-12-25-25M65 55c6-12 18-20 30-20-2 12-12 22-25 25M55 65c-6 12-18 20-30 20 2-12 12-22 25-25"/></g></symbol>
+    <symbol id="d-petal" viewBox="0 0 24 24"><path d="M12 2c5 4 7 9 4 15-1.5 3-6.5 3-8 0C5 11 7 6 12 2z" stroke="none"/></symbol>
   </defs>
 </svg>`,
 );
