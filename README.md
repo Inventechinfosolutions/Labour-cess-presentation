@@ -11,6 +11,8 @@ All Inventech demo sites live in this repo and deploy together as one Cloudflare
 | `fms/` | `/fms/` | Vite + React app (RGUHS Finance Management System) |
 | `solar/` | `/solar/` | Vite + React app (Solar PMIS, TanStack Router) |
 | `guest-house/` | `/guest-house/` | Vite + React app (Guest House Booking) |
+| `ocss/` | `/ocss/` | Vite + React app (CSMS claim settlement, TanStack Router) |
+| `pension/` | `/pension/` | Vite + React app (PensionFlow AI, TanStack Router) |
 | `home/` | `/` | Landing page that lists every demo |
 
 ## Work on one demo
