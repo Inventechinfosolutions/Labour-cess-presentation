@@ -1,7 +1,7 @@
 import { execSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
 
-const VITE_APPS = ["labour-cess", "global-connect", "bda"];
+const VITE_APPS = ["labour-cess", "global-connect", "bda", "fms", "solar", "guest-house"];
 const STATIC_SITES = { KSIC: "ksic" };
 
 const run = (cmd, cwd, env = {}) =>

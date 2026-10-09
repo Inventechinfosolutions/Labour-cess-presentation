@@ -48,4 +48,7 @@ export const DEMOS = [
       { id: "garden", path: "/design-9", name: "Design 9", style: "Watercolour" },
     ],
   },
+  { id: "fms", name: "RGUHS FMS · Finance Management System", pinVersion: 1 },
+  { id: "solar", name: "Solar PMIS · Project Management", pinVersion: 1, spa: true },
+  { id: "guest-house", name: "Guest House Booking", pinVersion: 1, spa: true },
 ];

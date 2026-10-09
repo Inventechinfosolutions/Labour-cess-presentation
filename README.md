@@ -8,6 +8,9 @@ All Inventech demo sites live in this repo and deploy together as one Cloudflare
 | `global-connect/` | `/global-connect/` | Vite + React site |
 | `KSIC/` | `/ksic/` | Static HTML designs |
 | `bda/` | `/bda/` | Vite + React site (English and Kannada) |
+| `fms/` | `/fms/` | Vite + React app (RGUHS Finance Management System) |
+| `solar/` | `/solar/` | Vite + React app (Solar PMIS, TanStack Router) |
+| `guest-house/` | `/guest-house/` | Vite + React app (Guest House Booking) |
 | `home/` | `/` | Landing page that lists every demo |
 
 ## Work on one demo
