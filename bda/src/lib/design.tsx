@@ -98,8 +98,8 @@ export const DESIGNS: { id: Design; path: string; label: Text; style: Text; summ
     label: { en: "Design 9", kn: "ವಿನ್ಯಾಸ 9" },
     style: { en: "Watercolour", kn: "ಜಲವರ್ಣ" },
     summary: {
-      en: "Soft watercolour portal: a circular photo slideshow hero, round quick service buttons, slanted Explore BDA cards, initiatives and a landscape footer.",
-      kn: "ಮೃದು ಜಲವರ್ಣ ಪೋರ್ಟಲ್: ವೃತ್ತಾಕಾರದ ಛಾಯಾಚಿತ್ರ ಸ್ಲೈಡ್‌ಶೋ, ದುಂಡನೆಯ ತ್ವರಿತ ಸೇವಾ ಬಟನ್‌ಗಳು, ಓರೆಯಾದ ಬಿಡಿಎ ಅನ್ವೇಷಣಾ ಕಾರ್ಡ್‌ಗಳು, ಉಪಕ್ರಮಗಳು ಮತ್ತು ಭೂದೃಶ್ಯದ ಅಡಿಭಾಗ.",
+      en: "Soft watercolour portal: a wide photo slideshow hero with leaf-cut corners, round quick service buttons, slanted Explore BDA cards, initiatives and a landscape footer.",
+      kn: "ಮೃದು ಜಲವರ್ಣ ಪೋರ್ಟಲ್: ಎಲೆಯಾಕಾರದ ಮೂಲೆಗಳ ಅಗಲವಾದ ಛಾಯಾಚಿತ್ರ ಸ್ಲೈಡ್‌ಶೋ, ದುಂಡನೆಯ ತ್ವರಿತ ಸೇವಾ ಬಟನ್‌ಗಳು, ಓರೆಯಾದ ಬಿಡಿಎ ಅನ್ವೇಷಣಾ ಕಾರ್ಡ್‌ಗಳು, ಉಪಕ್ರಮಗಳು ಮತ್ತು ಭೂದೃಶ್ಯದ ಅಡಿಭಾಗ.",
     },
     image: "images/previews/design-9.jpg",
   },

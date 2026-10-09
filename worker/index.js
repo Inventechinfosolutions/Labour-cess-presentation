@@ -14,6 +14,11 @@ const html = (body, status = 200, headers = {}) =>
 const redirect = (to, headers = {}) => new Response(null, { status: 303, headers: { Location: to, "Cache-Control": "no-store", ...headers } });
 const safeNext = (next) => (typeof next === "string" && next.startsWith("/") && !next.startsWith("//") ? next : "/");
 
+// Admins can preview a demo exactly as a client sees it: `?view=client` turns it on, `?view=admin` turns it off.
+const clientView = (request) => /(?:^|;\s*)demo_view=client(?:;|$)/.test(request.headers.get("Cookie") || "");
+const viewCookie = (view) => `demo_view=${view}; Path=/; HttpOnly; Secure; SameSite=Lax${view === "client" ? "" : "; Max-Age=0"}`;
+const PREVIEW_BAR = `<div style="position:fixed;left:16px;bottom:16px;z-index:2147483647;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 14px;border-radius:999px;background:#0f172a;color:#fff;font:600 13px/1.2 system-ui,-apple-system,sans-serif;box-shadow:0 8px 24px rgba(15,23,42,.3)">Client preview<a href="?view=admin" style="padding:6px 12px;border-radius:999px;background:#fff;color:#0f172a;text-decoration:none">Exit</a></div>`;
+
 async function allowed(env, request, bucket) {
   if (!env.AUTH_LIMITER) return true;
   const ip = request.headers.get("CF-Connecting-IP") || "local";
@@ -21,12 +26,15 @@ async function allowed(env, request, bucket) {
   return success;
 }
 
-async function serve(request, env, demo) {
+async function serve(request, env, demo, preview = false) {
   let res = await env.ASSETS.fetch(request);
   if (res.status === 404 && demo?.spa) res = await env.ASSETS.fetch(new Request(new URL(`/${demo.id}/`, request.url), request));
   res = new Response(res.body, res);
   res.headers.set("Cache-Control", "private, max-age=0, must-revalidate");
   res.headers.set("X-Robots-Tag", "noindex");
+  if (preview && res.headers.get("Content-Type")?.includes("text/html")) {
+    res = new HTMLRewriter().on("body", { element: (body) => body.append(PREVIEW_BAR, { html: true }) }).transform(res);
+  }
   return res;
 }
 
@@ -76,6 +84,14 @@ export default {
     const isAdmin = session?.admin === true;
     const unlocked = (demo) => session?.scopes?.includes(scopeFor(demo));
 
+    const view = url.searchParams.get("view");
+    if (isAdmin && (view === "client" || view === "admin")) {
+      url.searchParams.delete("view");
+      return redirect(url.pathname + url.search, { "Set-Cookie": viewCookie(view) });
+    }
+    const preview = isAdmin && clientView(request);
+    const asAdmin = isAdmin && !preview;
+
     if (path === "/login") return login(request, env, session, url);
     if (path === "/logout") return redirect("/login", { "Set-Cookie": clearCookie });
 
@@ -91,14 +107,14 @@ export default {
     const demo = DEMOS.find((d) => path === `/${d.id}` || path.startsWith(`/${d.id}/`));
     if (demo) {
       if (isAdmin || unlocked(demo)) {
-        if (!demo.designs) return serve(request, env, demo);
+        if (!demo.designs) return serve(request, env, demo, preview);
         const hidden = await hiddenDesigns(env, demo);
         const page = path.slice(demo.id.length + 1).replace(/\/+$/, "");
         if (page === "/visibility.json") {
-          return Response.json({ hidden, admin: isAdmin }, { headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
+          return Response.json({ hidden, admin: asAdmin }, { headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
         }
-        if (!isAdmin && blockedPage(demo, hidden, page)) return redirect(`/${demo.id}/`);
-        return serve(request, env, demo);
+        if (!asAdmin && blockedPage(demo, hidden, page)) return redirect(`/${demo.id}/`);
+        return serve(request, env, demo, preview);
       }
       if (request.method === "POST") return unlock(request, env, session, demo, url);
       return html(pinPage(demo), 401);

@@ -113,13 +113,13 @@ const designsSection = (demo, origin, { saved, storage }) => {
         <input type="checkbox" name="show" value="${esc(d.id)}" ${demo.hidden.includes(d.id) ? "" : "checked"} ${storage ? "" : "disabled"} />
         <span class="track" aria-hidden="true"></span>
         <span><span class="tname">${esc(d.name)} · ${esc(d.style)}</span><span class="tstate"></span></span>
-        <a href="${esc(`${origin}/${demo.id}${d.path ?? `/?theme=${d.id}`}`)}" target="_blank" rel="noopener">Open</a>
+        <a href="${esc(`${origin}/${demo.id}${d.path ? `${d.path}?view=admin` : `/?theme=${d.id}&view=admin`}`)}" target="_blank" rel="noopener">Open</a>
       </label>`,
     )
     .join("");
   return `<form class="designs" id="designs-${esc(demo.id)}" method="post" action="/admin/designs">
       <h2>${esc(demo.name)}: designs</h2>
-      <p>Switch a design off to hide it from clients. It disappears from their gallery or theme menu, and its link takes them back to the start. You still see everything while signed in, with hidden ones marked.</p>
+      <p>Switch a design off to hide it from clients. It disappears from their gallery or theme menu, and its link takes them back to the start. You still see everything while signed in, with hidden ones marked. Open a link in the table above to preview what a client sees.</p>
       ${saved === demo.id ? `<div class="ok" role="status">Saved. Clients see the change within a minute.</div>` : ""}
       ${storage ? "" : `<div class="error" role="alert">Storage isn't set up. Add the SETTINGS KV binding in wrangler.jsonc and deploy.</div>`}
       <input type="hidden" name="demo" value="${esc(demo.id)}" />
@@ -137,7 +137,7 @@ export const adminPage = (demos, origin, options = {}) =>
     "Share links",
     `<main class="card wide">
       <div class="top">
-        <div><img class="brand" src="/brand/inventech-logo.png" alt="Inventech Info Solutions" /><div class="kicker">Admin</div><h1>Share links &amp; PINs</h1><p>Send a client the link and PIN for one demo. The PIN unlocks only that demo.</p></div>
+        <div><img class="brand" src="/brand/inventech-logo.png" alt="Inventech Info Solutions" /><div class="kicker">Admin</div><h1>Share links &amp; PINs</h1><p>Send a client the link and PIN for one demo. The PIN unlocks only that demo. Opening a link here previews the demo as a client sees it.</p></div>
         <div class="links"><a href="/">All demos</a><a href="/logout">Sign out</a></div>
       </div>
       <table>
@@ -149,7 +149,7 @@ export const adminPage = (demos, origin, options = {}) =>
               const message = `${d.name}\nLink: ${link}\nPIN: ${d.pin}`;
               return `<tr>
                 <td><strong>${esc(d.name)}</strong></td>
-                <td><a href="${esc(link)}" target="_blank" rel="noopener">${esc(link)}</a></td>
+                <td><a href="${esc(`${link}?view=client`)}" target="_blank" rel="noopener" title="Opens as a client sees it">${esc(link)}</a></td>
                 <td class="code">${esc(d.pin)}</td>
                 <td><button class="copy" type="button" data-copy="${esc(message)}">Copy message</button></td>
               </tr>`;
