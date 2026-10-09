@@ -1,11 +1,22 @@
 import { createContext, useCallback, useContext } from "react";
-import { DEFAULT_THEME, THEME_BY_ID, isThemeId, type ThemeId } from "./themes";
+import { DEFAULT_THEME, THEMES, THEME_BY_ID, isThemeId, type ThemeId, type ThemeMeta } from "./themes";
 
 export const STORAGE_KEY = "gc-theme";
 
-type ThemeContextValue = { theme: ThemeId; setTheme: (id: ThemeId) => void };
+type ThemeContextValue = {
+  theme: ThemeId;
+  setTheme: (id: ThemeId) => void;
+  /** Themes this visitor may pick: all of them for the admin, the ones not hidden for clients. */
+  themes: ThemeMeta[];
+  isHidden: (id: ThemeId) => boolean;
+};
 
-export const ThemeContext = createContext<ThemeContextValue>({ theme: DEFAULT_THEME, setTheme: () => {} });
+export const ThemeContext = createContext<ThemeContextValue>({
+  theme: DEFAULT_THEME,
+  setTheme: () => {},
+  themes: THEMES,
+  isHidden: () => false,
+});
 
 /** `?theme=heritage` in the URL wins over the saved choice so a themed link can be shared. */
 export function readInitialTheme(): ThemeId {

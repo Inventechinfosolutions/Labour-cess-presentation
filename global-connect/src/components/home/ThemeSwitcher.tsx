@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Check, Palette } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/theme/context";
-import { THEMES, THEME_BY_ID, type ThemeMeta } from "@/theme/themes";
+import { THEME_BY_ID, type ThemeMeta } from "@/theme/themes";
 
 function Swatch({ colors, size = 14 }: { colors: ThemeMeta["swatch"]; size?: number }) {
   return (
@@ -16,7 +16,7 @@ function Swatch({ colors, size = 14 }: { colors: ThemeMeta["swatch"]; size?: num
 }
 
 export function ThemeSwitcher({ light = false }: { light?: boolean }) {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, themes, isHidden } = useTheme();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const active = THEME_BY_ID[theme];
@@ -35,6 +35,7 @@ export function ThemeSwitcher({ light = false }: { light?: boolean }) {
     };
   }, [open]);
 
+  if (themes.length < 2) return null;
   return (
     <div ref={ref} className="relative">
       <button
@@ -69,7 +70,7 @@ export function ThemeSwitcher({ light = false }: { light?: boolean }) {
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="px-3 pt-2 pb-1.5 text-[11px] font-extrabold tracking-[0.18em] text-(color:--gc-muted) uppercase">Theme</p>
-            {THEMES.map((t) => {
+            {themes.map((t) => {
               const selected = t.id === theme;
               return (
                 <button
@@ -92,6 +93,7 @@ export function ThemeSwitcher({ light = false }: { light?: boolean }) {
                   <span className="min-w-0 flex-1">
                     <span className="block font-display text-[14px] font-semibold">{t.label}</span>
                     <span className="block truncate text-[12px] text-(color:--gc-body)">{t.description}</span>
+                    {isHidden(t.id) ? <span className="block text-[11px] font-semibold text-red-600">Hidden from clients</span> : null}
                   </span>
                   {selected ? <Check size={16} weight="bold" className="text-(color:--gc-primary)" /> : null}
                 </button>

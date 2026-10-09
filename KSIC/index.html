@@ -95,6 +95,18 @@
         color: #8a6414;
       }
       .status.ready { background: #e3f4ea; color: #1b7a43; }
+      .hidden-tag {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #b91c1c;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .empty { color: var(--muted); }
       footer { padding: 0 6vw 32px; color: var(--muted); font-size: 13px; }
       @media (max-width: 640px) {
         header { flex-direction: column; align-items: flex-start; gap: 18px; padding-top: 28px; }
@@ -121,37 +133,50 @@
     <footer>Add a design by filling in its entry in the list at the bottom of this file.</footer>
 
     <script>
-      // Fill in title, summary, file (e.g. "designs/home.html") and image (e.g. "previews/home.png") as designs arrive.
+      // Fill in title, summary, id, file (e.g. "designs/home.html") and image (e.g. "previews/home.png") as designs arrive.
+      // `id` must match the KSIC design ids in worker/demos.js so the admin can hide it.
       const DESIGNS = [
-        { title: "Timeless Elegance", summary: "Editorial home page — model hero, light serif, soft cream palette.", file: "design-01/index.html", image: "previews/design-01.jpg" },
-        { title: "A Legacy of Grace", summary: "Royal heritage home page — sepia palace art, maroon and gold.", file: "design-02/index.html", image: "previews/design-02.jpg" },
-        { title: "A Timeless Heritage", summary: "Bright ivory home page — silk hero, services strip, blush newsletter.", file: "design-03/index.html", image: "previews/design-03.jpg" },
-        { title: "Sage Garden", summary: "Fresh sage-green home page — jasmine and leaf sprigs, airy daylight.", file: "design-04/index.html", image: "previews/design-04.jpg" },
-        { title: "Lilac Mist", summary: "Soft lavender home page — pastel shapes and a “Why choose KSIC” strip.", file: "design-05/index.html", image: "previews/design-05.jpg" },
-        { title: "Monsoon Blue", summary: "Cool sky-blue home page — line-art florals, crisp morning light.", file: "design-06/index.html", image: "previews/design-06.jpg" },
-        { title: "Marigold Glow", summary: "Warm golden home page — festive occasion banner, blush collections.", file: "design-07/index.html", image: "previews/design-07.jpg" },
-        { title: "Rose Petal", summary: "Blush pink home page — drifting petals and a wedding occasion banner.", file: "design-08/index.html", image: "previews/design-08.jpg" },
+        { title: "Timeless Elegance", summary: "Editorial home page — model hero, light serif, soft cream palette.", id: "design-01", file: "design-01/index.html", image: "previews/design-01.jpg" },
+        { title: "A Legacy of Grace", summary: "Royal heritage home page — sepia palace art, maroon and gold.", id: "design-02", file: "design-02/index.html", image: "previews/design-02.jpg" },
+        { title: "A Timeless Heritage", summary: "Bright ivory home page — silk hero, services strip, blush newsletter.", id: "design-03", file: "design-03/index.html", image: "previews/design-03.jpg" },
+        { title: "Sage Garden", summary: "Fresh sage-green home page — jasmine and leaf sprigs, airy daylight.", id: "design-04", file: "design-04/index.html", image: "previews/design-04.jpg" },
+        { title: "Lilac Mist", summary: "Soft lavender home page — pastel shapes and a “Why choose KSIC” strip.", id: "design-05", file: "design-05/index.html", image: "previews/design-05.jpg" },
+        { title: "Monsoon Blue", summary: "Cool sky-blue home page — line-art florals, crisp morning light.", id: "design-06", file: "design-06/index.html", image: "previews/design-06.jpg" },
+        { title: "Marigold Glow", summary: "Warm golden home page — festive occasion banner, blush collections.", id: "design-07", file: "design-07/index.html", image: "previews/design-07.jpg" },
+        { title: "Rose Petal", summary: "Blush pink home page — drifting petals and a wedding occasion banner.", id: "design-08", file: "design-08/index.html", image: "previews/design-08.jpg" },
       ];
 
+      // The demo Worker answers visibility.json; without it every design is shown.
       const grid = document.getElementById("designs");
-      DESIGNS.forEach((d, i) => {
-        const ready = Boolean(d.file);
-        const slot = document.createElement(ready ? "a" : "div");
-        slot.className = "slot";
-        if (ready) slot.href = d.file;
-        const num = String(i + 1).padStart(2, "0");
-        slot.innerHTML = `
-          <div class="preview">
-            ${d.image ? `<img src="${d.image}" alt="${d.title} preview" />` : "Design preview"}
-            <span class="num">${num}</span>
-          </div>
-          <div class="body">
-            <h2>${d.title}</h2>
-            <p>${d.summary}</p>
-            <span class="status ${ready ? "ready" : ""}">${ready ? "Ready to view" : "Coming soon"}</span>
-          </div>`;
-        grid.appendChild(slot);
-      });
+      fetch("visibility.json", { cache: "no-store" })
+        .then((r) => (r.ok && (r.headers.get("content-type") || "").includes("json") ? r.json() : null))
+        .catch(() => null)
+        .then((v) => render(Array.isArray(v?.hidden) ? v.hidden : [], v?.admin === true));
+
+      function render(hidden, admin) {
+        const shown = DESIGNS.map((d, i) => ({ ...d, n: i + 1 })).filter((d) => admin || !hidden.includes(d.id));
+        if (!shown.length) grid.outerHTML = '<p class="empty">No designs are shared yet.</p>';
+        shown.forEach((d) => {
+          const ready = Boolean(d.file);
+          const slot = document.createElement(ready ? "a" : "div");
+          slot.className = "slot";
+          if (ready) slot.href = d.file;
+          const num = String(d.n).padStart(2, "0");
+          const off = hidden.includes(d.id);
+          slot.innerHTML = `
+            <div class="preview">
+              ${d.image ? `<img src="${d.image}" alt="${d.title} preview" />` : "Design preview"}
+              <span class="num">${num}</span>
+              ${off ? '<span class="hidden-tag">Hidden from clients</span>' : ""}
+            </div>
+            <div class="body">
+              <h2>${d.title}</h2>
+              <p>${d.summary}</p>
+              <span class="status ${ready ? "ready" : ""}">${ready ? "Ready to view" : "Coming soon"}</span>
+            </div>`;
+          grid.appendChild(slot);
+        });
+      }
     </script>
   </body>
 </html>

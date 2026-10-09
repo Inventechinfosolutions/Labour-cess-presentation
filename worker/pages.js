@@ -39,6 +39,27 @@ const shell = (title, body) => `<!doctype html>
   .copy { width: auto; padding: 8px 12px; font-size: 13px; background: #f1f5f9; color: var(--ink); }
   .copy:hover { color: #fff; }
   .note { margin: 20px 0 0; font-size: 13px; }
+  .designs { margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
+  .designs h2 { font-size: 18px; margin: 0 0 4px; }
+  .designs p { margin: 0 0 16px; font-size: 14px; }
+  .ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; padding: 10px 12px; border-radius: 10px; font-size: 14px; margin-bottom: 16px; animation: rise 0.5s var(--ease) both; }
+  .toggles { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin-bottom: 18px; }
+  .toggle { position: relative; display: flex; align-items: center; gap: 12px; margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; font-weight: 400; transition: border-color 0.3s, background 0.3s; }
+  .toggle:hover { border-color: var(--accent); background: #f8fafc; }
+  .toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; padding: 0; }
+  .track { position: relative; flex: none; width: 38px; height: 22px; border-radius: 999px; background: #cbd5e1; transition: background 0.3s var(--ease); }
+  .track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgb(15 23 42 / 0.3); transition: transform 0.3s var(--ease); }
+  .toggle input:checked + .track { background: #16a34a; }
+  .toggle input:checked + .track::after { transform: translateX(16px); }
+  .toggle input:focus-visible + .track { box-shadow: 0 0 0 4px rgb(37 99 235 / 0.2); }
+  .tname { display: block; font-weight: 600; font-size: 14px; }
+  .tstate { display: block; font-size: 12.5px; color: var(--muted); }
+  .tstate::before { content: "Hidden from clients"; color: #b91c1c; }
+  .toggle input:checked ~ span .tstate::before { content: "Visible to clients"; color: #15803d; }
+  .toggle a { margin-left: auto; font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 600; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .row button { width: auto; }
+  .ghost { background: #f1f5f9; color: var(--ink); }
   @media (max-width: 680px) {
     thead { display: none; }
     tr { display: grid; gap: 6px; padding: 14px 0; border-bottom: 1px solid var(--line); }
@@ -85,7 +106,33 @@ export const pinPage = (demo, msg = "") =>
     </form>`,
   );
 
-export const adminPage = (demos, origin) =>
+const designsSection = (demo, origin, { saved, storage }) => {
+  const toggles = demo.designs
+    .map(
+      (d) => `<label class="toggle">
+        <input type="checkbox" name="show" value="${esc(d.id)}" ${demo.hidden.includes(d.id) ? "" : "checked"} ${storage ? "" : "disabled"} />
+        <span class="track" aria-hidden="true"></span>
+        <span><span class="tname">${esc(d.name)} · ${esc(d.style)}</span><span class="tstate"></span></span>
+        <a href="${esc(`${origin}/${demo.id}${d.path ?? `/?theme=${d.id}`}`)}" target="_blank" rel="noopener">Open</a>
+      </label>`,
+    )
+    .join("");
+  return `<form class="designs" id="designs-${esc(demo.id)}" method="post" action="/admin/designs">
+      <h2>${esc(demo.name)}: designs</h2>
+      <p>Switch a design off to hide it from clients. It disappears from their gallery or theme menu, and its link takes them back to the start. You still see everything while signed in, with hidden ones marked.</p>
+      ${saved === demo.id ? `<div class="ok" role="status">Saved. Clients see the change within a minute.</div>` : ""}
+      ${storage ? "" : `<div class="error" role="alert">Storage isn't set up. Add the SETTINGS KV binding in wrangler.jsonc and deploy.</div>`}
+      <input type="hidden" name="demo" value="${esc(demo.id)}" />
+      <div class="toggles">${toggles}</div>
+      <div class="row">
+        <button type="submit" ${storage ? "" : "disabled"}>Save</button>
+        <button type="button" class="ghost" data-all="true" ${storage ? "" : "disabled"}>Show all</button>
+        <button type="button" class="ghost" data-all="false" ${storage ? "" : "disabled"}>Hide all</button>
+      </div>
+    </form>`;
+};
+
+export const adminPage = (demos, origin, options = {}) =>
   shell(
     "Share links",
     `<main class="card wide">
@@ -111,8 +158,17 @@ export const adminPage = (demos, origin) =>
         </tbody>
       </table>
       <p class="note">To change a demo's PIN, raise its <code>pinVersion</code> in <code>worker/demos.js</code> and deploy. The old PIN stops working and clients it unlocked must enter the new one.</p>
+      ${demos
+        .filter((d) => d.designs)
+        .map((d) => designsSection(d, origin, options))
+        .join("")}
     </main>
     <script>
+      document.querySelectorAll("[data-all]").forEach((b) =>
+        b.addEventListener("click", () =>
+          b.form.querySelectorAll('input[name="show"]').forEach((c) => (c.checked = b.dataset.all === "true")),
+        ),
+      );
       document.querySelectorAll("[data-copy]").forEach((b) =>
         b.addEventListener("click", async () => {
           await navigator.clipboard.writeText(b.dataset.copy);

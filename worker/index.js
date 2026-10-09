@@ -1,6 +1,7 @@
 import { DEMOS } from "./demos.js";
 import { clearCookie, pinFor, readSession, safeEqual, scopeFor, sessionCookie } from "./auth.js";
 import { adminPage, loginPage, messagePage, pinPage } from "./pages.js";
+import { blockedPage, hiddenDesigns, saveHiddenDesigns } from "./settings.js";
 
 const ADMIN_DAYS = 7;
 const CLIENT_DAYS = 30;
@@ -43,6 +44,15 @@ async function login(request, env, session, url) {
   return redirect(next, { "Set-Cookie": cookie });
 }
 
+async function saveDesigns(request, env) {
+  if (request.method !== "POST" || !env.SETTINGS) return redirect("/admin");
+  const form = await request.formData();
+  const demo = DEMOS.find((d) => d.designs && d.id === form.get("demo"));
+  if (!demo) return redirect("/admin");
+  await saveHiddenDesigns(env, demo, form.getAll("show").map(String));
+  return redirect(`/admin?saved=${encodeURIComponent(demo.id)}#designs-${demo.id}`);
+}
+
 async function unlock(request, env, session, demo, url) {
   if (!(await allowed(env, request, "pin"))) return html(pinPage(demo, "Too many attempts. Wait a minute and try again."), 429);
   const pin = String((await request.formData()).get("pin") ?? "").replace(/\D/g, "");
@@ -71,13 +81,25 @@ export default {
 
     if (path === "/admin") {
       if (!isAdmin) return redirect("/login?next=/admin");
-      const demos = await Promise.all(DEMOS.map(async (d) => ({ ...d, pin: await pinFor(env.AUTH_SECRET, d) })));
-      return html(adminPage(demos, url.origin));
+      const demos = await Promise.all(
+        DEMOS.map(async (d) => ({ ...d, pin: await pinFor(env.AUTH_SECRET, d), hidden: await hiddenDesigns(env, d) })),
+      );
+      return html(adminPage(demos, url.origin, { saved: url.searchParams.get("saved"), storage: Boolean(env.SETTINGS) }));
     }
+    if (path === "/admin/designs") return isAdmin ? saveDesigns(request, env) : redirect("/login?next=/admin");
 
     const demo = DEMOS.find((d) => path === `/${d.id}` || path.startsWith(`/${d.id}/`));
     if (demo) {
-      if (isAdmin || unlocked(demo)) return serve(request, env, demo);
+      if (isAdmin || unlocked(demo)) {
+        if (!demo.designs) return serve(request, env, demo);
+        const hidden = await hiddenDesigns(env, demo);
+        const page = path.slice(demo.id.length + 1).replace(/\/+$/, "");
+        if (page === "/visibility.json") {
+          return Response.json({ hidden, admin: isAdmin }, { headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
+        }
+        if (!isAdmin && blockedPage(demo, hidden, page)) return redirect(`/${demo.id}/`);
+        return serve(request, env, demo);
+      }
       if (request.method === "POST") return unlock(request, env, session, demo, url);
       return html(pinPage(demo), 401);
     }
